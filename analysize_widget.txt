@@ -35,14 +35,17 @@ task_list screen:
     + Body:
         - Title
         - date time
-        + list task today:
-            - tick box {(true)->move task to complete||(false)->move task to uncomplete}
-            - Name
-            - Step complete (optional)
-            - due date (optional)
-            - notification icon (optional)
-            - note icon (optional)
-            - important tick box { (true)-> flag as important||(false)-> remove flag as important }
+        + list task:
+            + task 1:
+                - tick box {(true)->move task to complete||(false)->move task to uncomplete}
+                - Name -> task_detail screen
+                - Step complete (optional)
+                - due date (optional)
+                - notification icon (optional)
+                - note icon (optional)
+                - important tick box { (true)-> flag as important||(false)-> remove flag as important }
+            + task 2:
+            ...
     + float button
         - Suggestions button->Suggestions screen
         - add task button->add task screen
