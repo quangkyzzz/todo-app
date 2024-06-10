@@ -4,28 +4,45 @@ Main screen:
         - User Name
         - Search icon-> Search screen
     + Body:
-        - My Day -> My_day screen
+
+        *Main task lists:
+        - My Day -> task_list(today_list) screen
         - Important -> Important screen
         - Planned -> Planned screen
-        - Assigned to me -> Assigned_to_me screen
-        - Flagged email -> Flagged screen
-        - Tasks -> list of task screen
-    *List task:
-    - getting started -> list of task screen
-    - Groceries
+        - Assigned to me -> task_list(assigned_to_me_list) screen
+        - Flagged email -> Flagged_email screen
+        - Tasks -> task_list(all) screen
 
-My_Day screen:
+        *Custom task lists:
+        - task_list 1 -> task_list(list1) screen
+        - task_list 2 -> task_list(list2) screen
+
+        + Group of task list 1:
+            - task_list 1
+            - task_list 2
+            ...
+        + Group of task list 2:
+            ...
+        
+        *action:
+        - new list button -> show create_task_list widget
+        - new Group button -> show create_group widget
+
+task_list screen:
     + App bar:
         - back button -> Main screen
-        - popup mennu ->
+        - popup mennu -> show popup mennu
     + Body:
         - Title
         - date time
         + list task today:
-            - tick box (true)->move task to complete||(false)->move task to uncomplete
+            - tick box {(true)->move task to complete||(false)->move task to uncomplete}
             - Name
-            - Step complete
-            - note icon
+            - Step complete (optional)
+            - due date (optional)
+            - notification icon (optional)
+            - note icon (optional)
+            - important tick box { (true)-> flag as important||(false)-> remove flag as important }
     + float button
         - Suggestions button->Suggestions screen
         - add task button->add task screen
