@@ -1,0 +1,31 @@
+Main screen:
+    + App bar:
+        - icon->user screen
+        - User Name
+        - Search icon-> Search screen
+    + Body:
+        - My Day -> My_day screen
+        - Important -> Important screen
+        - Planned -> Planned screen
+        - Assigned to me -> Assigned_to_me screen
+        - Flagged email -> Flagged screen
+        - Tasks -> list of task screen
+    *List task:
+    - getting started -> list of task screen
+    - Groceries
+
+My_Day screen:
+    + App bar:
+        - back button -> Main screen
+        - popup mennu ->
+    + Body:
+        - Title
+        - date time
+        + list task today:
+            - tick box (true)->move task to complete||(false)->move task to uncomplete
+            - Name
+            - Step complete
+            - note icon
+    + float button
+        - Suggestions button->Suggestions screen
+        - add task button->add task screen
