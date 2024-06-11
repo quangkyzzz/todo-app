@@ -1,0 +1,9 @@
+Đã làm:
+    - Phân tích giao diện ứng dụng mẫu
+    - Đã phân tích xong giao diện view home, view tasklist.
+    - Tạo project
+    - Xây dựng view home 
+Đang làm:
+    - Hoàn thiện nốt những button còn thiếu trong view home
+Dự định làm:
+    - Xây dựng view tasklist.
