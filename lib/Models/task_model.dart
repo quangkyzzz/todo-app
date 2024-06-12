@@ -42,7 +42,7 @@ class TaskModel {
 
   factory TaskModel.fromMap(Map<String, dynamic> map) {
     return TaskModel(
-      taskID: map['taskID'] ?? '1',
+      taskID: map['taskID'] ?? '-1',
       title: map['title'] ?? 'title',
       isCompleted: map['isCompleted'] ?? false,
       isImportant: map['isImportant'] ?? false,
