@@ -9,6 +9,12 @@ class TaskListView extends StatefulWidget {
 }
 
 class _TaskListViewState extends State<TaskListView> {
+  Map<String, dynamic> incompleteTask = {
+    'taskID': '1',
+    'title': 'task 1',
+    'isCompleted': false,
+  };
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
