@@ -34,11 +34,13 @@ class _HomeGroupState extends State<HomeGroup> {
           text: 'my list 1',
           icon: Icons.list,
           iconColor: Pallete.blueColor,
+          endNumber: 0,
         ),
         HomeItem(
           text: 'my list 2',
           icon: Icons.list,
           iconColor: Pallete.blueColor,
+          endNumber: 0,
         )
       ],
     );

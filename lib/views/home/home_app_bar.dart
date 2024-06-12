@@ -1,29 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/theme/theme.dart';
+import 'package:todo_app/views/user_profile_view.dart';
 
 class HomeAppBar {
-  static AppBar appBar() {
+  BuildContext context;
+  HomeAppBar({Key? key, required this.context});
+
+  AppBar appBar() {
     return AppBar(
-      leading: const CircleAvatar(
-        backgroundImage: AssetImage('assets/images/avatar.jpg'),
-        radius: 15.0,
+      leading: InkWell(
+        onTap: () {
+          Navigator.push(context, UserProfileView.route());
+        },
+        child: const CircleAvatar(
+          backgroundImage: AssetImage('assets/images/avatar.jpg'),
+          radius: 15.0,
+        ),
       ),
-      title: RichText(
-        text: const TextSpan(
-            text: 'Quang Nguyen',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
-            ),
-            children: [
-              TextSpan(
-                text: '\nquang.ndt@outlook.com',
+      title: Container(
+        height: 50,
+        width: 300,
+        child: InkWell(
+          onTap: () {
+            Navigator.push(context, UserProfileView.route());
+          },
+          child: RichText(
+            text: const TextSpan(
+                text: 'Quang Nguyen',
                 style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w300,
-                    color: Pallete.greyColor),
-              )
-            ]),
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                ),
+                children: [
+                  TextSpan(
+                    text: '\nquang.ndt@outlook.com',
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w300,
+                        color: Pallete.greyColor),
+                  )
+                ]),
+          ),
+        ),
       ),
       actions: const [
         Icon(
