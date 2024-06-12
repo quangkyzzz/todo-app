@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/theme/theme.dart';
-import 'package:todo_app/views/home/home_item.dart';
+import 'package:todo_app/views/home/component/home_item.dart';
 
 class HomeGroup extends StatefulWidget {
   const HomeGroup({super.key});

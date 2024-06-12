@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:todo_app/theme/pallete.dart';
-import 'package:todo_app/views/home/home_app_bar.dart';
-import 'package:todo_app/views/home/home_group.dart';
-import 'package:todo_app/views/home/home_item.dart';
+import 'package:todo_app/views/home/component/home_app_bar.dart';
+import 'package:todo_app/views/home/component/home_group.dart';
+import 'package:todo_app/views/home/component/home_item.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});

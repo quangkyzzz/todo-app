@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/theme/theme.dart';
-import 'package:todo_app/views/user_profile_view.dart';
+import 'package:todo_app/views/search/search_view.dart';
+import 'package:todo_app/views/user_profile/user_profile_view.dart';
 
 class HomeAppBar {
   BuildContext context;
@@ -43,11 +44,19 @@ class HomeAppBar {
           ),
         ),
       ),
-      actions: const [
-        Icon(
-          Icons.search,
-          size: 40,
-          color: Pallete.greyColor,
+      actions: [
+        InkWell(
+          onTap: () {
+            Navigator.push(
+              context,
+              SearchView.route(),
+            );
+          },
+          child: const Icon(
+            Icons.search,
+            size: 40,
+            color: Pallete.greyColor,
+          ),
         ),
       ],
     );
