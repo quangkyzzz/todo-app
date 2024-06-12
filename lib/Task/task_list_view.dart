@@ -10,6 +10,19 @@ class TaskListView extends StatefulWidget {
 class _TaskListViewState extends State<TaskListView> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        actions: [
+          PopupMenuButton(itemBuilder: (context) {
+            return const [
+              PopupMenuItem(
+                value: 'menu',
+                child: Text('menu'),
+              ),
+            ];
+          })
+        ],
+      ),
+    );
   }
 }
