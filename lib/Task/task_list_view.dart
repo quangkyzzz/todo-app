@@ -16,11 +16,14 @@ class _TaskListViewState extends State<TaskListView> {
       'taskID': '1',
       'title': 'task 1',
       'isCompleted': false,
+      'note': 'xdd',
+      'filePath': 'xdd'
     },
     {
       'taskID': '2',
       'title': 'task 2',
       'isCompleted': false,
+      'dueDate': DateTime.now(),
     }
   ];
 

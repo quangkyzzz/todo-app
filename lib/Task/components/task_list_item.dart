@@ -13,6 +13,11 @@ class TaskListItem extends StatefulWidget {
 class _TaskListItemState extends State<TaskListItem> {
   @override
   Widget build(BuildContext context) {
+    List<String>? step = widget.task.step;
+    DateTime? dueDate = widget.task.dueDate;
+    DateTime? notiTime = widget.task.notiTime;
+    String? filePath = widget.task.filePath;
+    String? note = widget.task.note;
     bool isImportant = false;
     bool isChecked = false;
     return Container(
@@ -46,9 +51,41 @@ class _TaskListItemState extends State<TaskListItem> {
                   fontSize: 25,
                 ),
               ),
-              const Text(
-                'due date',
-                style: TextStyle(color: AppConfigs.greyColor),
+              Row(
+                children: [
+                  (step != null)
+                      ? Text(
+                          step.toString(),
+                          style: const TextStyle(color: AppConfigs.greyColor),
+                        )
+                      : const SizedBox(),
+                  (dueDate != null)
+                      ? Text(
+                          dueDate.toString(),
+                          style: const TextStyle(color: AppConfigs.greyColor),
+                        )
+                      : const SizedBox(),
+                  (notiTime != null)
+                      ? Text(
+                          notiTime.toString(),
+                          style: const TextStyle(color: AppConfigs.greyColor),
+                        )
+                      : const SizedBox(),
+                  (filePath != null)
+                      ? const Icon(
+                          Icons.attach_file_outlined,
+                          size: 15,
+                          color: AppConfigs.greyColor,
+                        )
+                      : const SizedBox(),
+                  (note != null)
+                      ? const Icon(
+                          Icons.note_outlined,
+                          size: 15,
+                          color: AppConfigs.greyColor,
+                        )
+                      : const SizedBox(),
+                ],
               )
             ],
           ),
@@ -60,7 +97,12 @@ class _TaskListItemState extends State<TaskListItem> {
                 isImportant = !isImportant;
               });
             },
-            child: const Icon(Icons.star_border_outlined),
+            child: (isImportant)
+                ? const Icon(
+                    Icons.star,
+                    color: AppConfigs.blueColor,
+                  )
+                : const Icon(Icons.star_border_outlined),
           )
         ],
       ),
