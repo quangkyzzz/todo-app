@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/Models/task_model.dart';
 import 'package:todo_app/Task/components/task_list_item.dart';
 
 class TaskListView extends StatefulWidget {
@@ -9,11 +10,18 @@ class TaskListView extends StatefulWidget {
 }
 
 class _TaskListViewState extends State<TaskListView> {
-  Map<String, dynamic> incompleteTask = {
-    'taskID': '1',
-    'title': 'task 1',
-    'isCompleted': false,
-  };
+  List<Map<String, dynamic>> incompleteTask = [
+    {
+      'taskID': '1',
+      'title': 'task 1',
+      'isCompleted': false,
+    },
+    {
+      'taskID': '2',
+      'title': 'task 2',
+      'isCompleted': false,
+    }
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -30,17 +38,14 @@ class _TaskListViewState extends State<TaskListView> {
           })
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            ListView.builder(
-              itemCount: 1,
-              itemBuilder: (context, index) {
-                return const TaskListItem();
-              },
-            )
-          ],
-        ),
+      body: ListView.builder(
+        itemCount: incompleteTask.length,
+        itemBuilder: (BuildContext context, int index) {
+          TaskModel task = TaskModel.fromMap(incompleteTask[index]);
+          return TaskListItem(
+            task: task,
+          );
+        },
       ),
     );
   }

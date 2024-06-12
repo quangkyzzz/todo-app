@@ -6,6 +6,7 @@ class TaskModel {
   final String taskID;
   final String title;
   final bool isCompleted;
+  final bool isImportant;
   final List<String>? step;
   final DateTime? dueDate;
   final DateTime? notiTime;
@@ -16,6 +17,7 @@ class TaskModel {
     required this.taskID,
     required this.title,
     required this.isCompleted,
+    required this.isImportant,
     this.step,
     this.dueDate,
     this.notiTime,
@@ -29,6 +31,7 @@ class TaskModel {
     result.addAll({'taskID': taskID});
     result.addAll({'title': title});
     result.addAll({'isCompleted': isCompleted});
+    result.addAll({'isImportant': isImportant});
     result.addAll({'step': step});
     result.addAll({'dueDate': dueDate});
     result.addAll({'notiTime': notiTime});
@@ -39,9 +42,10 @@ class TaskModel {
 
   factory TaskModel.fromMap(Map<String, dynamic> map) {
     return TaskModel(
-      taskID: map['taskID'],
+      taskID: map['taskID'] ?? '1',
       title: map['title'] ?? 'title',
       isCompleted: map['isCompleted'] ?? false,
+      isImportant: map['isImportant'] ?? false,
       step: map['step'],
       dueDate: map['dueDate'],
       notiTime: map['notiTime'],
