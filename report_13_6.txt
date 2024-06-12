@@ -3,7 +3,12 @@
     - Đã phân tích xong giao diện view home, view tasklist.
     - Tạo project
     - Xây dựng view home 
+
+    - Hoàn thiện view home
+    - Xây dựng task Model
+    - Xây dựng cơ bản taskListView
+    - Xây dựng taskListItem
 Đang làm:
-    - Hoàn thiện nốt những button còn thiếu trong view home
+    - Hoàn thiện taskListItem
 Dự định làm:
-    - Xây dựng view tasklist.
+    - Hoàn thiện taskListView
