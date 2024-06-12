@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
 class UserProfileView extends StatefulWidget {
-  static route() => MaterialPageRoute(
-        builder: (context) => UserProfileView(),
-      );
   const UserProfileView({super.key});
 
   @override

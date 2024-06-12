@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/Constant/routes.dart';
 import 'package:todo_app/theme/theme.dart';
-import 'package:todo_app/views/search/search_view.dart';
-import 'package:todo_app/views/user_profile/user_profile_view.dart';
 
 class HomeAppBar {
   BuildContext context;
@@ -11,7 +10,7 @@ class HomeAppBar {
     return AppBar(
       leading: InkWell(
         onTap: () {
-          Navigator.push(context, UserProfileView.route());
+          Navigator.of(context).pushNamed(userProfileRoute);
         },
         child: const CircleAvatar(
           backgroundImage: AssetImage('assets/images/avatar.jpg'),
@@ -23,7 +22,7 @@ class HomeAppBar {
         width: 300,
         child: InkWell(
           onTap: () {
-            Navigator.push(context, UserProfileView.route());
+            Navigator.of(context).pushNamed(userProfileRoute);
           },
           child: RichText(
             text: const TextSpan(
@@ -38,7 +37,7 @@ class HomeAppBar {
                     style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w300,
-                        color: Pallete.greyColor),
+                        color: AppConfigs.greyColor),
                   )
                 ]),
           ),
@@ -47,15 +46,12 @@ class HomeAppBar {
       actions: [
         InkWell(
           onTap: () {
-            Navigator.push(
-              context,
-              SearchView.route(),
-            );
+            Navigator.of(context).pushNamed(searchRoute);
           },
           child: const Icon(
             Icons.search,
             size: 40,
-            color: Pallete.greyColor,
+            color: AppConfigs.greyColor,
           ),
         ),
       ],

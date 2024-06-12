@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/theme/theme.dart';
-import 'package:todo_app/views/home/component/home_item.dart';
+import 'package:todo_app/Home/components/home_item.dart';
 
 class HomeGroup extends StatefulWidget {
   const HomeGroup({super.key});
@@ -33,13 +33,13 @@ class _HomeGroupState extends State<HomeGroup> {
         HomeItem(
           text: 'my list 1',
           icon: Icons.list,
-          iconColor: Pallete.blueColor,
+          iconColor: AppConfigs.blueColor,
           endNumber: 0,
         ),
         HomeItem(
           text: 'my list 2',
           icon: Icons.list,
-          iconColor: Pallete.blueColor,
+          iconColor: AppConfigs.blueColor,
           endNumber: 0,
         )
       ],

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/theme/theme.dart';
-import 'package:todo_app/views/home/home_view.dart';
+import 'package:todo_app/Constant/routes.dart';
+import 'package:todo_app/Task/task_list_view.dart';
+import 'package:todo_app/Theme/theme.dart';
+import 'package:todo_app/Home/home_view.dart';
+import 'package:todo_app/search/search_view.dart';
+import 'package:todo_app/user_profile/user_profile_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,6 +20,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.theme,
       home: const HomeView(),
+      routes: {
+        userProfileRoute: (context) => const UserProfileView(),
+        taskListRoute: (context) => const TaskListView(),
+        searchRoute: (context) => const SearchView()
+      },
     );
   }
 }

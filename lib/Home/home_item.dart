@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/Constant/routes.dart';
 import 'package:todo_app/theme/theme.dart';
-import 'package:todo_app/views/task_list/task_list_view.dart';
 
 class HomeItem extends StatelessWidget {
   final String text;
@@ -22,10 +22,7 @@ class HomeItem extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 5),
       child: InkWell(
         onTap: () {
-          Navigator.push(
-            context,
-            TaskListView.route(),
-          );
+          Navigator.of(context).pushNamed(taskListRoute);
         },
         child: Row(
           children: [
@@ -41,7 +38,7 @@ class HomeItem extends StatelessWidget {
             ((endNumber != 0)
                 ? Text(
                     endNumber.toString(),
-                    style: const TextStyle(color: Pallete.greyColor),
+                    style: const TextStyle(color: AppConfigs.greyColor),
                   )
                 : const SizedBox())
           ],

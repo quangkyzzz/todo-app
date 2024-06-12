@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
 class TaskListView extends StatefulWidget {
-  static route() => MaterialPageRoute(
-        builder: (context) => TaskListView(),
-      );
   const TaskListView({super.key});
 
   @override
