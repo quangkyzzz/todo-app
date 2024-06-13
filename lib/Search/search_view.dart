@@ -40,14 +40,34 @@ class _SearchViewState extends State<SearchView> {
             decoration: InputDecoration(hintText: 'Enter task name'),
           ),
         ),
-        actions: const [
-          Icon(Icons.mic_outlined),
-          SizedBox(width: 10),
-          Icon(Icons.more_vert_outlined)
+        actions: [
+          InkWell(
+            onTap: () {},
+            child: const Icon(Icons.mic_outlined),
+          ),
+          const SizedBox(width: 10),
+          InkWell(
+            onTap: () {},
+            child: PopupMenuButton(
+              itemBuilder: (context) {
+                return [
+                  PopupMenuItem(
+                    child: InkWell(
+                      onTap: () {},
+                      child: const Text(
+                        'Hide completed item',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ),
+                  ),
+                ];
+              },
+            ),
+          ),
         ],
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.only(top: 10),
+        padding: const EdgeInsets.only(top: 10),
         child: CompletedList(taskList: incompleteTask),
       ),
     );
