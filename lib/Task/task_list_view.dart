@@ -4,7 +4,8 @@ import 'package:todo_app/Task/components/task_list_popup_menu.dart';
 import 'package:todo_app/constant/app_configs.dart';
 
 class TaskListView extends StatefulWidget {
-  const TaskListView({super.key});
+  final bool haveCompletedList;
+  const TaskListView({super.key, this.haveCompletedList = true});
 
   @override
   State<TaskListView> createState() => _TaskListViewState();
@@ -32,41 +33,50 @@ class _TaskListViewState extends State<TaskListView> {
     bool isExpanded = true;
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Tasks',
-          style: TextStyle(
-            fontSize: 40,
-            color: AppConfigs.blueColor,
-          ),
-        ),
+        title: (widget.haveCompletedList)
+            ? const Text(
+                'Tasks',
+                style: TextStyle(
+                  fontSize: 40,
+                  color: AppConfigs.blueColor,
+                ),
+              )
+            : const Text(
+                'Important',
+                style: TextStyle(
+                  fontSize: 40,
+                  color: AppConfigs.pinkColor,
+                ),
+              ),
         actions: const [TaskListPopupMenu()],
       ),
       body: SingleChildScrollView(
         child: Column(children: [
-          Container(
-            child: IncompleteList(taskList: incompleteTask),
-          ),
-          ExpansionTile(
-            title: const Text(
-              'Completed',
-              style: TextStyle(
-                fontSize: 20,
-                color: AppConfigs.blueColor,
-              ),
-            ),
-            onExpansionChanged: (bool expanded) {
-              setState(() {
-                isExpanded = expanded;
-              });
-            },
-            trailing: Icon(
-                isExpanded ? Icons.expand_more : Icons.keyboard_arrow_left),
-            children: [
-              IncompleteList(
-                taskList: incompleteTask,
-              ),
-            ],
-          )
+          IncompleteList(taskList: incompleteTask),
+          (widget.haveCompletedList)
+              ? ExpansionTile(
+                  title: const Text(
+                    'Completed',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: AppConfigs.blueColor,
+                    ),
+                  ),
+                  onExpansionChanged: (bool expanded) {
+                    setState(() {
+                      isExpanded = expanded;
+                    });
+                  },
+                  trailing: Icon(isExpanded
+                      ? Icons.expand_more
+                      : Icons.keyboard_arrow_left),
+                  children: [
+                    IncompleteList(
+                      taskList: incompleteTask,
+                    ),
+                  ],
+                )
+              : const SizedBox()
         ]),
       ),
       floatingActionButton: Container(

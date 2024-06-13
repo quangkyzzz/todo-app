@@ -7,12 +7,14 @@ class HomeItem extends StatelessWidget {
   final IconData icon;
   final Color iconColor;
   final int endNumber;
+  final Function onTap;
   const HomeItem({
     super.key,
     required this.text,
     required this.icon,
     required this.iconColor,
     required this.endNumber,
+    required this.onTap,
   });
 
   @override
@@ -22,7 +24,7 @@ class HomeItem extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 5),
       child: InkWell(
         onTap: () {
-          Navigator.of(context).pushNamed(taskListRoute);
+          onTap();
         },
         child: Row(
           children: [

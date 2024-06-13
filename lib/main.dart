@@ -23,7 +23,9 @@ class MyApp extends StatelessWidget {
       routes: {
         userProfileRoute: (context) => const UserProfileView(),
         taskListRoute: (context) => const TaskListView(),
-        searchRoute: (context) => const SearchView()
+        searchRoute: (context) => const SearchView(),
+        taskListImportantRoute: (context) =>
+            const TaskListView(haveCompletedList: false),
       },
     );
   }

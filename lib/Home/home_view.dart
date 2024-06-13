@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:todo_app/Constant/app_configs.dart';
+import 'package:todo_app/Constant/routes.dart';
 import 'package:todo_app/Home/components/home_app_bar.dart';
 import 'package:todo_app/Home/components/home_group.dart';
 import 'package:todo_app/Home/components/home_item.dart';
@@ -15,45 +16,71 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   bool isExpanded = false;
+  void onTapToNormalList() {
+    Navigator.of(context).pushNamed(taskListRoute);
+  }
+
+  void onTapToImportantList() {
+    Navigator.of(context).pushNamed(taskListImportantRoute);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: HomeAppBar(context: context).appBar(),
       body: SingleChildScrollView(
         padding: EdgeInsets.only(left: 7, right: 5),
-        child: const Column(
+        child: Column(
           children: [
             HomeItem(
+              onTap: () {
+                onTapToNormalList();
+              },
               icon: Icons.wb_sunny_outlined,
               text: 'My Day',
               iconColor: AppConfigs.greyColor,
               endNumber: 0,
             ),
             HomeItem(
+              onTap: () {
+                onTapToImportantList();
+              },
               icon: Icons.star_border,
               text: 'Important',
               iconColor: AppConfigs.pinkColor,
               endNumber: 1,
             ),
             HomeItem(
+              onTap: () {
+                onTapToNormalList();
+              },
               icon: Icons.list_alt_outlined,
               text: 'Planned',
               iconColor: AppConfigs.redColor,
               endNumber: 2,
             ),
             HomeItem(
+              onTap: () {
+                onTapToNormalList();
+              },
               icon: Icons.person_outline,
               text: 'Assigned to me',
               iconColor: AppConfigs.greenColor,
               endNumber: 3,
             ),
             HomeItem(
+              onTap: () {
+                onTapToNormalList();
+              },
               icon: Icons.flag_outlined,
               text: 'Flagged email',
               iconColor: AppConfigs.orangeColor,
               endNumber: 0,
             ),
             HomeItem(
+              onTap: () {
+                onTapToNormalList();
+              },
               icon: Icons.task_outlined,
               text: 'Tasks',
               iconColor: AppConfigs.blueColor,
@@ -63,6 +90,9 @@ class _HomeViewState extends State<HomeView> {
               thickness: 2,
             ),
             HomeItem(
+              onTap: () {
+                onTapToNormalList();
+              },
               text: 'Getting started',
               icon: Icons.list,
               iconColor: AppConfigs.blueColor,
