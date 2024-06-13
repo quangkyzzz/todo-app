@@ -83,6 +83,7 @@ class _HomeViewState extends State<HomeView> {
         children: [
           // ignore: sized_box_for_whitespace
           Container(
+            height: 40,
             width: 370,
             child: InkWell(
               onTap: () {},
@@ -91,11 +92,12 @@ class _HomeViewState extends State<HomeView> {
                   Icon(
                     Icons.add,
                     color: AppConfigs.greyColor,
+                    size: 30,
                   ),
                   SizedBox(width: 10),
                   Text(
                     'New list',
-                    style: TextStyle(color: AppConfigs.greyColor),
+                    style: TextStyle(color: AppConfigs.greyColor, fontSize: 25),
                   )
                 ],
               ),
@@ -107,6 +109,7 @@ class _HomeViewState extends State<HomeView> {
             child: Icon(
               Icons.post_add,
               color: AppConfigs.greyColor,
+              size: 30,
             ),
           )
         ],
