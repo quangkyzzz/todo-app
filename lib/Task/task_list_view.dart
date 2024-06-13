@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/Models/task_model.dart';
 import 'package:todo_app/Task/components/incomplete_list.dart';
-import 'package:todo_app/Task/components/task_list_item.dart';
+import 'package:todo_app/Task/components/task_list_popup_menu.dart';
 import 'package:todo_app/constant/app_configs.dart';
 
 class TaskListView extends StatefulWidget {
@@ -40,16 +39,7 @@ class _TaskListViewState extends State<TaskListView> {
             color: AppConfigs.blueColor,
           ),
         ),
-        actions: [
-          PopupMenuButton(itemBuilder: (context) {
-            return const [
-              PopupMenuItem(
-                value: 'menu',
-                child: Text('menu'),
-              ),
-            ];
-          })
-        ],
+        actions: const [TaskListPopupMenu()],
       ),
       body: SingleChildScrollView(
         child: Column(children: [
@@ -78,6 +68,27 @@ class _TaskListViewState extends State<TaskListView> {
             ],
           )
         ]),
+      ),
+      floatingActionButton: Container(
+        decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          color: AppConfigs.blueColor,
+        ),
+        child: InkWell(
+          splashColor: AppConfigs.blackColor,
+          customBorder: const CircleBorder(),
+          onTap: () {},
+          child: Ink(
+            decoration: const BoxDecoration(shape: BoxShape.circle),
+            height: 70,
+            width: 70,
+            child: const Icon(
+              Icons.add,
+              size: 40,
+              color: AppConfigs.blackColor,
+            ),
+          ),
+        ),
       ),
     );
   }
