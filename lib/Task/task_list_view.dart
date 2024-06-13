@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/Models/task_model.dart';
+import 'package:todo_app/Task/components/incomplete_list.dart';
 import 'package:todo_app/Task/components/task_list_item.dart';
 import 'package:todo_app/constant/app_configs.dart';
 
@@ -24,11 +25,12 @@ class _TaskListViewState extends State<TaskListView> {
       'title': 'task 2',
       'isCompleted': false,
       'dueDate': DateTime.now(),
-    }
+    },
   ];
 
   @override
   Widget build(BuildContext context) {
+    bool isExpanded = true;
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -49,14 +51,33 @@ class _TaskListViewState extends State<TaskListView> {
           })
         ],
       ),
-      body: ListView.builder(
-        itemCount: incompleteTask.length,
-        itemBuilder: (BuildContext context, int index) {
-          TaskModel task = TaskModel.fromMap(incompleteTask[index]);
-          return TaskListItem(
-            task: task,
-          );
-        },
+      body: SingleChildScrollView(
+        child: Column(children: [
+          Container(
+            child: IncompleteList(taskList: incompleteTask),
+          ),
+          ExpansionTile(
+            title: const Text(
+              'Completed',
+              style: TextStyle(
+                fontSize: 20,
+                color: AppConfigs.blueColor,
+              ),
+            ),
+            onExpansionChanged: (bool expanded) {
+              setState(() {
+                isExpanded = expanded;
+              });
+            },
+            trailing: Icon(
+                isExpanded ? Icons.expand_more : Icons.keyboard_arrow_left),
+            children: [
+              IncompleteList(
+                taskList: incompleteTask,
+              ),
+            ],
+          )
+        ]),
       ),
     );
   }

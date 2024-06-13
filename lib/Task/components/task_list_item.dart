@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/Models/task_model.dart';
+import 'package:todo_app/Task/components/item_icon.dart';
 import 'package:todo_app/Theme/theme.dart';
 
 class TaskListItem extends StatefulWidget {
@@ -54,36 +55,19 @@ class _TaskListItemState extends State<TaskListItem> {
               Row(
                 children: [
                   (step != null)
-                      ? Text(
-                          step.toString(),
-                          style: const TextStyle(color: AppConfigs.greyColor),
-                        )
+                      ? ItemIcon(text: step.toString())
                       : const SizedBox(),
                   (dueDate != null)
-                      ? Text(
-                          dueDate.toString(),
-                          style: const TextStyle(color: AppConfigs.greyColor),
-                        )
+                      ? ItemIcon(text: dueDate.toString())
                       : const SizedBox(),
                   (notiTime != null)
-                      ? Text(
-                          notiTime.toString(),
-                          style: const TextStyle(color: AppConfigs.greyColor),
-                        )
+                      ? ItemIcon(text: notiTime.toString())
                       : const SizedBox(),
                   (filePath != null)
-                      ? const Icon(
-                          Icons.attach_file_outlined,
-                          size: 15,
-                          color: AppConfigs.greyColor,
-                        )
+                      ? const ItemIcon(icon: Icons.attach_file_outlined)
                       : const SizedBox(),
                   (note != null)
-                      ? const Icon(
-                          Icons.note_outlined,
-                          size: 15,
-                          color: AppConfigs.greyColor,
-                        )
+                      ? const ItemIcon(icon: Icons.note_outlined)
                       : const SizedBox(),
                 ],
               )
@@ -94,6 +78,7 @@ class _TaskListItemState extends State<TaskListItem> {
             onTap: () {
               print('tap');
               setState(() {
+                print(isImportant);
                 isImportant = !isImportant;
               });
             },
