@@ -1,4 +1,4 @@
-Main screen:
+*Main screen:
     + App bar:
         - icon->user screen
         - User Name
@@ -28,10 +28,19 @@ Main screen:
         - new list button -> show create_task_list widget
         - new Group button -> show create_group widget
 
-task_list screen:
+*Task_list screen:
     + App bar:
         - back button -> Main screen
-        - popup mennu -> show popup mennu
+        - popup menu -> show popup menu
+        + Popup menu:
+            - Sort By ->show Sort menu
+            - Reorder Tasks -> modify task list to reorder screen
+            - Add shortcut to homescreen -> show add_shortcut_menu
+            - Change theme -> show change theme menu
+            - Send a copy -> show send a copy screen
+            - Duplicate list -> copyList()
+            - Print list  -> print_preview() screen
+            - Turn on Suggestions -> turn on Suggestions
     + Body:
         - Title
         - date time
