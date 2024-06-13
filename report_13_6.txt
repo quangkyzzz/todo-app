@@ -12,3 +12,4 @@
     - Hoàn thiện taskListItem
 Dự định làm:
     - Hoàn thiện taskListView
+    - Hoàn thiện user profile view
