@@ -1,7 +1,11 @@
+// ignore_for_file: unnecessary_string_interpolations
+
 import 'package:flutter/material.dart';
 import 'package:todo_app/Models/task_model.dart';
 import 'package:todo_app/Task/components/item_icon.dart';
 import 'package:todo_app/Theme/theme.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 
 class TaskListItem extends StatefulWidget {
   final TaskModel task;
@@ -14,6 +18,7 @@ class TaskListItem extends StatefulWidget {
 class _TaskListItemState extends State<TaskListItem> {
   @override
   Widget build(BuildContext context) {
+    initializeDateFormatting('vi');
     List<String>? step = widget.task.step;
     DateTime? dueDate = widget.task.dueDate;
     DateTime? notiTime = widget.task.notiTime;
@@ -58,10 +63,13 @@ class _TaskListItemState extends State<TaskListItem> {
                       ? ItemIcon(text: step.toString())
                       : const SizedBox(),
                   (dueDate != null)
-                      ? ItemIcon(text: dueDate.toString())
+                      ? ItemIcon(
+                          text: '${DateFormat.MMMEd('en_US').format(dueDate)}')
                       : const SizedBox(),
                   (notiTime != null)
-                      ? ItemIcon(text: notiTime.toString())
+                      ? ItemIcon(
+                          text:
+                              '${DateFormat.MMMEd('en_US').add_jm().format(notiTime)}')
                       : const SizedBox(),
                   (filePath != null)
                       ? const ItemIcon(icon: Icons.attach_file_outlined)
