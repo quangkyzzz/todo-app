@@ -28,7 +28,7 @@
         - new list button -> show create_task_list widget
         - new Group button -> show create_group widget
 
-*User_profile screen
+*User_profile screen:
     + body:
         - Avatar icon
         - close button

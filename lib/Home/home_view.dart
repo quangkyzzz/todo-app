@@ -52,7 +52,7 @@ class _HomeViewState extends State<HomeView> {
             ),
             HomeItem(
               onTap: () {
-                onTapToNormalList();
+                Navigator.of(context).pushNamed(plannedRoute);
               },
               icon: Icons.list_alt_outlined,
               text: 'Planned',
@@ -70,7 +70,7 @@ class _HomeViewState extends State<HomeView> {
             ),
             HomeItem(
               onTap: () {
-                onTapToNormalList();
+                Navigator.of(context).pushNamed(flaggedRoute);
               },
               icon: Icons.flag_outlined,
               text: 'Flagged email',
