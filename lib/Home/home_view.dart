@@ -34,7 +34,7 @@ class _HomeViewState extends State<HomeView> {
           children: [
             HomeItem(
               onTap: () {
-                onTapToNormalList();
+                Navigator.of(context).pushNamed(myDayRoute);
               },
               icon: Icons.wb_sunny_outlined,
               text: 'My Day',
