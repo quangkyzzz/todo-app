@@ -7,7 +7,7 @@
 
         *Main task lists:
         - My Day -> task_list(today_list) screen
-        - Important -> Important screen
+        - Important -> task_list(important_list) screen
         - Planned -> Planned screen
         - Assigned to me -> task_list(assigned_to_me_list) screen
         - Flagged email -> Flagged_email screen
@@ -27,6 +27,27 @@
         *action:
         - new list button -> show create_task_list widget
         - new Group button -> show create_group widget
+
+*User_profile screen
+    + body:
+        - Avatar icon
+        - close button
+        - Name
+        - email
+        - add account -> add_account screen
+        - manage account -> manage_account screen
+        - settings -> settings screen
+
+
+*Search screen:
+    +App bar:
+        - back button
+        - Search field
+        - voice search button
+        + popupMennu:
+            - hide completed item
+    +body:
+        - task_list
 
 *Task_list screen:
     + App bar:
@@ -67,3 +88,27 @@
     + float button
         - Suggestions button->Suggestions screen
         - add task button->add task screen
+    
+
+*Planned screen :
+    + App bar:
+        task_list.appBar.popupMennu->:
+        - Group By
+        - Add shortcut to homescreen
+        - change theme
+        - hide completed Tasks
+        - send a copy
+        - Print list
+    + Body:
+        task_list.body->:
+        - sort button
+        - task_list
+
+*Important screen:
+    taskask_list screen without completed task list
+
+*Flagged_email screen:
+    task_list->+:
+    - Flagged email by week
+
+
