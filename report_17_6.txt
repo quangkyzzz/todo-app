@@ -1,0 +1,10 @@
+Đã làm:
+    - Hoàn thiện taskListView
+    - cập nhật analysis file
+    - Hoàn thiện user profile view
+    - hoàn thiện search view
+    - hoàn thiện flagged email, planned view
+Đang làm:
+    - my day view
+Dự định làm:
+    - Hoàn thành toàn bộ giao diện
