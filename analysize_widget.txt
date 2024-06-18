@@ -111,4 +111,20 @@
     task_list->+:
     - Flagged email by week
 
+*Settings screen:
+
+    +account:
+    - Avatar
+    - name, email
+    - manage account button
+    - sign out
+    
+    + General:
+    - Add new tasks on top (slide button)
+    - move starred tasks on top (slide button)
+    - Play completion sound (slide button)
+    - confirm before deleting (slide button)
+    - Show 'Due Today' tasks in My day (slide button)
+    - recognize dates and times in task titles (slide button)
+    - Remove dates and times from task titles once recognized (slide button)
 

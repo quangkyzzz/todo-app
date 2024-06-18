@@ -7,4 +7,6 @@
 Đang làm:
     - my day view
 Dự định làm:
-    - Hoàn thành toàn bộ giao diện
+    - hoàn thiện settings view
+    - Hoàn thiện các popup mennu
+    - Hoàn thiện toàn bộ giao diện

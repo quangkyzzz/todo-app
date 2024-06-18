@@ -55,6 +55,7 @@ class _TaskListViewState extends State<TaskListView> {
           IncompleteList(taskList: incompleteTask),
           (widget.haveCompletedList)
               ? ExpansionTile(
+                  initiallyExpanded: true,
                   title: const Text(
                     'Completed',
                     style: TextStyle(
