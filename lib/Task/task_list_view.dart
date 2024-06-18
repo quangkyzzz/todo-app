@@ -115,7 +115,7 @@ class _TaskListViewState extends State<TaskListView> {
                       ),
                       InkWell(
                         onTap: () {},
-                        child: const Icon(Icons.arrow_upward_outlined),
+                        child: const Icon(Icons.arrow_upward),
                       )
                     ],
                   ),

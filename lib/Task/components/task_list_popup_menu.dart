@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/Constant/app_configs.dart';
+import 'package:todo_app/Constant/routes.dart';
 
 class TaskListPopupMenu extends StatelessWidget {
   const TaskListPopupMenu({super.key});
@@ -10,7 +12,17 @@ class TaskListPopupMenu extends StatelessWidget {
         PopupMenuItem(
           value: 'sort_by',
           child: PopupItem(
-            onTap: () {},
+            onTap: () {
+              showModalBottomSheet(
+                isDismissible: true,
+                enableDrag: true,
+                context: context,
+                showDragHandle: true,
+                builder: (BuildContext context) {
+                  return const BottomSheetItem();
+                },
+              );
+            },
             text: 'Sort by',
             icon: Icons.sort_outlined,
           ),
@@ -20,7 +32,9 @@ class TaskListPopupMenu extends StatelessWidget {
           child: PopupItem(
             text: 'Reorder',
             icon: Icons.swap_vert,
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pushNamed(reOrderRoute);
+            },
           ),
         ),
         PopupMenuItem(
@@ -77,7 +91,7 @@ class TaskListPopupMenu extends StatelessWidget {
 }
 
 class PopupItem extends StatelessWidget {
-  final Function onTap;
+  final Function() onTap;
   final String text;
   final IconData icon;
 
@@ -90,10 +104,63 @@ class PopupItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(children: [
-      Icon(icon),
-      const SizedBox(width: 10),
-      InkWell(onTap: onTap(), child: Text(text)),
-    ]);
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 20),
+      child: InkWell(
+        onTap: onTap,
+        child: Row(children: [
+          Icon(icon),
+          const SizedBox(width: 10),
+          Text(text),
+        ]),
+      ),
+    );
+  }
+}
+
+class BottomSheetItem extends StatelessWidget {
+  const BottomSheetItem({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 260,
+      color: AppConfigs.backgroundGreyColor,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Sort by',
+            style: TextStyle(fontSize: 25),
+          ),
+          const SizedBox(height: 10),
+          PopupItem(
+            text: 'Important',
+            icon: Icons.star_border_outlined,
+            onTap: () {},
+          ),
+          PopupItem(
+            text: 'Due date',
+            icon: Icons.calendar_today_outlined,
+            onTap: () {},
+          ),
+          PopupItem(
+            text: 'Added to My Day',
+            icon: Icons.wb_sunny_outlined,
+            onTap: () {},
+          ),
+          PopupItem(
+            text: 'Alphabetiaclly',
+            icon: Icons.import_export_outlined,
+            onTap: () {},
+          ),
+          PopupItem(
+            text: 'Creation date',
+            icon: Icons.more_time_outlined,
+            onTap: () {},
+          ),
+        ],
+      ),
+    );
   }
 }
