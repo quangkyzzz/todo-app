@@ -44,7 +44,7 @@ class _MyDayViewState extends State<MyDayView> {
               width: 300,
               child: RichText(
                 text: TextSpan(
-                    text: 'Quang Nguyen',
+                    text: 'My Day',
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w500,

@@ -14,13 +14,13 @@ class MyDayPopupMenu extends StatelessWidget {
             icon: Icons.sort_outlined,
           ),
         ),
-        PopupMenuItem(
-          value: 'reorder',
-          child: PopupItem(
-            text: 'Reorder',
-            icon: Icons.swap_vert,
-          ),
-        ),
+        // PopupMenuItem(
+        //   value: 'reorder',
+        //   child: PopupItem(
+        //     text: 'Reorder',
+        //     icon: Icons.swap_vert,
+        //   ),
+        // ),
         PopupMenuItem(
           value: 'add_shortcut',
           child: PopupItem(
