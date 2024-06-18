@@ -125,6 +125,61 @@ class _PlannedViewState extends State<PlannedView> {
           ],
         ),
       ),
+      floatingActionButton: Container(
+        decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          color: AppConfigs.blueColor,
+        ),
+        child: InkWell(
+          splashColor: AppConfigs.blackColor,
+          customBorder: const CircleBorder(),
+          onTap: () {
+            showModalBottomSheet(
+              isScrollControlled: true,
+              context: context,
+              builder: (BuildContext context) {
+                return Container(
+                  padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).viewInsets.bottom),
+                  color: AppConfigs.backgroundGreyColor,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Checkbox(
+                        shape: const CircleBorder(),
+                        value: false,
+                        onChanged: (bool? value) {},
+                      ),
+                      const Expanded(
+                        child: TextField(
+                          autofocus: true,
+                          decoration: InputDecoration(
+                            hintText: 'Add a task',
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {},
+                        child: const Icon(Icons.arrow_upward_outlined),
+                      )
+                    ],
+                  ),
+                );
+              },
+            );
+          },
+          child: Ink(
+            decoration: const BoxDecoration(shape: BoxShape.circle),
+            height: 70,
+            width: 70,
+            child: const Icon(
+              Icons.add,
+              size: 40,
+              color: AppConfigs.blackColor,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

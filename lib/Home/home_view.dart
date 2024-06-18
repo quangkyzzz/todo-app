@@ -116,7 +116,33 @@ class _HomeViewState extends State<HomeView> {
             height: 40,
             width: 370,
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text('New List'),
+                        content: TextField(
+                          autofocus: true,
+                          decoration: const InputDecoration(
+                            hintText: 'Enter your list title',
+                          ),
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text('Cancel'),
+                          ),
+                          TextButton(
+                            onPressed: () {},
+                            child: Text('Create list'),
+                          )
+                        ],
+                      );
+                    });
+              },
               child: const Row(
                 children: [
                   Icon(
@@ -135,7 +161,33 @@ class _HomeViewState extends State<HomeView> {
           ),
           SizedBox(width: 5),
           InkWell(
-            onTap: () {},
+            onTap: () {
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: Text('Create a group'),
+                      content: TextField(
+                        autofocus: true,
+                        decoration: const InputDecoration(
+                          hintText: 'Name this group',
+                        ),
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text('Cancel'),
+                        ),
+                        TextButton(
+                          onPressed: () {},
+                          child: Text('Create group'),
+                        )
+                      ],
+                    );
+                  });
+            },
             child: Icon(
               Icons.post_add,
               color: AppConfigs.greyColor,

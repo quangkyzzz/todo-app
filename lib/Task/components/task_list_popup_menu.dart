@@ -6,10 +6,11 @@ class TaskListPopupMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton(itemBuilder: (context) {
-      return const [
+      return [
         PopupMenuItem(
           value: 'sort_by',
           child: PopupItem(
+            onTap: () {},
             text: 'Sort by',
             icon: Icons.sort_outlined,
           ),
@@ -19,6 +20,7 @@ class TaskListPopupMenu extends StatelessWidget {
           child: PopupItem(
             text: 'Reorder',
             icon: Icons.swap_vert,
+            onTap: () {},
           ),
         ),
         PopupMenuItem(
@@ -26,6 +28,7 @@ class TaskListPopupMenu extends StatelessWidget {
           child: PopupItem(
             text: 'Add shortcut to homescreen',
             icon: Icons.add_to_home_screen_outlined,
+            onTap: () {},
           ),
         ),
         PopupMenuItem(
@@ -33,6 +36,7 @@ class TaskListPopupMenu extends StatelessWidget {
           child: PopupItem(
             text: 'Change theme',
             icon: Icons.palette_outlined,
+            onTap: () {},
           ),
         ),
         PopupMenuItem(
@@ -40,6 +44,7 @@ class TaskListPopupMenu extends StatelessWidget {
           child: PopupItem(
             text: 'Send a copy',
             icon: Icons.share_outlined,
+            onTap: () {},
           ),
         ),
         PopupMenuItem(
@@ -47,6 +52,7 @@ class TaskListPopupMenu extends StatelessWidget {
           child: PopupItem(
             text: 'Duplicate list',
             icon: Icons.copy,
+            onTap: () {},
           ),
         ),
         PopupMenuItem(
@@ -54,6 +60,7 @@ class TaskListPopupMenu extends StatelessWidget {
           child: PopupItem(
             text: 'Print list',
             icon: Icons.print_outlined,
+            onTap: () {},
           ),
         ),
         PopupMenuItem(
@@ -61,6 +68,7 @@ class TaskListPopupMenu extends StatelessWidget {
           child: PopupItem(
             text: 'Turn on suggestions',
             icon: Icons.lightbulb_outline,
+            onTap: () {},
           ),
         ),
       ];
@@ -69,12 +77,15 @@ class TaskListPopupMenu extends StatelessWidget {
 }
 
 class PopupItem extends StatelessWidget {
+  final Function onTap;
   final String text;
   final IconData icon;
+
   const PopupItem({
     super.key,
     required this.text,
     required this.icon,
+    required this.onTap,
   });
 
   @override
@@ -82,7 +93,7 @@ class PopupItem extends StatelessWidget {
     return Row(children: [
       Icon(icon),
       const SizedBox(width: 10),
-      InkWell(child: Text(text)),
+      InkWell(onTap: onTap(), child: Text(text)),
     ]);
   }
 }
