@@ -33,8 +33,12 @@ class _MyDayViewState extends State<MyDayView> {
   @override
   Widget build(BuildContext context) {
     return Stack(
+      fit: StackFit.expand,
       children: [
-        Image.asset('assets/images/backGroundImage.jpg'),
+        Image.asset(
+          'assets/images/backGroundImage.jpg',
+          fit: BoxFit.fitHeight,
+        ),
         Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(

@@ -21,74 +21,77 @@ class _SettingsViewState extends State<SettingsView> {
         style: TextStyle(fontSize: 30),
       )),
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 20),
-            //account settings
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const CircleAvatar(
-                  backgroundImage: AssetImage('assets/images/avatar.jpg'),
-                  radius: 35,
-                ),
-                const SizedBox(width: 20),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Quang Nguyễn',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    const Text(
-                      'quang.ndt@outlook.com',
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: AppConfigs.greyColor,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 20),
+              //account settings
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const CircleAvatar(
+                    backgroundImage: AssetImage('assets/images/avatar.jpg'),
+                    radius: 35,
+                  ),
+                  const SizedBox(width: 20),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Quang Nguyễn',
+                        style: TextStyle(fontSize: 20),
                       ),
-                    ),
-                    const SizedBox(height: 10),
-                    InkWell(
-                      onTap: () {},
-                      child: Container(
-                        padding: const EdgeInsets.only(
-                            top: 20, bottom: 20, right: 120),
-                        child: const Text(
-                          'MANAGE ACCOUNT',
-                          style: TextStyle(fontSize: 18),
+                      const Text(
+                        'quang.ndt@outlook.com',
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: AppConfigs.greyColor,
                         ),
                       ),
-                    ),
-                    InkWell(
-                      onTap: () {},
-                      child: Container(
-                        padding: const EdgeInsets.only(
-                            top: 10, bottom: 20, right: 200),
-                        child: const Text(
-                          'SIGN OUT',
-                          style: TextStyle(
-                              fontSize: 18, color: AppConfigs.redColor),
+                      const SizedBox(height: 10),
+                      InkWell(
+                        onTap: () {},
+                        child: Container(
+                          padding: const EdgeInsets.only(
+                              top: 20, bottom: 20, right: 120),
+                          child: const Text(
+                            'MANAGE ACCOUNT',
+                            style: TextStyle(fontSize: 18),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                )
-              ],
-            ),
-            const Divider(thickness: 0.5, color: AppConfigs.greyColor),
-            const SizedBox(height: 10),
-            const Text(
-              'General',
-              style: TextStyle(
-                fontSize: 18,
-                color: AppConfigs.greyColor,
-                fontWeight: FontWeight.bold,
+                      InkWell(
+                        onTap: () {},
+                        child: Container(
+                          padding: const EdgeInsets.only(
+                              top: 10, bottom: 20, right: 200),
+                          child: const Text(
+                            'SIGN OUT',
+                            style: TextStyle(
+                                fontSize: 18, color: AppConfigs.redColor),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
               ),
-            ),
-            const SizedBox(height: 10),
-            const SettingsList()
-          ],
+              const Divider(thickness: 0.5, color: AppConfigs.greyColor),
+              const SizedBox(height: 10),
+              const Text(
+                'General',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: AppConfigs.greyColor,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 10),
+              const SettingsList()
+            ],
+          ),
         ),
       ),
     );
