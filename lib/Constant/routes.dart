@@ -3,6 +3,7 @@ import 'package:todo_app/My_day/my_day_view.dart';
 import 'package:todo_app/Planned/planned_view.dart';
 import 'package:todo_app/Search/search_view.dart';
 import 'package:todo_app/Task/task_list_view.dart';
+import 'package:todo_app/User_profile/settings_view.dart';
 import 'package:todo_app/User_profile/user_profile_view.dart';
 
 const userProfileRoute = '/user-profile/';
@@ -12,6 +13,7 @@ const searchRoute = '/search/';
 const flaggedRoute = '/flagged/';
 const plannedRoute = '/planned/';
 const myDayRoute = '/my-day/';
+const settingsRoute = '/user-profile/settings/';
 var allRoute = {
   userProfileRoute: (context) => const UserProfileView(),
   taskListRoute: (context) => const TaskListView(),
@@ -21,4 +23,5 @@ var allRoute = {
   flaggedRoute: (context) => const FlaggedEmailView(),
   plannedRoute: (context) => const PlannedView(),
   myDayRoute: (context) => const MyDayView(),
+  settingsRoute: (context) => const SettingsView(),
 };

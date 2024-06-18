@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
 class UserProfileItem extends StatelessWidget {
+  final Function onTap;
   final String text;
   final IconData icon;
-  const UserProfileItem({
+  UserProfileItem({
     super.key,
     required this.text,
     required this.icon,
+    required this.onTap,
   });
 
   @override
@@ -14,7 +16,9 @@ class UserProfileItem extends StatelessWidget {
     return Container(
       height: 50,
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          onTap();
+        },
         child: Row(
           children: [
             Icon(

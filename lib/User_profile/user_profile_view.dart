@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/Constant/app_configs.dart';
+import 'package:todo_app/Constant/routes.dart';
 import 'package:todo_app/User_profile/user_profile_component/user_profile_item.dart';
 
 class UserProfileView extends StatefulWidget {
@@ -58,19 +59,24 @@ class _UserProfileViewState extends State<UserProfileView> {
                   color: AppConfigs.greyColor),
             ),
             const Divider(thickness: 0.25, color: AppConfigs.greyColor),
-            const UserProfileItem(
+            UserProfileItem(
               text: 'Add account',
               icon: Icons.add,
+              onTap: () {},
             ),
             const Divider(thickness: 0.25, color: AppConfigs.greyColor),
-            const UserProfileItem(
+            UserProfileItem(
               text: 'Manage account',
               icon: Icons.person_outline,
+              onTap: () {},
             ),
             const Divider(thickness: 0.25, color: AppConfigs.greyColor),
-            const UserProfileItem(
+            UserProfileItem(
               text: 'Settings',
               icon: Icons.settings_outlined,
+              onTap: () {
+                Navigator.of(context).pushNamed(settingsRoute);
+              },
             )
           ],
         ),
