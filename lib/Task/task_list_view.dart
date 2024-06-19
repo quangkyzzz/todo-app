@@ -12,6 +12,7 @@ class TaskListView extends StatefulWidget {
 }
 
 class _TaskListViewState extends State<TaskListView> {
+  bool isExpanded = true;
   List<Map<String, dynamic>> incompleteTask = [
     {
       'taskID': '1',
@@ -30,7 +31,6 @@ class _TaskListViewState extends State<TaskListView> {
 
   @override
   Widget build(BuildContext context) {
-    bool isExpanded = true;
     return Scaffold(
       appBar: AppBar(
         title: (widget.haveCompletedList)

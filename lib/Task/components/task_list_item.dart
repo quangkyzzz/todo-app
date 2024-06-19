@@ -17,6 +17,16 @@ class TaskListItem extends StatefulWidget {
 }
 
 class _TaskListItemState extends State<TaskListItem> {
+  late bool isImportant;
+  late bool isChecked;
+
+  @override
+  void initState() {
+    isImportant = widget.task.isImportant;
+    isChecked = widget.task.isCompleted;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     initializeDateFormatting('vi');
@@ -25,8 +35,6 @@ class _TaskListItemState extends State<TaskListItem> {
     DateTime? notiTime = widget.task.notiTime;
     String? filePath = widget.task.filePath;
     String? note = widget.task.note;
-    bool isImportant = false;
-    bool isChecked = false;
 
     return Container(
       decoration: BoxDecoration(
@@ -38,7 +46,10 @@ class _TaskListItemState extends State<TaskListItem> {
       child: Material(
         child: InkWell(
           onTap: () {
-            Navigator.of(context).pushNamed(taskRoute);
+            Navigator.of(context).pushNamed(
+              taskRoute,
+              arguments: widget.task,
+            );
           },
           splashColor: AppConfigs.whiteColor,
           child: Row(
@@ -49,7 +60,6 @@ class _TaskListItemState extends State<TaskListItem> {
                 value: isChecked,
                 onChanged: (bool? value) {
                   setState(() {
-                    print(value);
                     isChecked = value!;
                   });
                 },
@@ -93,9 +103,7 @@ class _TaskListItemState extends State<TaskListItem> {
               const Spacer(),
               GestureDetector(
                 onTap: () {
-                  print('tap');
                   setState(() {
-                    print(isImportant);
                     isImportant = !isImportant;
                   });
                 },

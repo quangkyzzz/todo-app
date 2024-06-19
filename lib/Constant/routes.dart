@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:todo_app/Flagged_email/flagged_email_view.dart';
+import 'package:todo_app/Models/task_model.dart';
 import 'package:todo_app/My_day/my_day_view.dart';
 import 'package:todo_app/Planned/planned_view.dart';
 import 'package:todo_app/Search/search_view.dart';
@@ -29,5 +31,7 @@ var allRoute = {
   myDayRoute: (context) => const MyDayView(),
   settingsRoute: (context) => const SettingsView(),
   reOrderRoute: (context) => const ReOrderView(),
-  taskRoute: (context) => const TaskView(),
+  taskRoute: (context) => TaskView(
+        task: ModalRoute.of(context)!.settings.arguments as TaskModel,
+      ),
 };
