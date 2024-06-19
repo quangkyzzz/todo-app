@@ -1,7 +1,7 @@
 Đã làm:
-   - hoàn thiện my day view
-   - hoàn thiện newlist, newgroup view
-   - hoàn thiện các bottomsheet menu, popup menu
+    - hoàn thiện my day view
+    - hoàn thiện newlist, newgroup view
+    - hoàn thiện các bottomsheet menu, popup menu
 Đang làm:
     - reorder view, task view
 Dự định làm:

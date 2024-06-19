@@ -10,6 +10,10 @@ class ReOrderView extends StatefulWidget {
 class _ReOrderViewState extends State<ReOrderView> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Reorder tasks'),
+      ),
+    );
   }
 }
