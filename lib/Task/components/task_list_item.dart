@@ -1,6 +1,7 @@
 // ignore_for_file: unnecessary_string_interpolations
 
 import 'package:flutter/material.dart';
+import 'package:todo_app/Constant/routes.dart';
 import 'package:todo_app/Models/task_model.dart';
 import 'package:todo_app/Task/components/item_icon.dart';
 import 'package:todo_app/Theme/theme.dart';
@@ -8,10 +9,8 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
 class TaskListItem extends StatefulWidget {
-  final bool isReorderView;
   final TaskModel task;
-  const TaskListItem(
-      {super.key, required this.task, this.isReorderView = false});
+  const TaskListItem({super.key, required this.task});
 
   @override
   State<TaskListItem> createState() => _TaskListItemState();
@@ -28,7 +27,7 @@ class _TaskListItemState extends State<TaskListItem> {
     String? note = widget.task.note;
     bool isImportant = false;
     bool isChecked = false;
-    bool isReorderView = widget.isReorderView;
+
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
@@ -38,7 +37,9 @@ class _TaskListItemState extends State<TaskListItem> {
       margin: const EdgeInsets.only(bottom: 3),
       child: Material(
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            Navigator.of(context).pushNamed(taskRoute);
+          },
           splashColor: AppConfigs.whiteColor,
           child: Row(
             children: [

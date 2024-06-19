@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/Models/task_model.dart';
-import 'package:todo_app/Task/components/incomplete_list.dart';
 import 'package:todo_app/Task/components/task_list_item.dart';
 
 class ReOrderView extends StatefulWidget {
