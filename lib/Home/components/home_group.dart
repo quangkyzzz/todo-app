@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/Constant/routes.dart';
+import 'package:todo_app/Task/components/task_list_popup_menu.dart';
 import 'package:todo_app/theme/theme.dart';
 import 'package:todo_app/Home/components/home_item.dart';
 
@@ -26,7 +27,39 @@ class _HomeGroupState extends State<HomeGroup> {
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(isExpanded ? Icons.more_vert : null),
+          (isExpanded)
+              ? PopupMenuButton(
+                  offset: const Offset(0, 40),
+                  itemBuilder: (context) {
+                    return [
+                      PopupMenuItem(
+                        value: 'add_or_remove_lists',
+                        child: PopupItem(
+                          text: 'Add/Remove lists',
+                          icon: Icons.list_outlined,
+                          onTap: () {},
+                        ),
+                      ),
+                      PopupMenuItem(
+                        value: 'rename',
+                        child: PopupItem(
+                          text: 'Rename group',
+                          icon: Icons.edit_note_outlined,
+                          onTap: () {},
+                        ),
+                      ),
+                      PopupMenuItem(
+                        value: 'ungroup',
+                        child: PopupItem(
+                          text: 'Ungroup lists',
+                          icon: Icons.clear_all_outlined,
+                          onTap: () {},
+                        ),
+                      ),
+                    ];
+                  },
+                )
+              : const SizedBox(),
           Icon(isExpanded ? Icons.expand_more : Icons.keyboard_arrow_left),
         ],
       ),

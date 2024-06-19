@@ -8,8 +8,10 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
 class TaskListItem extends StatefulWidget {
+  final bool isReorderView;
   final TaskModel task;
-  const TaskListItem({super.key, required this.task});
+  const TaskListItem(
+      {super.key, required this.task, this.isReorderView = false});
 
   @override
   State<TaskListItem> createState() => _TaskListItemState();
@@ -26,6 +28,7 @@ class _TaskListItemState extends State<TaskListItem> {
     String? note = widget.task.note;
     bool isImportant = false;
     bool isChecked = false;
+    bool isReorderView = widget.isReorderView;
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
