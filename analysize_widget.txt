@@ -66,7 +66,7 @@
         - Title
         - date time
         + incomplete task list:
-            + task 1:
+            + task 1-> task screen:
                 - tick box {(true)->move task to complete||(false)->move task to uncomplete}
                 - Name -> task_detail screen
                 - Step complete (optional)
@@ -128,3 +128,33 @@
     - recognize dates and times in task titles (slide button)
     - Remove dates and times from task titles once recognized (slide button)
 
+*Task screen:
+    +appBar:
+    - back button
+    - title
+
+    +body:
+    - check box -> check task completed or not
+    - task name text field -> change task name
+    - star check box -> change task to important
+    - step check box -> change step to important
+    - add step text field -> add step to task
+    - add to my day text button -> add task to important
+    - remind me text button -> open date picker set remind time
+    - add due date text button -> open date picker set due date 
+    - repeat text button-> set repeat time
+    - add file text button -> open file picker
+    - add note text button -> edit note screen
+
+    +bottom:
+    - create time text
+    - delete button
+
+*edit note screen
+    +appBar:
+    - back button
+    - title
+    +body:
+    - text field multiple line
+    +bottom:
+    - editor tool
