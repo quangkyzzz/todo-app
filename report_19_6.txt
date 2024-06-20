@@ -1,9 +1,0 @@
-Đã làm:
-    - hoàn thiện my day view
-    - hoàn thiện newlist, newgroup view
-    - hoàn thiện các bottomsheet menu, popup menu
-Đang làm:
-    - reorder view, task view
-Dự định làm:
-    - hoàn thiện task view
-    - cấu trúc lại thư mục project

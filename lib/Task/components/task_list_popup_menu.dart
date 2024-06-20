@@ -43,7 +43,7 @@ class TaskListPopupMenu extends StatelessWidget {
       PopupMenuItem(
         value: 'add_shortcut',
         child: PopupItem(
-          text: 'Add shortcut to homescreen',
+          text: 'Add shortcut',
           icon: Icons.add_to_home_screen_outlined,
           onTap: () {},
         ),
