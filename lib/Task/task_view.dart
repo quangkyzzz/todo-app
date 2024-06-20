@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/Constant/app_configs.dart';
+import 'package:todo_app/Constant/routes.dart';
 import 'package:todo_app/Models/task_model.dart';
 
 class TaskView extends StatefulWidget {
@@ -138,7 +139,9 @@ class _TaskViewState extends State<TaskView> {
           Padding(
             padding: const EdgeInsets.only(left: 15),
             child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pushNamed(noteEditRoute);
+                },
                 child: const Text(
                   'Add note',
                   style: TextStyle(

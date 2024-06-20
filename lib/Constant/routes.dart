@@ -5,6 +5,7 @@ import 'package:todo_app/My_day/my_day_view.dart';
 import 'package:todo_app/Planned/planned_view.dart';
 import 'package:todo_app/Search/search_view.dart';
 import 'package:todo_app/Task/components/re_order_view.dart';
+import 'package:todo_app/Task/note_edit_view.dart';
 import 'package:todo_app/Task/task_list_view.dart';
 import 'package:todo_app/Task/task_view.dart';
 import 'package:todo_app/User_profile/settings_view.dart';
@@ -18,8 +19,9 @@ const flaggedRoute = '/flagged/';
 const plannedRoute = '/planned/';
 const myDayRoute = '/my-day/';
 const settingsRoute = '/user-profile/settings/';
-const reOrderRoute = '/task-list/re-order';
+const reOrderRoute = '/task-list/re-order/';
 const taskRoute = '/task/';
+const noteEditRoute = '/task/note-edit/';
 var allRoute = {
   userProfileRoute: (context) => const UserProfileView(),
   taskListRoute: (context) => const TaskListView(),
@@ -34,4 +36,5 @@ var allRoute = {
   taskRoute: (context) => TaskView(
         task: ModalRoute.of(context)!.settings.arguments as TaskModel,
       ),
+  noteEditRoute: (context) => const NoteEditView(),
 };
