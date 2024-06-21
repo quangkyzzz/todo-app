@@ -1,8 +1,0 @@
-Đã làm:
-    - hoàn thiện reorder view, task view
-    - hoàn thiện note edit view
-    - hoàn thiện giao diện
-Đang làm:
-    - cấu trúc thư mục project
-Dự định làm:
-    - hoàn thiện việc cấu trúc thư mục project

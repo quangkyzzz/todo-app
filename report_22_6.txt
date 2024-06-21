@@ -1,0 +1,11 @@
+Đã làm:
+    - sửa cấu trúc tasklist popup menu
+    - thêm popup menu trong taskview
+    - hoàn thành tái cấu trúc thư mục project
+    - sửa route
+    - cập nhật appconfig
+    - sửa hằng số toàn bộ project theo file appconfig
+Đang làm:
+    - chưa có
+Dự định làm:
+    - chưa có
