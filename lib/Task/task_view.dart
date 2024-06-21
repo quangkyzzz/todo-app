@@ -44,113 +44,115 @@ class _TaskViewState extends State<TaskView> {
           style: TextStyle(fontSize: 30),
         ),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Transform.scale(
-                scale: 1.3,
-                child: Checkbox(
-                  value: isChecked,
-                  shape: const CircleBorder(),
-                  onChanged: (bool? value) {
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Transform.scale(
+                  scale: 1.3,
+                  child: Checkbox(
+                    value: isChecked,
+                    shape: const CircleBorder(),
+                    onChanged: (bool? value) {
+                      setState(() {
+                        isChecked = value!;
+                      });
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: TextField(
+                    decoration: const InputDecoration(border: InputBorder.none),
+                    style: const TextStyle(fontSize: 30),
+                    controller: _taskNameController,
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
                     setState(() {
-                      isChecked = value!;
+                      isImportant = !isImportant;
                     });
                   },
-                ),
-              ),
-              Expanded(
-                child: TextField(
-                  decoration: const InputDecoration(border: InputBorder.none),
-                  style: const TextStyle(fontSize: 30),
-                  controller: _taskNameController,
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    isImportant = !isImportant;
-                  });
-                },
-                child: (isImportant)
-                    ? Transform.scale(
-                        scale: 1.3,
-                        child: const Icon(
-                          Icons.star,
-                          color: AppConfigs.blueColor,
-                        ),
-                      )
-                    : Transform.scale(
-                        scale: 1.3,
-                        child: const Icon(Icons.star_border_outlined)),
-              )
-            ],
-          ),
-          const SizedBox(height: 10),
-          Row(
-            children: [
-              const SizedBox(width: 15),
-              Transform.scale(scale: 1.3, child: const Icon(Icons.add)),
-              const SizedBox(width: 10),
-              const Expanded(
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Add step',
-                    border: InputBorder.none,
+                  child: (isImportant)
+                      ? Transform.scale(
+                          scale: 1.3,
+                          child: const Icon(
+                            Icons.star,
+                            color: AppConfigs.blueColor,
+                          ),
+                        )
+                      : Transform.scale(
+                          scale: 1.3,
+                          child: const Icon(Icons.star_border_outlined)),
+                )
+              ],
+            ),
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                const SizedBox(width: 15),
+                Transform.scale(scale: 1.3, child: const Icon(Icons.add)),
+                const SizedBox(width: 10),
+                const Expanded(
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Add step',
+                      border: InputBorder.none,
+                    ),
+                    style: TextStyle(fontSize: 20),
                   ),
-                  style: TextStyle(fontSize: 20),
-                ),
-              )
-            ],
-          ),
-          const SizedBox(height: 30),
-          TaskViewItem(
-            icon: Icons.wb_sunny_outlined,
-            text: 'Add to My Day',
-            onTap: () {},
-          ),
-          const SizedBox(height: 20),
-          TaskViewItem(
-            icon: Icons.notifications_outlined,
-            text: 'Remind me',
-            onTap: () {},
-          ),
-          const SizedBox(height: 20),
-          TaskViewItem(
-            icon: Icons.calendar_today_outlined,
-            text: 'Add due date',
-            onTap: () {},
-          ),
-          const SizedBox(height: 20),
-          TaskViewItem(
-            icon: Icons.repeat_outlined,
-            text: 'Repeat',
-            onTap: () {},
-          ),
-          const SizedBox(height: 20),
-          TaskViewItem(
-            icon: Icons.attach_file_outlined,
-            text: 'Add file',
-            onTap: () {},
-          ),
-          const SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.only(left: 15),
-            child: TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(noteEditRoute);
-                },
-                child: const Text(
-                  'Add note',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: AppConfigs.greyColor,
-                  ),
-                )),
-          )
-        ],
+                )
+              ],
+            ),
+            const SizedBox(height: 30),
+            TaskViewItem(
+              icon: Icons.wb_sunny_outlined,
+              text: 'Add to My Day',
+              onTap: () {},
+            ),
+            const SizedBox(height: 20),
+            TaskViewItem(
+              icon: Icons.notifications_outlined,
+              text: 'Remind me',
+              onTap: () {},
+            ),
+            const SizedBox(height: 20),
+            TaskViewItem(
+              icon: Icons.calendar_today_outlined,
+              text: 'Add due date',
+              onTap: () {},
+            ),
+            const SizedBox(height: 20),
+            TaskViewItem(
+              icon: Icons.repeat_outlined,
+              text: 'Repeat',
+              onTap: () {},
+            ),
+            const SizedBox(height: 20),
+            TaskViewItem(
+              icon: Icons.attach_file_outlined,
+              text: 'Add file',
+              onTap: () {},
+            ),
+            const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.only(left: 15),
+              child: TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(noteEditRoute);
+                  },
+                  child: const Text(
+                    'Add note',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: AppConfigs.greyColor,
+                    ),
+                  )),
+            )
+          ],
+        ),
       ),
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(
