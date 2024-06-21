@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/Constant/app_configs.dart';
 
 class UserProfileItem extends StatelessWidget {
   final Function onTap;
@@ -28,7 +29,7 @@ class UserProfileItem extends StatelessWidget {
             const SizedBox(width: 10),
             Text(
               text,
-              style: const TextStyle(fontSize: 20),
+              style: AppConfigs.itemTextStyle,
             ),
           ],
         ),

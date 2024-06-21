@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/Constant/app_configs.dart';
 import 'package:todo_app/Constant/routes.dart';
-import 'package:todo_app/Home/User_profile/user_profile_component/user_profile_item.dart';
+import 'package:todo_app/Home/User_profile/components/user_profile_item.dart';
 
 class UserProfileView extends StatefulWidget {
   const UserProfileView({super.key});
@@ -45,32 +45,25 @@ class _UserProfileViewState extends State<UserProfileView> {
             ),
             const Text(
               'Quang Nguyen',
-              style: TextStyle(
-                fontSize: 25,
-                fontWeight: FontWeight.w500,
-                color: AppConfigs.whiteColor,
-              ),
+              style: AppConfigs.titleTextStyle,
             ),
             const Text(
               'quang.ndt@outlook.com',
-              style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w300,
-                  color: AppConfigs.greyColor),
+              style: AppConfigs.secondaryTitleTextStyle,
             ),
-            const Divider(thickness: 0.25, color: AppConfigs.greyColor),
+            AppConfigs.dividerGreyStyle,
             UserProfileItem(
               text: 'Add account',
               icon: Icons.add,
               onTap: () {},
             ),
-            const Divider(thickness: 0.25, color: AppConfigs.greyColor),
+            AppConfigs.dividerGreyStyle,
             UserProfileItem(
               text: 'Manage account',
               icon: Icons.person_outline,
               onTap: () {},
             ),
-            const Divider(thickness: 0.25, color: AppConfigs.greyColor),
+            AppConfigs.dividerGreyStyle,
             UserProfileItem(
               text: 'Settings',
               icon: Icons.settings_outlined,

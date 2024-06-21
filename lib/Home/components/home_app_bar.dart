@@ -28,20 +28,15 @@ class HomeAppBar {
           },
           child: RichText(
             text: const TextSpan(
-                text: 'Quang Nguyen',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                ),
-                children: [
-                  TextSpan(
-                    text: '\nquang.ndt@outlook.com',
-                    style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w300,
-                        color: AppConfigs.greyColor),
-                  )
-                ]),
+              text: 'Quang Nguyen',
+              style: AppConfigs.titleTextStyle,
+              children: [
+                TextSpan(
+                  text: '\nquang.ndt@outlook.com',
+                  style: AppConfigs.secondaryTitleTextStyle,
+                )
+              ],
+            ),
           ),
         ),
       ),

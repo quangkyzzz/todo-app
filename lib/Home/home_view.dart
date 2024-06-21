@@ -150,7 +150,7 @@ class _HomeViewState extends State<HomeView> {
                   SizedBox(width: 10),
                   Text(
                     'New list',
-                    style: TextStyle(color: AppConfigs.greyColor, fontSize: 25),
+                    style: AppConfigs.itemGreyTextStyle,
                   )
                 ],
               ),

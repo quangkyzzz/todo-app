@@ -36,7 +36,7 @@ class _SearchViewState extends State<SearchView> {
             borderRadius: BorderRadius.circular(10),
           ),
           child: const TextField(
-            style: TextStyle(fontSize: 20),
+            style: AppConfigs.itemTextStyle,
             decoration: InputDecoration(hintText: 'Enter task name'),
           ),
         ),
@@ -56,7 +56,7 @@ class _SearchViewState extends State<SearchView> {
                       onTap: () {},
                       child: const Text(
                         'Hide completed item',
-                        style: TextStyle(fontSize: 20),
+                        style: AppConfigs.itemTextStyle,
                       ),
                     ),
                   ),

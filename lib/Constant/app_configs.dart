@@ -19,7 +19,7 @@ class AppConfigs {
   static const Color blueColor = Color.fromRGBO(29, 155, 240, 1);
   static const Color whiteColor = Colors.white;
   static const Color greyColor = Colors.grey;
-  static const Color redColor = Color.fromRGBO(249, 25, 127, 1);
+  static const Color redColor = Color.fromRGBO(249, 25, 25, 1);
   static const Color blackColor = Colors.black;
   static const Color backgroundGreyColor = Color.fromARGB(255, 34, 34, 34);
   static const Color pinkColor = Color.fromRGBO(202, 113, 153, 1);
@@ -27,4 +27,33 @@ class AppConfigs {
   static const Color orangeColor = Color.fromRGBO(236, 115, 35, 1);
 
   //text style
+  static const TextStyle titleTextStyle = TextStyle(
+    fontSize: 25,
+    fontWeight: FontWeight.w500,
+  );
+  static const TextStyle secondaryTitleTextStyle = TextStyle(
+    fontSize: 15,
+    fontWeight: FontWeight.w400,
+    color: AppConfigs.greyColor,
+  );
+  static const TextStyle itemTextStyle = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.w400,
+    color: AppConfigs.whiteColor,
+  );
+  static const TextStyle itemGreyTextStyle = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.w400,
+    color: AppConfigs.greyColor,
+  );
+
+  //divider style
+  static const Divider dividerGreyStyle = Divider(
+    thickness: 0.25,
+    color: AppConfigs.greyColor,
+  );
+  static const Divider dividerWhiteStyle = Divider(
+    thickness: 0.25,
+    color: AppConfigs.whiteColor,
+  );
 }

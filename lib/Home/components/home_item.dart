@@ -32,7 +32,10 @@ class HomeItem extends StatelessWidget {
               color: iconColor,
             ),
             const SizedBox(width: 10),
-            Text(text),
+            Text(
+              text,
+              style: AppConfigs.itemTextStyle,
+            ),
             const Spacer(
               flex: 1,
             ),

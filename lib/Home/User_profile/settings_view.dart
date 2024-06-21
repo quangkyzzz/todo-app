@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/Constant/app_configs.dart';
-import 'package:todo_app/Home/User_profile/user_profile_component/settings_list.dart';
+import 'package:todo_app/Home/User_profile/components/settings_list.dart';
 
 class SettingsView extends StatefulWidget {
   const SettingsView({super.key});
@@ -18,7 +18,7 @@ class _SettingsViewState extends State<SettingsView> {
       appBar: AppBar(
           title: const Text(
         'Settings',
-        style: TextStyle(fontSize: 30),
+        style: AppConfigs.titleTextStyle,
       )),
       body: SingleChildScrollView(
         child: Padding(
@@ -41,14 +41,11 @@ class _SettingsViewState extends State<SettingsView> {
                     children: [
                       const Text(
                         'Quang Nguyễn',
-                        style: TextStyle(fontSize: 20),
+                        style: AppConfigs.itemTextStyle,
                       ),
                       const Text(
                         'quang.ndt@outlook.com',
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: AppConfigs.greyColor,
-                        ),
+                        style: AppConfigs.secondaryTitleTextStyle,
                       ),
                       const SizedBox(height: 10),
                       InkWell(
@@ -58,7 +55,7 @@ class _SettingsViewState extends State<SettingsView> {
                               top: 20, bottom: 20, right: 120),
                           child: const Text(
                             'MANAGE ACCOUNT',
-                            style: TextStyle(fontSize: 18),
+                            style: AppConfigs.itemTextStyle,
                           ),
                         ),
                       ),
@@ -70,7 +67,7 @@ class _SettingsViewState extends State<SettingsView> {
                           child: const Text(
                             'SIGN OUT',
                             style: TextStyle(
-                                fontSize: 18, color: AppConfigs.redColor),
+                                fontSize: 20, color: AppConfigs.redColor),
                           ),
                         ),
                       ),
@@ -78,15 +75,11 @@ class _SettingsViewState extends State<SettingsView> {
                   )
                 ],
               ),
-              const Divider(thickness: 0.5, color: AppConfigs.greyColor),
+              AppConfigs.dividerWhiteStyle,
               const SizedBox(height: 10),
               const Text(
                 'General',
-                style: TextStyle(
-                  fontSize: 18,
-                  color: AppConfigs.greyColor,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: AppConfigs.itemGreyTextStyle,
               ),
               const SizedBox(height: 10),
               const SettingsList()

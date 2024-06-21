@@ -16,7 +16,10 @@ class _HomeGroupState extends State<HomeGroup> {
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
-      title: const Text('Group 1'),
+      title: const Text(
+        'Group 1',
+        style: AppConfigs.itemTextStyle,
+      ),
       tilePadding: const EdgeInsets.only(left: 7),
       childrenPadding: const EdgeInsets.only(left: 20),
       onExpansionChanged: (bool expanded) {
