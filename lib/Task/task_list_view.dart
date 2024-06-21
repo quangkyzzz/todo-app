@@ -12,6 +12,7 @@ class TaskListView extends StatefulWidget {
 }
 
 class _TaskListViewState extends State<TaskListView> {
+  bool isChecked = false;
   bool isExpanded = true;
   List<Map<String, dynamic>> incompleteTask = [
     {
@@ -93,33 +94,38 @@ class _TaskListViewState extends State<TaskListView> {
               isScrollControlled: true,
               context: context,
               builder: (BuildContext context) {
-                return Container(
-                  padding: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).viewInsets.bottom),
-                  color: AppConfigs.backgroundGreyColor,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Checkbox(
-                        shape: const CircleBorder(),
-                        value: false,
-                        onChanged: (bool? value) {},
-                      ),
-                      const Expanded(
-                        child: TextField(
-                          autofocus: true,
-                          decoration: InputDecoration(
-                            hintText: 'Add a task',
+                return StatefulBuilder(builder: (context, setState) {
+                  return Padding(
+                    padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).viewInsets.bottom),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Checkbox(
+                          shape: const CircleBorder(),
+                          value: isChecked,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              isChecked = value!;
+                            });
+                          },
+                        ),
+                        const Expanded(
+                          child: TextField(
+                            autofocus: true,
+                            decoration: InputDecoration(
+                              hintText: 'Add a task',
+                            ),
                           ),
                         ),
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        child: const Icon(Icons.arrow_upward),
-                      )
-                    ],
-                  ),
-                );
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.arrow_upward),
+                        )
+                      ],
+                    ),
+                  );
+                });
               },
             );
           },
