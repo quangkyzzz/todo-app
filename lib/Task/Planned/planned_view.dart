@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/Constant/app_configs.dart';
-import 'package:todo_app/Planned/components/planned_popup_menu.dart';
+import 'package:todo_app/Task/Planned/components/planned_popup_menu.dart';
 import 'package:todo_app/Task/components/incomplete_list.dart';
 
 class PlannedView extends StatefulWidget {

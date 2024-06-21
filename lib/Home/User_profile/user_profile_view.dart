@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/Constant/app_configs.dart';
 import 'package:todo_app/Constant/routes.dart';
-import 'package:todo_app/User_profile/user_profile_component/user_profile_item.dart';
+import 'package:todo_app/Home/User_profile/user_profile_component/user_profile_item.dart';
 
 class UserProfileView extends StatefulWidget {
   const UserProfileView({super.key});

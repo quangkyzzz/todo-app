@@ -20,10 +20,6 @@ class _HomeViewState extends State<HomeView> {
     Navigator.of(context).pushNamed(taskListRoute);
   }
 
-  void onTapToImportantList() {
-    Navigator.of(context).pushNamed(taskListImportantRoute);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +39,8 @@ class _HomeViewState extends State<HomeView> {
             ),
             HomeItem(
               onTap: () {
-                onTapToImportantList();
+                Navigator.of(context)
+                    .pushNamed(taskListRoute, arguments: false);
               },
               icon: Icons.star_border,
               text: 'Important',
