@@ -1,3 +1,5 @@
+// ignore_for_file: sized_box_for_whitespace
+
 import 'package:flutter/material.dart';
 import 'package:todo_app/Constant/app_configs.dart';
 import 'package:todo_app/Constant/routes.dart';
@@ -45,7 +47,20 @@ class TaskListPopupMenu extends StatelessWidget {
         child: PopupItem(
           text: 'Add shortcut',
           icon: Icons.add_to_home_screen_outlined,
-          onTap: () {},
+          onTap: () {
+            showModalBottomSheet(
+              isDismissible: true,
+              enableDrag: true,
+              context: context,
+              showDragHandle: true,
+              builder: (BuildContext context) {
+                return const NormalBottomSheetItem(
+                  title: 'Add to Home screen?',
+                  button: 'Add',
+                );
+              },
+            );
+          },
         ),
       ),
       PopupMenuItem(
@@ -53,7 +68,20 @@ class TaskListPopupMenu extends StatelessWidget {
         child: PopupItem(
           text: 'Change theme',
           icon: Icons.palette_outlined,
-          onTap: () {},
+          onTap: () {
+            showModalBottomSheet(
+              isDismissible: true,
+              enableDrag: true,
+              context: context,
+              showDragHandle: true,
+              builder: (BuildContext context) {
+                return const NormalBottomSheetItem(
+                  title: 'Pick a theme?',
+                  button: 'Pick',
+                );
+              },
+            );
+          },
         ),
       ),
       PopupMenuItem(
@@ -61,7 +89,20 @@ class TaskListPopupMenu extends StatelessWidget {
         child: PopupItem(
           text: 'Send a copy',
           icon: Icons.share_outlined,
-          onTap: () {},
+          onTap: () {
+            showModalBottomSheet(
+              isDismissible: true,
+              enableDrag: true,
+              context: context,
+              showDragHandle: true,
+              builder: (BuildContext context) {
+                return const NormalBottomSheetItem(
+                  title: 'Send a copy?',
+                  button: 'Send',
+                );
+              },
+            );
+          },
         ),
       ),
       PopupMenuItem(
@@ -69,7 +110,20 @@ class TaskListPopupMenu extends StatelessWidget {
         child: PopupItem(
           text: 'Duplicate list',
           icon: Icons.copy,
-          onTap: () {},
+          onTap: () {
+            showModalBottomSheet(
+              isDismissible: true,
+              enableDrag: true,
+              context: context,
+              showDragHandle: true,
+              builder: (BuildContext context) {
+                return const NormalBottomSheetItem(
+                  title: 'Duplicate this list?',
+                  button: 'Duplicate',
+                );
+              },
+            );
+          },
         ),
       ),
       PopupMenuItem(
@@ -77,7 +131,20 @@ class TaskListPopupMenu extends StatelessWidget {
         child: PopupItem(
           text: 'Print list',
           icon: Icons.print_outlined,
-          onTap: () {},
+          onTap: () {
+            showModalBottomSheet(
+              isDismissible: true,
+              enableDrag: true,
+              context: context,
+              showDragHandle: true,
+              builder: (BuildContext context) {
+                return const NormalBottomSheetItem(
+                  title: 'Print this list?',
+                  button: 'Print',
+                );
+              },
+            );
+          },
         ),
       ),
       PopupMenuItem(
@@ -85,7 +152,20 @@ class TaskListPopupMenu extends StatelessWidget {
         child: PopupItem(
           text: 'Turn on suggestions',
           icon: Icons.lightbulb_outline,
-          onTap: () {},
+          onTap: () {
+            showModalBottomSheet(
+              isDismissible: true,
+              enableDrag: true,
+              context: context,
+              showDragHandle: true,
+              builder: (BuildContext context) {
+                return const NormalBottomSheetItem(
+                  title: 'Turn on suggestions?',
+                  button: 'Turn on',
+                );
+              },
+            );
+          },
         ),
       ),
     ];
@@ -167,6 +247,54 @@ class BottomSheetItem extends StatelessWidget {
             icon: Icons.more_time_outlined,
             onTap: () {},
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class NormalBottomSheetItem extends StatelessWidget {
+  final String title;
+  final String button;
+  const NormalBottomSheetItem({
+    super.key,
+    required this.title,
+    required this.button,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 100,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: const TextStyle(fontSize: 20),
+          ),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              const Spacer(),
+              TextButton(
+                onPressed: () {},
+                child: const Text(
+                  'Cancel',
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
+              const Spacer(),
+              TextButton(
+                onPressed: () {},
+                child: Text(
+                  button,
+                  style: const TextStyle(fontSize: 20),
+                ),
+              ),
+              const Spacer(),
+            ],
+          )
         ],
       ),
     );
