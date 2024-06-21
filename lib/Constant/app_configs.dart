@@ -1,6 +1,16 @@
 import 'package:flutter/material.dart';
 
 class AppConfigs {
+  static ThemeData theme = ThemeData.dark().copyWith(
+    scaffoldBackgroundColor: AppConfigs.backgroundColor,
+    appBarTheme: const AppBarTheme(
+      backgroundColor: AppConfigs.backgroundColor,
+      elevation: 0,
+    ),
+    floatingActionButtonTheme: const FloatingActionButtonThemeData(
+      backgroundColor: AppConfigs.blueColor,
+    ),
+  );
   static const Color backgroundColor = Colors.black;
   static const Color searchBarColor = Color.fromRGBO(32, 35, 39, 1);
   static const Color blueColor = Color.fromRGBO(29, 155, 240, 1);

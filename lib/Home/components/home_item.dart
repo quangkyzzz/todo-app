@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/theme/theme.dart';
+import 'package:todo_app/Constant/app_configs.dart';
 
 class HomeItem extends StatelessWidget {
   final String text;

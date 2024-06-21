@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:todo_app/Constant/app_configs.dart';
 
@@ -10,11 +12,18 @@ class SettingsList extends StatefulWidget {
 
 class _SettingsListState extends State<SettingsList> {
   bool isAddNewTask = true;
+  bool isMoveToTop = true;
+  bool isPlaySoundOnComplete = true;
+  bool isConfirmBeforeDelete = true;
+  bool isShowDueToday = true;
+  bool isRecognizeDateAndTime = true;
+  bool isRemoveDateTimeFromTasksTitle = false;
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         SettingsItem(
+          isActive: isAddNewTask,
           text: "Add new tasks on top",
           onChange: (bool val) {
             setState(() {
@@ -23,50 +32,56 @@ class _SettingsListState extends State<SettingsList> {
           },
         ),
         SettingsItem(
+          isActive: isMoveToTop,
           text: "Move starred tasks on top",
           onChange: (bool val) {
             setState(() {
-              isAddNewTask = val;
+              isMoveToTop = val;
             });
           },
         ),
         SettingsItem(
+          isActive: isPlaySoundOnComplete,
           text: "Play completion sound",
           onChange: (bool val) {
             setState(() {
-              isAddNewTask = val;
+              isPlaySoundOnComplete = val;
             });
           },
         ),
         SettingsItem(
+          isActive: isConfirmBeforeDelete,
           text: "Confirm before deleting",
           onChange: (bool val) {
             setState(() {
-              isAddNewTask = val;
+              isConfirmBeforeDelete = val;
             });
           },
         ),
         SettingsItem(
+          isActive: isShowDueToday,
           text: "Show 'Due Today' tasks in My Day",
           onChange: (bool val) {
             setState(() {
-              isAddNewTask = val;
+              isShowDueToday = val;
             });
           },
         ),
         SettingsItem(
-          text: "Recognize dates an times in task titles",
+          isActive: isRecognizeDateAndTime,
+          text: "Recognize dates and times in task titles",
           onChange: (bool val) {
             setState(() {
-              isAddNewTask = val;
+              isRecognizeDateAndTime = val;
             });
           },
         ),
         SettingsItem(
+          isActive: isRemoveDateTimeFromTasksTitle,
           text: "Remove dates and times from tasks titles once recognized",
           onChange: (bool val) {
             setState(() {
-              isAddNewTask = val;
+              isRemoveDateTimeFromTasksTitle = val;
             });
           },
         ),
@@ -77,10 +92,10 @@ class _SettingsListState extends State<SettingsList> {
 
 // ignore: must_be_immutable
 class SettingsItem extends StatelessWidget {
-  bool isActive;
+  final bool isActive;
   final String text;
   final Function(bool) onChange;
-  SettingsItem({
+  const SettingsItem({
     super.key,
     required this.text,
     required this.onChange,
