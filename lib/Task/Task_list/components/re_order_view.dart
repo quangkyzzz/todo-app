@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/Constant/app_configs.dart';
 import 'package:todo_app/Models/task_model.dart';
 import 'package:todo_app/Task/Task_list/components/task_list_item.dart';
 
@@ -35,14 +36,17 @@ class _ReOrderViewState extends State<ReOrderView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Reorder tasks'),
+        title: const Text(
+          'Reorder tasks',
+          style: AppConfigs.titleTextStyle,
+        ),
       ),
       body: ReorderableListView(
           header: const Padding(
             padding: EdgeInsets.all(8.0),
             child: Text(
               'Tap and hold to reorder task',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: AppConfigs.itemTextStyle,
             ),
           ),
           children: [

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/Constant/app_configs.dart';
 import 'package:todo_app/Constant/routes.dart';
 import 'package:todo_app/Models/task_model.dart';
-import 'package:todo_app/Task/Task_list/components/item_icon.dart';
+import 'package:todo_app/Task/Task_list/components/task_list_item_bottom_icon.dart';
 
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
@@ -68,13 +68,10 @@ class _TaskListItemState extends State<TaskListItem> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 5),
+                  const SizedBox(height: 10),
                   Text(
                     widget.task.title,
-                    style: const TextStyle(
-                      color: AppConfigs.whiteColor,
-                      fontSize: 25,
-                    ),
+                    style: AppConfigs.itemTextStyle,
                   ),
                   Row(
                     children: [

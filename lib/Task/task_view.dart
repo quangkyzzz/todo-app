@@ -44,7 +44,7 @@ class _TaskViewState extends State<TaskView> {
       appBar: AppBar(
         title: const Text(
           'Tasks',
-          style: TextStyle(fontSize: 30),
+          style: AppConfigs.titleTextStyle,
         ),
       ),
       body: SingleChildScrollView(
@@ -68,7 +68,7 @@ class _TaskViewState extends State<TaskView> {
                 Expanded(
                   child: TextField(
                     decoration: const InputDecoration(border: InputBorder.none),
-                    style: const TextStyle(fontSize: 30),
+                    style: AppConfigs.titleTextStyle,
                     controller: _taskNameController,
                   ),
                 ),
@@ -104,7 +104,7 @@ class _TaskViewState extends State<TaskView> {
                       hintText: 'Add step',
                       border: InputBorder.none,
                     ),
-                    style: TextStyle(fontSize: 20),
+                    style: AppConfigs.itemTextStyle,
                   ),
                 )
               ],
@@ -256,7 +256,7 @@ class _TaskViewState extends State<TaskView> {
                         children: [
                           const Text(
                             'Upload from',
-                            style: TextStyle(fontSize: 20),
+                            style: AppConfigs.itemTextStyle,
                           ),
                           const SizedBox(height: 10),
                           TaskViewItem(
@@ -289,10 +289,7 @@ class _TaskViewState extends State<TaskView> {
                   },
                   child: const Text(
                     'Add note',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: AppConfigs.greyColor,
-                    ),
+                    style: AppConfigs.itemGreyTextStyle,
                   )),
             )
           ],
@@ -311,10 +308,7 @@ class _TaskViewState extends State<TaskView> {
           children: [
             const Text(
               'Create 1 hour ago',
-              style: TextStyle(
-                color: AppConfigs.greyColor,
-                fontSize: 20,
-              ),
+              style: AppConfigs.itemGreyTextStyle,
             ),
             const Spacer(),
             IconButton(
@@ -325,7 +319,7 @@ class _TaskViewState extends State<TaskView> {
                     return AlertDialog(
                       title: const Text(
                         'Are you sure?',
-                        style: TextStyle(fontSize: 20),
+                        style: AppConfigs.itemTextStyle,
                       ),
                       content: Text(
                           ' "${widget.task.title}" will be permanently deleted'),

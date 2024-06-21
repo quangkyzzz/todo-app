@@ -33,7 +33,7 @@ class HomeAppBar {
               children: [
                 TextSpan(
                   text: '\nquang.ndt@outlook.com',
-                  style: AppConfigs.secondaryTitleTextStyle,
+                  style: AppConfigs.secondaryTitleGreyTextStyle,
                 )
               ],
             ),

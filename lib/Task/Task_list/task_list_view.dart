@@ -38,18 +38,22 @@ class _TaskListViewState extends State<TaskListView> {
             ? const Text(
                 'Tasks',
                 style: TextStyle(
-                  fontSize: 40,
+                  fontSize: 25,
                   color: AppConfigs.blueColor,
                 ),
               )
             : const Text(
                 'Important',
                 style: TextStyle(
-                  fontSize: 40,
+                  fontSize: 25,
                   color: AppConfigs.pinkColor,
                 ),
               ),
-        actions: const [TaskListPopupMenu()],
+        actions: const [
+          TaskListPopupMenu(
+            toRemove: ['hide_completed_tasks'],
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(children: [

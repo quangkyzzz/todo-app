@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/Constant/app_configs.dart';
-import 'package:todo_app/Task/Planned/components/planned_popup_menu.dart';
 import 'package:todo_app/Task/Task_list/components/incomplete_list.dart';
+import 'package:todo_app/Task/Task_list/components/task_list_popup_menu.dart';
 
 class PlannedView extends StatefulWidget {
   const PlannedView({super.key});
@@ -33,11 +33,15 @@ class _PlannedViewState extends State<PlannedView> {
         title: const Text(
           'Planned',
           style: TextStyle(
-            fontSize: 40,
+            fontSize: 30,
             color: AppConfigs.redColor,
           ),
         ),
-        actions: const [PlannedPopupMenu()],
+        actions: const [
+          TaskListPopupMenu(
+            toRemove: ['reorder', 'turn_on_suggestions', 'duplicate_list'],
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -49,12 +53,13 @@ class _PlannedViewState extends State<PlannedView> {
             PopupMenuButton(
               offset: const Offset(0, 50),
               itemBuilder: (BuildContext context) {
-                return const [
+                return [
                   PopupMenuItem(
                     value: 'Overdue',
                     child: PopupItem(
                       text: 'Overdue',
                       icon: Icons.event_busy_outlined,
+                      onTap: () {},
                     ),
                   ),
                   PopupMenuItem(
@@ -62,6 +67,7 @@ class _PlannedViewState extends State<PlannedView> {
                     child: PopupItem(
                       text: 'Today',
                       icon: Icons.today_outlined,
+                      onTap: () {},
                     ),
                   ),
                   PopupMenuItem(
@@ -69,6 +75,7 @@ class _PlannedViewState extends State<PlannedView> {
                     child: PopupItem(
                       text: 'Tomorrow',
                       icon: Icons.event_outlined,
+                      onTap: () {},
                     ),
                   ),
                   PopupMenuItem(
@@ -76,6 +83,7 @@ class _PlannedViewState extends State<PlannedView> {
                     child: PopupItem(
                       text: 'This week',
                       icon: Icons.date_range_outlined,
+                      onTap: () {},
                     ),
                   ),
                   PopupMenuItem(
@@ -83,6 +91,7 @@ class _PlannedViewState extends State<PlannedView> {
                     child: PopupItem(
                       text: 'Later',
                       icon: Icons.calendar_month_outlined,
+                      onTap: () {},
                     ),
                   ),
                   PopupMenuItem(
@@ -90,6 +99,7 @@ class _PlannedViewState extends State<PlannedView> {
                     child: PopupItem(
                       text: 'All planned',
                       icon: Icons.event_note_outlined,
+                      onTap: () {},
                     ),
                   ),
                 ];

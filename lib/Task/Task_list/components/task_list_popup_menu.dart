@@ -1,6 +1,7 @@
 // ignore_for_file: sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
+import 'package:todo_app/Constant/app_configs.dart';
 import 'package:todo_app/Constant/routes.dart';
 
 class TaskListPopupMenu extends StatelessWidget {
@@ -82,6 +83,14 @@ class TaskListPopupMenu extends StatelessWidget {
               },
             );
           },
+        ),
+      ),
+      PopupMenuItem(
+        value: 'hide_completed_tasks',
+        child: PopupItem(
+          text: 'Hide completed tasks',
+          icon: Icons.check_circle_outline,
+          onTap: () {},
         ),
       ),
       PopupMenuItem(
@@ -201,7 +210,7 @@ class PopupItem extends StatelessWidget {
           const SizedBox(width: 15),
           Text(
             text,
-            style: const TextStyle(fontSize: 20),
+            style: AppConfigs.itemTextStyle,
           ),
         ]),
       ),
@@ -219,7 +228,7 @@ class BottomSheetItem extends StatelessWidget {
       children: [
         const Text(
           'Sort by',
-          style: TextStyle(fontSize: 25),
+          style: AppConfigs.itemTextStyle,
         ),
         const SizedBox(height: 10),
         PopupItem(

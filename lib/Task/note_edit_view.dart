@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/Constant/app_configs.dart';
 
 class NoteEditView extends StatefulWidget {
   const NoteEditView({super.key});
@@ -12,7 +13,10 @@ class _NoteEditViewState extends State<NoteEditView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit your note'),
+        title: const Text(
+          'Edit your note',
+          style: AppConfigs.titleTextStyle,
+        ),
       ),
       body: const TextField(
         maxLines: null,

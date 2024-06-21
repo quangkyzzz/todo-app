@@ -45,7 +45,7 @@ class _SettingsViewState extends State<SettingsView> {
                       ),
                       const Text(
                         'quang.ndt@outlook.com',
-                        style: AppConfigs.secondaryTitleTextStyle,
+                        style: AppConfigs.secondaryTitleGreyTextStyle,
                       ),
                       const SizedBox(height: 10),
                       InkWell(

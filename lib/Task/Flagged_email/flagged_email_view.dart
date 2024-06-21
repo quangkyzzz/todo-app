@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/Constant/app_configs.dart';
-import 'package:todo_app/Task/Flagged_email/components/flagged_popup_menu.dart';
 import 'package:todo_app/Task/Task_list/components/incomplete_list.dart';
+import 'package:todo_app/Task/Task_list/components/task_list_popup_menu.dart';
 
 class FlaggedEmailView extends StatefulWidget {
   const FlaggedEmailView({super.key});
@@ -33,11 +33,15 @@ class _FlaggedEmailViewState extends State<FlaggedEmailView> {
         title: const Text(
           'Flagged email',
           style: TextStyle(
-            fontSize: 40,
+            fontSize: 30,
             color: AppConfigs.orangeColor,
           ),
         ),
-        actions: const [FlaggedPopupMenu()],
+        actions: const [
+          TaskListPopupMenu(
+            toRemove: ['reorder', 'turn_on_suggestions'],
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: ExpansionTile(

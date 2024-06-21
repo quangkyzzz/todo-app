@@ -49,7 +49,7 @@ class _UserProfileViewState extends State<UserProfileView> {
             ),
             const Text(
               'quang.ndt@outlook.com',
-              style: AppConfigs.secondaryTitleTextStyle,
+              style: AppConfigs.secondaryTitleGreyTextStyle,
             ),
             AppConfigs.dividerGreyStyle,
             UserProfileItem(

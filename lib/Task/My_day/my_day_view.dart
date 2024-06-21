@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_app/Constant/app_configs.dart';
-import 'package:todo_app/Task/My_day/components/my_day_popup_menu.dart';
 import 'package:todo_app/Task/Task_list/components/incomplete_list.dart';
+import 'package:todo_app/Task/Task_list/components/task_list_popup_menu.dart';
 
 class MyDayView extends StatefulWidget {
   const MyDayView({super.key});
@@ -50,23 +50,26 @@ class _MyDayViewState extends State<MyDayView> {
               child: RichText(
                 text: TextSpan(
                     text: 'My Day',
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: AppConfigs.titleTextStyle,
                     children: [
                       TextSpan(
                         text:
                             '\n${DateFormat.MMMMEEEEd('en_US').format(DateTime.now())}',
-                        style: const TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w300,
-                        ),
+                        style: AppConfigs.secondaryTitleTextStyle,
                       )
                     ]),
               ),
             ),
-            actions: const [MyDayPopupMenu()],
+            actions: const [
+              TaskListPopupMenu(
+                toRemove: [
+                  'reorder',
+                  'turn_on_suggestions',
+                  'duplicate_list',
+                  'hide_completed_tasks',
+                ],
+              )
+            ],
           ),
           body: SingleChildScrollView(
             child: Column(children: [
@@ -121,7 +124,7 @@ class _MyDayViewState extends State<MyDayView> {
                             children: [
                               const Text(
                                 'From earlier',
-                                style: TextStyle(fontSize: 30),
+                                style: AppConfigs.itemTextStyle,
                               ),
                               Row(
                                 mainAxisSize: MainAxisSize.min,
@@ -135,7 +138,10 @@ class _MyDayViewState extends State<MyDayView> {
                                       });
                                     },
                                   ),
-                                  const Text('Task 1'),
+                                  const Text(
+                                    'Task 1',
+                                    style: AppConfigs.itemTextStyle,
+                                  ),
                                   const Spacer(),
                                   IconButton(
                                     onPressed: () {},
@@ -153,8 +159,7 @@ class _MyDayViewState extends State<MyDayView> {
                     decoration: const BoxDecoration(shape: BoxShape.circle),
                     child: const Text(
                       'Suggestions',
-                      style:
-                          TextStyle(color: AppConfigs.blackColor, fontSize: 20),
+                      style: AppConfigs.itemBlackTextStyle,
                     ),
                   ),
                 ),
