@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/Constant/app_configs.dart';
-import 'package:todo_app/Task/components/completed_list.dart';
+import 'package:todo_app/Task/Task_list/components/incomplete_list.dart';
 
 class SearchView extends StatefulWidget {
   const SearchView({super.key});
@@ -68,7 +68,7 @@ class _SearchViewState extends State<SearchView> {
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.only(top: 10),
-        child: CompletedList(taskList: incompleteTask),
+        child: IncompleteList(taskList: incompleteTask),
       ),
     );
   }

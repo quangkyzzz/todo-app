@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/Constant/app_configs.dart';
 import 'package:todo_app/Task/Planned/components/planned_popup_menu.dart';
-import 'package:todo_app/Task/components/incomplete_list.dart';
+import 'package:todo_app/Task/Task_list/components/incomplete_list.dart';
 
 class PlannedView extends StatefulWidget {
   const PlannedView({super.key});

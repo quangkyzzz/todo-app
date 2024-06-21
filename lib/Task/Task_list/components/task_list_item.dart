@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/Constant/app_configs.dart';
 import 'package:todo_app/Constant/routes.dart';
 import 'package:todo_app/Models/task_model.dart';
-import 'package:todo_app/Task/components/item_icon.dart';
+import 'package:todo_app/Task/Task_list/components/item_icon.dart';
 
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';

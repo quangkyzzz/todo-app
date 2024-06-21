@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/Task/components/incomplete_list.dart';
-import 'package:todo_app/Task/components/task_list_popup_menu.dart';
+import 'package:todo_app/Task/Task_list/components/incomplete_list.dart';
+import 'package:todo_app/Task/Task_list/components/task_list_popup_menu.dart';
 import 'package:todo_app/constant/app_configs.dart';
 
 class TaskListView extends StatefulWidget {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppConfigs {
+  //app theme
   static ThemeData theme = ThemeData.dark().copyWith(
     scaffoldBackgroundColor: AppConfigs.backgroundColor,
     appBarTheme: const AppBarTheme(
@@ -11,6 +12,8 @@ class AppConfigs {
       backgroundColor: AppConfigs.blueColor,
     ),
   );
+
+  //custom color
   static const Color backgroundColor = Colors.black;
   static const Color searchBarColor = Color.fromRGBO(32, 35, 39, 1);
   static const Color blueColor = Color.fromRGBO(29, 155, 240, 1);
@@ -22,4 +25,6 @@ class AppConfigs {
   static const Color pinkColor = Color.fromRGBO(202, 113, 153, 1);
   static const Color greenColor = Color.fromRGBO(134, 202, 145, 1);
   static const Color orangeColor = Color.fromRGBO(236, 115, 35, 1);
+
+  //text style
 }
