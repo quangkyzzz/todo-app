@@ -14,6 +14,7 @@ class MyDayView extends StatefulWidget {
 }
 
 class _MyDayViewState extends State<MyDayView> {
+  bool ischecked = false;
   bool isExpanded = true;
   List<Map<String, dynamic>> incompleteTask = [
     {
@@ -108,7 +109,46 @@ class _MyDayViewState extends State<MyDayView> {
                 child: InkWell(
                   splashColor: AppConfigs.blackColor,
                   customBorder: const CircleBorder(),
-                  onTap: () {},
+                  onTap: () {
+                    showModalBottomSheet(
+                      showDragHandle: true,
+                      constraints: const BoxConstraints(maxHeight: 200),
+                      context: context,
+                      builder: (BuildContext context) {
+                        return StatefulBuilder(builder: (context, setState) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'From earlier',
+                                style: TextStyle(fontSize: 30),
+                              ),
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Checkbox(
+                                    shape: const CircleBorder(),
+                                    value: ischecked,
+                                    onChanged: (bool? value) {
+                                      setState(() {
+                                        ischecked = value!;
+                                      });
+                                    },
+                                  ),
+                                  const Text('Task 1'),
+                                  const Spacer(),
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: const Icon(Icons.add_outlined),
+                                  )
+                                ],
+                              ),
+                            ],
+                          );
+                        });
+                      },
+                    );
+                  },
                   child: Ink(
                     decoration: const BoxDecoration(shape: BoxShape.circle),
                     child: const Text(
@@ -128,7 +168,48 @@ class _MyDayViewState extends State<MyDayView> {
                 child: InkWell(
                   splashColor: AppConfigs.blackColor,
                   customBorder: const CircleBorder(),
-                  onTap: () {},
+                  onTap: () {
+                    showModalBottomSheet(
+                      isScrollControlled: true,
+                      context: context,
+                      builder: (BuildContext context) {
+                        return StatefulBuilder(builder: (context, setState) {
+                          return Container(
+                            padding: EdgeInsets.only(
+                                bottom:
+                                    MediaQuery.of(context).viewInsets.bottom),
+                            color: AppConfigs.backgroundGreyColor,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Checkbox(
+                                  shape: const CircleBorder(),
+                                  value: ischecked,
+                                  onChanged: (bool? value) {
+                                    setState(() {
+                                      ischecked = value!;
+                                    });
+                                  },
+                                ),
+                                const Expanded(
+                                  child: TextField(
+                                    autofocus: true,
+                                    decoration: InputDecoration(
+                                      hintText: 'Add a task',
+                                    ),
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: () {},
+                                  icon: const Icon(Icons.arrow_upward),
+                                )
+                              ],
+                            ),
+                          );
+                        });
+                      },
+                    );
+                  },
                   child: Ink(
                     decoration: const BoxDecoration(shape: BoxShape.circle),
                     height: 60,

@@ -19,6 +19,7 @@ class TaskListPopupMenu extends StatelessWidget {
         child: PopupItem(
           onTap: () {
             showModalBottomSheet(
+              constraints: const BoxConstraints(maxHeight: 350),
               isDismissible: true,
               enableDrag: true,
               context: context,
@@ -198,8 +199,11 @@ class PopupItem extends StatelessWidget {
         onTap: onTap,
         child: Row(children: [
           Icon(icon),
-          const SizedBox(width: 10),
-          Text(text),
+          const SizedBox(width: 15),
+          Text(
+            text,
+            style: const TextStyle(fontSize: 20),
+          ),
         ]),
       ),
     );
@@ -211,44 +215,40 @@ class BottomSheetItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 260,
-      color: AppConfigs.backgroundGreyColor,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'Sort by',
-            style: TextStyle(fontSize: 25),
-          ),
-          const SizedBox(height: 10),
-          PopupItem(
-            text: 'Important',
-            icon: Icons.star_border_outlined,
-            onTap: () {},
-          ),
-          PopupItem(
-            text: 'Due date',
-            icon: Icons.calendar_today_outlined,
-            onTap: () {},
-          ),
-          PopupItem(
-            text: 'Added to My Day',
-            icon: Icons.wb_sunny_outlined,
-            onTap: () {},
-          ),
-          PopupItem(
-            text: 'Alphabetiaclly',
-            icon: Icons.import_export_outlined,
-            onTap: () {},
-          ),
-          PopupItem(
-            text: 'Creation date',
-            icon: Icons.more_time_outlined,
-            onTap: () {},
-          ),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Sort by',
+          style: TextStyle(fontSize: 25),
+        ),
+        const SizedBox(height: 10),
+        PopupItem(
+          text: 'Important',
+          icon: Icons.star_border_outlined,
+          onTap: () {},
+        ),
+        PopupItem(
+          text: 'Due date',
+          icon: Icons.calendar_today_outlined,
+          onTap: () {},
+        ),
+        PopupItem(
+          text: 'Added to My Day',
+          icon: Icons.wb_sunny_outlined,
+          onTap: () {},
+        ),
+        PopupItem(
+          text: 'Alphabetiaclly',
+          icon: Icons.import_export_outlined,
+          onTap: () {},
+        ),
+        PopupItem(
+          text: 'Creation date',
+          icon: Icons.more_time_outlined,
+          onTap: () {},
+        ),
+      ],
     );
   }
 }
@@ -278,7 +278,9 @@ class NormalBottomSheetItem extends StatelessWidget {
             children: [
               const Spacer(),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pop(context);
+                },
                 child: const Text(
                   'Cancel',
                   style: TextStyle(fontSize: 20),
