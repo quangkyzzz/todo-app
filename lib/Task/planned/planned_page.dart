@@ -28,6 +28,32 @@ class _PlannedPageState extends State<PlannedPage> {
   ];
   @override
   Widget build(BuildContext context) {
+    List<Map<String, dynamic>> listPopupMennu = [
+      {
+        'text': 'Overdue',
+        'icon': Icons.event_busy_outlined,
+      },
+      {
+        'text': 'Today',
+        'icon': Icons.today_outlined,
+      },
+      {
+        'text': 'Tomorrow',
+        'icon': Icons.event_outlined,
+      },
+      {
+        'text': 'This week',
+        'icon': Icons.date_range_outlined,
+      },
+      {
+        'text': 'Later',
+        'icon': Icons.calendar_month_outlined,
+      },
+      {
+        'text': 'All planned',
+        'icon': Icons.event_note_outlined,
+      },
+    ];
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -53,56 +79,15 @@ class _PlannedPageState extends State<PlannedPage> {
             PopupMenuButton(
               offset: const Offset(0, 50),
               itemBuilder: (BuildContext context) {
-                return [
-                  PopupMenuItem(
-                    value: 'Overdue',
+                return listPopupMennu.map((item) {
+                  return PopupMenuItem(
                     child: PopupItem(
-                      text: 'Overdue',
-                      icon: Icons.event_busy_outlined,
+                      text: item['text'],
+                      icon: item['icon'],
                       onTap: () {},
                     ),
-                  ),
-                  PopupMenuItem(
-                    value: 'Today',
-                    child: PopupItem(
-                      text: 'Today',
-                      icon: Icons.today_outlined,
-                      onTap: () {},
-                    ),
-                  ),
-                  PopupMenuItem(
-                    value: 'Tomorrow',
-                    child: PopupItem(
-                      text: 'Tomorrow',
-                      icon: Icons.event_outlined,
-                      onTap: () {},
-                    ),
-                  ),
-                  PopupMenuItem(
-                    value: 'This week',
-                    child: PopupItem(
-                      text: 'This week',
-                      icon: Icons.date_range_outlined,
-                      onTap: () {},
-                    ),
-                  ),
-                  PopupMenuItem(
-                    value: 'Later',
-                    child: PopupItem(
-                      text: 'Later',
-                      icon: Icons.calendar_month_outlined,
-                      onTap: () {},
-                    ),
-                  ),
-                  PopupMenuItem(
-                    value: 'All planned',
-                    child: PopupItem(
-                      text: 'All planned',
-                      icon: Icons.event_note_outlined,
-                      onTap: () {},
-                    ),
-                  ),
-                ];
+                  );
+                }).toList();
               },
               child: Container(
                 padding: const EdgeInsets.all(8),

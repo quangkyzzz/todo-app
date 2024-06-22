@@ -1,8 +1,10 @@
-// ignore_for_file: unnecessary_string_interpolations
+// ignore_for_file: unnecessary_string_interpolations, sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_app/constant/app_configs.dart';
+import 'package:todo_app/task/my_day/component/my_day_floating_button.dart';
+import 'package:todo_app/task/task_list/components/completed_list.dart';
 import 'package:todo_app/task/task_list/components/incomplete_list.dart';
 import 'package:todo_app/task/task_list/components/task_list_popup_menu.dart';
 
@@ -14,7 +16,6 @@ class MyDayPage extends StatefulWidget {
 }
 
 class _MyDayPageState extends State<MyDayPage> {
-  bool ischecked = false;
   bool isExpanded = true;
   List<Map<String, dynamic>> incompleteTask = [
     {
@@ -74,161 +75,10 @@ class _MyDayPageState extends State<MyDayPage> {
           body: SingleChildScrollView(
             child: Column(children: [
               IncompleteList(taskList: incompleteTask),
-              ExpansionTile(
-                initiallyExpanded: true,
-                title: const Text(
-                  'Completed',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: AppConfigs.blueColor,
-                  ),
-                ),
-                onExpansionChanged: (bool expanded) {
-                  setState(() {
-                    isExpanded = expanded;
-                  });
-                },
-                trailing: Icon(
-                    isExpanded ? Icons.expand_more : Icons.keyboard_arrow_left),
-                children: [
-                  IncompleteList(
-                    taskList: incompleteTask,
-                  ),
-                ],
-              )
+              CompletedList(taskList: incompleteTask),
             ]),
           ),
-          floatingActionButton: Row(
-            children: [
-              const Spacer(flex: 2),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                decoration: BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  borderRadius: BorderRadius.circular(20),
-                  color: AppConfigs.blueColor,
-                ),
-                child: InkWell(
-                  splashColor: AppConfigs.blackColor,
-                  customBorder: const CircleBorder(),
-                  onTap: () {
-                    showModalBottomSheet(
-                      showDragHandle: true,
-                      constraints: const BoxConstraints(maxHeight: 200),
-                      context: context,
-                      builder: (BuildContext context) {
-                        return StatefulBuilder(builder: (context, setState) {
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'From earlier',
-                                style: AppConfigs.itemTextStyle,
-                              ),
-                              Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Checkbox(
-                                    shape: const CircleBorder(),
-                                    value: ischecked,
-                                    onChanged: (bool? value) {
-                                      setState(() {
-                                        ischecked = value!;
-                                      });
-                                    },
-                                  ),
-                                  const Text(
-                                    'Task 1',
-                                    style: AppConfigs.itemTextStyle,
-                                  ),
-                                  const Spacer(),
-                                  IconButton(
-                                    onPressed: () {},
-                                    icon: const Icon(Icons.add_outlined),
-                                  )
-                                ],
-                              ),
-                            ],
-                          );
-                        });
-                      },
-                    );
-                  },
-                  child: Ink(
-                    decoration: const BoxDecoration(shape: BoxShape.circle),
-                    child: const Text(
-                      'Suggestions',
-                      style: AppConfigs.itemTextStyle,
-                    ),
-                  ),
-                ),
-              ),
-              const Spacer(flex: 1),
-              Container(
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppConfigs.blueColor,
-                ),
-                child: InkWell(
-                  splashColor: AppConfigs.blackColor,
-                  customBorder: const CircleBorder(),
-                  onTap: () {
-                    showModalBottomSheet(
-                      isScrollControlled: true,
-                      context: context,
-                      builder: (BuildContext context) {
-                        return StatefulBuilder(builder: (context, setState) {
-                          return Container(
-                            padding: EdgeInsets.only(
-                                bottom:
-                                    MediaQuery.of(context).viewInsets.bottom),
-                            color: AppConfigs.backgroundGreyColor,
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Checkbox(
-                                  shape: const CircleBorder(),
-                                  value: ischecked,
-                                  onChanged: (bool? value) {
-                                    setState(() {
-                                      ischecked = value!;
-                                    });
-                                  },
-                                ),
-                                const Expanded(
-                                  child: TextField(
-                                    autofocus: true,
-                                    decoration: InputDecoration(
-                                      hintText: 'Add a task',
-                                    ),
-                                  ),
-                                ),
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(Icons.arrow_upward),
-                                )
-                              ],
-                            ),
-                          );
-                        });
-                      },
-                    );
-                  },
-                  child: Ink(
-                    decoration: const BoxDecoration(shape: BoxShape.circle),
-                    height: 60,
-                    width: 60,
-                    child: const Icon(
-                      Icons.add,
-                      size: 40,
-                      color: AppConfigs.whiteColor,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
+          floatingActionButton: const MyDayFloatingButton(),
         ),
       ],
     );

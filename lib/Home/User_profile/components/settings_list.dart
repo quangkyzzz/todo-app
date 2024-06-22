@@ -16,74 +16,53 @@ class _SettingsListState extends State<SettingsList> {
   bool isShowDueToday = true;
   bool isRecognizeDateAndTime = true;
   bool isRemoveDateTimeFromTasksTitle = false;
+  late List<Map<String, dynamic>> listSettingItem = [
+    {
+      'text': 'Add new tasks on top',
+      'isActive': isAddNewTask,
+    },
+    {
+      'text': 'Move starred tasks on top',
+      'isActive': isMoveToTop,
+    },
+    {
+      'text': "Play completion sound",
+      'isActive': isPlaySoundOnComplete,
+    },
+    {
+      'text': 'Confirm before deleting',
+      'isActive': isConfirmBeforeDelete,
+    },
+    {
+      'text': "Show 'Due Today' tasks in My Day",
+      'isActive': isShowDueToday,
+    },
+    {
+      'text': 'Recognize dates and times in task titles',
+      'isActive': isRecognizeDateAndTime,
+    },
+    {
+      'text': 'Remove dates and times from tasks titles once recognized',
+      'isActive': isRemoveDateTimeFromTasksTitle,
+    },
+  ];
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SettingsItem(
-          isActive: isAddNewTask,
-          text: "Add new tasks on top",
-          onChange: (bool val) {
-            setState(() {
-              isAddNewTask = val;
-            });
-          },
-        ),
-        SettingsItem(
-          isActive: isMoveToTop,
-          text: "Move starred tasks on top",
-          onChange: (bool val) {
-            setState(() {
-              isMoveToTop = val;
-            });
-          },
-        ),
-        SettingsItem(
-          isActive: isPlaySoundOnComplete,
-          text: "Play completion sound",
-          onChange: (bool val) {
-            setState(() {
-              isPlaySoundOnComplete = val;
-            });
-          },
-        ),
-        SettingsItem(
-          isActive: isConfirmBeforeDelete,
-          text: "Confirm before deleting",
-          onChange: (bool val) {
-            setState(() {
-              isConfirmBeforeDelete = val;
-            });
-          },
-        ),
-        SettingsItem(
-          isActive: isShowDueToday,
-          text: "Show 'Due Today' tasks in My Day",
-          onChange: (bool val) {
-            setState(() {
-              isShowDueToday = val;
-            });
-          },
-        ),
-        SettingsItem(
-          isActive: isRecognizeDateAndTime,
-          text: "Recognize dates and times in task titles",
-          onChange: (bool val) {
-            setState(() {
-              isRecognizeDateAndTime = val;
-            });
-          },
-        ),
-        SettingsItem(
-          isActive: isRemoveDateTimeFromTasksTitle,
-          text: "Remove dates and times from tasks titles once recognized",
-          onChange: (bool val) {
-            setState(() {
-              isRemoveDateTimeFromTasksTitle = val;
-            });
-          },
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: listSettingItem.map((item) {
+          return SettingsItem(
+            isActive: item['isActive'],
+            text: item['text'],
+            onChange: (bool val) {
+              setState(() {
+                item['isActive'] = val;
+              });
+            },
+          );
+        }).toList(),
+      ),
     );
   }
 }

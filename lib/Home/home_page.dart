@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/constant/app_configs.dart';
 import 'package:todo_app/constant/routes.dart';
 import 'package:todo_app/home/components/home_app_bar.dart';
+import 'package:todo_app/home/components/home_dialog.dart';
 import 'package:todo_app/home/components/home_group.dart';
 import 'package:todo_app/home/components/home_item.dart';
 
@@ -16,79 +17,94 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool isExpanded = false;
-  void onTapToNormalList() {
+  onTapMyDay() {
+    Navigator.of(context).pushNamed(myDayRoute);
+  }
+
+  onTapImportant() {
+    Navigator.of(context).pushNamed(taskListRoute, arguments: false);
+  }
+
+  onTapPlanned() {
+    Navigator.of(context).pushNamed(plannedRoute);
+  }
+
+  onTapAssignToMe() {
+    Navigator.of(context).pushNamed(taskListRoute);
+  }
+
+  onTapFlaggedEmail() {
+    Navigator.of(context).pushNamed(flaggedRoute);
+  }
+
+  onTapTask() {
     Navigator.of(context).pushNamed(taskListRoute);
   }
 
   @override
   Widget build(BuildContext context) {
+    List<Map<String, dynamic>> listHomeItem = [
+      {
+        'text': 'My Day',
+        'ontap': onTapMyDay,
+        'icon': Icons.wb_sunny_outlined,
+        'iconColor': AppConfigs.greyColor,
+        'endNumber': 0
+      },
+      {
+        'text': 'Important',
+        'ontap': onTapImportant,
+        'icon': Icons.star_border,
+        'iconColor': AppConfigs.pinkColor,
+        'endNumber': 1,
+      },
+      {
+        'text': 'Planned',
+        'ontap': onTapPlanned,
+        'icon': Icons.list_alt_outlined,
+        'iconColor': AppConfigs.redColor,
+        'endNumber': 1,
+      },
+      {
+        'text': 'Assign to me',
+        'ontap': onTapAssignToMe,
+        'icon': Icons.person_outline,
+        'iconColor': AppConfigs.greenColor,
+        'endNumber': 1,
+      },
+      {
+        'text': 'Flagged email',
+        'ontap': onTapFlaggedEmail,
+        'icon': Icons.flag_outlined,
+        'iconColor': AppConfigs.orangeColor,
+        'endNumber': 0,
+      },
+      {
+        'text': 'Tasks',
+        'ontap': onTapTask,
+        'icon': Icons.task_outlined,
+        'iconColor': AppConfigs.blueColor,
+        'endNumber': 1,
+      },
+    ];
     return Scaffold(
       appBar: HomeAppBar(context: context).appBar(),
       body: SingleChildScrollView(
         padding: EdgeInsets.only(left: 7, right: 5),
         child: Column(
           children: [
+            for (Map<String, dynamic> item in listHomeItem)
+              HomeItem(
+                text: item['text'],
+                icon: item['icon'],
+                iconColor: item['iconColor'],
+                endNumber: item['endNumber'],
+                onTap: item['ontap'],
+              ),
+            AppConfigs.dividerWhiteStyle,
             HomeItem(
               onTap: () {
-                Navigator.of(context).pushNamed(myDayRoute);
-              },
-              icon: Icons.wb_sunny_outlined,
-              text: 'My Day',
-              iconColor: AppConfigs.greyColor,
-              endNumber: 0,
-            ),
-            HomeItem(
-              onTap: () {
-                Navigator.of(context)
-                    .pushNamed(taskListRoute, arguments: false);
-              },
-              icon: Icons.star_border,
-              text: 'Important',
-              iconColor: AppConfigs.pinkColor,
-              endNumber: 1,
-            ),
-            HomeItem(
-              onTap: () {
-                Navigator.of(context).pushNamed(plannedRoute);
-              },
-              icon: Icons.list_alt_outlined,
-              text: 'Planned',
-              iconColor: AppConfigs.redColor,
-              endNumber: 2,
-            ),
-            HomeItem(
-              onTap: () {
-                onTapToNormalList();
-              },
-              icon: Icons.person_outline,
-              text: 'Assigned to me',
-              iconColor: AppConfigs.greenColor,
-              endNumber: 3,
-            ),
-            HomeItem(
-              onTap: () {
-                Navigator.of(context).pushNamed(flaggedRoute);
-              },
-              icon: Icons.flag_outlined,
-              text: 'Flagged email',
-              iconColor: AppConfigs.orangeColor,
-              endNumber: 0,
-            ),
-            HomeItem(
-              onTap: () {
-                onTapToNormalList();
-              },
-              icon: Icons.task_outlined,
-              text: 'Tasks',
-              iconColor: AppConfigs.blueColor,
-              endNumber: 0,
-            ),
-            Divider(
-              thickness: 2,
-            ),
-            HomeItem(
-              onTap: () {
-                onTapToNormalList();
+                Navigator.of(context).pushNamed(taskListRoute);
               },
               text: 'Getting started',
               icon: Icons.list,
@@ -119,26 +135,10 @@ class _HomePageState extends State<HomePage> {
                   showDialog(
                     context: context,
                     builder: (context) {
-                      return AlertDialog(
-                        title: Text('New List'),
-                        content: TextField(
-                          autofocus: true,
-                          decoration: const InputDecoration(
-                            hintText: 'Enter your list title',
-                          ),
-                        ),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: Text('Cancel'),
-                          ),
-                          TextButton(
-                            onPressed: () {},
-                            child: Text('Create list'),
-                          )
-                        ],
+                      return HomeDialog(
+                        title: 'New List',
+                        hintText: 'Enter your list title',
+                        positiveButton: 'Create list',
                       );
                     },
                   );
@@ -165,26 +165,10 @@ class _HomePageState extends State<HomePage> {
                 showDialog(
                     context: context,
                     builder: (context) {
-                      return AlertDialog(
-                        title: Text('Create a group'),
-                        content: TextField(
-                          autofocus: true,
-                          decoration: const InputDecoration(
-                            hintText: 'Name this group',
-                          ),
-                        ),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: Text('Cancel'),
-                          ),
-                          TextButton(
-                            onPressed: () {},
-                            child: Text('Create group'),
-                          )
-                        ],
+                      return HomeDialog(
+                        title: 'Create a group',
+                        hintText: 'Name this group',
+                        positiveButton: 'Create group',
                       );
                     });
               },

@@ -81,7 +81,6 @@ class _SettingsPageState extends State<SettingsPage> {
                 'General',
                 style: AppConfigs.itemGreyTextStyle,
               ),
-              const SizedBox(height: 10),
               const SettingsList()
             ],
           ),
