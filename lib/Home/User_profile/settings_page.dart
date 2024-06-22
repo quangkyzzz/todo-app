@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/Constant/app_configs.dart';
-import 'package:todo_app/Home/User_profile/components/settings_list.dart';
+import 'package:todo_app/constant/app_configs.dart';
+import 'package:todo_app/home/user_profile/components/settings_list.dart';
 
-class SettingsView extends StatefulWidget {
-  const SettingsView({super.key});
+class SettingsPage extends StatefulWidget {
+  const SettingsPage({super.key});
 
   @override
-  State<SettingsView> createState() => _SettingsViewState();
+  State<SettingsPage> createState() => _SettingsPageState();
 }
 
-class _SettingsViewState extends State<SettingsView> {
+class _SettingsPageState extends State<SettingsPage> {
   bool isAddNewTask = true;
 
   @override

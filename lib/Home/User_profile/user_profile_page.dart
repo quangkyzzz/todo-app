@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/Constant/app_configs.dart';
-import 'package:todo_app/Constant/routes.dart';
-import 'package:todo_app/Home/User_profile/components/user_profile_item.dart';
+import 'package:todo_app/constant/app_configs.dart';
+import 'package:todo_app/constant/routes.dart';
+import 'package:todo_app/home/user_profile/components/user_profile_item.dart';
 
-class UserProfileView extends StatefulWidget {
-  const UserProfileView({super.key});
+class UserProfilePage extends StatefulWidget {
+  const UserProfilePage({super.key});
 
   @override
-  State<UserProfileView> createState() => _UserProfileViewState();
+  State<UserProfilePage> createState() => _UserProfilePageState();
 }
 
-class _UserProfileViewState extends State<UserProfileView> {
+class _UserProfilePageState extends State<UserProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +22,7 @@ class _UserProfileViewState extends State<UserProfileView> {
             Row(
               children: [
                 const CircleAvatar(
-                  backgroundImage: AssetImage('assets/images/avatar.jpg'),
+                  backgroundImage: AssetImage(AppConfigs.avatarImage),
                   radius: 35,
                 ),
                 const Spacer(),

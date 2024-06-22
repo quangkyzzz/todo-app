@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/Constant/app_configs.dart';
-import 'package:todo_app/Task/Task_list/components/incomplete_list.dart';
-import 'package:todo_app/Task/Task_list/components/task_list_popup_menu.dart';
+import 'package:todo_app/constant/app_configs.dart';
+import 'package:todo_app/task/task_list/components/incomplete_list.dart';
+import 'package:todo_app/task/task_list/components/task_list_popup_menu.dart';
 
-class PlannedView extends StatefulWidget {
-  const PlannedView({super.key});
+class PlannedPage extends StatefulWidget {
+  const PlannedPage({super.key});
 
   @override
-  State<PlannedView> createState() => _PlannedViewState();
+  State<PlannedPage> createState() => _PlannedPageState();
 }
 
-class _PlannedViewState extends State<PlannedView> {
+class _PlannedPageState extends State<PlannedPage> {
   List<Map<String, dynamic>> incompleteTask = [
     {
       'taskID': '1',

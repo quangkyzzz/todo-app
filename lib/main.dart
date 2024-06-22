@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/Constant/app_configs.dart';
 import 'package:todo_app/Constant/routes.dart';
-import 'package:todo_app/Home/home_view.dart';
+import 'package:todo_app/Home/home_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: AppConfigs.theme,
-      home: const HomeView(),
+      home: const HomePage(),
       routes: allRoute,
     );
   }

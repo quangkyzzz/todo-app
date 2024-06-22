@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/Task/Task_list/components/incomplete_list.dart';
-import 'package:todo_app/Task/Task_list/components/task_list_popup_menu.dart';
+import 'package:todo_app/task/task_list/components/incomplete_list.dart';
+import 'package:todo_app/task/task_list/components/task_list_popup_menu.dart';
 import 'package:todo_app/constant/app_configs.dart';
 
-class TaskListView extends StatefulWidget {
+class TaskListPage extends StatefulWidget {
   final bool haveCompletedList;
-  const TaskListView({super.key, this.haveCompletedList = true});
+  const TaskListPage({super.key, this.haveCompletedList = true});
 
   @override
-  State<TaskListView> createState() => _TaskListViewState();
+  State<TaskListPage> createState() => _TaskListPageState();
 }
 
-class _TaskListViewState extends State<TaskListView> {
+class _TaskListPageState extends State<TaskListPage> {
   bool isChecked = false;
   bool isExpanded = true;
   List<Map<String, dynamic>> incompleteTask = [

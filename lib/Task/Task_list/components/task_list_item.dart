@@ -1,10 +1,10 @@
 // ignore_for_file: unnecessary_string_interpolations
 
 import 'package:flutter/material.dart';
-import 'package:todo_app/Constant/app_configs.dart';
-import 'package:todo_app/Constant/routes.dart';
-import 'package:todo_app/Models/task_model.dart';
-import 'package:todo_app/Task/Task_list/components/task_list_item_bottom_icon.dart';
+import 'package:todo_app/constant/app_configs.dart';
+import 'package:todo_app/constant/routes.dart';
+import 'package:todo_app/models/task_model.dart';
+import 'package:todo_app/task/task_list/components/task_list_item_bottom_icon.dart';
 
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
@@ -78,19 +78,23 @@ class _TaskListItemState extends State<TaskListItem> {
                       (step != null)
                           ? ItemIcon(text: step.toString())
                           : const SizedBox(),
+                      const SizedBox(width: 5),
                       (dueDate != null)
                           ? ItemIcon(
                               text:
                                   '${DateFormat.MMMEd('en_US').format(dueDate)}')
                           : const SizedBox(),
+                      const SizedBox(width: 5),
                       (notiTime != null)
                           ? ItemIcon(
                               text:
                                   '${DateFormat.MMMEd('en_US').add_jm().format(notiTime)}')
                           : const SizedBox(),
+                      const SizedBox(width: 5),
                       (filePath != null)
                           ? const ItemIcon(icon: Icons.attach_file_outlined)
                           : const SizedBox(),
+                      const SizedBox(width: 5),
                       (note != null)
                           ? const ItemIcon(icon: Icons.note_outlined)
                           : const SizedBox(),

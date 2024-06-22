@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/Constant/app_configs.dart';
-import 'package:todo_app/Constant/routes.dart';
-import 'package:todo_app/Models/task_model.dart';
-import 'package:todo_app/Task/Task_list/components/task_list_popup_menu.dart';
+import 'package:todo_app/constant/app_configs.dart';
+import 'package:todo_app/constant/routes.dart';
+import 'package:todo_app/models/task_model.dart';
+import 'package:todo_app/task/task_list/components/task_list_popup_menu.dart';
 
-class TaskView extends StatefulWidget {
+class TaskPage extends StatefulWidget {
   final TaskModel task;
-  const TaskView({
+  const TaskPage({
     super.key,
     required this.task,
   });
 
   @override
-  State<TaskView> createState() => _TaskViewState();
+  State<TaskPage> createState() => _TaskPageState();
 }
 
-class _TaskViewState extends State<TaskView> {
+class _TaskPageState extends State<TaskPage> {
   late bool isOnMyDay;
   late bool isChecked;
   late bool isImportant;

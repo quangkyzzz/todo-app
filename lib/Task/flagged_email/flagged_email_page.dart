@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/Constant/app_configs.dart';
-import 'package:todo_app/Task/Task_list/components/incomplete_list.dart';
-import 'package:todo_app/Task/Task_list/components/task_list_popup_menu.dart';
+import 'package:todo_app/constant/app_configs.dart';
+import 'package:todo_app/task/task_list/components/incomplete_list.dart';
+import 'package:todo_app/task/task_list/components/task_list_popup_menu.dart';
 
-class FlaggedEmailView extends StatefulWidget {
-  const FlaggedEmailView({super.key});
+class FlaggedEmailPage extends StatefulWidget {
+  const FlaggedEmailPage({super.key});
 
   @override
-  State<FlaggedEmailView> createState() => _FlaggedEmailViewState();
+  State<FlaggedEmailPage> createState() => _FlaggedEmailPageState();
 }
 
-class _FlaggedEmailViewState extends State<FlaggedEmailView> {
+class _FlaggedEmailPageState extends State<FlaggedEmailPage> {
   List<Map<String, dynamic>> incompleteTask = [
     {
       'taskID': '1',

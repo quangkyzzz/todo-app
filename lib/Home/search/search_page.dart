@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/Constant/app_configs.dart';
-import 'package:todo_app/Task/Task_list/components/incomplete_list.dart';
+import 'package:todo_app/constant/app_configs.dart';
+import 'package:todo_app/task/task_list/components/incomplete_list.dart';
 
-class SearchView extends StatefulWidget {
-  const SearchView({super.key});
+class SearchPage extends StatefulWidget {
+  const SearchPage({super.key});
 
   @override
-  State<SearchView> createState() => _SearchViewState();
+  State<SearchPage> createState() => _SearchPageState();
 }
 
-class _SearchViewState extends State<SearchView> {
+class _SearchPageState extends State<SearchPage> {
   List<Map<String, dynamic>> incompleteTask = [
     {
       'taskID': '1',
       'title': 'task 1',
       'isCompleted': false,
       'note': 'xdd',
-      'filePath': 'xdd'
+      'filePath': 'xdd',
+      'dueDate': DateTime(2021, 1, 22),
+      'notiTime': DateTime(2024, 3, 15, 12, 12),
     },
     {
       'taskID': '2',

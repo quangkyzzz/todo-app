@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/Constant/app_configs.dart';
-import 'package:todo_app/Models/task_model.dart';
-import 'package:todo_app/Task/Task_list/components/task_list_item.dart';
+import 'package:todo_app/constant/app_configs.dart';
+import 'package:todo_app/models/task_model.dart';
+import 'package:todo_app/task/task_list/components/task_list_item.dart';
 
-class ReOrderView extends StatefulWidget {
-  const ReOrderView({super.key});
+class ReorderPage extends StatefulWidget {
+  const ReorderPage({super.key});
 
   @override
-  State<ReOrderView> createState() => _ReOrderViewState();
+  State<ReorderPage> createState() => _ReorderPageState();
 }
 
-class _ReOrderViewState extends State<ReOrderView> {
+class _ReorderPageState extends State<ReorderPage> {
   List<Map<String, dynamic>> incompleteTask = [
     {
       'taskID': '1',

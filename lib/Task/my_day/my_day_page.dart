@@ -2,18 +2,18 @@
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:todo_app/Constant/app_configs.dart';
-import 'package:todo_app/Task/Task_list/components/incomplete_list.dart';
-import 'package:todo_app/Task/Task_list/components/task_list_popup_menu.dart';
+import 'package:todo_app/constant/app_configs.dart';
+import 'package:todo_app/task/task_list/components/incomplete_list.dart';
+import 'package:todo_app/task/task_list/components/task_list_popup_menu.dart';
 
-class MyDayView extends StatefulWidget {
-  const MyDayView({super.key});
+class MyDayPage extends StatefulWidget {
+  const MyDayPage({super.key});
 
   @override
-  State<MyDayView> createState() => _MyDayViewState();
+  State<MyDayPage> createState() => _MyDayPageState();
 }
 
-class _MyDayViewState extends State<MyDayView> {
+class _MyDayPageState extends State<MyDayPage> {
   bool ischecked = false;
   bool isExpanded = true;
   List<Map<String, dynamic>> incompleteTask = [
@@ -37,7 +37,7 @@ class _MyDayViewState extends State<MyDayView> {
       fit: StackFit.expand,
       children: [
         Image.asset(
-          'assets/images/backGroundImage.jpg',
+          AppConfigs.backGroundImage,
           fit: BoxFit.fitHeight,
         ),
         Scaffold(

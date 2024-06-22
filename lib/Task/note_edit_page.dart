@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/Constant/app_configs.dart';
 
-class NoteEditView extends StatefulWidget {
-  const NoteEditView({super.key});
+class NoteEditPage extends StatefulWidget {
+  const NoteEditPage({super.key});
 
   @override
-  State<NoteEditView> createState() => _NoteEditViewState();
+  State<NoteEditPage> createState() => _NoteEditPageState();
 }
 
-class _NoteEditViewState extends State<NoteEditView> {
+class _NoteEditPageState extends State<NoteEditPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

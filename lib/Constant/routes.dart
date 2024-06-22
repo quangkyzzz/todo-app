@@ -1,40 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/Task/Flagged_email/flagged_email_view.dart';
-import 'package:todo_app/Models/task_model.dart';
-import 'package:todo_app/Task/My_day/my_day_view.dart';
-import 'package:todo_app/Task/Planned/planned_view.dart';
-import 'package:todo_app/Home/Search/search_view.dart';
-import 'package:todo_app/Task/Task_list/components/re_order_view.dart';
-import 'package:todo_app/Task/note_edit_view.dart';
-import 'package:todo_app/Task/Task_list/task_list_view.dart';
-import 'package:todo_app/Task/task_view.dart';
-import 'package:todo_app/Home/User_profile/settings_view.dart';
-import 'package:todo_app/Home/User_profile/user_profile_view.dart';
+import 'package:todo_app/task/flagged_email/flagged_email_page.dart';
+import 'package:todo_app/models/task_model.dart';
+import 'package:todo_app/task/my_day/my_day_page.dart';
+import 'package:todo_app/task/planned/planned_page.dart';
+import 'package:todo_app/home/search/search_page.dart';
+import 'package:todo_app/task/task_list/components/reorder_page.dart';
+import 'package:todo_app/task/note_edit_page.dart';
+import 'package:todo_app/task/task_list/task_list_page.dart';
+import 'package:todo_app/task/task_page.dart';
+import 'package:todo_app/home/user_profile/settings_page.dart';
+import 'package:todo_app/home/user_profile/user_profile_page.dart';
 
-const userProfileRoute = '/user-profile/';
-const taskListRoute = '/task-list/';
-const searchRoute = '/search/';
-const flaggedRoute = '/flagged/';
-const plannedRoute = '/planned/';
-const myDayRoute = '/my-day/';
-const settingsRoute = '/user-profile/settings/';
-const reOrderRoute = '/task-list/re-order/';
-const taskRoute = '/task/';
-const noteEditRoute = '/task/note-edit/';
+const userProfileRoute = '/user_profile';
+const taskListRoute = '/task_list';
+const searchRoute = '/search';
+const flaggedRoute = '/flagged';
+const plannedRoute = '/planned';
+const myDayRoute = '/my_day';
+const settingsRoute = '/user_profile/settings';
+const reorderRoute = '/task_list/reorder';
+const taskRoute = '/task';
+const noteEditRoute = '/task/note_edit';
 var allRoute = {
-  userProfileRoute: (context) => const UserProfileView(),
-  taskListRoute: (context) => TaskListView(
+  userProfileRoute: (context) => const UserProfilePage(),
+  taskListRoute: (context) => TaskListPage(
         haveCompletedList:
             ((ModalRoute.of(context)?.settings.arguments) ?? true) as bool,
       ),
-  searchRoute: (context) => const SearchView(),
-  flaggedRoute: (context) => const FlaggedEmailView(),
-  plannedRoute: (context) => const PlannedView(),
-  myDayRoute: (context) => const MyDayView(),
-  settingsRoute: (context) => const SettingsView(),
-  reOrderRoute: (context) => const ReOrderView(),
-  taskRoute: (context) => TaskView(
+  searchRoute: (context) => const SearchPage(),
+  flaggedRoute: (context) => const FlaggedEmailPage(),
+  plannedRoute: (context) => const PlannedPage(),
+  myDayRoute: (context) => const MyDayPage(),
+  settingsRoute: (context) => const SettingsPage(),
+  reorderRoute: (context) => const ReorderPage(),
+  taskRoute: (context) => TaskPage(
         task: ModalRoute.of(context)!.settings.arguments as TaskModel,
       ),
-  noteEditRoute: (context) => const NoteEditView(),
+  noteEditRoute: (context) => const NoteEditPage(),
 };

@@ -1,20 +1,20 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:todo_app/Constant/app_configs.dart';
-import 'package:todo_app/Constant/routes.dart';
-import 'package:todo_app/Home/components/home_app_bar.dart';
-import 'package:todo_app/Home/components/home_group.dart';
-import 'package:todo_app/Home/components/home_item.dart';
+import 'package:todo_app/constant/app_configs.dart';
+import 'package:todo_app/constant/routes.dart';
+import 'package:todo_app/home/components/home_app_bar.dart';
+import 'package:todo_app/home/components/home_group.dart';
+import 'package:todo_app/home/components/home_item.dart';
 
-class HomeView extends StatefulWidget {
-  const HomeView({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
   @override
-  State<HomeView> createState() => _HomeViewState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _HomeViewState extends State<HomeView> {
+class _HomePageState extends State<HomePage> {
   bool isExpanded = false;
   void onTapToNormalList() {
     Navigator.of(context).pushNamed(taskListRoute);

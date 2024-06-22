@@ -1,8 +1,8 @@
 // ignore_for_file: sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
-import 'package:todo_app/Constant/app_configs.dart';
-import 'package:todo_app/Constant/routes.dart';
+import 'package:todo_app/constant/app_configs.dart';
+import 'package:todo_app/constant/routes.dart';
 
 class TaskListPopupMenu extends StatelessWidget {
   final List<String> toRemove;
@@ -39,7 +39,7 @@ class TaskListPopupMenu extends StatelessWidget {
           text: 'Reorder',
           icon: Icons.swap_vert,
           onTap: () {
-            Navigator.of(context).pushNamed(reOrderRoute);
+            Navigator.of(context).pushNamed(reorderRoute);
           },
         ),
       ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/Constant/app_configs.dart';
+import 'package:todo_app/constant/app_configs.dart';
 
 class SettingsList extends StatefulWidget {
   const SettingsList({super.key});

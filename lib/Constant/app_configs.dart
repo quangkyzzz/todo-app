@@ -67,4 +67,8 @@ class AppConfigs {
     thickness: 0.25,
     color: AppConfigs.whiteColor,
   );
+
+  //assets path
+  static const String avatarImage = 'assets/avatars/avatar.jpg';
+  static const String backGroundImage = 'assets/backgrounds/bg_my_day.jpg';
 }

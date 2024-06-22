@@ -1,8 +1,8 @@
 // ignore_for_file: sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
-import 'package:todo_app/Constant/app_configs.dart';
-import 'package:todo_app/Constant/routes.dart';
+import 'package:todo_app/constant/app_configs.dart';
+import 'package:todo_app/constant/routes.dart';
 
 class HomeAppBar {
   BuildContext context;
@@ -15,7 +15,7 @@ class HomeAppBar {
           Navigator.of(context).pushNamed(userProfileRoute);
         },
         child: const CircleAvatar(
-          backgroundImage: AssetImage('assets/images/avatar.jpg'),
+          backgroundImage: AssetImage(AppConfigs.avatarImage),
           radius: 15.0,
         ),
       ),
