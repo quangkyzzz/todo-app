@@ -39,85 +39,83 @@ class _TaskListItemState extends State<TaskListItem> {
 
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: BorderRadius.circular(10),
         color: AppConfigs.backgroundGreyColor,
       ),
       height: 60,
       margin: const EdgeInsets.only(bottom: 3),
-      child: Material(
-        child: InkWell(
-          onTap: () {
-            Navigator.of(context).pushNamed(
-              taskRoute,
-              arguments: widget.task,
-            );
-          },
-          splashColor: AppConfigs.whiteColor,
-          child: Row(
-            children: [
-              Checkbox(
-                tristate: false,
-                shape: const CircleBorder(),
-                value: isChecked,
-                onChanged: (bool? value) {
-                  setState(() {
-                    isChecked = value!;
-                  });
-                },
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 10),
-                  Text(
-                    widget.task.title,
-                    style: AppConfigs.itemTextStyle,
-                  ),
-                  Row(
-                    children: [
-                      (step != null)
-                          ? ItemIcon(text: step.toString())
-                          : const SizedBox(),
-                      const SizedBox(width: 5),
-                      (dueDate != null)
-                          ? ItemIcon(
-                              text:
-                                  '${DateFormat.MMMEd('en_US').format(dueDate)}')
-                          : const SizedBox(),
-                      const SizedBox(width: 5),
-                      (notiTime != null)
-                          ? ItemIcon(
-                              text:
-                                  '${DateFormat.MMMEd('en_US').add_jm().format(notiTime)}')
-                          : const SizedBox(),
-                      const SizedBox(width: 5),
-                      (filePath != null)
-                          ? const ItemIcon(icon: Icons.attach_file_outlined)
-                          : const SizedBox(),
-                      const SizedBox(width: 5),
-                      (note != null)
-                          ? const ItemIcon(icon: Icons.note_outlined)
-                          : const SizedBox(),
-                    ],
-                  )
-                ],
-              ),
-              const Spacer(),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    isImportant = !isImportant;
-                  });
-                },
-                child: (isImportant)
-                    ? const Icon(
-                        Icons.star,
-                        color: AppConfigs.blueColor,
-                      )
-                    : const Icon(Icons.star_border_outlined),
-              )
-            ],
-          ),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: InkWell(
+        onTap: () {
+          Navigator.of(context).pushNamed(
+            taskRoute,
+            arguments: widget.task,
+          );
+        },
+        child: Row(
+          children: [
+            Checkbox(
+              tristate: false,
+              shape: const CircleBorder(),
+              value: isChecked,
+              onChanged: (bool? value) {
+                setState(() {
+                  isChecked = value!;
+                });
+              },
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 10),
+                Text(
+                  widget.task.title,
+                  style: AppConfigs.itemTextStyle,
+                ),
+                Row(
+                  children: [
+                    (step != null)
+                        ? ItemIcon(text: step.toString())
+                        : const SizedBox(),
+                    const SizedBox(width: 5),
+                    (dueDate != null)
+                        ? ItemIcon(
+                            text:
+                                '${DateFormat.MMMEd('en_US').format(dueDate)}')
+                        : const SizedBox(),
+                    const SizedBox(width: 5),
+                    (notiTime != null)
+                        ? ItemIcon(
+                            text:
+                                '${DateFormat.MMMEd('en_US').add_jm().format(notiTime)}')
+                        : const SizedBox(),
+                    const SizedBox(width: 5),
+                    (filePath != null)
+                        ? const ItemIcon(icon: Icons.attach_file_outlined)
+                        : const SizedBox(),
+                    const SizedBox(width: 5),
+                    (note != null)
+                        ? const ItemIcon(icon: Icons.note_outlined)
+                        : const SizedBox(),
+                  ],
+                )
+              ],
+            ),
+            const Spacer(),
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  isImportant = !isImportant;
+                });
+              },
+              child: (isImportant)
+                  ? const Icon(
+                      Icons.star,
+                      color: AppConfigs.blueColor,
+                    )
+                  : const Icon(Icons.star_border_outlined),
+            ),
+          ],
         ),
       ),
     );
