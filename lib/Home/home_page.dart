@@ -106,15 +106,17 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      bottomNavigationBar: Row(
-        children: [
-          // ignore: sized_box_for_whitespace
-          Container(
-            height: 40,
-            width: 370,
-            child: InkWell(
-              onTap: () {
-                showDialog(
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        child: Row(
+          children: [
+            // ignore: sized_box_for_whitespace
+            Container(
+              height: 40,
+              width: 370,
+              child: InkWell(
+                onTap: () {
+                  showDialog(
                     context: context,
                     builder: (context) {
                       return AlertDialog(
@@ -138,60 +140,62 @@ class _HomePageState extends State<HomePage> {
                           )
                         ],
                       );
-                    });
-              },
-              child: const Row(
-                children: [
-                  Icon(
-                    Icons.add,
-                    color: AppConfigs.greyColor,
-                    size: 30,
-                  ),
-                  SizedBox(width: 10),
-                  Text(
-                    'New list',
-                    style: AppConfigs.itemGreyTextStyle,
-                  )
-                ],
+                    },
+                  );
+                },
+                child: const Row(
+                  children: [
+                    Icon(
+                      Icons.add,
+                      color: AppConfigs.greyColor,
+                      size: 30,
+                    ),
+                    SizedBox(width: 10),
+                    Text(
+                      'New list',
+                      style: AppConfigs.itemGreyTextStyle,
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
-          SizedBox(width: 5),
-          InkWell(
-            onTap: () {
-              showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      title: Text('Create a group'),
-                      content: TextField(
-                        autofocus: true,
-                        decoration: const InputDecoration(
-                          hintText: 'Name this group',
+            SizedBox(width: 5),
+            InkWell(
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text('Create a group'),
+                        content: TextField(
+                          autofocus: true,
+                          decoration: const InputDecoration(
+                            hintText: 'Name this group',
+                          ),
                         ),
-                      ),
-                      actions: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text('Cancel'),
-                        ),
-                        TextButton(
-                          onPressed: () {},
-                          child: Text('Create group'),
-                        )
-                      ],
-                    );
-                  });
-            },
-            child: Icon(
-              Icons.post_add,
-              color: AppConfigs.greyColor,
-              size: 30,
-            ),
-          )
-        ],
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text('Cancel'),
+                          ),
+                          TextButton(
+                            onPressed: () {},
+                            child: Text('Create group'),
+                          )
+                        ],
+                      );
+                    });
+              },
+              child: Icon(
+                Icons.post_add,
+                color: AppConfigs.greyColor,
+                size: 30,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

@@ -32,7 +32,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const CircleAvatar(
-                    backgroundImage: AssetImage('assets/images/avatar.jpg'),
+                    backgroundImage: AssetImage(AppConfigs.avatarImage),
                     radius: 35,
                   ),
                   const SizedBox(width: 20),
