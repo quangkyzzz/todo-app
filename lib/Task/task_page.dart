@@ -296,6 +296,7 @@ class _TaskPageState extends State<TaskPage> {
         ),
       ),
       bottomNavigationBar: Container(
+        padding: const EdgeInsets.only(bottom: 20),
         decoration: const BoxDecoration(
           border: Border(
             top: BorderSide(
@@ -344,9 +345,12 @@ class _TaskPageState extends State<TaskPage> {
                   },
                 );
               },
-              icon: const Icon(
-                Icons.delete_outline,
-                color: AppConfigs.greyColor,
+              icon: Transform.scale(
+                scale: 1.3,
+                child: const Icon(
+                  Icons.delete_outline,
+                  color: AppConfigs.greyColor,
+                ),
               ),
             )
           ],

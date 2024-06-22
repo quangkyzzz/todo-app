@@ -17,6 +17,15 @@ class _NoteEditPageState extends State<NoteEditPage> {
           'Edit your note',
           style: AppConfigs.titleTextStyle,
         ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Transform.scale(
+              scale: 1.3,
+              child: const Icon(Icons.save_outlined),
+            ),
+          )
+        ],
       ),
       body: const TextField(
         maxLines: null,
