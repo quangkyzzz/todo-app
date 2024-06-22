@@ -140,7 +140,7 @@ class _TaskListPageState extends State<TaskListPage> {
             child: const Icon(
               Icons.add,
               size: 40,
-              color: AppConfigs.blackColor,
+              color: AppConfigs.whiteColor,
             ),
           ),
         ),

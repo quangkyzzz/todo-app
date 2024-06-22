@@ -159,7 +159,7 @@ class _MyDayPageState extends State<MyDayPage> {
                     decoration: const BoxDecoration(shape: BoxShape.circle),
                     child: const Text(
                       'Suggestions',
-                      style: AppConfigs.itemBlackTextStyle,
+                      style: AppConfigs.itemTextStyle,
                     ),
                   ),
                 ),
@@ -222,7 +222,7 @@ class _MyDayPageState extends State<MyDayPage> {
                     child: const Icon(
                       Icons.add,
                       size: 40,
-                      color: AppConfigs.blackColor,
+                      color: AppConfigs.whiteColor,
                     ),
                   ),
                 ),
