@@ -43,9 +43,9 @@ class _SearchPageState extends State<SearchPage> {
           ),
         ),
         actions: [
-          InkWell(
-            onTap: () {},
-            child: const Icon(Icons.mic_outlined),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.mic_outlined),
           ),
           const SizedBox(width: 10),
           InkWell(
