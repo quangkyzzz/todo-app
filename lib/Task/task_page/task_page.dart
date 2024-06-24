@@ -191,6 +191,7 @@ class _TaskPageState extends State<TaskPage> {
           Icons.repeat_outlined,
           color: AppConfigs.greyColor,
         ),
+        'key': key,
         'text': 'Repeat',
         'onTap': onTapRepeat,
       },
@@ -254,7 +255,8 @@ class _TaskPageState extends State<TaskPage> {
                       : Transform.scale(
                           scale: 1.3,
                           child: const Icon(Icons.star_border_outlined)),
-                )
+                ),
+                const SizedBox(width: 15),
               ],
             ),
             const SizedBox(height: 10),
@@ -279,6 +281,7 @@ class _TaskPageState extends State<TaskPage> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 20),
                 child: TaskViewItem(
+                  key: item['key'],
                   icon: item['icon'],
                   text: item['text'],
                   textColor: item['textColor'] ?? AppConfigs.greyColor,
