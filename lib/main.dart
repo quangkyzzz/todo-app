@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/Constant/app_configs.dart';
-import 'package:todo_app/Constant/routes.dart';
+import 'package:todo_app/app_configs.dart';
+import 'package:todo_app/routes.dart';
 import 'package:todo_app/Home/home_page.dart';
 
 void main() {
