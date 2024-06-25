@@ -28,41 +28,41 @@ class MyTheme {
 
   //text style
   static const TextStyle titleTextStyle = TextStyle(
-    fontSize: 25,
+    fontSize: 24,
     fontWeight: FontWeight.w500,
   );
   static const TextStyle secondaryTitleTextStyle = TextStyle(
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: FontWeight.w400,
     color: MyTheme.whiteColor,
   );
   static const TextStyle secondaryTitleGreyTextStyle = TextStyle(
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: FontWeight.w400,
     color: MyTheme.greyColor,
   );
   static const TextStyle itemTextStyle = TextStyle(
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: FontWeight.w400,
     color: MyTheme.whiteColor,
   );
   static const TextStyle itemGreyTextStyle = TextStyle(
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: FontWeight.w400,
     color: MyTheme.greyColor,
   );
   static const TextStyle itemBlackTextStyle = TextStyle(
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: FontWeight.w400,
     color: MyTheme.blackColor,
   );
   static const TextStyle itemSmallTextStyle = TextStyle(
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: FontWeight.w400,
     color: MyTheme.whiteColor,
   );
   static const TextStyle itemSmallGreyTextStyle = TextStyle(
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: FontWeight.w400,
     color: MyTheme.greyColor,
   );

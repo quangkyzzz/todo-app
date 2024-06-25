@@ -52,7 +52,7 @@ class _MyDayPageState extends State<MyDayPage> {
               child: RichText(
                 text: TextSpan(
                     text: 'My Day',
-                    style: MyTheme.titleTextStyle,
+                    //style: MyTheme.titleTextStyle,
                     children: [
                       TextSpan(
                         text:
