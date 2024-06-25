@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/Constant/app_configs.dart';
+import 'package:todo_app/app_configs.dart';
 
 class NoteEditPage extends StatefulWidget {
   const NoteEditPage({super.key});
