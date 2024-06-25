@@ -78,14 +78,16 @@ class _TaskListItemState extends State<TaskListItem> {
                     const SizedBox(width: 5),
                     (dueDate != null)
                         ? ItemBottomIcon(
+                            textIcon: Icons.calendar_today_outlined,
                             text:
                                 '${DateFormat.MMMEd('en_US').format(dueDate)}')
                         : const SizedBox(),
                     const SizedBox(width: 5),
                     (notiTime != null)
                         ? ItemBottomIcon(
+                            textIcon: Icons.notifications_outlined,
                             text:
-                                '${DateFormat.MMMEd('en_US').add_jm().format(notiTime)}')
+                                '${DateFormat.MMMEd('en_US').format(notiTime)}')
                         : const SizedBox(),
                     const SizedBox(width: 5),
                     (filePath != null)
@@ -121,20 +123,33 @@ class _TaskListItemState extends State<TaskListItem> {
 }
 
 class ItemBottomIcon extends StatelessWidget {
+  final IconData? textIcon;
   final String? text;
   final IconData? icon;
   const ItemBottomIcon({
     super.key,
     this.text,
     this.icon,
+    this.textIcon,
   });
 
   @override
   Widget build(BuildContext context) {
     return ((text != null)
-        ? Text(
-            text!,
-            style: const TextStyle(color: AppConfigs.greyColor),
+        ? Row(
+            children: [
+              (textIcon != null)
+                  ? Icon(
+                      textIcon,
+                      size: 15,
+                      color: AppConfigs.greyColor,
+                    )
+                  : const SizedBox(),
+              Text(
+                text!,
+                style: const TextStyle(color: AppConfigs.greyColor),
+              ),
+            ],
           )
         : Icon(
             icon,
