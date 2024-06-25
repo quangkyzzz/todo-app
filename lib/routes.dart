@@ -4,7 +4,7 @@ import 'package:todo_app/task/flagged_email/flagged_email_page.dart';
 import 'package:todo_app/models/task_model.dart';
 import 'package:todo_app/task/my_day/my_day_page.dart';
 import 'package:todo_app/task/planned/planned_page.dart';
-import 'package:todo_app/home/search/search_page.dart';
+import 'package:todo_app/search/search_page.dart';
 import 'package:todo_app/task/task_list/components/reorder_page.dart';
 import 'package:todo_app/task/task_page/note_edit_page.dart';
 import 'package:todo_app/task/task_list/task_list_page.dart';

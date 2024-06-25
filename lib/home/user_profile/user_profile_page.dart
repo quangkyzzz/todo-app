@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/app_configs.dart';
 import 'package:todo_app/routes.dart';
-import 'package:todo_app/home/user_profile/components/user_profile_item.dart';
 
 class UserProfilePage extends StatefulWidget {
   const UserProfilePage({super.key});
@@ -71,6 +70,43 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 Navigator.of(context).pushNamed(settingsRoute);
               },
             )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class UserProfileItem extends StatelessWidget {
+  final Function onTap;
+  final String text;
+  final IconData icon;
+  const UserProfileItem({
+    super.key,
+    required this.text,
+    required this.icon,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 50,
+      child: InkWell(
+        onTap: () {
+          onTap();
+        },
+        child: Row(
+          children: [
+            Icon(
+              icon,
+              size: 35,
+            ),
+            const SizedBox(width: 10),
+            Text(
+              text,
+              style: AppConfigs.itemTextStyle,
+            ),
           ],
         ),
       ),

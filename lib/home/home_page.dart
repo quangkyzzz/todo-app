@@ -3,10 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/app_configs.dart';
 import 'package:todo_app/routes.dart';
-import 'package:todo_app/home/components/home_app_bar.dart';
-import 'package:todo_app/home/components/home_dialog.dart';
-import 'package:todo_app/home/components/home_group.dart';
-import 'package:todo_app/home/components/home_item.dart';
+import 'package:todo_app/home/home_group.dart';
+import 'package:todo_app/home/home_item.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -181,6 +179,95 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class HomeAppBar {
+  BuildContext context;
+  HomeAppBar({Key? key, required this.context});
+
+  AppBar appBar() {
+    return AppBar(
+      leading: InkWell(
+        onTap: () {
+          Navigator.of(context).pushNamed(userProfileRoute);
+        },
+        child: const CircleAvatar(
+          backgroundImage: AssetImage(AppConfigs.avatarImage),
+          radius: 15.0,
+        ),
+      ),
+      title: Container(
+        height: 50,
+        width: 300,
+        child: InkWell(
+          onTap: () {
+            Navigator.of(context).pushNamed(userProfileRoute);
+          },
+          child: RichText(
+            text: const TextSpan(
+              text: 'Quang Nguyen',
+              style: AppConfigs.titleTextStyle,
+              children: [
+                TextSpan(
+                  text: '\nquang.ndt@outlook.com',
+                  style: AppConfigs.secondaryTitleGreyTextStyle,
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+      actions: [
+        IconButton(
+          onPressed: () {
+            Navigator.of(context).pushNamed(searchRoute);
+          },
+          icon: const Icon(
+            Icons.search,
+            size: 40,
+            color: AppConfigs.greyColor,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class HomeDialog extends StatelessWidget {
+  final String title;
+  final String hintText;
+  final String positiveButton;
+  const HomeDialog({
+    super.key,
+    required this.title,
+    required this.hintText,
+    required this.positiveButton,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text(title),
+      content: TextField(
+        autofocus: true,
+        decoration: InputDecoration(
+          hintText: hintText,
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: const Text('Cancel'),
+        ),
+        TextButton(
+          onPressed: () {},
+          child: Text(positiveButton),
+        )
+      ],
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/app_configs.dart';
-import 'package:todo_app/home/user_profile/components/settings_list.dart';
+import 'package:todo_app/home/user_profile/settings_list.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
