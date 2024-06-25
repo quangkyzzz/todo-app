@@ -1,0 +1,36 @@
+import 'package:flutter/material.dart';
+import 'package:todo_app/Constant/app_configs.dart';
+
+class NoteEditPage extends StatefulWidget {
+  const NoteEditPage({super.key});
+
+  @override
+  State<NoteEditPage> createState() => _NoteEditPageState();
+}
+
+class _NoteEditPageState extends State<NoteEditPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Edit your note',
+          style: AppConfigs.titleTextStyle,
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Transform.scale(
+              scale: 1.3,
+              child: const Icon(Icons.save_outlined),
+            ),
+          )
+        ],
+      ),
+      body: const TextField(
+        maxLines: null,
+        keyboardType: TextInputType.multiline,
+      ),
+    );
+  }
+}
