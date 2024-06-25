@@ -3,10 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_app/app_configs.dart';
-import 'package:todo_app/task/my_day/component/my_day_floating_button.dart';
-import 'package:todo_app/task/task_list/components/completed_list.dart';
-import 'package:todo_app/task/task_list/components/incomplete_list.dart';
-import 'package:todo_app/task/task_list/components/task_list_popup_menu.dart';
+import 'package:todo_app/task/my_day/my_day_floating_button.dart';
+import 'package:todo_app/reuse_part/completed_list.dart';
+import 'package:todo_app/reuse_part/incomplete_list.dart';
+import 'package:todo_app/reuse_part/popup_menu_component.dart';
 
 class MyDayPage extends StatefulWidget {
   const MyDayPage({super.key});
@@ -62,7 +62,7 @@ class _MyDayPageState extends State<MyDayPage> {
               ),
             ),
             actions: const [
-              TaskListPopupMenu(
+              PopupMenuComponent(
                 toRemove: [
                   'reorder',
                   'turn_on_suggestions',

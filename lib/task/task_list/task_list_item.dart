@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/app_configs.dart';
 import 'package:todo_app/routes.dart';
 import 'package:todo_app/models/task_model.dart';
-import 'package:todo_app/task/task_list/components/task_list_item_bottom_icon.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
@@ -74,27 +73,27 @@ class _TaskListItemState extends State<TaskListItem> {
                 Row(
                   children: [
                     (step != null)
-                        ? ItemIcon(text: step.toString())
+                        ? ItemBottomIcon(text: step.toString())
                         : const SizedBox(),
                     const SizedBox(width: 5),
                     (dueDate != null)
-                        ? ItemIcon(
+                        ? ItemBottomIcon(
                             text:
                                 '${DateFormat.MMMEd('en_US').format(dueDate)}')
                         : const SizedBox(),
                     const SizedBox(width: 5),
                     (notiTime != null)
-                        ? ItemIcon(
+                        ? ItemBottomIcon(
                             text:
                                 '${DateFormat.MMMEd('en_US').add_jm().format(notiTime)}')
                         : const SizedBox(),
                     const SizedBox(width: 5),
                     (filePath != null)
-                        ? const ItemIcon(icon: Icons.attach_file_outlined)
+                        ? const ItemBottomIcon(icon: Icons.attach_file_outlined)
                         : const SizedBox(),
                     const SizedBox(width: 5),
                     (note != null)
-                        ? const ItemIcon(icon: Icons.note_outlined)
+                        ? const ItemBottomIcon(icon: Icons.note_outlined)
                         : const SizedBox(),
                   ],
                 )
@@ -118,5 +117,29 @@ class _TaskListItemState extends State<TaskListItem> {
         ),
       ),
     );
+  }
+}
+
+class ItemBottomIcon extends StatelessWidget {
+  final String? text;
+  final IconData? icon;
+  const ItemBottomIcon({
+    super.key,
+    this.text,
+    this.icon,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ((text != null)
+        ? Text(
+            text!,
+            style: const TextStyle(color: AppConfigs.greyColor),
+          )
+        : Icon(
+            icon,
+            size: 15,
+            color: AppConfigs.greyColor,
+          ));
   }
 }

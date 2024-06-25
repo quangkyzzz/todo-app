@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/app_configs.dart';
-import 'package:todo_app/task/task_list/components/incomplete_list.dart';
+import 'package:todo_app/reuse_part/incomplete_list.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/app_configs.dart';
-import 'package:todo_app/task/task_list/components/incomplete_list.dart';
-import 'package:todo_app/task/task_list/components/task_list_popup_menu.dart';
+import 'package:todo_app/reuse_part/add_floating_button_component.dart';
+import 'package:todo_app/reuse_part/incomplete_list.dart';
+import 'package:todo_app/reuse_part/popup_menu_component.dart';
 
 class PlannedPage extends StatefulWidget {
   const PlannedPage({super.key});
@@ -64,7 +65,7 @@ class _PlannedPageState extends State<PlannedPage> {
           ),
         ),
         actions: const [
-          TaskListPopupMenu(
+          PopupMenuComponent(
             toRemove: ['reorder', 'turn_on_suggestions', 'duplicate_list'],
           )
         ],
@@ -120,61 +121,7 @@ class _PlannedPageState extends State<PlannedPage> {
           ],
         ),
       ),
-      floatingActionButton: Container(
-        decoration: const BoxDecoration(
-          shape: BoxShape.circle,
-          color: AppConfigs.blueColor,
-        ),
-        child: InkWell(
-          splashColor: AppConfigs.blackColor,
-          customBorder: const CircleBorder(),
-          onTap: () {
-            showModalBottomSheet(
-              isScrollControlled: true,
-              context: context,
-              builder: (BuildContext context) {
-                return Container(
-                  padding: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).viewInsets.bottom),
-                  color: AppConfigs.backgroundGreyColor,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Checkbox(
-                        shape: const CircleBorder(),
-                        value: false,
-                        onChanged: (bool? value) {},
-                      ),
-                      const Expanded(
-                        child: TextField(
-                          autofocus: true,
-                          decoration: InputDecoration(
-                            hintText: 'Add a task',
-                          ),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        child: const Icon(Icons.arrow_upward_outlined),
-                      )
-                    ],
-                  ),
-                );
-              },
-            );
-          },
-          child: Ink(
-            decoration: const BoxDecoration(shape: BoxShape.circle),
-            height: 70,
-            width: 70,
-            child: const Icon(
-              Icons.add,
-              size: 40,
-              color: AppConfigs.blackColor,
-            ),
-          ),
-        ),
-      ),
+      floatingActionButton: AddFloatingButton(),
     );
   }
 }
