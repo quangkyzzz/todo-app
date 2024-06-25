@@ -15,27 +15,27 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool isExpanded = false;
-  onTapMyDay() {
+  onTapMyDay(BuildContext context) {
     Navigator.of(context).pushNamed(myDayRoute);
   }
 
-  onTapImportant() {
+  onTapImportant(BuildContext context) {
     Navigator.of(context).pushNamed(taskListRoute, arguments: false);
   }
 
-  onTapPlanned() {
+  onTapPlanned(BuildContext context) {
     Navigator.of(context).pushNamed(plannedRoute);
   }
 
-  onTapAssignToMe() {
+  onTapAssignToMe(BuildContext context) {
     Navigator.of(context).pushNamed(taskListRoute);
   }
 
-  onTapFlaggedEmail() {
+  onTapFlaggedEmail(BuildContext context) {
     Navigator.of(context).pushNamed(flaggedRoute);
   }
 
-  onTapTask() {
+  onTapTask(BuildContext context) {
     Navigator.of(context).pushNamed(taskListRoute);
   }
 
@@ -97,7 +97,9 @@ class _HomePageState extends State<HomePage> {
                 icon: item['icon'],
                 iconColor: item['iconColor'],
                 endNumber: item['endNumber'],
-                onTap: item['ontap'],
+                onTap: () {
+                  item['ontap'](context);
+                },
               ),
             AppConfigs.dividerWhiteStyle,
             HomeItem(

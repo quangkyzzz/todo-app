@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/app_configs.dart';
-import 'package:todo_app/reuse_part/incomplete_list.dart';
+import 'package:todo_app/reuse_part/incomplete_list_component.dart';
 
-class CompletedList extends StatefulWidget {
+class CompletedListComponent extends StatefulWidget {
   final List<Map<String, dynamic>> taskList;
-  const CompletedList({
+  const CompletedListComponent({
     super.key,
     required this.taskList,
   });
 
   @override
-  State<CompletedList> createState() => _CompletedListState();
+  State<CompletedListComponent> createState() => _CompletedListComponentState();
 }
 
-class _CompletedListState extends State<CompletedList> {
+class _CompletedListComponentState extends State<CompletedListComponent> {
   bool isExpanded = true;
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class _CompletedListState extends State<CompletedList> {
       trailing:
           Icon(isExpanded ? Icons.expand_more : Icons.keyboard_arrow_left),
       children: [
-        IncompleteList(
+        IncompleteListComponent(
           taskList: widget.taskList,
         ),
       ],

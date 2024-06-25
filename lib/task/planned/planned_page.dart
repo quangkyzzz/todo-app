@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/app_configs.dart';
 import 'package:todo_app/reuse_part/add_floating_button_component.dart';
-import 'package:todo_app/reuse_part/incomplete_list.dart';
+import 'package:todo_app/reuse_part/incomplete_list_component.dart';
 import 'package:todo_app/reuse_part/popup_menu_component.dart';
 
 class PlannedPage extends StatefulWidget {
@@ -27,34 +27,34 @@ class _PlannedPageState extends State<PlannedPage> {
       'dueDate': DateTime.now(),
     },
   ];
+  List<Map<String, dynamic>> listPopupMennu = [
+    {
+      'text': 'Overdue',
+      'icon': Icons.event_busy_outlined,
+    },
+    {
+      'text': 'Today',
+      'icon': Icons.today_outlined,
+    },
+    {
+      'text': 'Tomorrow',
+      'icon': Icons.event_outlined,
+    },
+    {
+      'text': 'This week',
+      'icon': Icons.date_range_outlined,
+    },
+    {
+      'text': 'Later',
+      'icon': Icons.calendar_month_outlined,
+    },
+    {
+      'text': 'All planned',
+      'icon': Icons.event_note_outlined,
+    },
+  ];
   @override
   Widget build(BuildContext context) {
-    List<Map<String, dynamic>> listPopupMennu = [
-      {
-        'text': 'Overdue',
-        'icon': Icons.event_busy_outlined,
-      },
-      {
-        'text': 'Today',
-        'icon': Icons.today_outlined,
-      },
-      {
-        'text': 'Tomorrow',
-        'icon': Icons.event_outlined,
-      },
-      {
-        'text': 'This week',
-        'icon': Icons.date_range_outlined,
-      },
-      {
-        'text': 'Later',
-        'icon': Icons.calendar_month_outlined,
-      },
-      {
-        'text': 'All planned',
-        'icon': Icons.event_note_outlined,
-      },
-    ];
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -117,11 +117,11 @@ class _PlannedPageState extends State<PlannedPage> {
             const SizedBox(height: 20),
 
             //task list
-            IncompleteList(taskList: incompleteTask),
+            IncompleteListComponent(taskList: incompleteTask),
           ],
         ),
       ),
-      floatingActionButton: AddFloatingButton(),
+      floatingActionButton: const AddFloatingButtonComponent(),
     );
   }
 }

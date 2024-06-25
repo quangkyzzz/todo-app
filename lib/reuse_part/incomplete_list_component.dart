@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/models/task_model.dart';
 import 'package:todo_app/task/task_list/task_list_item.dart';
 
-class IncompleteList extends StatelessWidget {
+class IncompleteListComponent extends StatelessWidget {
   final List<Map<String, dynamic>> taskList;
-  const IncompleteList({super.key, required this.taskList});
+  const IncompleteListComponent({super.key, required this.taskList});
 
   @override
   Widget build(BuildContext context) {

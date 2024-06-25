@@ -72,7 +72,7 @@ class _PopupMenuComponentState extends State<PopupMenuComponent> {
       'onTap': onTapTurnOnSuggestions,
     },
   ];
-  onTapSortBy() {
+  onTapSortBy(BuildContext context) {
     showModalBottomSheet(
       constraints: const BoxConstraints(maxHeight: 350),
       isDismissible: true,
@@ -85,11 +85,11 @@ class _PopupMenuComponentState extends State<PopupMenuComponent> {
     );
   }
 
-  onTapReorder() {
+  onTapReorder(BuildContext context) {
     Navigator.of(context).pushNamed(reorderRoute);
   }
 
-  onTapAddShortcut() {
+  onTapAddShortcut(BuildContext context) {
     showModalBottomSheet(
       isDismissible: true,
       enableDrag: true,
@@ -104,7 +104,7 @@ class _PopupMenuComponentState extends State<PopupMenuComponent> {
     );
   }
 
-  onTapChangeTheme() {
+  onTapChangeTheme(BuildContext context) {
     showModalBottomSheet(
       isDismissible: true,
       enableDrag: true,
@@ -119,9 +119,9 @@ class _PopupMenuComponentState extends State<PopupMenuComponent> {
     );
   }
 
-  onTapHideCompletedTasks() {}
+  onTapHideCompletedTasks(BuildContext context) {}
 
-  onTapSendCopy() {
+  onTapSendCopy(BuildContext context) {
     showModalBottomSheet(
       isDismissible: true,
       enableDrag: true,
@@ -136,7 +136,7 @@ class _PopupMenuComponentState extends State<PopupMenuComponent> {
     );
   }
 
-  onTapDuplicateList() {
+  onTapDuplicateList(BuildContext context) {
     showModalBottomSheet(
       isDismissible: true,
       enableDrag: true,
@@ -151,7 +151,7 @@ class _PopupMenuComponentState extends State<PopupMenuComponent> {
     );
   }
 
-  onTapPrintList() {
+  onTapPrintList(BuildContext context) {
     showModalBottomSheet(
       isDismissible: true,
       enableDrag: true,
@@ -166,7 +166,7 @@ class _PopupMenuComponentState extends State<PopupMenuComponent> {
     );
   }
 
-  onTapTurnOnSuggestions() {
+  onTapTurnOnSuggestions(BuildContext context) {
     showModalBottomSheet(
       isDismissible: true,
       enableDrag: true,
@@ -190,7 +190,9 @@ class _PopupMenuComponentState extends State<PopupMenuComponent> {
           child: PopupItem(
             text: item['text'],
             icon: item['icon'],
-            onTap: item['onTap'],
+            onTap: () {
+              item['onTap'](context);
+            },
           ),
         )
     ];

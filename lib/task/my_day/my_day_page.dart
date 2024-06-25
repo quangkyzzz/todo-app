@@ -3,9 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_app/app_configs.dart';
-import 'package:todo_app/task/my_day/my_day_floating_button.dart';
-import 'package:todo_app/reuse_part/completed_list.dart';
-import 'package:todo_app/reuse_part/incomplete_list.dart';
+import 'package:todo_app/task/my_day/my_day_floating_buttons.dart';
+import 'package:todo_app/reuse_part/completed_list_component.dart';
+import 'package:todo_app/reuse_part/incomplete_list_component.dart';
 import 'package:todo_app/reuse_part/popup_menu_component.dart';
 
 class MyDayPage extends StatefulWidget {
@@ -74,11 +74,11 @@ class _MyDayPageState extends State<MyDayPage> {
           ),
           body: SingleChildScrollView(
             child: Column(children: [
-              IncompleteList(taskList: incompleteTask),
-              CompletedList(taskList: incompleteTask),
+              IncompleteListComponent(taskList: incompleteTask),
+              CompletedListComponent(taskList: incompleteTask),
             ]),
           ),
-          floatingActionButton: const MyDayFloatingButton(),
+          floatingActionButton: const MyDayFloatingButtons(),
         ),
       ],
     );

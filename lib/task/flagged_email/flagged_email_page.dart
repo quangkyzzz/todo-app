@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/app_configs.dart';
-import 'package:todo_app/reuse_part/incomplete_list.dart';
+import 'package:todo_app/reuse_part/incomplete_list_component.dart';
 import 'package:todo_app/reuse_part/popup_menu_component.dart';
 
 class FlaggedEmailPage extends StatefulWidget {
@@ -51,7 +51,7 @@ class _FlaggedEmailPageState extends State<FlaggedEmailPage> {
             style: TextStyle(color: AppConfigs.orangeColor),
           ),
           children: [
-            IncompleteList(taskList: incompleteTask),
+            IncompleteListComponent(taskList: incompleteTask),
           ],
         ),
       ),

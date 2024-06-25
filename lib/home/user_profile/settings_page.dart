@@ -36,42 +36,40 @@ class _SettingsPageState extends State<SettingsPage> {
                     radius: 35,
                   ),
                   const SizedBox(width: 20),
-                  IntrinsicWidth(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        const Text(
-                          'Quang Nguyễn',
-                          style: AppConfigs.itemTextStyle,
-                        ),
-                        const Text(
-                          'quang.ndt@outlook.com',
-                          style: AppConfigs.secondaryTitleGreyTextStyle,
-                        ),
-                        const SizedBox(height: 10),
-                        InkWell(
-                          onTap: () {},
-                          child: Container(
-                            padding: const EdgeInsets.only(top: 20, bottom: 20),
-                            child: const Text(
-                              'MANAGE ACCOUNT',
-                              style: AppConfigs.itemTextStyle,
-                            ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const Text(
+                        'Quang Nguyễn',
+                        style: AppConfigs.itemTextStyle,
+                      ),
+                      const Text(
+                        'quang.ndt@outlook.com',
+                        style: AppConfigs.secondaryTitleGreyTextStyle,
+                      ),
+                      const SizedBox(height: 10),
+                      InkWell(
+                        onTap: () {},
+                        child: Container(
+                          padding: const EdgeInsets.only(top: 20, bottom: 20),
+                          child: const Text(
+                            'MANAGE ACCOUNT',
+                            style: AppConfigs.itemTextStyle,
                           ),
                         ),
-                        InkWell(
-                          onTap: () {},
-                          child: Container(
-                            padding: const EdgeInsets.only(top: 10, bottom: 20),
-                            child: const Text(
-                              'SIGN OUT',
-                              style: TextStyle(
-                                  fontSize: 20, color: AppConfigs.redColor),
-                            ),
+                      ),
+                      InkWell(
+                        onTap: () {},
+                        child: Container(
+                          padding: const EdgeInsets.only(top: 10, bottom: 20),
+                          child: const Text(
+                            'SIGN OUT',
+                            style: TextStyle(
+                                fontSize: 20, color: AppConfigs.redColor),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   )
                 ],
               ),

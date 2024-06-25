@@ -49,13 +49,13 @@ class _TaskPageState extends State<TaskPage> {
     },
   ];
 
-  onTapAddToMyDay() {
+  onTapAddToMyDay(BuildContext context) {
     setState(() {
       isOnMyDay = !isOnMyDay;
     });
   }
 
-  onTapRemindMe() {
+  onTapRemindMe(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -68,7 +68,7 @@ class _TaskPageState extends State<TaskPage> {
     );
   }
 
-  onTapRepeat() {
+  onTapRepeat(BuildContext context) {
     RenderBox box = key.currentContext!.findRenderObject() as RenderBox;
     Offset possition = box.localToGlobal(Offset.zero);
     showMenu(
@@ -92,7 +92,7 @@ class _TaskPageState extends State<TaskPage> {
     );
   }
 
-  onTapAddFile() {
+  onTapAddFile(BuildContext context) {
     showModalBottomSheet(
       showDragHandle: true,
       constraints: const BoxConstraints(
@@ -277,7 +277,9 @@ class _TaskPageState extends State<TaskPage> {
                   icon: item['icon'],
                   text: item['text'],
                   textColor: item['textColor'] ?? AppConfigs.greyColor,
-                  onTap: item['onTap'],
+                  onTap: () {
+                    item['onTap'](context);
+                  },
                 ),
               ),
             const SizedBox(height: 20),

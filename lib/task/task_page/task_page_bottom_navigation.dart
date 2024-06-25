@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/app_configs.dart';
 import 'package:todo_app/models/task_model.dart';
+import 'package:todo_app/reuse_part/show_alert_dialog_component.dart';
 
 class TaskPageBottomNavigation extends StatelessWidget {
   final TaskModel task;
@@ -30,35 +31,10 @@ class TaskPageBottomNavigation extends StatelessWidget {
           const Spacer(),
           IconButton(
             onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    title: const Text(
-                      'Are you sure?',
-                      style: AppConfigs.itemTextStyle,
-                    ),
-                    content:
-                        Text(' "${task.title}" will be permanently deleted'),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: const Text('Cancel'),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: const Text(
-                          'Delete',
-                          style: TextStyle(color: AppConfigs.redColor),
-                        ),
-                      )
-                    ],
-                  );
-                },
+              showAlertDialog(
+                context,
+                'Are you sure?',
+                ' "${task.title}" will be permanently deleted',
               );
             },
             icon: Transform.scale(

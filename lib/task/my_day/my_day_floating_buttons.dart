@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/app_configs.dart';
+import 'package:todo_app/reuse_part/add_floating_button_component.dart';
 
-class MyDayFloatingButton extends StatefulWidget {
-  const MyDayFloatingButton({super.key});
+class MyDayFloatingButtons extends StatefulWidget {
+  const MyDayFloatingButtons({super.key});
 
   @override
-  State<MyDayFloatingButton> createState() => _MyDayFloatingButtonState();
+  State<MyDayFloatingButtons> createState() => _MyDayFloatingButtonsState();
 }
 
-class _MyDayFloatingButtonState extends State<MyDayFloatingButton> {
-  bool isChecked = false;
-
+class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -39,76 +38,13 @@ class _MyDayFloatingButtonState extends State<MyDayFloatingButton> {
           ),
         ),
         const Spacer(flex: 1),
-        Container(
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
-            color: AppConfigs.blueColor,
-          ),
-          child: InkWell(
-            splashColor: AppConfigs.blackColor,
-            customBorder: const CircleBorder(),
-            onTap: () {
-              onAddTaskTap(context);
-            },
-            child: Ink(
-              decoration: const BoxDecoration(shape: BoxShape.circle),
-              height: 60,
-              width: 60,
-              child: const Icon(
-                Icons.add,
-                size: 40,
-                color: AppConfigs.whiteColor,
-              ),
-            ),
-          ),
-        ),
+        const AddFloatingButtonComponent(),
       ],
     );
   }
 
-  Future<dynamic> onAddTaskTap(BuildContext context) {
-    return showModalBottomSheet(
-      isScrollControlled: true,
-      context: context,
-      builder: (BuildContext context) {
-        return StatefulBuilder(builder: (context, setState) {
-          return Container(
-            padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom),
-            color: AppConfigs.backgroundGreyColor,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Checkbox(
-                  shape: const CircleBorder(),
-                  value: isChecked,
-                  onChanged: (bool? value) {
-                    setState(() {
-                      isChecked = value!;
-                    });
-                  },
-                ),
-                const Expanded(
-                  child: TextField(
-                    autofocus: true,
-                    decoration: InputDecoration(
-                      hintText: 'Add a task',
-                    ),
-                  ),
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.arrow_upward),
-                )
-              ],
-            ),
-          );
-        });
-      },
-    );
-  }
-
   Future<dynamic> onSuggestionsTap(BuildContext context) {
+    bool isChecked = false;
     return showModalBottomSheet(
       showDragHandle: true,
       constraints: const BoxConstraints(maxHeight: 200),
