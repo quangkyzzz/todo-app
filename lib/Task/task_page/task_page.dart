@@ -22,6 +22,32 @@ class _TaskPageState extends State<TaskPage> {
   late bool isChecked;
   late bool isImportant;
   late final TextEditingController _taskNameController;
+  List<Map<String, dynamic>> listPopupItem = [
+    {
+      'text': 'Daily',
+      'icon': Icons.calendar_today_outlined,
+    },
+    {
+      'text': 'Weekdays',
+      'icon': Icons.calendar_today_outlined,
+    },
+    {
+      'text': 'Weekly',
+      'icon': Icons.calendar_today_outlined,
+    },
+    {
+      'text': 'Monthly',
+      'icon': Icons.calendar_today_outlined,
+    },
+    {
+      'text': 'Yearly',
+      'icon': Icons.calendar_today_outlined,
+    },
+    {
+      'text': 'Custom',
+      'icon': Icons.calendar_today_outlined,
+    },
+  ];
 
   onTapAddToMyDay() {
     setState(() {
@@ -54,48 +80,14 @@ class _TaskPageState extends State<TaskPage> {
         0,
       ),
       items: [
-        PopupMenuItem(
-          child: PopupItem(
-            text: 'Daily',
-            icon: Icons.calendar_today_outlined,
-            onTap: () {},
-          ),
-        ),
-        PopupMenuItem(
-          child: PopupItem(
-            text: 'Weekdays',
-            icon: Icons.calendar_today_outlined,
-            onTap: () {},
-          ),
-        ),
-        PopupMenuItem(
-          child: PopupItem(
-            text: 'Weekly',
-            icon: Icons.calendar_today_outlined,
-            onTap: () {},
-          ),
-        ),
-        PopupMenuItem(
-          child: PopupItem(
-            text: 'Monthly',
-            icon: Icons.calendar_today_outlined,
-            onTap: () {},
-          ),
-        ),
-        PopupMenuItem(
-          child: PopupItem(
-            text: 'Yearly',
-            icon: Icons.calendar_today_outlined,
-            onTap: () {},
-          ),
-        ),
-        PopupMenuItem(
-          child: PopupItem(
-            text: 'Custom',
-            icon: Icons.calendar_today_outlined,
-            onTap: () {},
-          ),
-        ),
+        for (Map<String, dynamic> item in listPopupItem)
+          PopupMenuItem(
+            child: PopupItem(
+              text: item['text'],
+              icon: item['icon'],
+              onTap: () {},
+            ),
+          )
       ],
     );
   }
