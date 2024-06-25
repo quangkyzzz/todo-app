@@ -57,6 +57,16 @@ class AppConfigs {
     fontWeight: FontWeight.w400,
     color: AppConfigs.blackColor,
   );
+  static const TextStyle itemSmallTextStyle = TextStyle(
+    fontSize: 15,
+    fontWeight: FontWeight.w400,
+    color: AppConfigs.whiteColor,
+  );
+  static const TextStyle itemSmallGreyTextStyle = TextStyle(
+    fontSize: 15,
+    fontWeight: FontWeight.w400,
+    color: AppConfigs.greyColor,
+  );
 
   //divider style
   static const Divider dividerGreyStyle = Divider(
