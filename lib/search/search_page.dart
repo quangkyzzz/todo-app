@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/app_configs.dart';
+import 'package:todo_app/themes.dart';
 import 'package:todo_app/reuse_part/incomplete_list_component.dart';
 
 class SearchPage extends StatefulWidget {
@@ -34,11 +34,11 @@ class _SearchPageState extends State<SearchPage> {
         title: Container(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           decoration: BoxDecoration(
-            color: AppConfigs.backgroundGreyColor,
+            color: MyTheme.backgroundGreyColor,
             borderRadius: BorderRadius.circular(10),
           ),
           child: const TextField(
-            style: AppConfigs.itemTextStyle,
+            style: MyTheme.itemTextStyle,
             decoration: InputDecoration(hintText: 'Enter task name'),
           ),
         ),
@@ -58,7 +58,7 @@ class _SearchPageState extends State<SearchPage> {
                       onTap: () {},
                       child: const Text(
                         'Hide completed item',
-                        style: AppConfigs.itemTextStyle,
+                        style: MyTheme.itemTextStyle,
                       ),
                     ),
                   ),

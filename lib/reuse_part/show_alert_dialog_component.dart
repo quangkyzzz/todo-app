@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/app_configs.dart';
+import 'package:todo_app/themes.dart';
 
 Future<dynamic> showAlertDialog(
   BuildContext context,
@@ -12,7 +12,7 @@ Future<dynamic> showAlertDialog(
       return AlertDialog(
         title: Text(
           title,
-          style: AppConfigs.itemTextStyle,
+          style: MyTheme.itemTextStyle,
         ),
         content: Text(content),
         actions: [
@@ -28,7 +28,7 @@ Future<dynamic> showAlertDialog(
             },
             child: const Text(
               'Delete',
-              style: TextStyle(color: AppConfigs.redColor),
+              style: TextStyle(color: MyTheme.redColor),
             ),
           )
         ],

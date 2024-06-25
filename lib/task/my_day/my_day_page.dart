@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_app/app_configs.dart';
+import 'package:todo_app/themes.dart';
 import 'package:todo_app/task/my_day/my_day_floating_buttons.dart';
 import 'package:todo_app/reuse_part/completed_list_component.dart';
 import 'package:todo_app/reuse_part/incomplete_list_component.dart';
@@ -51,12 +52,12 @@ class _MyDayPageState extends State<MyDayPage> {
               child: RichText(
                 text: TextSpan(
                     text: 'My Day',
-                    style: AppConfigs.titleTextStyle,
+                    style: MyTheme.titleTextStyle,
                     children: [
                       TextSpan(
                         text:
                             '\n${DateFormat.MMMMEEEEd('en_US').format(DateTime.now())}',
-                        style: AppConfigs.secondaryTitleTextStyle,
+                        style: MyTheme.secondaryTitleTextStyle,
                       )
                     ]),
               ),

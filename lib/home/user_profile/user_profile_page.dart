@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/app_configs.dart';
+import 'package:todo_app/themes.dart';
 import 'package:todo_app/routes.dart';
 
 class UserProfilePage extends StatefulWidget {
@@ -35,7 +36,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     },
                     child: const Icon(
                       Icons.close,
-                      color: AppConfigs.greyColor,
+                      color: MyTheme.greyColor,
                       size: 35,
                     ),
                   ),
@@ -44,11 +45,11 @@ class _UserProfilePageState extends State<UserProfilePage> {
             ),
             const Text(
               'Quang Nguyen',
-              style: AppConfigs.titleTextStyle,
+              style: MyTheme.titleTextStyle,
             ),
             const Text(
               'quang.ndt@outlook.com',
-              style: AppConfigs.secondaryTitleGreyTextStyle,
+              style: MyTheme.secondaryTitleGreyTextStyle,
             ),
             AppConfigs.dividerGreyStyle,
             UserProfileItem(
@@ -105,7 +106,7 @@ class UserProfileItem extends StatelessWidget {
             const SizedBox(width: 10),
             Text(
               text,
-              style: AppConfigs.itemTextStyle,
+              style: MyTheme.itemTextStyle,
             ),
           ],
         ),

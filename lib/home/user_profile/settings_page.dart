@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/app_configs.dart';
+import 'package:todo_app/themes.dart';
 import 'package:todo_app/home/user_profile/settings_list.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -18,7 +19,7 @@ class _SettingsPageState extends State<SettingsPage> {
       appBar: AppBar(
           title: const Text(
         'Settings',
-        style: AppConfigs.titleTextStyle,
+        style: MyTheme.titleTextStyle,
       )),
       body: SingleChildScrollView(
         child: Padding(
@@ -41,11 +42,11 @@ class _SettingsPageState extends State<SettingsPage> {
                     children: [
                       const Text(
                         'Quang Nguyễn',
-                        style: AppConfigs.itemTextStyle,
+                        style: MyTheme.itemTextStyle,
                       ),
                       const Text(
                         'quang.ndt@outlook.com',
-                        style: AppConfigs.secondaryTitleGreyTextStyle,
+                        style: MyTheme.secondaryTitleGreyTextStyle,
                       ),
                       const SizedBox(height: 10),
                       InkWell(
@@ -54,7 +55,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           padding: const EdgeInsets.only(top: 20, bottom: 20),
                           child: const Text(
                             'MANAGE ACCOUNT',
-                            style: AppConfigs.itemTextStyle,
+                            style: MyTheme.itemTextStyle,
                           ),
                         ),
                       ),
@@ -65,7 +66,7 @@ class _SettingsPageState extends State<SettingsPage> {
                           child: const Text(
                             'SIGN OUT',
                             style: TextStyle(
-                                fontSize: 20, color: AppConfigs.redColor),
+                                fontSize: 20, color: MyTheme.redColor),
                           ),
                         ),
                       ),
@@ -77,7 +78,7 @@ class _SettingsPageState extends State<SettingsPage> {
               const SizedBox(height: 10),
               const Text(
                 'General',
-                style: AppConfigs.itemGreyTextStyle,
+                style: MyTheme.itemGreyTextStyle,
               ),
               const SettingsList()
             ],

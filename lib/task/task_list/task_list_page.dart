@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/reuse_part/add_floating_button_component.dart';
 import 'package:todo_app/reuse_part/incomplete_list_component.dart';
 import 'package:todo_app/reuse_part/popup_menu_component.dart';
-import 'package:todo_app/app_configs.dart';
+import 'package:todo_app/themes.dart';
 
 class TaskListPage extends StatefulWidget {
   final bool haveCompletedList;
@@ -40,14 +40,14 @@ class _TaskListPageState extends State<TaskListPage> {
                 'Tasks',
                 style: TextStyle(
                   fontSize: 25,
-                  color: AppConfigs.blueColor,
+                  color: MyTheme.blueColor,
                 ),
               )
             : const Text(
                 'Important',
                 style: TextStyle(
                   fontSize: 25,
-                  color: AppConfigs.pinkColor,
+                  color: MyTheme.pinkColor,
                 ),
               ),
         actions: const [
@@ -66,7 +66,7 @@ class _TaskListPageState extends State<TaskListPage> {
                     'Completed',
                     style: TextStyle(
                       fontSize: 20,
-                      color: AppConfigs.blueColor,
+                      color: MyTheme.blueColor,
                     ),
                   ),
                   onExpansionChanged: (bool expanded) {

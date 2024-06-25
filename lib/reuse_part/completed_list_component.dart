@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/app_configs.dart';
+import 'package:todo_app/themes.dart';
 import 'package:todo_app/reuse_part/incomplete_list_component.dart';
 
 class CompletedListComponent extends StatefulWidget {
@@ -23,7 +23,7 @@ class _CompletedListComponentState extends State<CompletedListComponent> {
         'Completed',
         style: TextStyle(
           fontSize: 20,
-          color: AppConfigs.blueColor,
+          color: MyTheme.blueColor,
         ),
       ),
       onExpansionChanged: (bool expanded) {

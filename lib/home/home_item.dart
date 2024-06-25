@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/app_configs.dart';
+import 'package:todo_app/themes.dart';
 
 class HomeItem extends StatelessWidget {
   final String text;
@@ -34,7 +34,7 @@ class HomeItem extends StatelessWidget {
             const SizedBox(width: 10),
             Text(
               text,
-              style: AppConfigs.itemTextStyle,
+              style: MyTheme.itemTextStyle,
             ),
             const Spacer(
               flex: 1,
@@ -42,7 +42,7 @@ class HomeItem extends StatelessWidget {
             ((endNumber != 0)
                 ? Text(
                     endNumber.toString(),
-                    style: const TextStyle(color: AppConfigs.greyColor),
+                    style: const TextStyle(color: MyTheme.greyColor),
                   )
                 : const SizedBox())
           ],

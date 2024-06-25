@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/app_configs.dart';
+import 'package:todo_app/themes.dart';
 import 'package:todo_app/models/task_model.dart';
 import 'package:todo_app/reuse_part/show_alert_dialog_component.dart';
 
@@ -17,7 +17,7 @@ class TaskPageBottomNavigation extends StatelessWidget {
       decoration: const BoxDecoration(
         border: Border(
           top: BorderSide(
-            color: AppConfigs.greyColor,
+            color: MyTheme.greyColor,
             width: 0.3,
           ),
         ),
@@ -26,7 +26,7 @@ class TaskPageBottomNavigation extends StatelessWidget {
         children: [
           const Text(
             'Create 1 hour ago',
-            style: AppConfigs.itemGreyTextStyle,
+            style: MyTheme.itemGreyTextStyle,
           ),
           const Spacer(),
           IconButton(
@@ -41,7 +41,7 @@ class TaskPageBottomNavigation extends StatelessWidget {
               scale: 1.3,
               child: const Icon(
                 Icons.delete_outline,
-                color: AppConfigs.greyColor,
+                color: MyTheme.greyColor,
               ),
             ),
           )

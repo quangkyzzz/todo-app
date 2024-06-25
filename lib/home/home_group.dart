@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/app_configs.dart';
+import 'package:todo_app/themes.dart';
 import 'package:todo_app/routes.dart';
 import 'package:todo_app/reuse_part/popup_menu_component.dart';
 import 'package:todo_app/home/home_item.dart';
@@ -18,7 +18,7 @@ class _HomeGroupState extends State<HomeGroup> {
     return ExpansionTile(
       title: const Text(
         'Group 1',
-        style: AppConfigs.itemTextStyle,
+        style: MyTheme.itemTextStyle,
       ),
       tilePadding: const EdgeInsets.only(left: 7),
       childrenPadding: const EdgeInsets.only(left: 20),
@@ -73,7 +73,7 @@ class _HomeGroupState extends State<HomeGroup> {
           },
           text: 'my list 1',
           icon: Icons.list,
-          iconColor: AppConfigs.blueColor,
+          iconColor: MyTheme.blueColor,
           endNumber: 0,
         ),
         HomeItem(
@@ -82,7 +82,7 @@ class _HomeGroupState extends State<HomeGroup> {
           },
           text: 'my list 2',
           icon: Icons.list,
-          iconColor: AppConfigs.blueColor,
+          iconColor: MyTheme.blueColor,
           endNumber: 0,
         )
       ],

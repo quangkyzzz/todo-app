@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/app_configs.dart';
+import 'package:todo_app/themes.dart';
 import 'package:todo_app/routes.dart';
 import 'package:todo_app/models/task_model.dart';
 import 'package:todo_app/reuse_part/popup_menu_component.dart';
@@ -105,13 +105,13 @@ class _TaskPageState extends State<TaskPage> {
           children: [
             const Text(
               'Upload from',
-              style: AppConfigs.itemTextStyle,
+              style: MyTheme.itemTextStyle,
             ),
             const SizedBox(height: 10),
             TaskViewItem(
               icon: const Icon(
                 Icons.folder_outlined,
-                color: AppConfigs.greyColor,
+                color: MyTheme.greyColor,
               ),
               text: 'Device files',
               onTap: () {},
@@ -119,7 +119,7 @@ class _TaskPageState extends State<TaskPage> {
             TaskViewItem(
               icon: const Icon(
                 Icons.photo_camera_outlined,
-                color: AppConfigs.greyColor,
+                color: MyTheme.greyColor,
               ),
               text: 'Camera',
               onTap: () {},
@@ -152,20 +152,20 @@ class _TaskPageState extends State<TaskPage> {
         'icon': (isOnMyDay)
             ? const Icon(
                 Icons.wb_sunny_outlined,
-                color: AppConfigs.blueColor,
+                color: MyTheme.blueColor,
               )
             : const Icon(
                 Icons.wb_sunny_outlined,
-                color: AppConfigs.greyColor,
+                color: MyTheme.greyColor,
               ),
         'text': 'Add to My Day',
-        'textColor': (isOnMyDay) ? AppConfigs.blueColor : AppConfigs.greyColor,
+        'textColor': (isOnMyDay) ? MyTheme.blueColor : MyTheme.greyColor,
         'onTap': onTapAddToMyDay,
       },
       {
         'icon': const Icon(
           Icons.notifications_outlined,
-          color: AppConfigs.greyColor,
+          color: MyTheme.greyColor,
         ),
         'text': 'Remind me',
         'onTap': onTapRemindMe,
@@ -173,7 +173,7 @@ class _TaskPageState extends State<TaskPage> {
       {
         'icon': const Icon(
           Icons.calendar_today_outlined,
-          color: AppConfigs.greyColor,
+          color: MyTheme.greyColor,
         ),
         'text': 'Add due date',
         'onTap': onTapRemindMe,
@@ -181,7 +181,7 @@ class _TaskPageState extends State<TaskPage> {
       {
         'icon': const Icon(
           Icons.repeat_outlined,
-          color: AppConfigs.greyColor,
+          color: MyTheme.greyColor,
         ),
         'key': key,
         'text': 'Repeat',
@@ -190,7 +190,7 @@ class _TaskPageState extends State<TaskPage> {
       {
         'icon': const Icon(
           Icons.attach_file_outlined,
-          color: AppConfigs.greyColor,
+          color: MyTheme.greyColor,
         ),
         'text': 'Add file',
         'onTap': onTapAddFile,
@@ -202,7 +202,7 @@ class _TaskPageState extends State<TaskPage> {
       appBar: AppBar(
         title: const Text(
           'Tasks',
-          style: AppConfigs.titleTextStyle,
+          style: MyTheme.titleTextStyle,
         ),
       ),
       body: SingleChildScrollView(
@@ -226,7 +226,7 @@ class _TaskPageState extends State<TaskPage> {
                 Expanded(
                   child: TextField(
                     decoration: const InputDecoration(border: InputBorder.none),
-                    style: AppConfigs.titleTextStyle,
+                    style: MyTheme.titleTextStyle,
                     controller: _taskNameController,
                   ),
                 ),
@@ -241,7 +241,7 @@ class _TaskPageState extends State<TaskPage> {
                           scale: 1.3,
                           child: const Icon(
                             Icons.star,
-                            color: AppConfigs.blueColor,
+                            color: MyTheme.blueColor,
                           ),
                         )
                       : Transform.scale(
@@ -263,7 +263,7 @@ class _TaskPageState extends State<TaskPage> {
                       hintText: 'Add step',
                       border: InputBorder.none,
                     ),
-                    style: AppConfigs.itemTextStyle,
+                    style: MyTheme.itemTextStyle,
                   ),
                 )
               ],
@@ -276,7 +276,7 @@ class _TaskPageState extends State<TaskPage> {
                   key: item['key'],
                   icon: item['icon'],
                   text: item['text'],
-                  textColor: item['textColor'] ?? AppConfigs.greyColor,
+                  textColor: item['textColor'] ?? MyTheme.greyColor,
                   onTap: () {
                     item['onTap'](context);
                   },
@@ -291,7 +291,7 @@ class _TaskPageState extends State<TaskPage> {
                   },
                   child: const Text(
                     'Add note',
-                    style: AppConfigs.itemGreyTextStyle,
+                    style: MyTheme.itemGreyTextStyle,
                   )),
             )
           ],
@@ -312,7 +312,7 @@ class TaskViewItem extends StatelessWidget {
     required this.icon,
     required this.text,
     required this.onTap,
-    this.textColor = AppConfigs.greyColor,
+    this.textColor = MyTheme.greyColor,
   });
 
   @override

@@ -1,7 +1,7 @@
 // ignore_for_file: unnecessary_string_interpolations
 
 import 'package:flutter/material.dart';
-import 'package:todo_app/app_configs.dart';
+import 'package:todo_app/themes.dart';
 import 'package:todo_app/routes.dart';
 import 'package:todo_app/models/task_model.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -38,7 +38,7 @@ class _TaskListItemState extends State<TaskListItem> {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: AppConfigs.backgroundGreyColor,
+        color: MyTheme.backgroundGreyColor,
       ),
       height: 60,
       margin: const EdgeInsets.only(bottom: 3),
@@ -68,7 +68,7 @@ class _TaskListItemState extends State<TaskListItem> {
                 const SizedBox(height: 10),
                 Text(
                   widget.task.title,
-                  style: AppConfigs.itemTextStyle,
+                  style: MyTheme.itemTextStyle,
                 ),
                 Row(
                   children: [
@@ -111,7 +111,7 @@ class _TaskListItemState extends State<TaskListItem> {
               child: (isImportant)
                   ? const Icon(
                       Icons.star,
-                      color: AppConfigs.blueColor,
+                      color: MyTheme.blueColor,
                     )
                   : const Icon(Icons.star_border_outlined),
             ),
@@ -142,19 +142,19 @@ class ItemBottomIcon extends StatelessWidget {
                   ? Icon(
                       textIcon,
                       size: 15,
-                      color: AppConfigs.greyColor,
+                      color: MyTheme.greyColor,
                     )
                   : const SizedBox(),
               Text(
                 text!,
-                style: const TextStyle(color: AppConfigs.greyColor),
+                style: const TextStyle(color: MyTheme.greyColor),
               ),
             ],
           )
         : Icon(
             icon,
             size: 15,
-            color: AppConfigs.greyColor,
+            color: MyTheme.greyColor,
           ));
   }
 }

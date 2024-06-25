@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/app_configs.dart';
+import 'package:todo_app/themes.dart';
 
 class NoteEditPage extends StatefulWidget {
   const NoteEditPage({super.key});
@@ -15,7 +15,7 @@ class _NoteEditPageState extends State<NoteEditPage> {
       appBar: AppBar(
         title: const Text(
           'Edit your note',
-          style: AppConfigs.titleTextStyle,
+          style: MyTheme.titleTextStyle,
         ),
         actions: [
           IconButton(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/app_configs.dart';
+import 'package:todo_app/themes.dart';
 import 'package:todo_app/models/task_model.dart';
 import 'package:todo_app/task/task_list/task_list_item.dart';
 
@@ -38,7 +38,7 @@ class _ReorderPageState extends State<ReorderPage> {
       appBar: AppBar(
         title: const Text(
           'Reorder tasks',
-          style: AppConfigs.titleTextStyle,
+          style: MyTheme.titleTextStyle,
         ),
       ),
       body: ReorderableListView(
@@ -46,7 +46,7 @@ class _ReorderPageState extends State<ReorderPage> {
             padding: EdgeInsets.all(8.0),
             child: Text(
               'Tap and hold to reorder task',
-              style: AppConfigs.itemTextStyle,
+              style: MyTheme.itemTextStyle,
             ),
           ),
           children: [

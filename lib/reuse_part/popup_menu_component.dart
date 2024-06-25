@@ -1,7 +1,7 @@
 // ignore_for_file: sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
-import 'package:todo_app/app_configs.dart';
+import 'package:todo_app/themes.dart';
 import 'package:todo_app/routes.dart';
 
 class PopupMenuComponent extends StatefulWidget {
@@ -228,7 +228,7 @@ class PopupItem extends StatelessWidget {
           const SizedBox(width: 15),
           Text(
             text,
-            style: AppConfigs.itemSmallTextStyle,
+            style: MyTheme.itemSmallTextStyle,
           ),
         ]),
       ),
@@ -248,7 +248,7 @@ class BottomSheetItem extends StatelessWidget {
         children: [
           const Text(
             'Sort by',
-            style: AppConfigs.itemTextStyle,
+            style: MyTheme.itemTextStyle,
           ),
           const SizedBox(height: 10),
           PopupItem(

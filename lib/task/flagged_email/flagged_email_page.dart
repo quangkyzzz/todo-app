@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/app_configs.dart';
+import 'package:todo_app/themes.dart';
 import 'package:todo_app/reuse_part/incomplete_list_component.dart';
 import 'package:todo_app/reuse_part/popup_menu_component.dart';
 
@@ -34,7 +34,7 @@ class _FlaggedEmailPageState extends State<FlaggedEmailPage> {
           'Flagged email',
           style: TextStyle(
             fontSize: 30,
-            color: AppConfigs.orangeColor,
+            color: MyTheme.orangeColor,
           ),
         ),
         actions: const [
@@ -48,7 +48,7 @@ class _FlaggedEmailPageState extends State<FlaggedEmailPage> {
           initiallyExpanded: true,
           title: const Text(
             'Flagged this week',
-            style: TextStyle(color: AppConfigs.orangeColor),
+            style: TextStyle(color: MyTheme.orangeColor),
           ),
           children: [
             IncompleteListComponent(taskList: incompleteTask),

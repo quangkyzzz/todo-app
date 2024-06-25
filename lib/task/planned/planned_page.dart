@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/app_configs.dart';
+import 'package:todo_app/themes.dart';
 import 'package:todo_app/reuse_part/add_floating_button_component.dart';
 import 'package:todo_app/reuse_part/incomplete_list_component.dart';
 import 'package:todo_app/reuse_part/popup_menu_component.dart';
@@ -61,7 +61,7 @@ class _PlannedPageState extends State<PlannedPage> {
           'Planned',
           style: TextStyle(
             fontSize: 30,
-            color: AppConfigs.redColor,
+            color: MyTheme.redColor,
           ),
         ),
         actions: const [
@@ -93,7 +93,7 @@ class _PlannedPageState extends State<PlannedPage> {
               child: Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: AppConfigs.backgroundGreyColor,
+                  color: MyTheme.backgroundGreyColor,
                   borderRadius: BorderRadius.circular(5),
                 ),
                 child: const Row(
@@ -102,13 +102,12 @@ class _PlannedPageState extends State<PlannedPage> {
                     Icon(
                       Icons.list,
                       size: 30,
-                      color: AppConfigs.redColor,
+                      color: MyTheme.redColor,
                     ),
                     SizedBox(width: 10),
                     Text(
                       'All planned',
-                      style:
-                          TextStyle(fontSize: 20, color: AppConfigs.redColor),
+                      style: TextStyle(fontSize: 20, color: MyTheme.redColor),
                     ),
                   ],
                 ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/app_configs.dart';
+import 'package:todo_app/themes.dart';
 
 class SettingsList extends StatefulWidget {
   const SettingsList({super.key});
@@ -89,13 +89,13 @@ class SettingsItem extends StatelessWidget {
           Flexible(
             child: Text(
               text,
-              style: AppConfigs.itemTextStyle,
+              style: MyTheme.itemTextStyle,
             ),
           ),
           Switch(
             value: isActive,
             onChanged: onChange,
-            activeColor: AppConfigs.blueColor,
+            activeColor: MyTheme.blueColor,
           ),
         ],
       ),

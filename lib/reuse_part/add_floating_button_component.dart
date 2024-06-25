@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/app_configs.dart';
+import 'package:todo_app/themes.dart';
 
 class AddFloatingButtonComponent extends StatelessWidget {
   const AddFloatingButtonComponent({super.key});
@@ -9,10 +9,10 @@ class AddFloatingButtonComponent extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(
         shape: BoxShape.circle,
-        color: AppConfigs.blueColor,
+        color: MyTheme.blueColor,
       ),
       child: InkWell(
-        splashColor: AppConfigs.blackColor,
+        splashColor: MyTheme.blackColor,
         customBorder: const CircleBorder(),
         onTap: () {
           bool isChecked = false;
@@ -62,7 +62,7 @@ class AddFloatingButtonComponent extends StatelessWidget {
           child: const Icon(
             Icons.add,
             size: 40,
-            color: AppConfigs.whiteColor,
+            color: MyTheme.whiteColor,
           ),
         ),
       ),

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:todo_app/app_configs.dart';
+import 'package:todo_app/themes.dart';
 import 'package:todo_app/routes.dart';
 import 'package:todo_app/home/home_group.dart';
 import 'package:todo_app/home/home_item.dart';
@@ -46,42 +47,42 @@ class _HomePageState extends State<HomePage> {
         'text': 'My Day',
         'ontap': onTapMyDay,
         'icon': Icons.wb_sunny_outlined,
-        'iconColor': AppConfigs.greyColor,
+        'iconColor': MyTheme.greyColor,
         'endNumber': 0
       },
       {
         'text': 'Important',
         'ontap': onTapImportant,
         'icon': Icons.star_border,
-        'iconColor': AppConfigs.pinkColor,
+        'iconColor': MyTheme.pinkColor,
         'endNumber': 1,
       },
       {
         'text': 'Planned',
         'ontap': onTapPlanned,
         'icon': Icons.list_alt_outlined,
-        'iconColor': AppConfigs.redColor,
+        'iconColor': MyTheme.redColor,
         'endNumber': 1,
       },
       {
         'text': 'Assign to me',
         'ontap': onTapAssignToMe,
         'icon': Icons.person_outline,
-        'iconColor': AppConfigs.greenColor,
+        'iconColor': MyTheme.greenColor,
         'endNumber': 1,
       },
       {
         'text': 'Flagged email',
         'ontap': onTapFlaggedEmail,
         'icon': Icons.flag_outlined,
-        'iconColor': AppConfigs.orangeColor,
+        'iconColor': MyTheme.orangeColor,
         'endNumber': 0,
       },
       {
         'text': 'Tasks',
         'ontap': onTapTask,
         'icon': Icons.task_outlined,
-        'iconColor': AppConfigs.blueColor,
+        'iconColor': MyTheme.blueColor,
         'endNumber': 1,
       },
     ];
@@ -108,7 +109,7 @@ class _HomePageState extends State<HomePage> {
               },
               text: 'Getting started',
               icon: Icons.list,
-              iconColor: AppConfigs.blueColor,
+              iconColor: MyTheme.blueColor,
               endNumber: 0,
             ),
             HomeGroup(),
@@ -147,13 +148,13 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Icon(
                       Icons.add,
-                      color: AppConfigs.greyColor,
+                      color: MyTheme.greyColor,
                       size: 30,
                     ),
                     SizedBox(width: 10),
                     Text(
                       'New list',
-                      style: AppConfigs.itemGreyTextStyle,
+                      style: MyTheme.itemGreyTextStyle,
                     )
                   ],
                 ),
@@ -174,7 +175,7 @@ class _HomePageState extends State<HomePage> {
               },
               child: Icon(
                 Icons.post_add,
-                color: AppConfigs.greyColor,
+                color: MyTheme.greyColor,
                 size: 30,
               ),
             )
@@ -210,11 +211,11 @@ class HomeAppBar {
           child: RichText(
             text: const TextSpan(
               text: 'Quang Nguyen',
-              style: AppConfigs.titleTextStyle,
+              style: MyTheme.titleTextStyle,
               children: [
                 TextSpan(
                   text: '\nquang.ndt@outlook.com',
-                  style: AppConfigs.secondaryTitleGreyTextStyle,
+                  style: MyTheme.secondaryTitleGreyTextStyle,
                 )
               ],
             ),
@@ -229,7 +230,7 @@ class HomeAppBar {
           icon: const Icon(
             Icons.search,
             size: 40,
-            color: AppConfigs.greyColor,
+            color: MyTheme.greyColor,
           ),
         ),
       ],

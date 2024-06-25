@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/app_configs.dart';
+import 'package:todo_app/themes.dart';
 import 'package:todo_app/reuse_part/add_floating_button_component.dart';
 
 class MyDayFloatingButtons extends StatefulWidget {
@@ -20,10 +20,10 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
           decoration: BoxDecoration(
             shape: BoxShape.rectangle,
             borderRadius: BorderRadius.circular(20),
-            color: AppConfigs.blueColor,
+            color: MyTheme.blueColor,
           ),
           child: InkWell(
-            splashColor: AppConfigs.blackColor,
+            splashColor: MyTheme.blackColor,
             customBorder: const CircleBorder(),
             onTap: () {
               onSuggestionsTap(context);
@@ -32,7 +32,7 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
               decoration: const BoxDecoration(shape: BoxShape.circle),
               child: const Text(
                 'Suggestions',
-                style: AppConfigs.itemTextStyle,
+                style: MyTheme.itemTextStyle,
               ),
             ),
           ),
@@ -56,7 +56,7 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
             children: [
               const Text(
                 'From earlier',
-                style: AppConfigs.itemTextStyle,
+                style: MyTheme.itemTextStyle,
               ),
               Row(
                 mainAxisSize: MainAxisSize.min,
@@ -72,7 +72,7 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
                   ),
                   const Text(
                     'Task 1',
-                    style: AppConfigs.itemTextStyle,
+                    style: MyTheme.itemTextStyle,
                   ),
                   const Spacer(),
                   IconButton(
