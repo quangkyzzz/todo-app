@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/models/task_model.dart';
-import 'package:todo_app/reuse_part/show_alert_dialog_component.dart';
+import 'package:todo_app/components/show_alert_dialog_component.dart';
 
 class TaskPageBottomNavigation extends StatelessWidget {
   final TaskModel task;

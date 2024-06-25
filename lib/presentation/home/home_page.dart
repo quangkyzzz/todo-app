@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/app_configs.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/routes.dart';
-import 'package:todo_app/home/home_group.dart';
-import 'package:todo_app/home/home_item.dart';
+import 'package:todo_app/presentation/home/home_group.dart';
+import 'package:todo_app/presentation/home/home_item.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -106,15 +106,6 @@ class _HomePageState extends State<HomePage> {
               }).toList(),
             ),
             AppConfigs.dividerWhiteStyle,
-            HomeItem(
-              onTap: () {
-                Navigator.of(context).pushNamed(taskListRoute);
-              },
-              text: 'Getting started',
-              icon: Icons.list,
-              iconColor: MyTheme.blueColor,
-              endNumber: 0,
-            ),
             HomeGroup(),
             HomeGroup(),
             HomeGroup(),

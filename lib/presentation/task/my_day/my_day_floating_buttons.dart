@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/themes.dart';
-import 'package:todo_app/reuse_part/add_floating_button_component.dart';
+import 'package:todo_app/components/add_floating_button_component.dart';
 
 class MyDayFloatingButtons extends StatefulWidget {
   const MyDayFloatingButtons({super.key});

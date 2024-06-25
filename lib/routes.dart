@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/home/home_page.dart';
-import 'package:todo_app/task/flagged_email/flagged_email_page.dart';
+import 'package:todo_app/presentation/home/home_page.dart';
+import 'package:todo_app/presentation/task/flagged_email/flagged_email_page.dart';
 import 'package:todo_app/models/task_model.dart';
-import 'package:todo_app/task/my_day/my_day_page.dart';
-import 'package:todo_app/task/planned/planned_page.dart';
-import 'package:todo_app/search/search_page.dart';
-import 'package:todo_app/task/task_list/reorder_page.dart';
-import 'package:todo_app/task/task_page/note_edit_page.dart';
-import 'package:todo_app/task/task_list/task_list_page.dart';
-import 'package:todo_app/task/task_page/task_page.dart';
-import 'package:todo_app/settings/settings_page.dart';
-import 'package:todo_app/user_profile/user_profile_page.dart';
+import 'package:todo_app/presentation/task/my_day/my_day_page.dart';
+import 'package:todo_app/presentation/task/planned/planned_page.dart';
+import 'package:todo_app/presentation/search/search_page.dart';
+import 'package:todo_app/presentation/task/task_list/reorder_page.dart';
+import 'package:todo_app/presentation/task/task_page/note_edit_page.dart';
+import 'package:todo_app/presentation/task/task_list/task_list_page.dart';
+import 'package:todo_app/presentation/task/task_page/task_page.dart';
+import 'package:todo_app/presentation/settings/settings_page.dart';
+import 'package:todo_app/presentation/user_profile/user_profile_page.dart';
 
 const initialRoute = '/home';
 const userProfileRoute = '/user_profile';

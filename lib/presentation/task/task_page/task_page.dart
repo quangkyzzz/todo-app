@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/routes.dart';
 import 'package:todo_app/models/task_model.dart';
-import 'package:todo_app/reuse_part/popup_menu_component.dart';
-import 'package:todo_app/task/task_page/task_page_bottom_navigation.dart';
+import 'package:todo_app/components/popup_menu_component.dart';
+import 'package:todo_app/presentation/task/task_page/task_page_bottom_navigation.dart';
 
 class TaskPage extends StatefulWidget {
   final TaskModel task;

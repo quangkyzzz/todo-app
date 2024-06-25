@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/themes.dart';
-import 'package:todo_app/reuse_part/incomplete_list.dart';
+import 'package:todo_app/lists/incomplete_list.dart';
 
 class CompletedList extends StatefulWidget {
   final List<Map<String, dynamic>> taskList;

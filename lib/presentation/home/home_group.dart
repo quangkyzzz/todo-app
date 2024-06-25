@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/routes.dart';
-import 'package:todo_app/reuse_part/popup_menu_component.dart';
-import 'package:todo_app/home/home_item.dart';
+import 'package:todo_app/components/popup_menu_component.dart';
+import 'package:todo_app/presentation/home/home_item.dart';
 
 class HomeGroup extends StatefulWidget {
   const HomeGroup({super.key});
