@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:todo_app/constant/app_configs.dart';
-import 'package:todo_app/constant/routes.dart';
+import 'package:todo_app/app_configs.dart';
+import 'package:todo_app/routes.dart';
 import 'package:todo_app/home/components/home_app_bar.dart';
 import 'package:todo_app/home/components/home_dialog.dart';
 import 'package:todo_app/home/components/home_group.dart';

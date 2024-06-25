@@ -1,8 +1,8 @@
 // ignore_for_file: sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
-import 'package:todo_app/constant/app_configs.dart';
-import 'package:todo_app/constant/routes.dart';
+import 'package:todo_app/app_configs.dart';
+import 'package:todo_app/routes.dart';
 
 class TaskListPopupMenu extends StatefulWidget {
   final List<String> toRemove;

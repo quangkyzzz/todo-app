@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:todo_app/constant/app_configs.dart';
+import 'package:todo_app/app_configs.dart';
 import 'package:todo_app/task/my_day/component/my_day_floating_button.dart';
 import 'package:todo_app/task/task_list/components/completed_list.dart';
 import 'package:todo_app/task/task_list/components/incomplete_list.dart';

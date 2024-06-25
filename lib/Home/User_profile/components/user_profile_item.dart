@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/constant/app_configs.dart';
+import 'package:todo_app/app_configs.dart';
 
 class UserProfileItem extends StatelessWidget {
   final Function onTap;

@@ -41,11 +41,11 @@ class HomeAppBar {
         ),
       ),
       actions: [
-        InkWell(
-          onTap: () {
+        IconButton(
+          onPressed: () {
             Navigator.of(context).pushNamed(searchRoute);
           },
-          child: const Icon(
+          icon: const Icon(
             Icons.search,
             size: 40,
             color: AppConfigs.greyColor,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/constant/app_configs.dart';
-import 'package:todo_app/constant/routes.dart';
+import 'package:todo_app/app_configs.dart';
+import 'package:todo_app/routes.dart';
 import 'package:todo_app/home/user_profile/components/user_profile_item.dart';
 
 class UserProfilePage extends StatefulWidget {
