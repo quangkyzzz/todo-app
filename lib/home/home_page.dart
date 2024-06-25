@@ -92,16 +92,19 @@ class _HomePageState extends State<HomePage> {
         padding: EdgeInsets.only(left: 7, right: 5),
         child: Column(
           children: [
-            for (Map<String, dynamic> item in listHomeItem)
-              HomeItem(
-                text: item['text'],
-                icon: item['icon'],
-                iconColor: item['iconColor'],
-                endNumber: item['endNumber'],
-                onTap: () {
-                  item['ontap'](context);
-                },
-              ),
+            Column(
+              children: listHomeItem.map((item) {
+                return HomeItem(
+                  text: item['text'],
+                  icon: item['icon'],
+                  iconColor: item['iconColor'],
+                  endNumber: item['endNumber'],
+                  onTap: () {
+                    item['ontap'](context);
+                  },
+                );
+              }).toList(),
+            ),
             AppConfigs.dividerWhiteStyle,
             HomeItem(
               onTap: () {

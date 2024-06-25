@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/reuse_part/add_floating_button_component.dart';
-import 'package:todo_app/reuse_part/incomplete_list_component.dart';
+import 'package:todo_app/reuse_part/incomplete_list.dart';
 import 'package:todo_app/reuse_part/popup_menu_component.dart';
 
 class PlannedPage extends StatefulWidget {
@@ -116,7 +116,7 @@ class _PlannedPageState extends State<PlannedPage> {
             const SizedBox(height: 20),
 
             //task list
-            IncompleteListComponent(taskList: incompleteTask),
+            IncompleteList(taskList: incompleteTask),
           ],
         ),
       ),

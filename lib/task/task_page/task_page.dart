@@ -79,16 +79,15 @@ class _TaskPageState extends State<TaskPage> {
         0,
         0,
       ),
-      items: [
-        for (Map<String, dynamic> item in listPopupItem)
-          PopupMenuItem(
-            child: PopupItem(
-              text: item['text'],
-              icon: item['icon'],
-              onTap: () {},
-            ),
-          )
-      ],
+      items: listPopupItem.map((item) {
+        return PopupMenuItem(
+          child: PopupItem(
+            text: item['text'],
+            icon: item['icon'],
+            onTap: () {},
+          ),
+        );
+      }).toList(),
     );
   }
 
@@ -269,19 +268,22 @@ class _TaskPageState extends State<TaskPage> {
               ],
             ),
             const SizedBox(height: 30),
-            for (Map<String, dynamic> item in listTaskItem)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 20),
-                child: TaskViewItem(
-                  key: item['key'],
-                  icon: item['icon'],
-                  text: item['text'],
-                  textColor: item['textColor'] ?? MyTheme.greyColor,
-                  onTap: () {
-                    item['onTap'](context);
-                  },
-                ),
-              ),
+            Column(
+              children: listTaskItem.map((item) {
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  child: TaskViewItem(
+                    key: item['key'],
+                    icon: item['icon'],
+                    text: item['text'],
+                    textColor: item['textColor'] ?? MyTheme.greyColor,
+                    onTap: () {
+                      item['onTap'](context);
+                    },
+                  ),
+                );
+              }).toList(),
+            ),
             const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.only(left: 15),

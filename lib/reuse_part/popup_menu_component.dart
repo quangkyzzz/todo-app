@@ -183,9 +183,12 @@ class _PopupMenuComponentState extends State<PopupMenuComponent> {
 
   @override
   Widget build(BuildContext context) {
-    List<PopupMenuItem> listPopupItem = [
-      for (Map<String, dynamic> item in listPopupMenuItem)
-        PopupMenuItem(
+    return PopupMenuButton(itemBuilder: (context) {
+      listPopupMenuItem.removeWhere((element) {
+        return widget.toRemove.contains(element['value']);
+      });
+      return listPopupMenuItem.map((item) {
+        return PopupMenuItem(
           value: item['value'],
           child: PopupItem(
             text: item['text'],
@@ -194,13 +197,8 @@ class _PopupMenuComponentState extends State<PopupMenuComponent> {
               item['onTap'](context);
             },
           ),
-        )
-    ];
-    return PopupMenuButton(itemBuilder: (context) {
-      listPopupItem.removeWhere((element) {
-        return widget.toRemove.contains(element.value);
-      });
-      return listPopupItem;
+        );
+      }).toList();
     });
   }
 }

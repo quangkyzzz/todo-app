@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/reuse_part/add_floating_button_component.dart';
-import 'package:todo_app/reuse_part/incomplete_list_component.dart';
+import 'package:todo_app/reuse_part/incomplete_list.dart';
 import 'package:todo_app/reuse_part/popup_menu_component.dart';
 import 'package:todo_app/themes.dart';
 
@@ -58,7 +58,7 @@ class _TaskListPageState extends State<TaskListPage> {
       ),
       body: SingleChildScrollView(
         child: Column(children: [
-          IncompleteListComponent(taskList: incompleteTask),
+          IncompleteList(taskList: incompleteTask),
           (widget.haveCompletedList)
               ? ExpansionTile(
                   initiallyExpanded: true,
@@ -78,7 +78,7 @@ class _TaskListPageState extends State<TaskListPage> {
                       ? Icons.expand_more
                       : Icons.keyboard_arrow_left),
                   children: [
-                    IncompleteListComponent(
+                    IncompleteList(
                       taskList: incompleteTask,
                     ),
                   ],
