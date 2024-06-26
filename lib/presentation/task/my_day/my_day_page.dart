@@ -5,9 +5,9 @@ import 'package:intl/intl.dart';
 import 'package:todo_app/app_configs.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/presentation/task/my_day/my_day_floating_buttons.dart';
-import 'package:todo_app/lists/completed_list.dart';
-import 'package:todo_app/lists/incomplete_list.dart';
-import 'package:todo_app/components/popup_menu.dart';
+import 'package:todo_app/presentation/lists/completed_list.dart';
+import 'package:todo_app/presentation/lists/incomplete_list.dart';
+import 'package:todo_app/presentation/components/popup_menu.dart';
 
 class MyDayPage extends StatefulWidget {
   const MyDayPage({super.key});

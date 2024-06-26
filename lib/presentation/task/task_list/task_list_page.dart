@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/components/add_floating_button.dart';
-import 'package:todo_app/lists/incomplete_list.dart';
-import 'package:todo_app/components/popup_menu.dart';
+import 'package:todo_app/presentation/components/add_floating_button.dart';
+import 'package:todo_app/presentation/lists/incomplete_list.dart';
+import 'package:todo_app/presentation/components/popup_menu.dart';
 import 'package:todo_app/themes.dart';
 
 class TaskListPage extends StatefulWidget {

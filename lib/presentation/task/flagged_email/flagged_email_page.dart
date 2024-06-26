@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/themes.dart';
-import 'package:todo_app/lists/incomplete_list.dart';
-import 'package:todo_app/components/popup_menu.dart';
+import 'package:todo_app/presentation/lists/incomplete_list.dart';
+import 'package:todo_app/presentation/components/popup_menu.dart';
 
 class FlaggedEmailPage extends StatefulWidget {
   const FlaggedEmailPage({super.key});
