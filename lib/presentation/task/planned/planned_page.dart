@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/themes.dart';
-import 'package:todo_app/components/add_floating_button_component.dart';
+import 'package:todo_app/components/add_floating_button.dart';
 import 'package:todo_app/lists/incomplete_list.dart';
-import 'package:todo_app/components/popup_menu_component.dart';
+import 'package:todo_app/components/popup_menu.dart';
 
 class PlannedPage extends StatefulWidget {
   const PlannedPage({super.key});
@@ -65,7 +65,7 @@ class _PlannedPageState extends State<PlannedPage> {
           ),
         ),
         actions: const [
-          PopupMenuComponent(
+          PopupMenu(
             toRemove: ['reorder', 'turn_on_suggestions', 'duplicate_list'],
           )
         ],
@@ -120,7 +120,7 @@ class _PlannedPageState extends State<PlannedPage> {
           ],
         ),
       ),
-      floatingActionButton: const AddFloatingButtonComponent(),
+      floatingActionButton: const AddFloatingButton(),
     );
   }
 }

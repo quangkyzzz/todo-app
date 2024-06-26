@@ -4,18 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/routes.dart';
 
-class PopupMenuComponent extends StatefulWidget {
+class PopupMenu extends StatefulWidget {
   final List<String> toRemove;
-  const PopupMenuComponent({
+  const PopupMenu({
     super.key,
     this.toRemove = const [],
   });
 
   @override
-  State<PopupMenuComponent> createState() => _PopupMenuComponentState();
+  State<PopupMenu> createState() => _PopupMenuState();
 }
 
-class _PopupMenuComponentState extends State<PopupMenuComponent> {
+class _PopupMenuState extends State<PopupMenu> {
   late List<Map<String, dynamic>> listPopupMenuItem = [
     {
       'value': 'sort_by',

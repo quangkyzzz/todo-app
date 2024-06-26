@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
 import 'package:todo_app/app_configs.dart';
@@ -121,7 +121,6 @@ class _HomePageState extends State<HomePage> {
         padding: const EdgeInsets.symmetric(vertical: 20),
         child: Row(
           children: [
-            // ignore: sized_box_for_whitespace
             Container(
               height: 40,
               width: 370,
@@ -196,8 +195,7 @@ class HomeAppBar {
         ),
       ),
       title: Container(
-        height: 50,
-        width: 300,
+        width: double.infinity,
         child: InkWell(
           onTap: () {
             Navigator.of(context).pushNamed(userProfileRoute);
@@ -227,6 +225,7 @@ class HomeAppBar {
             color: MyTheme.greyColor,
           ),
         ),
+        SizedBox(width: 10)
       ],
     );
   }

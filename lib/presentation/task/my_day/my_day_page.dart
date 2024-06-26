@@ -7,7 +7,7 @@ import 'package:todo_app/themes.dart';
 import 'package:todo_app/presentation/task/my_day/my_day_floating_buttons.dart';
 import 'package:todo_app/lists/completed_list.dart';
 import 'package:todo_app/lists/incomplete_list.dart';
-import 'package:todo_app/components/popup_menu_component.dart';
+import 'package:todo_app/components/popup_menu.dart';
 
 class MyDayPage extends StatefulWidget {
   const MyDayPage({super.key});
@@ -63,7 +63,7 @@ class _MyDayPageState extends State<MyDayPage> {
               ),
             ),
             actions: const [
-              PopupMenuComponent(
+              PopupMenu(
                 toRemove: [
                   'reorder',
                   'turn_on_suggestions',

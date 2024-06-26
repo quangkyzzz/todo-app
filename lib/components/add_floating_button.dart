@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/themes.dart';
 
-class AddFloatingButtonComponent extends StatelessWidget {
-  const AddFloatingButtonComponent({super.key});
+class AddFloatingButton extends StatelessWidget {
+  const AddFloatingButton({super.key});
 
   @override
   Widget build(BuildContext context) {

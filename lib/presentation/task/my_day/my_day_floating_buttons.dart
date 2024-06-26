@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/themes.dart';
-import 'package:todo_app/components/add_floating_button_component.dart';
+import 'package:todo_app/components/add_floating_button.dart';
 
 class MyDayFloatingButtons extends StatefulWidget {
   const MyDayFloatingButtons({super.key});
@@ -38,7 +38,7 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
           ),
         ),
         const Spacer(flex: 1),
-        const AddFloatingButtonComponent(),
+        const AddFloatingButton(),
       ],
     );
   }

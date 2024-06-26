@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/lists/incomplete_list.dart';
-import 'package:todo_app/components/popup_menu_component.dart';
+import 'package:todo_app/components/popup_menu.dart';
 
 class FlaggedEmailPage extends StatefulWidget {
   const FlaggedEmailPage({super.key});
@@ -38,7 +38,7 @@ class _FlaggedEmailPageState extends State<FlaggedEmailPage> {
           ),
         ),
         actions: const [
-          PopupMenuComponent(
+          PopupMenu(
             toRemove: ['reorder', 'turn_on_suggestions'],
           )
         ],
