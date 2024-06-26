@@ -123,7 +123,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             Container(
               height: 36,
-              width: 368,
+              width: 352,
               child: InkWell(
                 onTap: () {
                   showDialog(
@@ -154,8 +154,8 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             SizedBox(width: 6),
-            InkWell(
-              onTap: () {
+            IconButton(
+              onPressed: () {
                 showDialog(
                     context: context,
                     builder: (context) {
@@ -166,7 +166,7 @@ class _HomePageState extends State<HomePage> {
                       );
                     });
               },
-              child: Icon(
+              icon: Icon(
                 Icons.post_add,
                 color: MyTheme.greyColor,
                 size: 32,

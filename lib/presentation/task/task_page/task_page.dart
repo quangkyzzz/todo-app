@@ -135,6 +135,7 @@ class _TaskPageState extends State<TaskPage> {
     isChecked = widget.task.isCompleted;
     isImportant = widget.task.isImportant;
     _taskNameController = TextEditingController();
+    _taskNameController.text = widget.task.title;
     super.initState();
   }
 
@@ -195,7 +196,6 @@ class _TaskPageState extends State<TaskPage> {
         'onTap': onTapAddFile,
       },
     ];
-    _taskNameController.text = widget.task.title;
 
     return Scaffold(
       appBar: AppBar(
@@ -208,49 +208,10 @@ class _TaskPageState extends State<TaskPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                Transform.scale(
-                  scale: 1.3,
-                  child: Checkbox(
-                    value: isChecked,
-                    shape: const CircleBorder(),
-                    onChanged: (bool? value) {
-                      setState(() {
-                        isChecked = value!;
-                      });
-                    },
-                  ),
-                ),
-                Expanded(
-                  child: TextField(
-                    decoration: const InputDecoration(border: InputBorder.none),
-                    style: MyTheme.titleTextStyle,
-                    controller: _taskNameController,
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      isImportant = !isImportant;
-                    });
-                  },
-                  child: (isImportant)
-                      ? Transform.scale(
-                          scale: 1.3,
-                          child: const Icon(
-                            Icons.star,
-                            color: MyTheme.blueColor,
-                          ),
-                        )
-                      : Transform.scale(
-                          scale: 1.3,
-                          child: const Icon(Icons.star_border_outlined)),
-                ),
-                const SizedBox(width: 16),
-              ],
-            ),
+            //Edit task row
+            TaskEditRow(taskNameController: _taskNameController),
             const SizedBox(height: 8),
+            //Add step row
             Row(
               children: [
                 const SizedBox(width: 16),
@@ -273,7 +234,8 @@ class _TaskPageState extends State<TaskPage> {
                 )
               ],
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 18),
+            //List uniform task page item
             Column(
               children: listTaskItem.map((item) {
                 return Padding(
@@ -291,6 +253,7 @@ class _TaskPageState extends State<TaskPage> {
               }).toList(),
             ),
             const SizedBox(height: 18),
+            //Add and edit note button
             Padding(
               padding: const EdgeInsets.only(left: 16),
               child: TextButton(
@@ -340,6 +303,78 @@ class TaskPageItem extends StatelessWidget {
             style: MyTheme.itemGreyTextStyle,
           ),
         ),
+      ],
+    );
+  }
+}
+
+class TaskEditRow extends StatefulWidget {
+  final bool isChecked;
+  final bool isImportant;
+  final TextEditingController taskNameController;
+  const TaskEditRow({
+    super.key,
+    this.isChecked = false,
+    this.isImportant = false,
+    required this.taskNameController,
+  });
+
+  @override
+  State<TaskEditRow> createState() => _TaskEditRowState();
+}
+
+class _TaskEditRowState extends State<TaskEditRow> {
+  bool _isChecked = false;
+  bool _isImportant = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _isChecked = widget.isChecked;
+    _isImportant = widget.isImportant;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Transform.scale(
+          scale: 1.3,
+          child: Checkbox(
+            value: _isChecked,
+            shape: const CircleBorder(),
+            onChanged: (bool? value) {
+              setState(() {
+                _isChecked = value!;
+              });
+            },
+          ),
+        ),
+        Expanded(
+          child: TextField(
+            decoration: const InputDecoration(border: InputBorder.none),
+            style: MyTheme.titleTextStyle,
+            controller: widget.taskNameController,
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            setState(() {
+              _isImportant = !_isImportant;
+            });
+          },
+          child: (_isImportant)
+              ? Transform.scale(
+                  scale: 1.3,
+                  child: const Icon(
+                    Icons.star,
+                    color: MyTheme.blueColor,
+                  ),
+                )
+              : Transform.scale(
+                  scale: 1.3, child: const Icon(Icons.star_border_outlined)),
+        ),
+        const SizedBox(width: 16),
       ],
     );
   }

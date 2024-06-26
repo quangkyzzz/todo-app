@@ -136,7 +136,7 @@ class ItemBottomIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ((text != null)
+    return (text != null)
         ? Row(
             children: [
               (textIcon != null)
@@ -156,6 +156,6 @@ class ItemBottomIcon extends StatelessWidget {
             icon,
             size: 16,
             color: MyTheme.greyColor,
-          ));
+          );
   }
 }
