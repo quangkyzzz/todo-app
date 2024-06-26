@@ -257,35 +257,50 @@ class BottomSheetItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.all(16.0),
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             'Sort by',
             style: MyTheme.itemTextStyle,
           ),
-          SizedBox(height: 8),
-          PopupItem(
-            text: 'Important',
-            icon: Icons.star_border_outlined,
+          const SizedBox(height: 8),
+          InkWell(
+            onTap: () {},
+            child: const PopupItem(
+              text: 'Important',
+              icon: Icons.star_border_outlined,
+            ),
           ),
-          PopupItem(
-            text: 'Due date',
-            icon: Icons.calendar_today_outlined,
+          InkWell(
+            onTap: () {},
+            child: const PopupItem(
+              text: 'Due date',
+              icon: Icons.calendar_today_outlined,
+            ),
           ),
-          PopupItem(
-            text: 'Added to My Day',
-            icon: Icons.wb_sunny_outlined,
+          InkWell(
+            onTap: () {},
+            child: const PopupItem(
+              text: 'Added to My Day',
+              icon: Icons.wb_sunny_outlined,
+            ),
           ),
-          PopupItem(
-            text: 'Alphabetiaclly',
-            icon: Icons.import_export_outlined,
+          InkWell(
+            onTap: () {},
+            child: const PopupItem(
+              text: 'Alphabetiaclly',
+              icon: Icons.import_export_outlined,
+            ),
           ),
-          PopupItem(
-            text: 'Creation date',
-            icon: Icons.more_time_outlined,
+          InkWell(
+            onTap: () {},
+            child: const PopupItem(
+              text: 'Creation date',
+              icon: Icons.more_time_outlined,
+            ),
           ),
         ],
       ),

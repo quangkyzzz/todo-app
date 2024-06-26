@@ -51,11 +51,15 @@ class _SettingsPageState extends State<SettingsPage> {
                       const SizedBox(height: 8),
                       InkWell(
                         onTap: () {},
-                        child: Container(
-                          padding: const EdgeInsets.only(top: 18, bottom: 18),
-                          child: const Text(
-                            'MANAGE ACCOUNT',
-                            style: MyTheme.itemTextStyle,
+                        child: const Padding(
+                          padding: EdgeInsets.only(top: 18, bottom: 18),
+                          child: Row(
+                            children: [
+                              Text(
+                                'MANAGE ACCOUNT',
+                                style: MyTheme.itemTextStyle,
+                              ),
+                            ],
                           ),
                         ),
                       ),
