@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/presentation/components/add_floating_button.dart';
-import 'package:todo_app/presentation/lists/incomplete_list.dart';
+import 'package:todo_app/presentation/lists_and_items/incomplete_list.dart';
 import 'package:todo_app/presentation/components/popup_menu.dart';
 
 class PlannedPage extends StatefulWidget {
