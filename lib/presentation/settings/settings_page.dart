@@ -74,7 +74,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   )
                 ],
               ),
-              AppConfigs.dividerWhiteStyle,
+              MyTheme.dividerWhiteStyle,
               const SizedBox(height: 10),
               const Text(
                 'General',

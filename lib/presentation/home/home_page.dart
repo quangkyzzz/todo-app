@@ -105,7 +105,7 @@ class _HomePageState extends State<HomePage> {
                 );
               }).toList(),
             ),
-            AppConfigs.dividerWhiteStyle,
+            MyTheme.dividerWhiteStyle,
             HomeGroup(),
             HomeGroup(),
             HomeGroup(),

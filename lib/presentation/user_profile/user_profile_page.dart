@@ -15,7 +15,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.only(left: 10, top: 60),
+        padding: const EdgeInsets.only(left: 8, top: 42, right: 8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -51,19 +51,19 @@ class _UserProfilePageState extends State<UserProfilePage> {
               'quang.ndt@outlook.com',
               style: MyTheme.secondaryTitleGreyTextStyle,
             ),
-            AppConfigs.dividerGreyStyle,
+            MyTheme.dividerGreyStyle,
             UserProfileItem(
               text: 'Add account',
               icon: Icons.add,
               onTap: () {},
             ),
-            AppConfigs.dividerGreyStyle,
+            MyTheme.dividerGreyStyle,
             UserProfileItem(
               text: 'Manage account',
               icon: Icons.person_outline,
               onTap: () {},
             ),
-            AppConfigs.dividerGreyStyle,
+            MyTheme.dividerGreyStyle,
             UserProfileItem(
               text: 'Settings',
               icon: Icons.settings_outlined,
@@ -92,7 +92,7 @@ class UserProfileItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 50,
+      padding: const EdgeInsets.symmetric(vertical: 8),
       child: InkWell(
         onTap: () {
           onTap();

@@ -66,4 +66,14 @@ class MyTheme {
     fontWeight: FontWeight.w400,
     color: MyTheme.greyColor,
   );
+
+  //divider style
+  static const Divider dividerGreyStyle = Divider(
+    thickness: 0.25,
+    color: MyTheme.greyColor,
+  );
+  static const Divider dividerWhiteStyle = Divider(
+    thickness: 0.25,
+    color: MyTheme.whiteColor,
+  );
 }

@@ -67,7 +67,6 @@ class _SettingsListState extends State<SettingsList> {
   }
 }
 
-// ignore: must_be_immutable
 class SettingsItem extends StatelessWidget {
   final bool isActive;
   final String text;
