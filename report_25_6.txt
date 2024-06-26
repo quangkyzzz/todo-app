@@ -1,7 +1,0 @@
-Đã làm:
-    - sửa app name, icon.
-    - sửa tên thư mục, quy ước đặt tên biến.
-    - sửa padding, màu sắc, kích cỡ các button ở các màn
-    - sửa cấu trúc code để tái sử dụng các widget
-Dự định làm:
-    - tổng hợp từ review code để tiếp tục hoàn thiện hoặc chuyển sang bước tiếp theo

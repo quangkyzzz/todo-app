@@ -119,9 +119,7 @@ class _PopupMenuComponentState extends State<PopupMenuComponent> {
     );
   }
 
-  onTapHideCompletedTasks(BuildContext context) {}
-
-  onTapSendCopy(BuildContext context) {
+  onTapHideCompletedTasks(BuildContext context) {
     showModalBottomSheet(
       isDismissible: true,
       enableDrag: true,
@@ -131,6 +129,21 @@ class _PopupMenuComponentState extends State<PopupMenuComponent> {
         return const NormalBottomSheetItem(
           title: 'Hide completed tasks?',
           button: 'Yes',
+        );
+      },
+    );
+  }
+
+  onTapSendCopy(BuildContext context) {
+    showModalBottomSheet(
+      isDismissible: true,
+      enableDrag: true,
+      context: context,
+      showDragHandle: true,
+      builder: (BuildContext context) {
+        return const NormalBottomSheetItem(
+          title: 'Send a copy?',
+          button: 'Send',
         );
       },
     );
