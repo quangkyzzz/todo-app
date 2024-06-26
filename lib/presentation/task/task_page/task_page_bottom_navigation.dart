@@ -13,7 +13,7 @@ class TaskPageBottomNavigation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(bottom: 18),
+      padding: const EdgeInsets.only(left: 8, right: 8, bottom: 12),
       decoration: const BoxDecoration(
         border: Border(
           top: BorderSide(
