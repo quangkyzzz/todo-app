@@ -39,14 +39,14 @@ class _TaskListPageState extends State<TaskListPage> {
             ? const Text(
                 'Tasks',
                 style: TextStyle(
-                  fontSize: 25,
+                  fontSize: 24,
                   color: MyTheme.blueColor,
                 ),
               )
             : const Text(
                 'Important',
                 style: TextStyle(
-                  fontSize: 25,
+                  fontSize: 24,
                   color: MyTheme.pinkColor,
                 ),
               ),
@@ -65,7 +65,7 @@ class _TaskListPageState extends State<TaskListPage> {
                   title: const Text(
                     'Completed',
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 18,
                       color: MyTheme.blueColor,
                     ),
                   ),

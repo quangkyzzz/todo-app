@@ -60,7 +60,7 @@ class _PlannedPageState extends State<PlannedPage> {
         title: const Text(
           'Planned',
           style: TextStyle(
-            fontSize: 30,
+            fontSize: 24,
             color: MyTheme.redColor,
           ),
         ),
@@ -74,7 +74,7 @@ class _PlannedPageState extends State<PlannedPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 50),
+            const SizedBox(height: 48),
 
             //popup menu
             PopupMenuButton(
@@ -94,26 +94,26 @@ class _PlannedPageState extends State<PlannedPage> {
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   color: MyTheme.backgroundGreyColor,
-                  borderRadius: BorderRadius.circular(5),
+                  borderRadius: BorderRadius.circular(6),
                 ),
                 child: const Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Icon(
                       Icons.list,
-                      size: 30,
+                      size: 32,
                       color: MyTheme.redColor,
                     ),
-                    SizedBox(width: 10),
+                    SizedBox(width: 8),
                     Text(
                       'All planned',
-                      style: TextStyle(fontSize: 20, color: MyTheme.redColor),
+                      style: TextStyle(fontSize: 18, color: MyTheme.redColor),
                     ),
                   ],
                 ),
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 18),
 
             //task list
             IncompleteList(taskList: incompleteTask),

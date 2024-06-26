@@ -16,10 +16,10 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
       children: [
         const Spacer(flex: 2),
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
           decoration: BoxDecoration(
             shape: BoxShape.rectangle,
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(18),
             color: MyTheme.blueColor,
           ),
           child: InkWell(
@@ -47,7 +47,7 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
     bool isChecked = false;
     return showModalBottomSheet(
       showDragHandle: true,
-      constraints: const BoxConstraints(maxHeight: 200),
+      constraints: const BoxConstraints(maxHeight: 198),
       context: context,
       builder: (BuildContext context) {
         return StatefulBuilder(builder: (context, setState) {

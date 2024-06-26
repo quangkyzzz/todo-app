@@ -33,7 +33,7 @@ class _FlaggedEmailPageState extends State<FlaggedEmailPage> {
         title: const Text(
           'Flagged email',
           style: TextStyle(
-            fontSize: 30,
+            fontSize: 24,
             color: MyTheme.orangeColor,
           ),
         ),

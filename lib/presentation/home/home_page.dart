@@ -89,7 +89,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: HomeAppBar(context: context).appBar(),
       body: SingleChildScrollView(
-        padding: EdgeInsets.only(left: 7, right: 5),
+        padding: EdgeInsets.only(left: 8, right: 6),
         child: Column(
           children: [
             Column(
@@ -118,12 +118,12 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20),
+        padding: const EdgeInsets.symmetric(vertical: 18),
         child: Row(
           children: [
             Container(
-              height: 40,
-              width: 370,
+              height: 36,
+              width: 368,
               child: InkWell(
                 onTap: () {
                   showDialog(
@@ -144,7 +144,7 @@ class _HomePageState extends State<HomePage> {
                       color: MyTheme.greyColor,
                       size: 30,
                     ),
-                    SizedBox(width: 10),
+                    SizedBox(width: 8),
                     Text(
                       'New list',
                       style: MyTheme.itemGreyTextStyle,
@@ -153,7 +153,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            SizedBox(width: 5),
+            SizedBox(width: 6),
             InkWell(
               onTap: () {
                 showDialog(
@@ -169,7 +169,7 @@ class _HomePageState extends State<HomePage> {
               child: Icon(
                 Icons.post_add,
                 color: MyTheme.greyColor,
-                size: 30,
+                size: 32,
               ),
             )
           ],
@@ -185,13 +185,16 @@ class HomeAppBar {
 
   AppBar appBar() {
     return AppBar(
-      leading: InkWell(
-        onTap: () {
-          Navigator.of(context).pushNamed(userProfileRoute);
-        },
-        child: const CircleAvatar(
-          backgroundImage: AssetImage(AppConfigs.avatarImage),
-          radius: 15.0,
+      leading: Container(
+        padding: EdgeInsets.only(left: 6),
+        child: InkWell(
+          onTap: () {
+            Navigator.of(context).pushNamed(userProfileRoute);
+          },
+          child: const CircleAvatar(
+            backgroundImage: AssetImage(AppConfigs.avatarImage),
+            radius: 16.0,
+          ),
         ),
       ),
       title: Container(
@@ -221,11 +224,11 @@ class HomeAppBar {
           },
           icon: const Icon(
             Icons.search,
-            size: 40,
+            size: 42,
             color: MyTheme.greyColor,
           ),
         ),
-        SizedBox(width: 10)
+        SizedBox(width: 8)
       ],
     );
   }

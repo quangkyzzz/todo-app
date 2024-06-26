@@ -37,12 +37,12 @@ class _TaskListItemState extends State<TaskListItem> {
 
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(8),
         color: MyTheme.backgroundGreyColor,
       ),
       height: 60,
       margin: const EdgeInsets.only(bottom: 3),
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
       child: InkWell(
         onTap: () {
           Navigator.of(context).pushNamed(
@@ -65,35 +65,36 @@ class _TaskListItemState extends State<TaskListItem> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 10),
+                const SizedBox(height: 8),
                 Text(
                   widget.task.title,
                   style: MyTheme.itemTextStyle,
                 ),
+                const SizedBox(height: 4),
                 Row(
                   children: [
                     (step != null)
                         ? ItemBottomIcon(text: step.toString())
                         : const SizedBox(),
-                    const SizedBox(width: 5),
+                    const SizedBox(width: 6),
                     (dueDate != null)
                         ? ItemBottomIcon(
                             textIcon: Icons.calendar_today_outlined,
                             text:
                                 '${DateFormat.MMMEd('en_US').format(dueDate)}')
                         : const SizedBox(),
-                    const SizedBox(width: 5),
+                    const SizedBox(width: 6),
                     (notiTime != null)
                         ? ItemBottomIcon(
                             textIcon: Icons.notifications_outlined,
                             text:
                                 '${DateFormat.MMMEd('en_US').format(notiTime)}')
                         : const SizedBox(),
-                    const SizedBox(width: 5),
+                    const SizedBox(width: 6),
                     (filePath != null)
                         ? const ItemBottomIcon(icon: Icons.attach_file_outlined)
                         : const SizedBox(),
-                    const SizedBox(width: 5),
+                    const SizedBox(width: 6),
                     (note != null)
                         ? const ItemBottomIcon(icon: Icons.note_outlined)
                         : const SizedBox(),
@@ -141,7 +142,7 @@ class ItemBottomIcon extends StatelessWidget {
               (textIcon != null)
                   ? Icon(
                       textIcon,
-                      size: 15,
+                      size: 16,
                       color: MyTheme.greyColor,
                     )
                   : const SizedBox(),
@@ -153,7 +154,7 @@ class ItemBottomIcon extends StatelessWidget {
           )
         : Icon(
             icon,
-            size: 15,
+            size: 16,
             color: MyTheme.greyColor,
           ));
   }

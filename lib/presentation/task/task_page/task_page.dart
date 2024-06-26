@@ -95,7 +95,7 @@ class _TaskPageState extends State<TaskPage> {
     showModalBottomSheet(
       showDragHandle: true,
       constraints: const BoxConstraints(
-        maxHeight: 200,
+        maxHeight: 198,
       ),
       context: context,
       builder: (BuildContext context) {
@@ -106,7 +106,7 @@ class _TaskPageState extends State<TaskPage> {
               'Upload from',
               style: MyTheme.itemTextStyle,
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 8),
             TaskViewItem(
               icon: const Icon(
                 Icons.folder_outlined,
@@ -247,15 +247,15 @@ class _TaskPageState extends State<TaskPage> {
                           scale: 1.3,
                           child: const Icon(Icons.star_border_outlined)),
                 ),
-                const SizedBox(width: 15),
+                const SizedBox(width: 16),
               ],
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 8),
             Row(
               children: [
-                const SizedBox(width: 15),
+                const SizedBox(width: 16),
                 Transform.scale(scale: 1.3, child: const Icon(Icons.add)),
-                const SizedBox(width: 10),
+                const SizedBox(width: 8),
                 const Expanded(
                   child: TextField(
                     decoration: InputDecoration(
@@ -271,7 +271,7 @@ class _TaskPageState extends State<TaskPage> {
             Column(
               children: listTaskItem.map((item) {
                 return Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
+                  padding: const EdgeInsets.only(bottom: 18),
                   child: TaskViewItem(
                     key: item['key'],
                     icon: item['icon'],
@@ -284,9 +284,9 @@ class _TaskPageState extends State<TaskPage> {
                 );
               }).toList(),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 18),
             Padding(
-              padding: const EdgeInsets.only(left: 15),
+              padding: const EdgeInsets.only(left: 16),
               child: TextButton(
                   onPressed: () {
                     Navigator.of(context).pushNamed(noteEditRoute);
@@ -321,17 +321,17 @@ class TaskViewItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const SizedBox(width: 15),
+        const SizedBox(width: 16),
         Transform.scale(
           scale: 1.3,
           child: icon,
         ),
-        const SizedBox(width: 10),
+        const SizedBox(width: 8),
         TextButton(
           onPressed: onTap,
           child: Text(
             text,
-            style: TextStyle(color: textColor, fontSize: 20),
+            style: TextStyle(color: textColor, fontSize: 18),
           ),
         ),
       ],

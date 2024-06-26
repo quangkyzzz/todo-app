@@ -23,12 +23,12 @@ class _UserProfilePageState extends State<UserProfilePage> {
               children: [
                 const CircleAvatar(
                   backgroundImage: AssetImage(AppConfigs.avatarImage),
-                  radius: 35,
+                  radius: 32,
                 ),
                 const Spacer(),
                 Container(
                   decoration: const BoxDecoration(shape: BoxShape.circle),
-                  height: 50,
+                  height: 48,
                   child: InkWell(
                     customBorder: const CircleBorder(),
                     onTap: () {
@@ -37,7 +37,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                     child: const Icon(
                       Icons.close,
                       color: MyTheme.greyColor,
-                      size: 35,
+                      size: 32,
                     ),
                   ),
                 ),
@@ -101,9 +101,9 @@ class UserProfileItem extends StatelessWidget {
           children: [
             Icon(
               icon,
-              size: 35,
+              size: 32,
             ),
-            const SizedBox(width: 10),
+            const SizedBox(width: 8),
             Text(
               text,
               style: MyTheme.itemTextStyle,

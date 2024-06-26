@@ -19,8 +19,8 @@ class HomeItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 50,
-      margin: const EdgeInsets.symmetric(horizontal: 5),
+      height: 48,
+      margin: const EdgeInsets.symmetric(horizontal: 6),
       child: InkWell(
         onTap: () {
           onTap();
@@ -31,7 +31,7 @@ class HomeItem extends StatelessWidget {
               icon,
               color: iconColor,
             ),
-            const SizedBox(width: 10),
+            const SizedBox(width: 8),
             Text(
               text,
               style: MyTheme.itemTextStyle,

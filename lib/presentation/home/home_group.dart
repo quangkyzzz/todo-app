@@ -20,8 +20,8 @@ class _HomeGroupState extends State<HomeGroup> {
         'Group 1',
         style: MyTheme.itemTextStyle,
       ),
-      tilePadding: const EdgeInsets.only(left: 7),
-      childrenPadding: const EdgeInsets.only(left: 20),
+      tilePadding: const EdgeInsets.only(left: 8),
+      childrenPadding: const EdgeInsets.only(left: 18),
       onExpansionChanged: (bool expanded) {
         setState(() {
           isExpanded = expanded;

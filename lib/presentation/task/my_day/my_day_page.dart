@@ -47,7 +47,7 @@ class _MyDayPageState extends State<MyDayPage> {
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             title: Container(
-              height: 50,
+              height: 48,
               width: 300,
               child: RichText(
                 text: TextSpan(

@@ -32,10 +32,10 @@ class _SearchPageState extends State<SearchPage> {
     return Scaffold(
       appBar: AppBar(
         title: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 8),
           decoration: BoxDecoration(
             color: MyTheme.backgroundGreyColor,
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(8),
           ),
           child: const TextField(
             style: MyTheme.itemTextStyle,
@@ -47,7 +47,7 @@ class _SearchPageState extends State<SearchPage> {
             onPressed: () {},
             icon: const Icon(Icons.mic_outlined),
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: 8),
           InkWell(
             onTap: () {},
             child: PopupMenuButton(
@@ -69,7 +69,7 @@ class _SearchPageState extends State<SearchPage> {
         ],
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.only(top: 10),
+        padding: const EdgeInsets.only(top: 8),
         child: IncompleteList(taskList: incompleteTask),
       ),
     );
