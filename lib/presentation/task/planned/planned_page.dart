@@ -85,7 +85,6 @@ class _PlannedPageState extends State<PlannedPage> {
                     child: PopupItem(
                       text: item['text'],
                       icon: item['icon'],
-                      onTap: () {},
                     ),
                   );
                 }).toList();

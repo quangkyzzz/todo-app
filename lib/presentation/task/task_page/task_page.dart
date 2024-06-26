@@ -81,10 +81,10 @@ class _TaskPageState extends State<TaskPage> {
       ),
       items: listPopupItem.map((item) {
         return PopupMenuItem(
+          onTap: () {},
           child: PopupItem(
             text: item['text'],
             icon: item['icon'],
-            onTap: () {},
           ),
         );
       }).toList(),
@@ -107,7 +107,7 @@ class _TaskPageState extends State<TaskPage> {
               style: MyTheme.itemTextStyle,
             ),
             const SizedBox(height: 8),
-            TaskViewItem(
+            TaskPageItem(
               icon: const Icon(
                 Icons.folder_outlined,
                 color: MyTheme.greyColor,
@@ -115,7 +115,7 @@ class _TaskPageState extends State<TaskPage> {
               text: 'Device files',
               onTap: () {},
             ),
-            TaskViewItem(
+            TaskPageItem(
               icon: const Icon(
                 Icons.photo_camera_outlined,
                 color: MyTheme.greyColor,
@@ -254,7 +254,13 @@ class _TaskPageState extends State<TaskPage> {
             Row(
               children: [
                 const SizedBox(width: 16),
-                Transform.scale(scale: 1.3, child: const Icon(Icons.add)),
+                Transform.scale(
+                  scale: 1.3,
+                  child: const Icon(
+                    Icons.add,
+                    color: MyTheme.greyColor,
+                  ),
+                ),
                 const SizedBox(width: 8),
                 const Expanded(
                   child: TextField(
@@ -272,7 +278,7 @@ class _TaskPageState extends State<TaskPage> {
               children: listTaskItem.map((item) {
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 18),
-                  child: TaskViewItem(
+                  child: TaskPageItem(
                     key: item['key'],
                     icon: item['icon'],
                     text: item['text'],
@@ -304,12 +310,12 @@ class _TaskPageState extends State<TaskPage> {
   }
 }
 
-class TaskViewItem extends StatelessWidget {
+class TaskPageItem extends StatelessWidget {
   final Color textColor;
   final Icon icon;
   final String text;
   final Function() onTap;
-  const TaskViewItem({
+  const TaskPageItem({
     super.key,
     required this.icon,
     required this.text,
@@ -331,7 +337,7 @@ class TaskViewItem extends StatelessWidget {
           onPressed: onTap,
           child: Text(
             text,
-            style: TextStyle(color: textColor, fontSize: 18),
+            style: MyTheme.itemGreyTextStyle,
           ),
         ),
       ],

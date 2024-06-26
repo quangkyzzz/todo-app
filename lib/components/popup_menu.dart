@@ -5,10 +5,12 @@ import 'package:todo_app/themes.dart';
 import 'package:todo_app/routes.dart';
 
 class PopupMenu extends StatefulWidget {
+  final List<Map<String, dynamic>>? customListPopupMenuItem;
   final List<String> toRemove;
   const PopupMenu({
     super.key,
     this.toRemove = const [],
+    this.customListPopupMenuItem,
   });
 
   @override
@@ -196,28 +198,32 @@ class _PopupMenuState extends State<PopupMenu> {
 
   @override
   Widget build(BuildContext context) {
-    return PopupMenuButton(itemBuilder: (context) {
-      listPopupMenuItem.removeWhere((element) {
-        return widget.toRemove.contains(element['value']);
-      });
-      return listPopupMenuItem.map((item) {
-        return PopupMenuItem(
-          value: item['value'],
-          child: PopupItem(
-            text: item['text'],
-            icon: item['icon'],
+    (widget.customListPopupMenuItem != null)
+        ? listPopupMenuItem = widget.customListPopupMenuItem!
+        : true;
+    return PopupMenuButton(
+      itemBuilder: (context) {
+        listPopupMenuItem.removeWhere((element) {
+          return widget.toRemove.contains(element['value']);
+        });
+        return listPopupMenuItem.map((item) {
+          return PopupMenuItem(
+            value: item['value'],
             onTap: () {
               item['onTap'](context);
             },
-          ),
-        );
-      }).toList();
-    });
+            child: PopupItem(
+              text: item['text'],
+              icon: item['icon'],
+            ),
+          );
+        }).toList();
+      },
+    );
   }
 }
 
 class PopupItem extends StatelessWidget {
-  final Function() onTap;
   final String text;
   final IconData icon;
 
@@ -225,24 +231,23 @@ class PopupItem extends StatelessWidget {
     super.key,
     required this.text,
     required this.icon,
-    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
-      child: InkWell(
-        onTap: onTap,
-        child: Row(children: [
-          Icon(icon),
-          const SizedBox(width: 15),
-          Text(
-            text,
-            style: MyTheme.itemSmallTextStyle,
-          ),
-        ]),
-      ),
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Row(children: [
+        Icon(
+          icon,
+          color: MyTheme.whiteColor,
+        ),
+        const SizedBox(width: 15),
+        Text(
+          text,
+          style: MyTheme.itemSmallTextStyle,
+        ),
+      ]),
     );
   }
 }
@@ -252,40 +257,35 @@ class BottomSheetItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(15.0),
+    return const Padding(
+      padding: EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Sort by',
             style: MyTheme.itemTextStyle,
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 8),
           PopupItem(
             text: 'Important',
             icon: Icons.star_border_outlined,
-            onTap: () {},
           ),
           PopupItem(
             text: 'Due date',
             icon: Icons.calendar_today_outlined,
-            onTap: () {},
           ),
           PopupItem(
             text: 'Added to My Day',
             icon: Icons.wb_sunny_outlined,
-            onTap: () {},
           ),
           PopupItem(
             text: 'Alphabetiaclly',
             icon: Icons.import_export_outlined,
-            onTap: () {},
           ),
           PopupItem(
             text: 'Creation date',
             icon: Icons.more_time_outlined,
-            onTap: () {},
           ),
         ],
       ),

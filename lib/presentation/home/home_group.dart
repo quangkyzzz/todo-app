@@ -12,6 +12,26 @@ class HomeGroup extends StatefulWidget {
 }
 
 class _HomeGroupState extends State<HomeGroup> {
+  List<Map<String, dynamic>> listPopupMenuItem = [
+    {
+      'value': 'add_or_remove_lists',
+      'text': 'Add/remove lists',
+      'icon': Icons.list_outlined,
+      'onTap': () {},
+    },
+    {
+      'value': 'rename',
+      'text': 'Rename group',
+      'icon': Icons.edit_note_outlined,
+      'onTap': () {},
+    },
+    {
+      'value': 'ungroup',
+      'text': 'Ungroup list',
+      'icon': Icons.clear_all_outlined,
+      'onTap': () {},
+    },
+  ];
   bool isExpanded = false;
   @override
   Widget build(BuildContext context) {
@@ -34,32 +54,41 @@ class _HomeGroupState extends State<HomeGroup> {
               ? PopupMenuButton(
                   offset: const Offset(0, 40),
                   itemBuilder: (context) {
-                    return [
-                      PopupMenuItem(
-                        value: 'add_or_remove_lists',
+                    return listPopupMenuItem.map((item) {
+                      return PopupMenuItem(
+                        onTap: item['onTap'],
+                        value: item['value'],
                         child: PopupItem(
-                          text: 'Add/Remove lists',
-                          icon: Icons.list_outlined,
-                          onTap: () {},
+                          text: item['text'],
+                          icon: item['icon'],
                         ),
-                      ),
-                      PopupMenuItem(
-                        value: 'rename',
-                        child: PopupItem(
-                          text: 'Rename group',
-                          icon: Icons.edit_note_outlined,
-                          onTap: () {},
-                        ),
-                      ),
-                      PopupMenuItem(
-                        value: 'ungroup',
-                        child: PopupItem(
-                          text: 'Ungroup lists',
-                          icon: Icons.clear_all_outlined,
-                          onTap: () {},
-                        ),
-                      ),
-                    ];
+                      );
+                    }).toList(); //[
+                    //   PopupMenuItem(
+                    //     value: 'add_or_remove_lists',
+                    //     child: PopupItem(
+                    //       text: 'Add/Remove lists',
+                    //       icon: Icons.list_outlined,
+                    //       onTap: () {},
+                    //     ),
+                    //   ),
+                    //   PopupMenuItem(
+                    //     value: 'rename',
+                    //     child: PopupItem(
+                    //       text: 'Rename group',
+                    //       icon: Icons.edit_note_outlined,
+                    //       onTap: () {},
+                    //     ),
+                    //   ),
+                    //   PopupMenuItem(
+                    //     value: 'ungroup',
+                    //     child: PopupItem(
+                    //       text: 'Ungroup lists',
+                    //       icon: Icons.clear_all_outlined,
+                    //       onTap: () {},
+                    //     ),
+                    //   ),
+                    // ];
                   },
                 )
               : const SizedBox(),
