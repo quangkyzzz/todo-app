@@ -2,9 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:todo_app/routes.dart';
-
-import '../items/bottom_sheet_item.dart';
-import '../items/popup_item.dart';
+import 'package:todo_app/themes.dart';
+import 'package:todo_app/presentation/items/popup_item.dart';
 
 class PopupMenu extends StatefulWidget {
   final List<Map<String, dynamic>>? customListPopupMenuItem;
@@ -84,7 +83,7 @@ class _PopupMenuState extends State<PopupMenu> {
       context: context,
       showDragHandle: true,
       builder: (BuildContext context) {
-        return const BottomSheetItem();
+        return const SortByBottomSheet();
       },
     );
   }
@@ -100,7 +99,7 @@ class _PopupMenuState extends State<PopupMenu> {
       context: context,
       showDragHandle: true,
       builder: (BuildContext context) {
-        return const NormalBottomSheetItem(
+        return const NormalBottomSheet(
           title: 'Add to Home screen?',
           button: 'Add',
         );
@@ -115,7 +114,7 @@ class _PopupMenuState extends State<PopupMenu> {
       context: context,
       showDragHandle: true,
       builder: (BuildContext context) {
-        return const NormalBottomSheetItem(
+        return const NormalBottomSheet(
           title: 'Change theme?',
           button: 'Change',
         );
@@ -130,7 +129,7 @@ class _PopupMenuState extends State<PopupMenu> {
       context: context,
       showDragHandle: true,
       builder: (BuildContext context) {
-        return const NormalBottomSheetItem(
+        return const NormalBottomSheet(
           title: 'Hide completed tasks?',
           button: 'Yes',
         );
@@ -145,7 +144,7 @@ class _PopupMenuState extends State<PopupMenu> {
       context: context,
       showDragHandle: true,
       builder: (BuildContext context) {
-        return const NormalBottomSheetItem(
+        return const NormalBottomSheet(
           title: 'Send a copy?',
           button: 'Send',
         );
@@ -160,7 +159,7 @@ class _PopupMenuState extends State<PopupMenu> {
       context: context,
       showDragHandle: true,
       builder: (BuildContext context) {
-        return const NormalBottomSheetItem(
+        return const NormalBottomSheet(
           title: 'Duplicate list?',
           button: 'Yes',
         );
@@ -175,7 +174,7 @@ class _PopupMenuState extends State<PopupMenu> {
       context: context,
       showDragHandle: true,
       builder: (BuildContext context) {
-        return const NormalBottomSheetItem(
+        return const NormalBottomSheet(
           title: 'Print list?',
           button: 'Print',
         );
@@ -190,7 +189,7 @@ class _PopupMenuState extends State<PopupMenu> {
       context: context,
       showDragHandle: true,
       builder: (BuildContext context) {
-        return const NormalBottomSheetItem(
+        return const NormalBottomSheet(
           title: 'Turn on suggestions?',
           button: 'Turn on',
         );
@@ -225,10 +224,10 @@ class _PopupMenuState extends State<PopupMenu> {
   }
 }
 
-class NormalBottomSheetItem extends StatelessWidget {
+class NormalBottomSheet extends StatelessWidget {
   final String title;
   final String button;
-  const NormalBottomSheetItem({
+  const NormalBottomSheet({
     super.key,
     required this.title,
     required this.button,
@@ -270,6 +269,62 @@ class NormalBottomSheetItem extends StatelessWidget {
               const Spacer(),
             ],
           )
+        ],
+      ),
+    );
+  }
+}
+
+class SortByBottomSheet extends StatelessWidget {
+  const SortByBottomSheet({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Sort by',
+            style: MyTheme.itemTextStyle,
+          ),
+          const SizedBox(height: 8),
+          InkWell(
+            onTap: () {},
+            child: const PopupItem(
+              text: 'Important',
+              icon: Icons.star_border_outlined,
+            ),
+          ),
+          InkWell(
+            onTap: () {},
+            child: const PopupItem(
+              text: 'Due date',
+              icon: Icons.calendar_today_outlined,
+            ),
+          ),
+          InkWell(
+            onTap: () {},
+            child: const PopupItem(
+              text: 'Added to My Day',
+              icon: Icons.wb_sunny_outlined,
+            ),
+          ),
+          InkWell(
+            onTap: () {},
+            child: const PopupItem(
+              text: 'Alphabetiaclly',
+              icon: Icons.import_export_outlined,
+            ),
+          ),
+          InkWell(
+            onTap: () {},
+            child: const PopupItem(
+              text: 'Creation date',
+              icon: Icons.more_time_outlined,
+            ),
+          ),
         ],
       ),
     );
