@@ -1,8 +1,10 @@
 // ignore_for_file: sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
-import 'package:todo_app/themes.dart';
 import 'package:todo_app/routes.dart';
+
+import '../items/bottom_sheet_item.dart';
+import '../items/popup_item.dart';
 
 class PopupMenu extends StatefulWidget {
   final List<Map<String, dynamic>>? customListPopupMenuItem;
@@ -219,91 +221,6 @@ class _PopupMenuState extends State<PopupMenu> {
           );
         }).toList();
       },
-    );
-  }
-}
-
-class PopupItem extends StatelessWidget {
-  final String text;
-  final IconData icon;
-
-  const PopupItem({
-    super.key,
-    required this.text,
-    required this.icon,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: Row(children: [
-        Icon(
-          icon,
-          color: MyTheme.whiteColor,
-        ),
-        const SizedBox(width: 15),
-        Text(
-          text,
-          style: MyTheme.itemSmallTextStyle,
-        ),
-      ]),
-    );
-  }
-}
-
-class BottomSheetItem extends StatelessWidget {
-  const BottomSheetItem({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'Sort by',
-            style: MyTheme.itemTextStyle,
-          ),
-          const SizedBox(height: 8),
-          InkWell(
-            onTap: () {},
-            child: const PopupItem(
-              text: 'Important',
-              icon: Icons.star_border_outlined,
-            ),
-          ),
-          InkWell(
-            onTap: () {},
-            child: const PopupItem(
-              text: 'Due date',
-              icon: Icons.calendar_today_outlined,
-            ),
-          ),
-          InkWell(
-            onTap: () {},
-            child: const PopupItem(
-              text: 'Added to My Day',
-              icon: Icons.wb_sunny_outlined,
-            ),
-          ),
-          InkWell(
-            onTap: () {},
-            child: const PopupItem(
-              text: 'Alphabetiaclly',
-              icon: Icons.import_export_outlined,
-            ),
-          ),
-          InkWell(
-            onTap: () {},
-            child: const PopupItem(
-              text: 'Creation date',
-              icon: Icons.more_time_outlined,
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

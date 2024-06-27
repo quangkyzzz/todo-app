@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/models/task_model.dart';
-import 'package:todo_app/presentation/lists_and_items/task_list_item.dart';
+import 'package:todo_app/presentation/items/task_list_item.dart';
 
 class ReorderPage extends StatefulWidget {
   const ReorderPage({super.key});

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/models/task_model.dart';
-import 'package:todo_app/presentation/lists_and_items/task_list_item.dart';
+import 'package:todo_app/presentation/items/task_list_item.dart';
 
 class IncompleteList extends StatelessWidget {
   final List<Map<String, dynamic>> taskList;
