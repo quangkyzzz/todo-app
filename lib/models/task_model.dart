@@ -1,15 +1,19 @@
 import 'package:flutter/foundation.dart';
 import 'dart:core';
 
+import 'package:todo_app/models/step_model.dart';
+
 @immutable
 class TaskModel {
   final String taskID;
   final String title;
   final bool isCompleted;
   final bool isImportant;
-  final List<String>? step;
+  final DateTime createDate;
+  final List<StepModel>? step;
   final DateTime? dueDate;
   final DateTime? notiTime;
+  final String? notiFrequency;
   final String? filePath;
   final String? note;
 
@@ -18,9 +22,11 @@ class TaskModel {
     required this.title,
     required this.isCompleted,
     required this.isImportant,
+    required this.createDate,
     this.step,
     this.dueDate,
     this.notiTime,
+    this.notiFrequency,
     this.filePath,
     this.note,
   });
@@ -32,9 +38,11 @@ class TaskModel {
     result.addAll({'title': title});
     result.addAll({'isCompleted': isCompleted});
     result.addAll({'isImportant': isImportant});
+    result.addAll({'createDate': createDate});
     result.addAll({'step': step});
     result.addAll({'dueDate': dueDate});
     result.addAll({'notiTime': notiTime});
+    result.addAll({'notiFrequency': notiFrequency});
     result.addAll({'filePath': filePath});
     result.addAll({'note': note});
     return result;
@@ -46,9 +54,11 @@ class TaskModel {
       title: map['title'] ?? 'title',
       isCompleted: map['isCompleted'] ?? false,
       isImportant: map['isImportant'] ?? false,
+      createDate: map['createDate'] ?? DateTime.now(),
       step: map['step'],
       dueDate: map['dueDate'],
       notiTime: map['notiTime'],
+      notiFrequency: map['notiFrequency'],
       filePath: map['filePath'],
       note: map['note'],
     );

@@ -1,6 +1,7 @@
 // ignore_for_file: unnecessary_string_interpolations
 
 import 'package:flutter/material.dart';
+import 'package:todo_app/models/step_model.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/routes.dart';
 import 'package:todo_app/models/task_model.dart';
@@ -29,7 +30,7 @@ class _TaskListItemState extends State<TaskListItem> {
   @override
   Widget build(BuildContext context) {
     initializeDateFormatting('vi');
-    List<String>? step = widget.task.step;
+    List<StepModel>? step = widget.task.step;
     DateTime? dueDate = widget.task.dueDate;
     DateTime? notiTime = widget.task.notiTime;
     String? filePath = widget.task.filePath;
