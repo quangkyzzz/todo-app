@@ -1,16 +1,18 @@
 import 'package:flutter/foundation.dart';
 import 'dart:core';
 
+import 'package:todo_app/models/task_list_model.dart';
+
 @immutable
-class ListGroupModel {
+class GroupModel {
   final String groupID;
   final String groupName;
-  final List<String>? listTaskListID;
+  final List<TaskListModel>? listTaskList;
 
-  const ListGroupModel({
+  const GroupModel({
     required this.groupID,
     required this.groupName,
-    this.listTaskListID,
+    this.listTaskList,
   });
 
   Map<String, dynamic> toMap() {
@@ -18,15 +20,15 @@ class ListGroupModel {
 
     result.addAll({'groupID': groupID});
     result.addAll({'groupName': groupName});
-    result.addAll({'listTaskListID': listTaskListID});
+    result.addAll({'listTaskList': listTaskList});
     return result;
   }
 
-  factory ListGroupModel.fromMap(Map<String, dynamic> map) {
-    return ListGroupModel(
+  factory GroupModel.fromMap(Map<String, dynamic> map) {
+    return GroupModel(
       groupID: map['groupID'] ?? '-1',
       groupName: map['groupName'] ?? 'Untitle group',
-      listTaskListID: map['listTaskListID'] ?? [],
+      listTaskList: map['listTaskList'] ?? [],
     );
   }
 }

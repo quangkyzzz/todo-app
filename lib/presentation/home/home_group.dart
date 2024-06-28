@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/models/group_model.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/routes.dart';
 import 'package:todo_app/presentation/home/home_item.dart';
-
-import '../items/popup_item.dart';
+import 'package:todo_app/presentation/items/popup_item.dart';
 
 class HomeGroup extends StatefulWidget {
-  const HomeGroup({super.key});
+  final GroupModel group;
+  const HomeGroup({
+    super.key,
+    required this.group,
+  });
 
   @override
   State<HomeGroup> createState() => _HomeGroupState();
@@ -37,8 +41,8 @@ class _HomeGroupState extends State<HomeGroup> {
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
-      title: const Text(
-        'Group 1',
+      title: Text(
+        widget.group.groupName,
         style: MyTheme.itemTextStyle,
       ),
       tilePadding: const EdgeInsets.only(left: 8),
@@ -64,58 +68,24 @@ class _HomeGroupState extends State<HomeGroup> {
                           icon: item['icon'],
                         ),
                       );
-                    }).toList(); //[
-                    //   PopupMenuItem(
-                    //     value: 'add_or_remove_lists',
-                    //     child: PopupItem(
-                    //       text: 'Add/Remove lists',
-                    //       icon: Icons.list_outlined,
-                    //       onTap: () {},
-                    //     ),
-                    //   ),
-                    //   PopupMenuItem(
-                    //     value: 'rename',
-                    //     child: PopupItem(
-                    //       text: 'Rename group',
-                    //       icon: Icons.edit_note_outlined,
-                    //       onTap: () {},
-                    //     ),
-                    //   ),
-                    //   PopupMenuItem(
-                    //     value: 'ungroup',
-                    //     child: PopupItem(
-                    //       text: 'Ungroup lists',
-                    //       icon: Icons.clear_all_outlined,
-                    //       onTap: () {},
-                    //     ),
-                    //   ),
-                    // ];
+                    }).toList();
                   },
                 )
               : const SizedBox(),
           Icon(isExpanded ? Icons.expand_more : Icons.keyboard_arrow_left),
         ],
       ),
-      children: [
-        HomeItem(
+      children: widget.group.listTaskList!.map((item) {
+        return HomeItem(
+          text: item.listName,
+          icon: Icons.list_outlined,
+          iconColor: MyTheme.blueColor,
+          endNumber: 1,
           onTap: () {
             Navigator.of(context).pushNamed(taskListRoute);
           },
-          text: 'my list 1',
-          icon: Icons.list,
-          iconColor: MyTheme.blueColor,
-          endNumber: 0,
-        ),
-        HomeItem(
-          onTap: () {
-            Navigator.of(context).pushNamed(taskListRoute);
-          },
-          text: 'my list 2',
-          icon: Icons.list,
-          iconColor: MyTheme.blueColor,
-          endNumber: 0,
-        )
-      ],
+        );
+      }).toList(),
     );
   }
 }

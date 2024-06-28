@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:todo_app/models/list_group_model.dart';
+import 'package:todo_app/models/group_model.dart';
 import 'dart:core';
 
 import 'package:todo_app/models/task_list_model.dart';
@@ -10,14 +10,14 @@ class UserModel {
   final String userName;
   final String userEmail;
   final List<TaskListModel>? taskLists;
-  final List<ListGroupModel>? listGroups;
+  final List<GroupModel>? groups;
 
   const UserModel({
     required this.userID,
     required this.userName,
     required this.userEmail,
     this.taskLists,
-    this.listGroups,
+    this.groups,
   });
 
   Map<String, dynamic> toMap() {
@@ -27,7 +27,7 @@ class UserModel {
     result.addAll({'userName': userName});
     result.addAll({'userEmail': userEmail});
     result.addAll({'taskLists': taskLists});
-    result.addAll({'listGroups': listGroups});
+    result.addAll({'groups': groups});
 
     return result;
   }
@@ -38,7 +38,7 @@ class UserModel {
       userName: map['userName'] ?? 'Unknown name',
       userEmail: map['userEmail'] ?? 'Unknown email',
       taskLists: map['taskLists'] ?? [],
-      listGroups: map['listGroups'] ?? [],
+      groups: map['groups'] ?? [],
     );
   }
 }

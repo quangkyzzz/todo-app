@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:todo_app/app_configs.dart';
+import 'package:todo_app/models/group_model.dart';
+import 'package:todo_app/models/task_list_model.dart';
 import 'package:todo_app/models/user_model.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/routes.dart';
@@ -44,10 +46,43 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     UserModel user = UserModel(
-      userID: '1',
-      userName: 'Quang Nguyễn',
-      userEmail: 'quang.ndt@outlook.com',
-    );
+        userID: '1',
+        userName: 'Quang Nguyễn',
+        userEmail: 'quang.ndt@outlook.com',
+        taskLists: const [
+          TaskListModel(listID: '1', listName: 'my personal list 1'),
+          TaskListModel(listID: '1', listName: 'my personal list 2'),
+        ],
+        groups: const [
+          GroupModel(
+            groupID: '1',
+            groupName: 'Group 1',
+            listTaskList: [
+              TaskListModel(
+                listID: '1',
+                listName: 'my list 1',
+              ),
+              TaskListModel(
+                listID: '2',
+                listName: 'my list 2',
+              ),
+            ],
+          ),
+          GroupModel(
+            groupID: '2',
+            groupName: 'Group 2',
+            listTaskList: [
+              TaskListModel(
+                listID: '1',
+                listName: 'my list 1',
+              ),
+              TaskListModel(
+                listID: '2',
+                listName: 'my list 2',
+              ),
+            ],
+          ),
+        ]);
     List<Map<String, dynamic>> listHomeItem = [
       {
         'text': 'My Day',
@@ -112,14 +147,24 @@ class _HomePageState extends State<HomePage> {
               }).toList(),
             ),
             MyTheme.dividerWhiteStyle,
-            HomeGroup(),
-            HomeGroup(),
-            HomeGroup(),
-            HomeGroup(),
-            HomeGroup(),
-            HomeGroup(),
-            HomeGroup(),
-            HomeGroup(),
+            Column(
+              children: user.taskLists!.map((item) {
+                return HomeItem(
+                  text: item.listName,
+                  icon: Icons.list_outlined,
+                  iconColor: MyTheme.blueColor,
+                  endNumber: 1,
+                  onTap: () {
+                    Navigator.of(context).pushNamed(taskListRoute);
+                  },
+                );
+              }).toList(),
+            ),
+            Column(
+              children: user.groups!.map((item) {
+                return HomeGroup(group: item);
+              }).toList(),
+            ),
           ],
         ),
       ),
