@@ -5,6 +5,8 @@ import 'package:todo_app/models/task_model.dart';
 import 'package:todo_app/presentation/task/task_page/task_page_bottom_navigation.dart';
 import 'package:todo_app/presentation/items/popup_item.dart';
 
+import 'task_page_item.dart';
+
 class TaskPage extends StatefulWidget {
   final TaskModel task;
   const TaskPage({
@@ -19,8 +21,12 @@ class TaskPage extends StatefulWidget {
 class _TaskPageState extends State<TaskPage> {
   GlobalKey key = GlobalKey();
   late bool isOnMyDay;
-  late bool isChecked;
+  late bool isCompleted;
   late bool isImportant;
+  late DateTime? notiDate;
+  late DateTime? dueDate;
+  late String? notiFrequency;
+  late String? filePath;
   late final TextEditingController _taskNameController;
   List<Map<String, dynamic>> listPopupItem = [
     {
@@ -52,10 +58,24 @@ class _TaskPageState extends State<TaskPage> {
   onTapAddToMyDay(BuildContext context) {
     setState(() {
       isOnMyDay = !isOnMyDay;
+      print(isOnMyDay);
     });
   }
 
   onTapRemindMe(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return DatePickerDialog(
+          initialDate: DateTime.now(),
+          firstDate: DateTime(2000),
+          lastDate: DateTime(2025),
+        );
+      },
+    );
+  }
+
+  onTapAddDueDate(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -108,18 +128,14 @@ class _TaskPageState extends State<TaskPage> {
             ),
             const SizedBox(height: 8),
             TaskPageItem(
-              icon: const Icon(
-                Icons.folder_outlined,
-                color: MyTheme.greyColor,
-              ),
+              isActive: false,
+              icon: Icons.folder_outlined,
               text: 'Device files',
               onTap: () {},
             ),
             TaskPageItem(
-              icon: const Icon(
-                Icons.photo_camera_outlined,
-                color: MyTheme.greyColor,
-              ),
+              isActive: false,
+              icon: Icons.photo_camera_outlined,
               text: 'Camera',
               onTap: () {},
             ),
@@ -132,8 +148,12 @@ class _TaskPageState extends State<TaskPage> {
   @override
   void initState() {
     isOnMyDay = false;
-    isChecked = widget.task.isCompleted;
+    isCompleted = widget.task.isCompleted;
     isImportant = widget.task.isImportant;
+    notiDate = widget.task.notiTime;
+    dueDate = widget.task.dueDate;
+    notiFrequency = widget.task.notiFrequency;
+    filePath = widget.task.filePath;
     _taskNameController = TextEditingController();
     _taskNameController.text = widget.task.title;
     super.initState();
@@ -149,49 +169,33 @@ class _TaskPageState extends State<TaskPage> {
   Widget build(BuildContext context) {
     late List<Map<String, dynamic>> listTaskItem = [
       {
-        'icon': (isOnMyDay)
-            ? const Icon(
-                Icons.wb_sunny_outlined,
-                color: MyTheme.blueColor,
-              )
-            : const Icon(
-                Icons.wb_sunny_outlined,
-                color: MyTheme.greyColor,
-              ),
+        'isActive': isOnMyDay,
+        'icon': Icons.wb_sunny_outlined,
         'text': 'Add to My Day',
-        'textColor': (isOnMyDay) ? MyTheme.blueColor : MyTheme.greyColor,
         'onTap': onTapAddToMyDay,
       },
       {
-        'icon': const Icon(
-          Icons.notifications_outlined,
-          color: MyTheme.greyColor,
-        ),
+        'isActive': (notiDate != null),
+        'icon': Icons.notifications_outlined,
         'text': 'Remind me',
         'onTap': onTapRemindMe,
       },
       {
-        'icon': const Icon(
-          Icons.calendar_today_outlined,
-          color: MyTheme.greyColor,
-        ),
+        'isActive': (dueDate != null),
+        'icon': Icons.calendar_today_outlined,
         'text': 'Add due date',
-        'onTap': onTapRemindMe,
+        'onTap': onTapAddDueDate,
       },
       {
-        'icon': const Icon(
-          Icons.repeat_outlined,
-          color: MyTheme.greyColor,
-        ),
+        'isActive': (notiFrequency != null),
+        'icon': Icons.repeat_outlined,
         'key': key,
         'text': 'Repeat',
         'onTap': onTapRepeat,
       },
       {
-        'icon': const Icon(
-          Icons.attach_file_outlined,
-          color: MyTheme.greyColor,
-        ),
+        'isActive': false,
+        'icon': Icons.attach_file_outlined,
         'text': 'Add file',
         'onTap': onTapAddFile,
       },
@@ -238,13 +242,16 @@ class _TaskPageState extends State<TaskPage> {
             //List uniform task page item
             Column(
               children: listTaskItem.map((item) {
+                //TODO: fix this
+                print(
+                    'building ${item['text']} with isOnMyDay is: ${isOnMyDay}');
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 18),
                   child: TaskPageItem(
                     key: item['key'],
+                    isActive: item['isActive'],
                     icon: item['icon'],
                     text: item['text'],
-                    textColor: item['textColor'] ?? MyTheme.greyColor,
                     onTap: () {
                       item['onTap'](context);
                     },
@@ -269,41 +276,6 @@ class _TaskPageState extends State<TaskPage> {
         ),
       ),
       bottomNavigationBar: TaskPageBottomNavigation(task: widget.task),
-    );
-  }
-}
-
-class TaskPageItem extends StatelessWidget {
-  final Color textColor;
-  final Icon icon;
-  final String text;
-  final Function() onTap;
-  const TaskPageItem({
-    super.key,
-    required this.icon,
-    required this.text,
-    required this.onTap,
-    this.textColor = MyTheme.greyColor,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const SizedBox(width: 16),
-        Transform.scale(
-          scale: 1.3,
-          child: icon,
-        ),
-        const SizedBox(width: 8),
-        TextButton(
-          onPressed: onTap,
-          child: Text(
-            text,
-            style: MyTheme.itemGreyTextStyle,
-          ),
-        ),
-      ],
     );
   }
 }

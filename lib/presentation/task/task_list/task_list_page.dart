@@ -26,7 +26,6 @@ class _TaskListPageState extends State<TaskListPage> {
         isCompleted: false,
         isImportant: false,
         createDate: DateTime.now(),
-        note: 'note',
       ),
       TaskModel(
         taskID: '2',
@@ -35,6 +34,7 @@ class _TaskListPageState extends State<TaskListPage> {
         isImportant: false,
         createDate: DateTime.now(),
         dueDate: DateTime(2014, 12, 12),
+        notiFrequency: 'gg',
       ),
     ],
   );

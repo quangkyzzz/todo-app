@@ -66,6 +66,16 @@ class MyTheme {
     fontWeight: FontWeight.w400,
     color: MyTheme.greyColor,
   );
+  static const TextStyle itemExtraSmallTextStyle = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    color: MyTheme.whiteColor,
+  );
+  static const TextStyle itemExtraSmallGreyTextStyle = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    color: MyTheme.greyColor,
+  );
 
   //divider style
   static const Divider dividerGreyStyle = Divider(

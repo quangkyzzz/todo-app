@@ -36,7 +36,7 @@ class _TaskListItemState extends State<TaskListItem> {
     DateTime? notiTime = widget.task.notiTime;
     String? filePath = widget.task.filePath;
     String? note = widget.task.note;
-    bool isAllNull = ((step == null) &&
+    bool isAllBottomIconNull = ((step == null) &&
         (dueDate == null) &&
         (notiTime == null) &&
         (filePath == null) &&
@@ -68,17 +68,19 @@ class _TaskListItemState extends State<TaskListItem> {
                 });
               },
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: (isAllNull)
-                  ? [
-                      const SizedBox(height: 16),
+            (isAllBottomIconNull)
+                ? Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
                       Text(
                         widget.task.title,
                         style: MyTheme.itemTextStyle,
-                      ),
-                    ]
-                  : [
+                      )
+                    ],
+                  )
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
                       const SizedBox(height: 8),
                       Text(
                         widget.task.title,
@@ -116,7 +118,7 @@ class _TaskListItemState extends State<TaskListItem> {
                         ],
                       )
                     ],
-            ),
+                  ),
             const Spacer(),
             GestureDetector(
               onTap: () {
@@ -160,13 +162,13 @@ class ItemBottomIcon extends StatelessWidget {
               (textIcon != null)
                   ? Icon(
                       textIcon,
-                      size: 16,
+                      size: 12,
                       color: MyTheme.greyColor,
                     )
                   : const SizedBox(),
               Text(
                 text!,
-                style: const TextStyle(color: MyTheme.greyColor),
+                style: MyTheme.itemExtraSmallGreyTextStyle,
               ),
             ],
           )
