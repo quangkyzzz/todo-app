@@ -133,6 +133,7 @@ class _HomePageState extends State<HomePage> {
         padding: EdgeInsets.only(left: 8, right: 6),
         child: Column(
           children: [
+            //default list
             Column(
               children: listHomeItem.map((item) {
                 return HomeItem(
@@ -147,6 +148,7 @@ class _HomePageState extends State<HomePage> {
               }).toList(),
             ),
             MyTheme.dividerWhiteStyle,
+            //personal list
             Column(
               children: user.taskLists!.map((item) {
                 return HomeItem(
@@ -160,6 +162,7 @@ class _HomePageState extends State<HomePage> {
                 );
               }).toList(),
             ),
+            //personal group
             Column(
               children: user.groups!.map((item) {
                 return HomeGroup(group: item);

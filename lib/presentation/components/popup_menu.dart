@@ -236,16 +236,16 @@ class NormalBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
       height: 100,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             title,
-            style: const TextStyle(fontSize: 20),
+            style: MyTheme.itemTextStyle,
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 8),
           Row(
             children: [
               const Spacer(),
@@ -255,7 +255,7 @@ class NormalBottomSheet extends StatelessWidget {
                 },
                 child: const Text(
                   'Cancel',
-                  style: TextStyle(fontSize: 20),
+                  style: MyTheme.itemTextStyle,
                 ),
               ),
               const Spacer(),
@@ -263,7 +263,7 @@ class NormalBottomSheet extends StatelessWidget {
                 onPressed: () {},
                 child: Text(
                   button,
-                  style: const TextStyle(fontSize: 20),
+                  style: MyTheme.itemTextStyle,
                 ),
               ),
               const Spacer(),

@@ -22,7 +22,7 @@ class PopupItem extends StatelessWidget {
           icon,
           color: MyTheme.whiteColor,
         ),
-        const SizedBox(width: 15),
+        const SizedBox(width: 16),
         Text(
           text,
           style: MyTheme.itemSmallTextStyle,

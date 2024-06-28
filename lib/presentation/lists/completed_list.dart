@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/models/task_list_model.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/presentation/lists/incomplete_list.dart';
 
 class CompletedList extends StatefulWidget {
-  final List<Map<String, dynamic>> taskList;
+  final TaskListModel taskList;
   const CompletedList({
     super.key,
     required this.taskList,
@@ -22,7 +23,7 @@ class _CompletedListState extends State<CompletedList> {
       title: const Text(
         'Completed',
         style: TextStyle(
-          fontSize: 20,
+          fontSize: 18,
           color: MyTheme.blueColor,
         ),
       ),

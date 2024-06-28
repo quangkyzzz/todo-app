@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/models/task_list_model.dart';
+import 'package:todo_app/models/task_model.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/presentation/lists/incomplete_list.dart';
 import 'package:todo_app/presentation/components/popup_menu.dart';
@@ -11,21 +13,26 @@ class FlaggedEmailPage extends StatefulWidget {
 }
 
 class _FlaggedEmailPageState extends State<FlaggedEmailPage> {
-  List<Map<String, dynamic>> incompleteTask = [
-    {
-      'taskID': '1',
-      'title': 'task 1',
-      'isCompleted': false,
-      'note': 'xdd',
-      'filePath': 'xdd'
-    },
-    {
-      'taskID': '2',
-      'title': 'task 2',
-      'isCompleted': false,
-      'dueDate': DateTime.now(),
-    },
-  ];
+  TaskListModel incompleteTask = TaskListModel(
+    listID: '1',
+    listName: 'list1',
+    taskList: [
+      TaskModel(
+        taskID: '1',
+        title: 'task 1',
+        isCompleted: false,
+        isImportant: false,
+        createDate: DateTime.now(),
+      ),
+      TaskModel(
+        taskID: '2',
+        title: 'task 2',
+        isCompleted: false,
+        isImportant: false,
+        createDate: DateTime.now(),
+      ),
+    ],
+  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(

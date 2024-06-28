@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/models/task_list_model.dart';
+import 'package:todo_app/models/task_model.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/presentation/components/add_floating_button.dart';
 import 'package:todo_app/presentation/lists/incomplete_list.dart';
@@ -13,21 +15,26 @@ class PlannedPage extends StatefulWidget {
 }
 
 class _PlannedPageState extends State<PlannedPage> {
-  List<Map<String, dynamic>> incompleteTask = [
-    {
-      'taskID': '1',
-      'title': 'task 1',
-      'isCompleted': false,
-      'note': 'xdd',
-      'filePath': 'xdd'
-    },
-    {
-      'taskID': '2',
-      'title': 'task 2',
-      'isCompleted': false,
-      'dueDate': DateTime.now(),
-    },
-  ];
+  TaskListModel incompleteTask = TaskListModel(
+    listID: '1',
+    listName: 'list1',
+    taskList: [
+      TaskModel(
+        taskID: '1',
+        title: 'task 1',
+        isCompleted: false,
+        isImportant: false,
+        createDate: DateTime.now(),
+      ),
+      TaskModel(
+        taskID: '2',
+        title: 'task 2',
+        isCompleted: false,
+        isImportant: false,
+        createDate: DateTime.now(),
+      ),
+    ],
+  );
   List<Map<String, dynamic>> listPopupMennu = [
     {
       'text': 'Overdue',
@@ -79,7 +86,7 @@ class _PlannedPageState extends State<PlannedPage> {
 
             //popup menu
             PopupMenuButton(
-              offset: const Offset(0, 50),
+              offset: const Offset(0, 48),
               itemBuilder: (BuildContext context) {
                 return listPopupMennu.map((item) {
                   return PopupMenuItem(

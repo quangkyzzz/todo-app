@@ -30,12 +30,17 @@ class _TaskListItemState extends State<TaskListItem> {
   @override
   Widget build(BuildContext context) {
     initializeDateFormatting('vi');
+
     List<StepModel>? step = widget.task.step;
     DateTime? dueDate = widget.task.dueDate;
     DateTime? notiTime = widget.task.notiTime;
     String? filePath = widget.task.filePath;
     String? note = widget.task.note;
-
+    bool isAllNull = ((step == null) &&
+        (dueDate == null) &&
+        (notiTime == null) &&
+        (filePath == null) &&
+        (note == null));
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
@@ -65,43 +70,52 @@ class _TaskListItemState extends State<TaskListItem> {
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 8),
-                Text(
-                  widget.task.title,
-                  style: MyTheme.itemTextStyle,
-                ),
-                const SizedBox(height: 4),
-                Row(
-                  children: [
-                    (step != null)
-                        ? ItemBottomIcon(text: step.toString())
-                        : const SizedBox(),
-                    const SizedBox(width: 6),
-                    (dueDate != null)
-                        ? ItemBottomIcon(
-                            textIcon: Icons.calendar_today_outlined,
-                            text:
-                                '${DateFormat.MMMEd('en_US').format(dueDate)}')
-                        : const SizedBox(),
-                    const SizedBox(width: 6),
-                    (notiTime != null)
-                        ? ItemBottomIcon(
-                            textIcon: Icons.notifications_outlined,
-                            text:
-                                '${DateFormat.MMMEd('en_US').format(notiTime)}')
-                        : const SizedBox(),
-                    const SizedBox(width: 6),
-                    (filePath != null)
-                        ? const ItemBottomIcon(icon: Icons.attach_file_outlined)
-                        : const SizedBox(),
-                    const SizedBox(width: 6),
-                    (note != null)
-                        ? const ItemBottomIcon(icon: Icons.note_outlined)
-                        : const SizedBox(),
-                  ],
-                )
-              ],
+              children: (isAllNull)
+                  ? [
+                      const SizedBox(height: 16),
+                      Text(
+                        widget.task.title,
+                        style: MyTheme.itemTextStyle,
+                      ),
+                    ]
+                  : [
+                      const SizedBox(height: 8),
+                      Text(
+                        widget.task.title,
+                        style: MyTheme.itemTextStyle,
+                      ),
+                      const SizedBox(height: 4),
+                      Row(
+                        children: [
+                          (step != null)
+                              ? ItemBottomIcon(text: step.toString())
+                              : const SizedBox(),
+                          const SizedBox(width: 6),
+                          (dueDate != null)
+                              ? ItemBottomIcon(
+                                  textIcon: Icons.calendar_today_outlined,
+                                  text:
+                                      '${DateFormat.MMMEd('en_US').format(dueDate)}')
+                              : const SizedBox(),
+                          const SizedBox(width: 6),
+                          (notiTime != null)
+                              ? ItemBottomIcon(
+                                  textIcon: Icons.notifications_outlined,
+                                  text:
+                                      '${DateFormat.MMMEd('en_US').format(notiTime)}')
+                              : const SizedBox(),
+                          const SizedBox(width: 6),
+                          (filePath != null)
+                              ? const ItemBottomIcon(
+                                  icon: Icons.attach_file_outlined)
+                              : const SizedBox(),
+                          const SizedBox(width: 6),
+                          (note != null)
+                              ? const ItemBottomIcon(icon: Icons.note_outlined)
+                              : const SizedBox(),
+                        ],
+                      )
+                    ],
             ),
             const Spacer(),
             GestureDetector(
@@ -115,7 +129,10 @@ class _TaskListItemState extends State<TaskListItem> {
                       Icons.star,
                       color: MyTheme.blueColor,
                     )
-                  : const Icon(Icons.star_border_outlined),
+                  : const Icon(
+                      Icons.star_border_outlined,
+                      color: MyTheme.greyColor,
+                    ),
             ),
           ],
         ),

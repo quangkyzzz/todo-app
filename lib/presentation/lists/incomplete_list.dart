@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/models/task_list_model.dart';
 import 'package:todo_app/models/task_model.dart';
 import 'package:todo_app/presentation/items/task_list_item.dart';
 
 class IncompleteList extends StatelessWidget {
-  final List<Map<String, dynamic>> taskList;
+  final TaskListModel taskList;
   const IncompleteList({super.key, required this.taskList});
 
   @override
@@ -11,9 +12,9 @@ class IncompleteList extends StatelessWidget {
     return ListView.builder(
       shrinkWrap: true,
       physics: const ClampingScrollPhysics(),
-      itemCount: taskList.length,
+      itemCount: taskList.taskList!.length,
       itemBuilder: (BuildContext context, int index) {
-        TaskModel task = TaskModel.fromMap(taskList[index]);
+        TaskModel task = taskList.taskList![index];
         return TaskListItem(
           task: task,
         );

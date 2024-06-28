@@ -17,7 +17,6 @@ class _SettingsPageState extends State<SettingsPage> {
     userName: 'Quang Nguyễn',
     userEmail: 'quang.ndt@outlook.com',
   );
-  bool isAddNewTask = true;
 
   @override
   Widget build(BuildContext context) {
