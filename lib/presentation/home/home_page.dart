@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:todo_app/app_configs.dart';
+import 'package:todo_app/models/user_model.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/routes.dart';
 import 'package:todo_app/presentation/home/home_group.dart';
@@ -42,6 +43,11 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    UserModel user = UserModel(
+      userID: '1',
+      userName: 'Quang Nguyễn',
+      userEmail: 'quang.ndt@outlook.com',
+    );
     List<Map<String, dynamic>> listHomeItem = [
       {
         'text': 'My Day',
@@ -87,7 +93,7 @@ class _HomePageState extends State<HomePage> {
       },
     ];
     return Scaffold(
-      appBar: HomeAppBar(context: context).appBar(),
+      appBar: HomeAppBar(context: context, user: user).appBar(),
       body: SingleChildScrollView(
         padding: EdgeInsets.only(left: 8, right: 6),
         child: Column(
@@ -180,8 +186,13 @@ class _HomePageState extends State<HomePage> {
 }
 
 class HomeAppBar {
+  UserModel user;
   BuildContext context;
-  HomeAppBar({Key? key, required this.context});
+  HomeAppBar({
+    Key? key,
+    required this.context,
+    required this.user,
+  });
 
   AppBar appBar() {
     return AppBar(
@@ -204,12 +215,12 @@ class HomeAppBar {
             Navigator.of(context).pushNamed(userProfileRoute);
           },
           child: RichText(
-            text: const TextSpan(
-              text: 'Quang Nguyen',
+            text: TextSpan(
+              text: user.userName,
               style: MyTheme.titleTextStyle,
               children: [
                 TextSpan(
-                  text: '\nquang.ndt@outlook.com',
+                  text: '\n${user.userEmail}',
                   style: MyTheme.secondaryTitleGreyTextStyle,
                 )
               ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/app_configs.dart';
+import 'package:todo_app/models/user_model.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/routes.dart';
 
@@ -11,6 +12,11 @@ class UserProfilePage extends StatefulWidget {
 }
 
 class _UserProfilePageState extends State<UserProfilePage> {
+  UserModel user = const UserModel(
+    userID: '1',
+    userName: 'Quang Nguyễn',
+    userEmail: 'quang.ndt@outlook.com',
+  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,12 +49,12 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 ),
               ],
             ),
-            const Text(
-              'Quang Nguyen',
+            Text(
+              user.userName,
               style: MyTheme.titleTextStyle,
             ),
-            const Text(
-              'quang.ndt@outlook.com',
+            Text(
+              user.userEmail,
               style: MyTheme.secondaryTitleGreyTextStyle,
             ),
             MyTheme.dividerGreyStyle,

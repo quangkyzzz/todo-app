@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/app_configs.dart';
+import 'package:todo_app/models/user_model.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/presentation/settings/settings_list.dart';
 
@@ -11,6 +12,11 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  UserModel user = const UserModel(
+    userID: '1',
+    userName: 'Quang Nguyễn',
+    userEmail: 'quang.ndt@outlook.com',
+  );
   bool isAddNewTask = true;
 
   @override
@@ -40,12 +46,12 @@ class _SettingsPageState extends State<SettingsPage> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Quang Nguyễn',
+                      Text(
+                        user.userName,
                         style: MyTheme.itemTextStyle,
                       ),
-                      const Text(
-                        'quang.ndt@outlook.com',
+                      Text(
+                        user.userEmail,
                         style: MyTheme.secondaryTitleGreyTextStyle,
                       ),
                       const SizedBox(height: 8),
