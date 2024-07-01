@@ -4,6 +4,7 @@ import 'package:todo_app/routes.dart';
 import 'package:todo_app/models/task_model.dart';
 import 'package:todo_app/presentation/task/task_page/task_page_bottom_navigation.dart';
 import 'package:todo_app/presentation/items/popup_item.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'task_page_item.dart';
 
@@ -61,17 +62,31 @@ class _TaskPageState extends State<TaskPage> {
     });
   }
 
-  onTapRemindMe(BuildContext context) {
-    showDialog(
+  Future<DateTime?> onTapRemindMe(BuildContext context) async {
+    final DateTime? selectedDate = await showDatePicker(
       context: context,
-      builder: (BuildContext context) {
-        return DatePickerDialog(
-          initialDate: DateTime.now(),
-          firstDate: DateTime(2000),
-          lastDate: DateTime(2025),
-        );
-      },
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
     );
+    if (selectedDate == null) return null;
+
+    if (!context.mounted) return selectedDate;
+
+    final TimeOfDay? selectedTime = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+
+    return (selectedTime == null)
+        ? selectedDate
+        : DateTime(
+            selectedDate.year,
+            selectedDate.month,
+            selectedDate.day,
+            selectedTime.hour,
+            selectedTime.minute,
+          );
   }
 
   onTapAddDueDate(BuildContext context) {
