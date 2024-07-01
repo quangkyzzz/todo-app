@@ -31,7 +31,7 @@ class _TaskListItemState extends State<TaskListItem> {
   Widget build(BuildContext context) {
     initializeDateFormatting('vi');
 
-    List<StepModel>? step = widget.task.step;
+    List<StepModel>? step = widget.task.stepList;
     DateTime? dueDate = widget.task.dueDate;
     DateTime? notiTime = widget.task.notiTime;
     String? filePath = widget.task.filePath;
@@ -90,7 +90,8 @@ class _TaskListItemState extends State<TaskListItem> {
                       Row(
                         children: [
                           (step != null)
-                              ? ItemBottomIcon(text: step.toString())
+                              ? ItemBottomIcon(
+                                  text: '0 of ${step.length.toString()}')
                               : const SizedBox(),
                           const SizedBox(width: 6),
                           (dueDate != null)

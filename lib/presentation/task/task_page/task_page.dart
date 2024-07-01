@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/models/step_model.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/routes.dart';
 import 'package:todo_app/models/task_model.dart';
 import 'package:todo_app/presentation/task/task_page/task_page_bottom_navigation.dart';
 import 'package:todo_app/presentation/items/popup_item.dart';
-import 'package:flutter/cupertino.dart';
-
 import 'task_page_item.dart';
 
 class TaskPage extends StatefulWidget {
@@ -24,6 +23,7 @@ class _TaskPageState extends State<TaskPage> {
   late bool isOnMyDay;
   late bool isCompleted;
   late bool isImportant;
+  late List<StepModel>? steps;
   late DateTime? notiDate;
   late DateTime? dueDate;
   late String? notiFrequency;
@@ -95,8 +95,8 @@ class _TaskPageState extends State<TaskPage> {
       builder: (BuildContext context) {
         return DatePickerDialog(
           initialDate: DateTime.now(),
-          firstDate: DateTime(2000),
-          lastDate: DateTime(2025),
+          firstDate: DateTime(2020),
+          lastDate: DateTime(2030),
         );
       },
     );
@@ -166,6 +166,7 @@ class _TaskPageState extends State<TaskPage> {
     isImportant = widget.task.isImportant;
     notiDate = widget.task.notiTime;
     dueDate = widget.task.dueDate;
+    steps = widget.task.stepList;
     notiFrequency = widget.task.notiFrequency;
     filePath = widget.task.filePath;
     _taskNameController = TextEditingController();
@@ -222,67 +223,80 @@ class _TaskPageState extends State<TaskPage> {
         ),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            //Edit task row
-            TaskEditRow(taskNameController: _taskNameController),
-            const SizedBox(height: 8),
-            //Add step row
-            Row(
-              children: [
-                const SizedBox(width: 16),
-                Transform.scale(
-                  scale: 1.3,
-                  child: const Icon(
-                    Icons.add,
-                    color: MyTheme.greyColor,
-                  ),
-                ),
-                const SizedBox(width: 8),
-                const Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Add step',
-                      border: InputBorder.none,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              //Edit task row
+              TaskEditRow(taskNameController: _taskNameController),
+              const SizedBox(height: 8),
+              //Add step row
+              (steps != null)
+                  ? Column(
+                      children: steps!.map(
+                      (item) {
+                        return StepItem(
+                          step: item,
+                        );
+                      },
+                    ).toList())
+                  : const SizedBox(),
+              Row(
+                children: [
+                  const SizedBox(width: 16),
+                  Transform.scale(
+                    scale: 1.3,
+                    child: const Icon(
+                      Icons.add,
+                      color: MyTheme.greyColor,
                     ),
-                    style: MyTheme.itemTextStyle,
                   ),
-                )
-              ],
-            ),
-            const SizedBox(height: 18),
-            //List uniform task page item
-            Column(
-              children: listTaskItem.map((item) {
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 18),
-                  child: TaskPageItem(
-                    key: item['key'],
-                    isActive: item['isActive'],
-                    icon: item['icon'],
-                    text: item['text'],
-                    onTap: () {
-                      item['onTap'](context);
+                  const SizedBox(width: 8),
+                  const Expanded(
+                    child: TextField(
+                      decoration: InputDecoration(
+                        hintText: 'Add step',
+                        border: InputBorder.none,
+                      ),
+                      style: MyTheme.itemTextStyle,
+                    ),
+                  )
+                ],
+              ),
+              const SizedBox(height: 18),
+              //List uniform task page item
+              Column(
+                children: listTaskItem.map((item) {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 18),
+                    child: TaskPageItem(
+                      key: item['key'],
+                      isActive: item['isActive'],
+                      icon: item['icon'],
+                      text: item['text'],
+                      onTap: () {
+                        item['onTap'](context);
+                      },
+                    ),
+                  );
+                }).toList(),
+              ),
+              const SizedBox(height: 18),
+              //Add and edit note button
+              Padding(
+                padding: const EdgeInsets.only(left: 16),
+                child: TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(noteEditRoute);
                     },
-                  ),
-                );
-              }).toList(),
-            ),
-            const SizedBox(height: 18),
-            //Add and edit note button
-            Padding(
-              padding: const EdgeInsets.only(left: 16),
-              child: TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(noteEditRoute);
-                  },
-                  child: const Text(
-                    'Add note',
-                    style: MyTheme.itemGreyTextStyle,
-                  )),
-            )
-          ],
+                    child: const Text(
+                      'Add note',
+                      style: MyTheme.itemGreyTextStyle,
+                    )),
+              )
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: TaskPageBottomNavigation(task: widget.task),
@@ -357,6 +371,76 @@ class _TaskEditRowState extends State<TaskEditRow> {
                   scale: 1.3, child: const Icon(Icons.star_border_outlined)),
         ),
         const SizedBox(width: 16),
+      ],
+    );
+  }
+}
+
+class StepItem extends StatefulWidget {
+  final StepModel step;
+  const StepItem({
+    super.key,
+    required this.step,
+  });
+
+  @override
+  State<StepItem> createState() => _StepItemState();
+}
+
+class _StepItemState extends State<StepItem> {
+  late StepModel step;
+  late bool isCompleted;
+  late TextEditingController _controller;
+
+  @override
+  void initState() {
+    step = widget.step;
+    isCompleted = widget.step.isCompleted;
+    _controller = TextEditingController();
+    _controller.text = widget.step.stepName;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Checkbox(
+          shape: const CircleBorder(),
+          value: isCompleted,
+          onChanged: (bool? value) {
+            setState(() {
+              isCompleted = value!;
+            });
+          },
+        ),
+        Expanded(
+          child: TextField(
+            controller: _controller,
+          ),
+        ),
+        PopupMenuButton(itemBuilder: (BuildContext context) {
+          return [
+            PopupMenuItem(
+              child: TextButton(
+                onPressed: () {},
+                child: const Text(
+                  'Promote to task',
+                  style: MyTheme.itemExtraSmallTextStyle,
+                ),
+              ),
+            ),
+            PopupMenuItem(
+              child: TextButton(
+                onPressed: () {},
+                child: const Text(
+                  'Delete step',
+                  style: MyTheme.itemExtraSmallTextStyle,
+                ),
+              ),
+            ),
+          ];
+        })
       ],
     );
   }

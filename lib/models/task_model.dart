@@ -10,7 +10,7 @@ class TaskModel {
   final bool isCompleted;
   final bool isImportant;
   final DateTime createDate;
-  final List<StepModel>? step;
+  final List<StepModel>? stepList;
   final DateTime? dueDate;
   final DateTime? notiTime;
   final String? notiFrequency;
@@ -23,7 +23,7 @@ class TaskModel {
     required this.isCompleted,
     required this.isImportant,
     required this.createDate,
-    this.step,
+    this.stepList,
     this.dueDate,
     this.notiTime,
     this.notiFrequency,
@@ -39,7 +39,7 @@ class TaskModel {
     result.addAll({'isCompleted': isCompleted});
     result.addAll({'isImportant': isImportant});
     result.addAll({'createDate': createDate});
-    result.addAll({'step': step});
+    result.addAll({'stepList': stepList});
     result.addAll({'dueDate': dueDate});
     result.addAll({'notiTime': notiTime});
     result.addAll({'notiFrequency': notiFrequency});
@@ -55,7 +55,7 @@ class TaskModel {
       isCompleted: map['isCompleted'] ?? false,
       isImportant: map['isImportant'] ?? false,
       createDate: map['createDate'] ?? DateTime.now(),
-      step: map['step'],
+      stepList: map['stepList'],
       dueDate: map['dueDate'],
       notiTime: map['notiTime'],
       notiFrequency: map['notiFrequency'],

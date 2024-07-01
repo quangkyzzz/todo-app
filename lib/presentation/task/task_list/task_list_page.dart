@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/models/step_model.dart';
 import 'package:todo_app/models/task_list_model.dart';
 import 'package:todo_app/models/task_model.dart';
 import 'package:todo_app/presentation/components/add_floating_button.dart';
@@ -21,12 +22,23 @@ class _TaskListPageState extends State<TaskListPage> {
     listName: 'list1',
     taskList: [
       TaskModel(
-        taskID: '1',
-        title: 'task 1',
-        isCompleted: false,
-        isImportant: false,
-        createDate: DateTime.now(),
-      ),
+          taskID: '1',
+          title: 'task 1',
+          isCompleted: false,
+          isImportant: false,
+          createDate: DateTime.now(),
+          stepList: const [
+            StepModel(
+              stepID: '1',
+              stepName: 'step 1',
+              isCompleted: false,
+            ),
+            StepModel(
+              stepID: '2',
+              stepName: 'step 2',
+              isCompleted: false,
+            ),
+          ]),
       TaskModel(
         taskID: '2',
         title: 'task 2',
