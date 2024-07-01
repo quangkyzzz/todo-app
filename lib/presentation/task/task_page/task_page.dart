@@ -171,7 +171,6 @@ class _TaskPageState extends State<TaskPage> {
         'isActive': isOnMyDay,
         'icon': Icons.wb_sunny_outlined,
         'text': 'Add to My Day',
-        // 'onTap': null,
       },
       {
         'isActive': (notiDate != null),

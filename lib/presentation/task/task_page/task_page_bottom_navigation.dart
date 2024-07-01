@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/models/task_model.dart';
 import 'package:todo_app/presentation/components/show_alert_dialog.dart';
+import 'package:intl/intl.dart';
 
 class TaskPageBottomNavigation extends StatelessWidget {
   final TaskModel task;
@@ -24,8 +25,8 @@ class TaskPageBottomNavigation extends StatelessWidget {
       ),
       child: Row(
         children: [
-          const Text(
-            'Create 1 hour ago',
+          Text(
+            'Create at ${DateFormat.MMMEd('en_US').add_jm().format(task.createDate)}',
             style: MyTheme.itemGreyTextStyle,
           ),
           const Spacer(),
