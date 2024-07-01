@@ -6,34 +6,25 @@ class AddFloatingButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        shape: BoxShape.circle,
-        color: MyTheme.blueColor,
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        shape: const CircleBorder(),
+        padding: const EdgeInsets.all(8),
       ),
-      child: InkWell(
-        splashColor: MyTheme.blackColor,
-        customBorder: const CircleBorder(),
-        onTap: () {
-          bool isChecked = false;
-          showModalBottomSheet(
-            isScrollControlled: true,
-            context: context,
-            builder: (BuildContext context) {
-              return AddTaskItem(isChecked: isChecked);
-            },
-          );
-        },
-        child: Ink(
-          decoration: const BoxDecoration(shape: BoxShape.circle),
-          height: 60,
-          width: 60,
-          child: const Icon(
-            Icons.add,
-            size: 40,
-            color: MyTheme.whiteColor,
-          ),
-        ),
+      onPressed: () {
+        bool isChecked = false;
+        showModalBottomSheet(
+          isScrollControlled: true,
+          context: context,
+          builder: (BuildContext context) {
+            return AddTaskItem(isChecked: isChecked);
+          },
+        );
+      },
+      child: const Icon(
+        Icons.add,
+        size: 40,
+        color: MyTheme.whiteColor,
       ),
     );
   }

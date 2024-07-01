@@ -13,15 +13,15 @@ import 'package:todo_app/presentation/settings/settings_page.dart';
 import 'package:todo_app/presentation/user_profile/user_profile_page.dart';
 
 const initialRoute = '/home';
-const userProfileRoute = '/user_profile';
-const taskListRoute = '/task_list';
-const searchRoute = '/search';
-const flaggedRoute = '/flagged';
-const plannedRoute = '/planned';
-const myDayRoute = '/my_day';
-const settingsRoute = '/settings';
-const reorderRoute = '/task_list/reorder';
-const taskRoute = '/task';
+const userProfileRoute = '/home/user_profile';
+const taskListRoute = '/home/task_list';
+const searchRoute = '/home/search';
+const flaggedRoute = '/home/flagged';
+const plannedRoute = '/home/planned';
+const myDayRoute = '/home/my_day';
+const settingsRoute = '/home/user_profile/settings';
+const reorderRoute = '/home/task_list/reorder';
+const taskRoute = '/task_list/task';
 const noteEditRoute = '/task/note_edit';
 
 var allRoute = {
