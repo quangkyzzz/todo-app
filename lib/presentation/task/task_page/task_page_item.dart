@@ -5,7 +5,7 @@ class TaskPageItem extends StatefulWidget {
   final bool isActive;
   final IconData icon;
   final String text;
-  final Function() onTap;
+  final void Function() onTap;
 
   const TaskPageItem({
     super.key,
@@ -23,13 +23,12 @@ class _TaskPageItemState extends State<TaskPageItem> {
   late bool isActive;
   @override
   void initState() {
+    isActive = widget.isActive;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    isActive = widget.isActive;
-    print('building inside with isActive: ${isActive}');
     return Row(
       children: [
         const SizedBox(width: 16),
@@ -42,7 +41,13 @@ class _TaskPageItemState extends State<TaskPageItem> {
         ),
         const SizedBox(width: 8),
         TextButton(
-          onPressed: widget.onTap,
+          onPressed: (widget.text != 'Add to My Day')
+              ? widget.onTap
+              : () {
+                  setState(() {
+                    isActive = !isActive;
+                  });
+                },
           child: Text(
             widget.text,
             style: TextStyle(

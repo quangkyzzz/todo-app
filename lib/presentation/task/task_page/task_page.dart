@@ -58,7 +58,6 @@ class _TaskPageState extends State<TaskPage> {
   onTapAddToMyDay(BuildContext context) {
     setState(() {
       isOnMyDay = !isOnMyDay;
-      print(isOnMyDay);
     });
   }
 
@@ -172,7 +171,7 @@ class _TaskPageState extends State<TaskPage> {
         'isActive': isOnMyDay,
         'icon': Icons.wb_sunny_outlined,
         'text': 'Add to My Day',
-        'onTap': onTapAddToMyDay,
+        // 'onTap': null,
       },
       {
         'isActive': (notiDate != null),
@@ -242,9 +241,6 @@ class _TaskPageState extends State<TaskPage> {
             //List uniform task page item
             Column(
               children: listTaskItem.map((item) {
-                //TODO: fix this
-                print(
-                    'building ${item['text']} with isOnMyDay is: ${isOnMyDay}');
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 18),
                   child: TaskPageItem(
