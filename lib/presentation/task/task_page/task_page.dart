@@ -422,21 +422,17 @@ class _StepItemState extends State<StepItem> {
         PopupMenuButton(itemBuilder: (BuildContext context) {
           return [
             PopupMenuItem(
-              child: TextButton(
-                onPressed: () {},
-                child: const Text(
-                  'Promote to task',
-                  style: MyTheme.itemExtraSmallTextStyle,
-                ),
+              onTap: () {},
+              child: const PopupItem(
+                text: 'Promote to task',
+                icon: Icons.add_outlined,
               ),
             ),
             PopupMenuItem(
-              child: TextButton(
-                onPressed: () {},
-                child: const Text(
-                  'Delete step',
-                  style: MyTheme.itemExtraSmallTextStyle,
-                ),
+              onTap: () {},
+              child: const PopupItem(
+                text: 'Delete task',
+                icon: Icons.delete_outline,
               ),
             ),
           ];

@@ -36,7 +36,7 @@ class _TaskListPageState extends State<TaskListPage> {
             StepModel(
               stepID: '2',
               stepName: 'step 2',
-              isCompleted: false,
+              isCompleted: true,
             ),
           ]),
       TaskModel(
