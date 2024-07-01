@@ -66,27 +66,27 @@ class _TaskPageState extends State<TaskPage> {
     final DateTime? selectedDate = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
+      firstDate: DateTime(2020),
+      lastDate: DateTime(2030),
     );
-    if (selectedDate == null) return null;
+    if (selectedDate == null) return DateTime.now();
 
     if (!context.mounted) return selectedDate;
 
-    final TimeOfDay? selectedTime = await showTimePicker(
+    TimeOfDay? selectedTime = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
     );
 
-    return (selectedTime == null)
-        ? selectedDate
-        : DateTime(
-            selectedDate.year,
-            selectedDate.month,
-            selectedDate.day,
-            selectedTime.hour,
-            selectedTime.minute,
-          );
+    selectedTime ??= TimeOfDay.now();
+
+    return DateTime(
+      selectedDate.year,
+      selectedDate.month,
+      selectedDate.day,
+      selectedTime.hour,
+      selectedTime.minute,
+    );
   }
 
   onTapAddDueDate(BuildContext context) {
