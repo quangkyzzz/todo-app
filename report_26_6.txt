@@ -1,7 +1,0 @@
-Đã làm:
-    - sửa initial route 
-    - chỉnh cấu trúc, xắp xếp lại các thành phần tái sử dụng
-    - sửa các vòng for thành map
-    - sửa các hàm onTap bằng cách chuyền context vào biến
-Dự định làm:
-    - tổng hợp từ review code để tiếp tục hoàn thiện hoặc chuyển sang bước tiếp theo

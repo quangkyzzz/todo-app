@@ -23,12 +23,12 @@ class _TaskPageItemState extends State<TaskPageItem> {
   late bool isActive;
   @override
   void initState() {
-    isActive = widget.isActive;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    isActive = widget.isActive;
     print('building inside with isActive: ${isActive}');
     return Row(
       children: [

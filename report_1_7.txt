@@ -1,0 +1,11 @@
+Đã làm:
+    - Thêm user, task list, group và step model
+    - Sửa task model đã thêm từ trước
+    - Tích hợp user model vào các màn homepage, user profile, setting
+    - Tích hợp task list vào toàn bộ code
+Đang làm:
+    - Tích hợp task model vào màn task page
+Dự định làm:
+    - Sửa lỗi khi tích hợp task model
+    - Tích họp step model vào code
+    - Tổng hợp từ review code để cải thiện các lỗi nếu có
