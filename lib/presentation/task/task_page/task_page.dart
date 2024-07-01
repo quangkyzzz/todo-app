@@ -223,80 +223,74 @@ class _TaskPageState extends State<TaskPage> {
         ),
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              //Edit task row
-              TaskEditRow(taskNameController: _taskNameController),
-              const SizedBox(height: 8),
-              //Add step row
-              (steps != null)
-                  ? Column(
-                      children: steps!.map(
-                      (item) {
-                        return StepItem(
-                          step: item,
-                        );
-                      },
-                    ).toList())
-                  : const SizedBox(),
-              Row(
-                children: [
-                  const SizedBox(width: 16),
-                  Transform.scale(
-                    scale: 1.3,
-                    child: const Icon(
-                      Icons.add,
-                      color: MyTheme.greyColor,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  const Expanded(
-                    child: TextField(
-                      decoration: InputDecoration(
-                        hintText: 'Add step',
-                        border: InputBorder.none,
-                      ),
-                      style: MyTheme.itemTextStyle,
-                    ),
-                  )
-                ],
-              ),
-              const SizedBox(height: 18),
-              //List uniform task page item
-              Column(
-                children: listTaskItem.map((item) {
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 18),
-                    child: TaskPageItem(
-                      key: item['key'],
-                      isActive: item['isActive'],
-                      icon: item['icon'],
-                      text: item['text'],
-                      onTap: () {
-                        item['onTap'](context);
-                      },
-                    ),
-                  );
-                }).toList(),
-              ),
-              const SizedBox(height: 18),
-              //Add and edit note button
-              Padding(
-                padding: const EdgeInsets.only(left: 16),
-                child: TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pushNamed(noteEditRoute);
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            //Edit task row
+            TaskEditRow(taskNameController: _taskNameController),
+            const SizedBox(height: 8),
+            //Add step row
+            (steps != null)
+                ? Column(
+                    children: steps!.map(
+                    (item) {
+                      return StepItem(
+                        step: item,
+                      );
                     },
-                    child: const Text(
-                      'Add note',
-                      style: MyTheme.itemGreyTextStyle,
-                    )),
-              )
-            ],
-          ),
+                  ).toList())
+                : const SizedBox(),
+            const Row(
+              children: [
+                SizedBox(width: 16),
+                Icon(
+                  Icons.add,
+                  color: MyTheme.greyColor,
+                ),
+                SizedBox(width: 8),
+                Expanded(
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Add step',
+                      border: InputBorder.none,
+                    ),
+                    style: MyTheme.itemSmallTextStyle,
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(height: 12),
+            //List uniform task page item
+            Column(
+              children: listTaskItem.map((item) {
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: TaskPageItem(
+                    key: item['key'],
+                    isActive: item['isActive'],
+                    icon: item['icon'],
+                    text: item['text'],
+                    onTap: () {
+                      item['onTap'](context);
+                    },
+                  ),
+                );
+              }).toList(),
+            ),
+            const SizedBox(height: 18),
+            //Add and edit note button
+            Padding(
+              padding: const EdgeInsets.only(left: 16),
+              child: TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(noteEditRoute);
+                  },
+                  child: const Text(
+                    'Add note',
+                    style: MyTheme.itemSmallGreyTextStyle,
+                  )),
+            )
+          ],
         ),
       ),
       bottomNavigationBar: TaskPageBottomNavigation(task: widget.task),

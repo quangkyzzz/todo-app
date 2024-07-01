@@ -32,12 +32,9 @@ class _TaskPageItemState extends State<TaskPageItem> {
     return Row(
       children: [
         const SizedBox(width: 16),
-        Transform.scale(
-          scale: 1.3,
-          child: Icon(
-            widget.icon,
-            color: (isActive) ? MyTheme.blueColor : MyTheme.greyColor,
-          ),
+        Icon(
+          widget.icon,
+          color: (isActive) ? MyTheme.blueColor : MyTheme.greyColor,
         ),
         const SizedBox(width: 8),
         TextButton(
@@ -51,7 +48,7 @@ class _TaskPageItemState extends State<TaskPageItem> {
           child: Text(
             widget.text,
             style: TextStyle(
-              fontSize: 18,
+              fontSize: 16,
               fontWeight: FontWeight.w400,
               color: (isActive) ? MyTheme.blueColor : MyTheme.greyColor,
             ),

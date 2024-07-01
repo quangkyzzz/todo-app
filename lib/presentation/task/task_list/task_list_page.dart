@@ -22,23 +22,24 @@ class _TaskListPageState extends State<TaskListPage> {
     listName: 'list1',
     taskList: [
       TaskModel(
-          taskID: '1',
-          title: 'task 1',
-          isCompleted: false,
-          isImportant: false,
-          createDate: DateTime.now(),
-          stepList: const [
-            StepModel(
-              stepID: '1',
-              stepName: 'step 1',
-              isCompleted: false,
-            ),
-            StepModel(
-              stepID: '2',
-              stepName: 'step 2',
-              isCompleted: true,
-            ),
-          ]),
+        taskID: '1',
+        title: 'task 1',
+        isCompleted: false,
+        isImportant: false,
+        createDate: DateTime.now(),
+        stepList: const [
+          StepModel(
+            stepID: '1',
+            stepName: 'step 1',
+            isCompleted: false,
+          ),
+          StepModel(
+            stepID: '2',
+            stepName: 'step 2',
+            isCompleted: true,
+          ),
+        ],
+      ),
       TaskModel(
         taskID: '2',
         title: 'task 2',
