@@ -121,21 +121,25 @@ class _TaskListItemState extends State<TaskListItem> {
                     ],
                   ),
             const Spacer(),
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  isImportant = !isImportant;
-                });
-              },
-              child: (isImportant)
-                  ? const Icon(
-                      Icons.star,
-                      color: MyTheme.blueColor,
-                    )
-                  : const Icon(
-                      Icons.star_border_outlined,
-                      color: MyTheme.greyColor,
-                    ),
+            Material(
+              color: Colors.transparent,
+              shape: const CircleBorder(),
+              child: IconButton(
+                onPressed: () {
+                  setState(() {
+                    isImportant = !isImportant;
+                  });
+                },
+                icon: (isImportant)
+                    ? const Icon(
+                        Icons.star,
+                        color: MyTheme.blueColor,
+                      )
+                    : const Icon(
+                        Icons.star_border_outlined,
+                        color: MyTheme.greyColor,
+                      ),
+              ),
             ),
           ],
         ),
