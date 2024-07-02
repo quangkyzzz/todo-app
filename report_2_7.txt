@@ -3,9 +3,8 @@
     - Sửa task model đã thêm từ trước
     - Tích hợp user model vào các màn homepage, user profile, setting
     - Tích hợp task list vào toàn bộ code
-Đang làm:
     - Tích hợp task model vào màn task page
+    - Tích hợp step model vào code
+    - Chỉnh sửa các lỗi giao diện 
 Dự định làm:
-    - Sửa lỗi khi tích hợp task model
-    - Tích họp step model vào code
     - Tổng hợp từ review code để cải thiện các lỗi nếu có
