@@ -11,8 +11,21 @@ class TaskPageBottomNavigation extends StatelessWidget {
     required this.task,
   });
 
+  String diffTimeFormat(Duration diffTime) {
+    if (diffTime < const Duration(minutes: 1)) {
+      return 'Created a few moments ago';
+    } else if (diffTime < const Duration(hours: 1)) {
+      return 'Created ${diffTime.inMinutes} minutes ago';
+    } else {
+      return 'Created ${diffTime.inHours} hours ago';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    Duration diffTime = DateTime.now().difference(task.createDate);
+
+    print(diffTime);
     return Container(
       padding: const EdgeInsets.only(left: 8, right: 8, bottom: 12),
       decoration: const BoxDecoration(
@@ -25,10 +38,15 @@ class TaskPageBottomNavigation extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Text(
-            'Create at ${DateFormat.MMMEd('en_US').add_jm().format(task.createDate)}',
-            style: MyTheme.itemGreyTextStyle,
-          ),
+          (diffTime < const Duration(days: 1))
+              ? Text(
+                  diffTimeFormat(diffTime),
+                  style: MyTheme.itemGreyTextStyle,
+                )
+              : Text(
+                  'Create on ${DateFormat.MMMEd('en_US').format(task.createDate)}',
+                  style: MyTheme.itemGreyTextStyle,
+                ),
           const Spacer(),
           IconButton(
             onPressed: () {

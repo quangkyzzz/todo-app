@@ -24,7 +24,8 @@ class _NoteEditPageState extends State<NoteEditPage> {
               scale: 1.3,
               child: const Icon(Icons.save_outlined),
             ),
-          )
+          ),
+          const SizedBox(width: 8),
         ],
       ),
       body: const TextField(

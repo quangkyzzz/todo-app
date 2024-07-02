@@ -75,10 +75,10 @@ class _TaskPageState extends State<TaskPage> {
 
     TimeOfDay? selectedTime = await showTimePicker(
       context: context,
-      initialTime: TimeOfDay.now(),
+      initialTime: TimeOfDay.fromDateTime(DateTime(2000, 2, 2, 9)),
     );
 
-    selectedTime ??= TimeOfDay.now();
+    selectedTime ??= TimeOfDay.fromDateTime(DateTime(2000, 2, 2, 9));
 
     return DateTime(
       selectedDate.year,

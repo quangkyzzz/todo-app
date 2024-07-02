@@ -26,7 +26,7 @@ class _TaskListPageState extends State<TaskListPage> {
         title: 'task 1',
         isCompleted: false,
         isImportant: false,
-        createDate: DateTime.now(),
+        createDate: DateTime(2024, 6, 9),
         stepList: const [
           StepModel(
             stepID: '1',
@@ -42,12 +42,33 @@ class _TaskListPageState extends State<TaskListPage> {
       ),
       TaskModel(
         taskID: '2',
-        title: 'task 2',
+        title: 'few day',
         isCompleted: false,
         isImportant: false,
-        createDate: DateTime.now(),
-        dueDate: DateTime(2014, 12, 12),
+        createDate: DateTime(2024, 6, 2),
+        dueDate: DateTime(2024, 6, 2),
         notiFrequency: 'gg',
+      ),
+      TaskModel(
+        taskID: '2',
+        title: 'few hour',
+        isCompleted: false,
+        isImportant: false,
+        createDate: DateTime(2024, 7, 2, 7),
+      ),
+      TaskModel(
+        taskID: '2',
+        title: 'recent',
+        isCompleted: false,
+        isImportant: false,
+        createDate: DateTime(2024, 7, 2, 9, 38),
+      ),
+      TaskModel(
+        taskID: '2',
+        title: 'few minute',
+        isCompleted: false,
+        isImportant: false,
+        createDate: DateTime(2024, 7, 2, 9, 30),
       ),
     ],
   );
