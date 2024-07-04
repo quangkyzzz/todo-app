@@ -1,0 +1,5 @@
+Đã làm:
+    - Chỉnh sửa một vài lỗi nhỏ trong giao diện
+    - Tìm hiểu về Provider
+Dự định làm:
+    - Tổng hợp từ review code để cải thiện các lỗi nếu có
