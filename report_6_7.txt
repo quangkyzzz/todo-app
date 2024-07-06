@@ -1,0 +1,9 @@
+Đã làm:
+    - Tiếp tục tim hiểu về Provider.
+    - Xây dựng ví dụ sử dụng Provider
+    - kết hợp Provider và sqlite 
+Đang làm:
+    - Tiếp tục hoàn thiện ví dụ sử dụng Provider và sqlite
+Dự định làm:
+    - Tạo branch trong project todo app để áp dụng Provider 
+      và sqlite vào project chính.

@@ -51,7 +51,7 @@ class TaskPageBottomNavigation extends StatelessWidget {
               showAlertDialog(
                 context,
                 'Are you sure?',
-                ' "${task.title}" will be permanently deleted',
+                '"${task.title}" will be permanently deleted',
               );
             },
             icon: Transform.scale(
