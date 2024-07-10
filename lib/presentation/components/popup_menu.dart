@@ -114,10 +114,7 @@ class _PopupMenuState extends State<PopupMenu> {
       context: context,
       showDragHandle: true,
       builder: (BuildContext context) {
-        return const NormalBottomSheet(
-          title: 'Change theme?',
-          button: 'Change',
-        );
+        return const ChangeThemeBottomSheet();
       },
     );
   }
@@ -326,6 +323,52 @@ class SortByBottomSheet extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class ChangeThemeBottomSheet extends StatefulWidget {
+  const ChangeThemeBottomSheet({super.key});
+
+  @override
+  State<ChangeThemeBottomSheet> createState() => _ChangeThemeBottomSheetState();
+}
+
+class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Container(
+        height: 100,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Pick a theme',
+              style: MyTheme.itemTextStyle,
+            ),
+            Expanded(
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: <Widget>[
+                  GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      height: 32,
+                      width: 32,
+                      decoration: const ShapeDecoration(
+                        shape: CircleBorder(),
+                        color: MyTheme.redColor,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
