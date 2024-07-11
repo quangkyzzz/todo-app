@@ -1,0 +1,6 @@
+Đã làm:
+Đã tìm hiểu về:
+    -  inheritedContext, inheritedProvider
+    -  Hoàn thiện các ví dụ sử dụng các provider.
+Dự định làm:
+    - Tổng hợp review để hoàn thiện hoặc chỉnh sửa 
