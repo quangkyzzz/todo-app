@@ -5,30 +5,30 @@ import 'package:todo_app/models/task_list_model.dart';
 
 @immutable
 class GroupModel {
-  final String groupID;
+  final String id;
   final String groupName;
-  final List<TaskListModel>? listTaskList;
+  final List<TaskListModel>? taskLists;
 
   const GroupModel({
-    required this.groupID,
+    required this.id,
     required this.groupName,
-    this.listTaskList,
+    this.taskLists,
   });
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
-    result.addAll({'groupID': groupID});
+    result.addAll({'id': id});
     result.addAll({'groupName': groupName});
-    result.addAll({'listTaskList': listTaskList});
+    result.addAll({'taskLists': taskLists});
     return result;
   }
 
   factory GroupModel.fromMap(Map<String, dynamic> map) {
     return GroupModel(
-      groupID: map['groupID'] ?? '-1',
+      id: map['id'] ?? '-1',
       groupName: map['groupName'] ?? 'Untitle group',
-      listTaskList: map['listTaskList'] ?? [],
+      taskLists: map['taskLists'] ?? [],
     );
   }
 }

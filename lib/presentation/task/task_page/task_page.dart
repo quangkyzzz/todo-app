@@ -164,10 +164,10 @@ class _TaskPageState extends State<TaskPage> {
     isOnMyDay = false;
     isCompleted = widget.task.isCompleted;
     isImportant = widget.task.isImportant;
-    notiDate = widget.task.notiTime;
+    notiDate = widget.task.remindTime;
     dueDate = widget.task.dueDate;
     steps = widget.task.stepList;
-    notiFrequency = widget.task.notiFrequency;
+    notiFrequency = widget.task.repeatFrequency;
     filePath = widget.task.filePath;
     _taskNameController = TextEditingController();
     _taskNameController.text = widget.task.title;

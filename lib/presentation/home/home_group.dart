@@ -75,7 +75,7 @@ class _HomeGroupState extends State<HomeGroup> {
           Icon(isExpanded ? Icons.expand_more : Icons.keyboard_arrow_left),
         ],
       ),
-      children: widget.group.listTaskList!.map((item) {
+      children: widget.group.taskLists!.map((item) {
         return HomeItem(
           text: item.listName,
           icon: Icons.list_outlined,

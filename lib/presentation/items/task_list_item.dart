@@ -33,7 +33,7 @@ class _TaskListItemState extends State<TaskListItem> {
 
     List<StepModel>? step = widget.task.stepList;
     DateTime? dueDate = widget.task.dueDate;
-    DateTime? notiTime = widget.task.notiTime;
+    DateTime? notiTime = widget.task.remindTime;
     String? filePath = widget.task.filePath;
     String? note = widget.task.note;
     bool isAllBottomIconNull = ((step == null) &&

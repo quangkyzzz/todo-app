@@ -5,12 +5,12 @@ import 'package:todo_app/models/task_model.dart';
 
 @immutable
 class TaskListModel {
-  final String listID;
+  final String id;
   final String listName;
   final List<TaskModel>? taskList;
 
   const TaskListModel({
-    required this.listID,
+    required this.id,
     required this.listName,
     this.taskList,
   });
@@ -18,7 +18,7 @@ class TaskListModel {
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
-    result.addAll({'listID': listID});
+    result.addAll({'id': id});
     result.addAll({'listName': listName});
     result.addAll({'taskList': taskList});
 
@@ -27,7 +27,7 @@ class TaskListModel {
 
   factory TaskListModel.fromMap(Map<String, dynamic> map) {
     return TaskListModel(
-      listID: map['listID'] ?? '-1',
+      id: map['id'] ?? '-1',
       listName: map['listName'] ?? 'Untitle list',
       taskList: map['taskList'] ?? [],
     );

@@ -45,44 +45,47 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    //fake data
     UserModel user = UserModel(
-        userID: '1',
-        userName: 'Quang Nguyễn',
-        userEmail: 'quang.ndt@outlook.com',
-        taskLists: const [
-          TaskListModel(listID: '1', listName: 'my personal list 1'),
-          TaskListModel(listID: '1', listName: 'my personal list 2'),
+      id: '1',
+      userName: 'Quang Nguyễn',
+      userEmail: 'quang.ndt@outlook.com',
+    );
+    List<TaskListModel> taskLists = [
+      TaskListModel(id: '1', listName: 'my personal list 1'),
+      TaskListModel(id: '1', listName: 'my personal list 2'),
+    ];
+    List<GroupModel> groups = const [
+      GroupModel(
+        id: '1',
+        groupName: 'Group 1',
+        taskLists: [
+          TaskListModel(
+            id: '1',
+            listName: 'my list 1',
+          ),
+          TaskListModel(
+            id: '2',
+            listName: 'my list 2',
+          ),
         ],
-        groups: const [
-          GroupModel(
-            groupID: '1',
-            groupName: 'Group 1',
-            listTaskList: [
-              TaskListModel(
-                listID: '1',
-                listName: 'my list 1',
-              ),
-              TaskListModel(
-                listID: '2',
-                listName: 'my list 2',
-              ),
-            ],
+      ),
+      GroupModel(
+        id: '2',
+        groupName: 'Group 2',
+        taskLists: [
+          TaskListModel(
+            id: '1',
+            listName: 'my list 1',
           ),
-          GroupModel(
-            groupID: '2',
-            groupName: 'Group 2',
-            listTaskList: [
-              TaskListModel(
-                listID: '1',
-                listName: 'my list 1',
-              ),
-              TaskListModel(
-                listID: '2',
-                listName: 'my list 2',
-              ),
-            ],
+          TaskListModel(
+            id: '2',
+            listName: 'my list 2',
           ),
-        ]);
+        ],
+      ),
+    ];
+    //fake data
     List<Map<String, dynamic>> listHomeItem = [
       {
         'text': 'My Day',
@@ -150,7 +153,7 @@ class _HomePageState extends State<HomePage> {
             MyTheme.dividerWhiteStyle,
             //personal list
             Column(
-              children: user.taskLists!.map((item) {
+              children: taskLists.map((item) {
                 return HomeItem(
                   text: item.listName,
                   icon: Icons.list_outlined,
@@ -164,7 +167,7 @@ class _HomePageState extends State<HomePage> {
             ),
             //personal group
             Column(
-              children: user.groups!.map((item) {
+              children: groups.map((item) {
                 return HomeGroup(group: item);
               }).toList(),
             ),

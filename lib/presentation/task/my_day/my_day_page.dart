@@ -21,18 +21,18 @@ class MyDayPage extends StatefulWidget {
 class _MyDayPageState extends State<MyDayPage> {
   bool isExpanded = true;
   TaskListModel incompleteTask = TaskListModel(
-    listID: '1',
+    id: '1',
     listName: 'list1',
     taskList: [
       TaskModel(
-        taskID: '1',
+        id: '1',
         title: 'task 1',
         isCompleted: false,
         isImportant: false,
         createDate: DateTime.now(),
       ),
       TaskModel(
-        taskID: '2',
+        id: '2',
         title: 'task 2',
         isCompleted: false,
         isImportant: false,

@@ -18,53 +18,53 @@ class TaskListPage extends StatefulWidget {
 class _TaskListPageState extends State<TaskListPage> {
   bool isExpanded = true;
   TaskListModel incompleteTask = TaskListModel(
-    listID: '1',
+    id: '1',
     listName: 'list1',
     taskList: [
       TaskModel(
-        taskID: '1',
+        id: '1',
         title: 'task 1',
         isCompleted: false,
         isImportant: false,
         createDate: DateTime(2024, 6, 9),
         stepList: const [
           StepModel(
-            stepID: '1',
+            id: '1',
             stepName: 'step 1',
             isCompleted: false,
           ),
           StepModel(
-            stepID: '2',
+            id: '2',
             stepName: 'step 2',
             isCompleted: true,
           ),
         ],
       ),
       TaskModel(
-        taskID: '2',
+        id: '2',
         title: 'few day',
         isCompleted: false,
         isImportant: false,
         createDate: DateTime(2024, 6, 2),
         dueDate: DateTime(2024, 6, 2),
-        notiFrequency: 'gg',
+        repeatFrequency: 'gg',
       ),
       TaskModel(
-        taskID: '2',
+        id: '2',
         title: 'few hour',
         isCompleted: false,
         isImportant: false,
         createDate: DateTime(2024, 7, 2, 7),
       ),
       TaskModel(
-        taskID: '2',
+        id: '2',
         title: 'recent',
         isCompleted: false,
         isImportant: false,
         createDate: DateTime(2024, 7, 2, 9, 38),
       ),
       TaskModel(
-        taskID: '2',
+        id: '2',
         title: 'few minute',
         isCompleted: false,
         isImportant: false,

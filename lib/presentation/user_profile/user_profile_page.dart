@@ -13,7 +13,7 @@ class UserProfilePage extends StatefulWidget {
 
 class _UserProfilePageState extends State<UserProfilePage> {
   UserModel user = const UserModel(
-    userID: '1',
+    id: '1',
     userName: 'Quang Nguyễn',
     userEmail: 'quang.ndt@outlook.com',
   );

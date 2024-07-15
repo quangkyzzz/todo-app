@@ -13,7 +13,7 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   UserModel user = const UserModel(
-    userID: '1',
+    id: '1',
     userName: 'Quang Nguyễn',
     userEmail: 'quang.ndt@outlook.com',
   );

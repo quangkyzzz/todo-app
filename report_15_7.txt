@@ -1,3 +1,4 @@
+Báo cáo 15/7
 Đã làm:
     -  chỉnh sửa một vài lỗi giao diện nhỏ
     -  tìm hiểu về coding convention

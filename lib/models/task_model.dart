@@ -5,62 +5,70 @@ import 'package:todo_app/models/step_model.dart';
 
 @immutable
 class TaskModel {
-  final String taskID;
+  final String id;
   final String title;
   final bool isCompleted;
   final bool isImportant;
   final DateTime createDate;
   final List<StepModel>? stepList;
   final DateTime? dueDate;
-  final DateTime? notiTime;
-  final String? notiFrequency;
+  final DateTime? remindTime;
+  final String? repeatFrequency;
   final String? filePath;
   final String? note;
+  final String? backgroundImage;
+  final String? themeColor;
 
   const TaskModel({
-    required this.taskID,
+    required this.id,
     required this.title,
     required this.isCompleted,
     required this.isImportant,
     required this.createDate,
     this.stepList,
     this.dueDate,
-    this.notiTime,
-    this.notiFrequency,
+    this.remindTime,
+    this.repeatFrequency,
     this.filePath,
     this.note,
+    this.backgroundImage,
+    this.themeColor,
   });
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
-    result.addAll({'taskID': taskID});
+    result.addAll({'id': id});
     result.addAll({'title': title});
     result.addAll({'isCompleted': isCompleted});
     result.addAll({'isImportant': isImportant});
     result.addAll({'createDate': createDate});
     result.addAll({'stepList': stepList});
     result.addAll({'dueDate': dueDate});
-    result.addAll({'notiTime': notiTime});
-    result.addAll({'notiFrequency': notiFrequency});
+    result.addAll({'remindTime': remindTime});
+    result.addAll({'repeatFreaquency': repeatFrequency});
     result.addAll({'filePath': filePath});
     result.addAll({'note': note});
+    result.addAll({'backgroundImage': backgroundImage});
+    result.addAll({'themeColor': themeColor});
     return result;
   }
 
   factory TaskModel.fromMap(Map<String, dynamic> map) {
     return TaskModel(
-      taskID: map['taskID'] ?? '-1',
+      id: map['id'] ?? '-1',
       title: map['title'] ?? 'title',
       isCompleted: map['isCompleted'] ?? false,
       isImportant: map['isImportant'] ?? false,
       createDate: map['createDate'] ?? DateTime.now(),
       stepList: map['stepList'],
       dueDate: map['dueDate'],
-      notiTime: map['notiTime'],
-      notiFrequency: map['notiFrequency'],
+      remindTime: map['remindTime'],
+      repeatFrequency: map['repeatFrequency'],
       filePath: map['filePath'],
       note: map['note'],
+      backgroundImage: map['backgroundImage'],
+      themeColor: map['themeColor'],
     );
   }
 }
