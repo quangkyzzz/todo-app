@@ -1,0 +1,5 @@
+Đã làm:
+    -  chỉnh sửa một vài lỗi giao diện nhỏ
+    -  tìm hiểu về coding convention
+Dự định làm:
+    - Tổng hợp review để hoàn thiện hoặc chỉnh sửa 
