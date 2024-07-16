@@ -1,0 +1,9 @@
+Báo cáo 16/7
+Đã làm:
+    -  Chỉnh sửa biểu đồ ERD
+    -  Chỉnh sửa model dựa theo biểu đồ ERD
+Đang làm:
+    -  Tích hợp state provider vào project
+Dự định làm:
+    -  Hoàn thiện tích hợp provider vào project
+    -  Test app với fake data
