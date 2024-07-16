@@ -23,10 +23,11 @@ class HomePageBottomNavigationBar extends StatelessWidget {
                 showDialog(
                   context: context,
                   builder: (context) {
-                    return const HomeDialog(
+                    return HomeDialog(
                       title: 'New List',
                       hintText: 'Enter your list title',
                       positiveButton: 'Create list',
+                      onTap: () {},
                     );
                   },
                 );
@@ -53,10 +54,11 @@ class HomePageBottomNavigationBar extends StatelessWidget {
               showDialog(
                   context: context,
                   builder: (context) {
-                    return const HomeDialog(
+                    return HomeDialog(
                       title: 'Create a group',
                       hintText: 'Name this group',
                       positiveButton: 'Create group',
+                      onTap: () {},
                     );
                   });
             },

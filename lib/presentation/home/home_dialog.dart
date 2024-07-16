@@ -6,11 +6,13 @@ class HomeDialog extends StatelessWidget {
   final String title;
   final String hintText;
   final String positiveButton;
+  final Function() onTap;
   const HomeDialog({
     super.key,
     required this.title,
     required this.hintText,
     required this.positiveButton,
+    required this.onTap,
   });
 
   @override
@@ -31,7 +33,7 @@ class HomeDialog extends StatelessWidget {
           child: const Text('Cancel'),
         ),
         TextButton(
-          onPressed: () {},
+          onPressed: onTap,
           child: Text(positiveButton),
         )
       ],
