@@ -1,13 +1,11 @@
-import 'package:flutter/foundation.dart';
 import 'dart:core';
 
-@immutable
 class StepModel {
   final String id;
-  final String stepName;
-  final bool isCompleted;
+  String stepName;
+  bool isCompleted;
 
-  const StepModel({
+  StepModel({
     required this.id,
     required this.stepName,
     required this.isCompleted,

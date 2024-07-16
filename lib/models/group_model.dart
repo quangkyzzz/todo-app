@@ -1,15 +1,13 @@
-import 'package:flutter/foundation.dart';
 import 'dart:core';
 
 import 'package:todo_app/models/task_list_model.dart';
 
-@immutable
 class GroupModel {
   final String id;
-  final String groupName;
-  final List<TaskListModel>? taskLists;
+  String groupName;
+  List<TaskListModel>? taskLists;
 
-  const GroupModel({
+  GroupModel({
     required this.id,
     required this.groupName,
     this.taskLists,

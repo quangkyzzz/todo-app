@@ -27,7 +27,7 @@ class _TaskListPageState extends State<TaskListPage> {
         isCompleted: false,
         isImportant: false,
         createDate: DateTime(2024, 6, 9),
-        stepList: const [
+        stepList: [
           StepModel(
             id: '1',
             stepName: 'step 1',

@@ -1,15 +1,13 @@
-import 'package:flutter/foundation.dart';
 import 'dart:core';
 
 import 'package:todo_app/models/task_model.dart';
 
-@immutable
 class TaskListModel {
   final String id;
-  final String listName;
-  final List<TaskModel>? taskList;
+  String listName;
+  List<TaskModel>? taskList;
 
-  const TaskListModel({
+  TaskListModel({
     required this.id,
     required this.listName,
     this.taskList,

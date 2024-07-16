@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/app_configs.dart';
-import 'package:todo_app/models/group_model.dart';
-import 'package:todo_app/models/task_list_model.dart';
+import 'package:todo_app/provider/group_provider.dart';
+import 'package:todo_app/provider/task_list_provider.dart';
 import 'package:todo_app/provider/user_provider.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/routes.dart';
@@ -47,40 +47,40 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     //fake data
-    List<TaskListModel> taskLists = [
-      TaskListModel(id: '1', listName: 'my personal list 1'),
-      TaskListModel(id: '1', listName: 'my personal list 2'),
-    ];
-    List<GroupModel> groups = const [
-      GroupModel(
-        id: '1',
-        groupName: 'Group 1',
-        taskLists: [
-          TaskListModel(
-            id: '1',
-            listName: 'my list 1',
-          ),
-          TaskListModel(
-            id: '2',
-            listName: 'my list 2',
-          ),
-        ],
-      ),
-      GroupModel(
-        id: '2',
-        groupName: 'Group 2',
-        taskLists: [
-          TaskListModel(
-            id: '1',
-            listName: 'my list 1',
-          ),
-          TaskListModel(
-            id: '2',
-            listName: 'my list 2',
-          ),
-        ],
-      ),
-    ];
+    // List<TaskListModel> taskLists = [
+    //   TaskListModel(id: '1', listName: 'my personal list 1'),
+    //   TaskListModel(id: '1', listName: 'my personal list 2'),
+    // ];
+    // List<GroupModel> groups = [
+    //   GroupModel(
+    //     id: '1',
+    //     groupName: 'Group 1',
+    //     taskLists: [
+    //       TaskListModel(
+    //         id: '1',
+    //         listName: 'my list 1',
+    //       ),
+    //       TaskListModel(
+    //         id: '2',
+    //         listName: 'my list 2',
+    //       ),
+    //     ],
+    //   ),
+    //   GroupModel(
+    //     id: '2',
+    //     groupName: 'Group 2',
+    //     taskLists: [
+    //       TaskListModel(
+    //         id: '1',
+    //         listName: 'my list 1',
+    //       ),
+    //       TaskListModel(
+    //         id: '2',
+    //         listName: 'my list 2',
+    //       ),
+    //     ],
+    //   ),
+    // ];
     //fake data
     List<Map<String, dynamic>> listHomeItem = [
       {
@@ -148,25 +148,30 @@ class _HomePageState extends State<HomePage> {
             ),
             MyTheme.dividerWhiteStyle,
             //personal list
-            Column(
-              children: taskLists.map((item) {
-                return HomeItem(
-                  text: item.listName,
-                  icon: Icons.list_outlined,
-                  iconColor: MyTheme.blueColor,
-                  endNumber: 1,
-                  onTap: () {
-                    Navigator.of(context).pushNamed(taskListRoute);
-                  },
-                );
-              }).toList(),
-            ),
+            Consumer<TaskListProvider>(
+                builder: (context, taskListProvider, child) {
+              return Column(
+                children: taskListProvider.taskLists.map((item) {
+                  return HomeItem(
+                    text: item.listName,
+                    icon: Icons.list_outlined,
+                    iconColor: MyTheme.blueColor,
+                    endNumber: 1,
+                    onTap: () {
+                      Navigator.of(context).pushNamed(taskListRoute);
+                    },
+                  );
+                }).toList(),
+              );
+            }),
             //personal group
-            Column(
-              children: groups.map((item) {
-                return HomeGroup(group: item);
-              }).toList(),
-            ),
+            Consumer<GroupProvider>(builder: (context, groupProvider, child) {
+              return Column(
+                children: groupProvider.groups.map((item) {
+                  return HomeGroup(group: item);
+                }).toList(),
+              );
+            }),
           ],
         ),
       ),

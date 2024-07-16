@@ -1,15 +1,13 @@
-import 'package:flutter/foundation.dart';
 import 'dart:core';
 
-@immutable
 class UserModel {
   final String id;
-  final String userName;
-  final String userEmail;
+  String userName;
+  String userEmail;
   //final List<TaskListModel>? taskLists;
   //final List<GroupModel>? groups;
 
-  const UserModel({
+  UserModel({
     required this.id,
     required this.userName,
     required this.userEmail,

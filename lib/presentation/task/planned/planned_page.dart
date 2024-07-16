@@ -74,7 +74,13 @@ class _PlannedPageState extends State<PlannedPage> {
         ),
         actions: const [
           PopupMenu(
-            toRemove: ['reorder', 'turn_on_suggestions', 'duplicate_list'],
+            toRemove: [
+              'reorder',
+              'turn_on_suggestions',
+              'duplicate_list',
+              'delete_list',
+              'rename_list',
+            ],
           )
         ],
       ),

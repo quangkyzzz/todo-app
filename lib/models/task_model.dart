@@ -1,25 +1,23 @@
-import 'package:flutter/foundation.dart';
 import 'dart:core';
 
 import 'package:todo_app/models/step_model.dart';
 
-@immutable
 class TaskModel {
   final String id;
-  final String title;
-  final bool isCompleted;
-  final bool isImportant;
+  String title;
+  bool isCompleted;
+  bool isImportant;
   final DateTime createDate;
-  final List<StepModel>? stepList;
-  final DateTime? dueDate;
-  final DateTime? remindTime;
-  final String? repeatFrequency;
-  final String? filePath;
-  final String? note;
-  final String? backgroundImage;
-  final String? themeColor;
+  List<StepModel>? stepList;
+  DateTime? dueDate;
+  DateTime? remindTime;
+  String? repeatFrequency;
+  String? filePath;
+  String? note;
+  String? backgroundImage;
+  String? themeColor;
 
-  const TaskModel({
+  TaskModel({
     required this.id,
     required this.title,
     required this.isCompleted,

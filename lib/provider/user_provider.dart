@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/models/user_model.dart';
 
 class UserProvider extends ChangeNotifier {
-  UserModel user = const UserModel(
+  UserModel user = UserModel(
     id: '1',
     userName: 'Nguyễn Quang',
     userEmail: 'quang.ndt@outlook.com',

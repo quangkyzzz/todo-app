@@ -1,6 +1,7 @@
 // ignore_for_file: sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
+import 'package:todo_app/presentation/components/show_alert_dialog.dart';
 import 'package:todo_app/routes.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/presentation/items/popup_item.dart';
@@ -20,6 +21,12 @@ class PopupMenu extends StatefulWidget {
 
 class _PopupMenuState extends State<PopupMenu> {
   late List<Map<String, dynamic>> listPopupMenuItem = [
+    {
+      'value': 'rename_list',
+      'text': 'Rename list',
+      'icon': Icons.edit_outlined,
+      'onTap': onTapDeleteList,
+    },
     {
       'value': 'sort_by',
       'text': 'Sort by',
@@ -67,6 +74,12 @@ class _PopupMenuState extends State<PopupMenu> {
       'text': 'Print list',
       'icon': Icons.print_outlined,
       'onTap': onTapPrintList,
+    },
+    {
+      'value': 'delete_list',
+      'text': 'Delete list',
+      'icon': Icons.delete_outline,
+      'onTap': onTapDeleteList,
     },
     {
       'value': 'turn_on_suggestions',
@@ -177,6 +190,10 @@ class _PopupMenuState extends State<PopupMenu> {
         );
       },
     );
+  }
+
+  onTapDeleteList(BuildContext context) {
+    showAlertDialog(context, 'Are you sure?', 'This list will be delete');
   }
 
   onTapTurnOnSuggestions(BuildContext context) {

@@ -46,7 +46,12 @@ class _FlaggedEmailPageState extends State<FlaggedEmailPage> {
         ),
         actions: const [
           PopupMenu(
-            toRemove: ['reorder', 'turn_on_suggestions'],
+            toRemove: [
+              'rename_list',
+              'reorder',
+              'turn_on_suggestions',
+              'delete_list',
+            ],
           )
         ],
       ),

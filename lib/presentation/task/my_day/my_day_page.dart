@@ -72,10 +72,12 @@ class _MyDayPageState extends State<MyDayPage> {
             actions: const [
               PopupMenu(
                 toRemove: [
+                  'rename_list',
                   'reorder',
                   'turn_on_suggestions',
                   'duplicate_list',
                   'hide_completed_tasks',
+                  'delete_list'
                 ],
               )
             ],
