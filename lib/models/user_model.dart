@@ -17,6 +17,18 @@ class UserModel {
     //this.groups,
   });
 
+  UserModel copyWith({
+    String? id,
+    String? userName,
+    String? userEmail,
+  }) {
+    return UserModel(
+      id: id ?? this.id,
+      userName: userName ?? this.userName,
+      userEmail: userEmail ?? this.userEmail,
+    );
+  }
+
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 

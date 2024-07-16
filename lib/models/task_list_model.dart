@@ -15,6 +15,18 @@ class TaskListModel {
     this.taskList,
   });
 
+  TaskListModel copyWith({
+    String? id,
+    String? listName,
+    List<TaskModel>? taskList,
+  }) {
+    return TaskListModel(
+      id: id ?? this.id,
+      listName: listName ?? this.listName,
+      taskList: taskList ?? this.taskList,
+    );
+  }
+
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 

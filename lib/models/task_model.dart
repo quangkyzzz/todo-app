@@ -35,6 +35,38 @@ class TaskModel {
     this.themeColor,
   });
 
+  TaskModel copyWith({
+    String? id,
+    String? title,
+    bool? isCompleted,
+    bool? isImportant,
+    DateTime? createDate,
+    List<StepModel>? stepList,
+    DateTime? dueDate,
+    DateTime? remindTime,
+    String? repeatFrequency,
+    String? filePath,
+    String? note,
+    String? backgroundImage,
+    String? themeColor,
+  }) {
+    return TaskModel(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      isCompleted: isCompleted ?? this.isCompleted,
+      isImportant: isImportant ?? this.isImportant,
+      createDate: createDate ?? this.createDate,
+      stepList: stepList ?? this.stepList,
+      dueDate: dueDate ?? this.dueDate,
+      remindTime: remindTime ?? this.remindTime,
+      repeatFrequency: repeatFrequency ?? this.repeatFrequency,
+      filePath: filePath ?? this.filePath,
+      note: note ?? this.note,
+      backgroundImage: backgroundImage ?? this.backgroundImage,
+      themeColor: themeColor ?? this.themeColor,
+    );
+  }
+
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 

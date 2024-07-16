@@ -15,6 +15,18 @@ class GroupModel {
     this.taskLists,
   });
 
+  GroupModel copyWith({
+    String? id,
+    String? groupName,
+    List<TaskListModel>? taskLists,
+  }) {
+    return GroupModel(
+      id: id ?? this.id,
+      groupName: groupName ?? this.groupName,
+      taskLists: taskLists ?? this.taskLists,
+    );
+  }
+
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 

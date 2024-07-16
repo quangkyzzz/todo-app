@@ -13,6 +13,18 @@ class StepModel {
     required this.isCompleted,
   });
 
+  StepModel copyWith({
+    String? id,
+    String? stepName,
+    bool? isCompleted,
+  }) {
+    return StepModel(
+      id: id ?? this.id,
+      stepName: stepName ?? this.stepName,
+      isCompleted: isCompleted ?? this.isCompleted,
+    );
+  }
+
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
