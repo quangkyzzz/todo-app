@@ -2,14 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/app_configs.dart';
+import 'package:todo_app/presentation/home/home_appbar.dart';
 import 'package:todo_app/provider/group_provider.dart';
 import 'package:todo_app/provider/task_list_provider.dart';
-import 'package:todo_app/provider/user_provider.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/routes.dart';
 import 'package:todo_app/presentation/home/home_group.dart';
 import 'package:todo_app/presentation/home/home_item.dart';
+import 'home_bottom_navigation_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -46,42 +46,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    //fake data
-    // List<TaskListModel> taskLists = [
-    //   TaskListModel(id: '1', listName: 'my personal list 1'),
-    //   TaskListModel(id: '1', listName: 'my personal list 2'),
-    // ];
-    // List<GroupModel> groups = [
-    //   GroupModel(
-    //     id: '1',
-    //     groupName: 'Group 1',
-    //     taskLists: [
-    //       TaskListModel(
-    //         id: '1',
-    //         listName: 'my list 1',
-    //       ),
-    //       TaskListModel(
-    //         id: '2',
-    //         listName: 'my list 2',
-    //       ),
-    //     ],
-    //   ),
-    //   GroupModel(
-    //     id: '2',
-    //     groupName: 'Group 2',
-    //     taskLists: [
-    //       TaskListModel(
-    //         id: '1',
-    //         listName: 'my list 1',
-    //       ),
-    //       TaskListModel(
-    //         id: '2',
-    //         listName: 'my list 2',
-    //       ),
-    //     ],
-    //   ),
-    // ];
-    //fake data
     List<Map<String, dynamic>> listHomeItem = [
       {
         'text': 'My Day',
@@ -175,162 +139,7 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 18),
-        child: Row(
-          children: [
-            Container(
-              height: 36,
-              width: 352,
-              child: InkWell(
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return HomeDialog(
-                        title: 'New List',
-                        hintText: 'Enter your list title',
-                        positiveButton: 'Create list',
-                      );
-                    },
-                  );
-                },
-                child: const Row(
-                  children: [
-                    Icon(
-                      Icons.add,
-                      color: MyTheme.greyColor,
-                      size: 30,
-                    ),
-                    SizedBox(width: 8),
-                    Text(
-                      'New list',
-                      style: MyTheme.itemGreyTextStyle,
-                    )
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(width: 6),
-            IconButton(
-              onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      return HomeDialog(
-                        title: 'Create a group',
-                        hintText: 'Name this group',
-                        positiveButton: 'Create group',
-                      );
-                    });
-              },
-              icon: Icon(
-                Icons.post_add,
-                color: MyTheme.greyColor,
-                size: 32,
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class HomeAppBar {
-  BuildContext context;
-  HomeAppBar({
-    Key? key,
-    required this.context,
-  });
-
-  AppBar appBar() {
-    return AppBar(
-      leading: Container(
-        padding: EdgeInsets.only(left: 6),
-        child: InkWell(
-          onTap: () {
-            Navigator.of(context).pushNamed(userProfileRoute);
-          },
-          child: const CircleAvatar(
-            backgroundImage: AssetImage(AppConfigs.avatarImage),
-            radius: 16.0,
-          ),
-        ),
-      ),
-      title: Container(
-        width: double.infinity,
-        child: InkWell(
-          onTap: () {
-            Navigator.of(context).pushNamed(userProfileRoute);
-          },
-          child:
-              Consumer<UserProvider>(builder: (context, userProvider, child) {
-            return RichText(
-              text: TextSpan(
-                text: userProvider.user.userName,
-                style: MyTheme.titleTextStyle,
-                children: [
-                  TextSpan(
-                    text: '\n${userProvider.user.userEmail}',
-                    style: MyTheme.secondaryTitleGreyTextStyle,
-                  )
-                ],
-              ),
-            );
-          }),
-        ),
-      ),
-      actions: [
-        IconButton(
-          onPressed: () {
-            Navigator.of(context).pushNamed(searchRoute);
-          },
-          icon: const Icon(
-            Icons.search,
-            size: 42,
-            color: MyTheme.greyColor,
-          ),
-        ),
-        SizedBox(width: 8)
-      ],
-    );
-  }
-}
-
-class HomeDialog extends StatelessWidget {
-  final String title;
-  final String hintText;
-  final String positiveButton;
-  const HomeDialog({
-    super.key,
-    required this.title,
-    required this.hintText,
-    required this.positiveButton,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text(title),
-      content: TextField(
-        autofocus: true,
-        decoration: InputDecoration(
-          hintText: hintText,
-        ),
-      ),
-      actions: [
-        TextButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: const Text('Cancel'),
-        ),
-        TextButton(
-          onPressed: () {},
-          child: Text(positiveButton),
-        )
-      ],
+      bottomNavigationBar: HomePageBottomNavigationBar(),
     );
   }
 }
