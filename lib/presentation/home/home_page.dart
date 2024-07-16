@@ -1,10 +1,11 @@
 // ignore_for_file: prefer_const_constructors, sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/app_configs.dart';
 import 'package:todo_app/models/group_model.dart';
 import 'package:todo_app/models/task_list_model.dart';
-import 'package:todo_app/models/user_model.dart';
+import 'package:todo_app/provider/user_provider.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/routes.dart';
 import 'package:todo_app/presentation/home/home_group.dart';
@@ -46,11 +47,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     //fake data
-    UserModel user = UserModel(
-      id: '1',
-      userName: 'Quang Nguyễn',
-      userEmail: 'quang.ndt@outlook.com',
-    );
     List<TaskListModel> taskLists = [
       TaskListModel(id: '1', listName: 'my personal list 1'),
       TaskListModel(id: '1', listName: 'my personal list 2'),
@@ -131,7 +127,7 @@ class _HomePageState extends State<HomePage> {
       },
     ];
     return Scaffold(
-      appBar: HomeAppBar(context: context, user: user).appBar(),
+      appBar: HomeAppBar(context: context).appBar(),
       body: SingleChildScrollView(
         padding: EdgeInsets.only(left: 8, right: 6),
         child: Column(
@@ -237,12 +233,10 @@ class _HomePageState extends State<HomePage> {
 }
 
 class HomeAppBar {
-  UserModel user;
   BuildContext context;
   HomeAppBar({
     Key? key,
     required this.context,
-    required this.user,
   });
 
   AppBar appBar() {
@@ -265,18 +259,21 @@ class HomeAppBar {
           onTap: () {
             Navigator.of(context).pushNamed(userProfileRoute);
           },
-          child: RichText(
-            text: TextSpan(
-              text: user.userName,
-              style: MyTheme.titleTextStyle,
-              children: [
-                TextSpan(
-                  text: '\n${user.userEmail}',
-                  style: MyTheme.secondaryTitleGreyTextStyle,
-                )
-              ],
-            ),
-          ),
+          child:
+              Consumer<UserProvider>(builder: (context, userProvider, child) {
+            return RichText(
+              text: TextSpan(
+                text: userProvider.user.userName,
+                style: MyTheme.titleTextStyle,
+                children: [
+                  TextSpan(
+                    text: '\n${userProvider.user.userEmail}',
+                    style: MyTheme.secondaryTitleGreyTextStyle,
+                  )
+                ],
+              ),
+            );
+          }),
         ),
       ),
       actions: [

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/app_configs.dart';
 import 'package:todo_app/models/user_model.dart';
+import 'package:todo_app/provider/user_provider.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/routes.dart';
 
@@ -22,63 +24,65 @@ class _UserProfilePageState extends State<UserProfilePage> {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(left: 8, top: 42, right: 8),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                const CircleAvatar(
-                  backgroundImage: AssetImage(AppConfigs.avatarImage),
-                  radius: 32,
-                ),
-                const Spacer(),
-                Container(
-                  decoration: const BoxDecoration(shape: BoxShape.circle),
-                  height: 48,
-                  child: InkWell(
-                    customBorder: const CircleBorder(),
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Icon(
-                      Icons.close,
-                      color: MyTheme.greyColor,
-                      size: 32,
+        child: Consumer<UserProvider>(builder: (context, userProvider, child) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  const CircleAvatar(
+                    backgroundImage: AssetImage(AppConfigs.avatarImage),
+                    radius: 32,
+                  ),
+                  const Spacer(),
+                  Container(
+                    decoration: const BoxDecoration(shape: BoxShape.circle),
+                    height: 48,
+                    child: InkWell(
+                      customBorder: const CircleBorder(),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Icon(
+                        Icons.close,
+                        color: MyTheme.greyColor,
+                        size: 32,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            Text(
-              user.userName,
-              style: MyTheme.titleTextStyle,
-            ),
-            Text(
-              user.userEmail,
-              style: MyTheme.secondaryTitleGreyTextStyle,
-            ),
-            MyTheme.dividerGreyStyle,
-            UserProfileItem(
-              text: 'Add account',
-              icon: Icons.add,
-              onTap: () {},
-            ),
-            MyTheme.dividerGreyStyle,
-            UserProfileItem(
-              text: 'Manage account',
-              icon: Icons.person_outline,
-              onTap: () {},
-            ),
-            MyTheme.dividerGreyStyle,
-            UserProfileItem(
-              text: 'Settings',
-              icon: Icons.settings_outlined,
-              onTap: () {
-                Navigator.of(context).pushNamed(settingsRoute);
-              },
-            )
-          ],
-        ),
+                ],
+              ),
+              Text(
+                userProvider.user.userName,
+                style: MyTheme.titleTextStyle,
+              ),
+              Text(
+                userProvider.user.userEmail,
+                style: MyTheme.secondaryTitleGreyTextStyle,
+              ),
+              MyTheme.dividerGreyStyle,
+              UserProfileItem(
+                text: 'Add account',
+                icon: Icons.add,
+                onTap: () {},
+              ),
+              MyTheme.dividerGreyStyle,
+              UserProfileItem(
+                text: 'Manage account',
+                icon: Icons.person_outline,
+                onTap: () {},
+              ),
+              MyTheme.dividerGreyStyle,
+              UserProfileItem(
+                text: 'Settings',
+                icon: Icons.settings_outlined,
+                onTap: () {
+                  Navigator.of(context).pushNamed(settingsRoute);
+                },
+              )
+            ],
+          );
+        }),
       ),
     );
   }
