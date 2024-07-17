@@ -1,9 +1,9 @@
-Báo cáo 16/7
+Báo cáo 17/7
 Đã làm:
-    -  Chỉnh sửa biểu đồ ERD
-    -  Chỉnh sửa model dựa theo biểu đồ ERD
+    -  Chỉnh sửa nhỏ về cấu trúc file.
+    -  Tích hợp user provider vào project.
+    -  Tích hợp taskList provider và group provider vào project.
 Đang làm:
-    -  Tích hợp state provider vào project
+    -  Hoàn thiện tích hợp taskList vào các màn còn thiếu
 Dự định làm:
-    -  Hoàn thiện tích hợp provider vào project
-    -  Test app với fake data
+    -  Triển khai các chức năng lên quan đến taskList
