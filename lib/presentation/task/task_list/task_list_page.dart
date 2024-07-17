@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/models/step_model.dart';
 import 'package:todo_app/models/task_list_model.dart';
-import 'package:todo_app/models/task_model.dart';
 import 'package:todo_app/presentation/components/add_floating_button.dart';
 import 'package:todo_app/presentation/lists/incomplete_list.dart';
 import 'package:todo_app/presentation/components/popup_menu.dart';
@@ -9,7 +7,12 @@ import 'package:todo_app/themes.dart';
 
 class TaskListPage extends StatefulWidget {
   final bool haveCompletedList;
-  const TaskListPage({super.key, this.haveCompletedList = true});
+  final TaskListModel taskList;
+  const TaskListPage({
+    super.key,
+    this.haveCompletedList = true,
+    required this.taskList,
+  });
 
   @override
   State<TaskListPage> createState() => _TaskListPageState();
@@ -17,70 +20,15 @@ class TaskListPage extends StatefulWidget {
 
 class _TaskListPageState extends State<TaskListPage> {
   bool isExpanded = true;
-  TaskListModel incompleteTask = TaskListModel(
-    id: '1',
-    listName: 'list1',
-    taskList: [
-      TaskModel(
-        id: '1',
-        title: 'task 1',
-        isCompleted: false,
-        isImportant: false,
-        createDate: DateTime(2024, 6, 9),
-        stepList: [
-          StepModel(
-            id: '1',
-            stepName: 'step 1',
-            isCompleted: false,
-          ),
-          StepModel(
-            id: '2',
-            stepName: 'step 2',
-            isCompleted: true,
-          ),
-        ],
-      ),
-      TaskModel(
-        id: '2',
-        title: 'few day',
-        isCompleted: false,
-        isImportant: false,
-        createDate: DateTime(2024, 6, 2),
-        dueDate: DateTime(2024, 6, 2),
-        repeatFrequency: 'gg',
-      ),
-      TaskModel(
-        id: '2',
-        title: 'few hour',
-        isCompleted: false,
-        isImportant: false,
-        createDate: DateTime(2024, 7, 2, 7),
-      ),
-      TaskModel(
-        id: '2',
-        title: 'recent',
-        isCompleted: false,
-        isImportant: false,
-        createDate: DateTime(2024, 7, 2, 9, 38),
-      ),
-      TaskModel(
-        id: '2',
-        title: 'few minute',
-        isCompleted: false,
-        isImportant: false,
-        createDate: DateTime(2024, 7, 2, 9, 30),
-      ),
-    ],
-  );
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: (widget.haveCompletedList)
-            ? const Text(
-                'Tasks',
-                style: TextStyle(
+            ? Text(
+                widget.taskList.listName,
+                style: const TextStyle(
                   fontSize: 24,
                   color: MyTheme.blueColor,
                 ),
@@ -100,7 +48,7 @@ class _TaskListPageState extends State<TaskListPage> {
       ),
       body: SingleChildScrollView(
         child: Column(children: [
-          IncompleteList(taskList: incompleteTask),
+          IncompleteList(taskList: widget.taskList),
           (widget.haveCompletedList)
               ? ExpansionTile(
                   initiallyExpanded: true,
@@ -121,7 +69,7 @@ class _TaskListPageState extends State<TaskListPage> {
                       : Icons.keyboard_arrow_left),
                   children: [
                     IncompleteList(
-                      taskList: incompleteTask,
+                      taskList: widget.taskList,
                     ),
                   ],
                 )

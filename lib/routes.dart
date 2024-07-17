@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/models/task_list_model.dart';
 import 'package:todo_app/presentation/home/home_page.dart';
 import 'package:todo_app/presentation/task/flagged_email/flagged_email_page.dart';
 import 'package:todo_app/models/task_model.dart';
@@ -27,10 +28,16 @@ const noteEditRoute = '/task/note_edit';
 var allRoute = {
   initialRoute: (context) => const HomePage(),
   userProfileRoute: (context) => const UserProfilePage(),
-  taskListRoute: (context) => TaskListPage(
-        haveCompletedList:
-            ((ModalRoute.of(context)?.settings.arguments) ?? true) as bool,
-      ),
+  taskListRoute: (context) {
+    Map<dynamic, dynamic> arg =
+        ModalRoute.of(context)?.settings.arguments as Map;
+    bool havecompletedList = arg['haveCompletedList'] ?? true;
+    TaskListModel taskList = arg['taskList'];
+    return TaskListPage(
+      haveCompletedList: havecompletedList,
+      taskList: taskList,
+    );
+  },
   searchRoute: (context) => const SearchPage(),
   flaggedRoute: (context) => const FlaggedEmailPage(),
   plannedRoute: (context) => const PlannedPage(),

@@ -12,9 +12,9 @@ class IncompleteList extends StatelessWidget {
     return ListView.builder(
       shrinkWrap: true,
       physics: const ClampingScrollPhysics(),
-      itemCount: taskList.taskList!.length,
+      itemCount: taskList.taskList.length,
       itemBuilder: (BuildContext context, int index) {
-        TaskModel task = taskList.taskList![index];
+        TaskModel task = taskList.taskList[index];
         return TaskListItem(
           task: task,
         );

@@ -5,12 +5,12 @@ import 'package:todo_app/models/task_list_model.dart';
 class GroupModel {
   final String id;
   String groupName;
-  List<TaskListModel>? taskLists;
+  List<TaskListModel> taskLists;
 
   GroupModel({
     required this.id,
     required this.groupName,
-    this.taskLists,
+    this.taskLists = const [],
   });
 
   GroupModel copyWith({

@@ -5,12 +5,12 @@ import 'package:todo_app/models/task_model.dart';
 class TaskListModel {
   final String id;
   String listName;
-  List<TaskModel>? taskList;
+  List<TaskModel> taskList;
 
   TaskListModel({
     required this.id,
     required this.listName,
-    this.taskList,
+    this.taskList = const [],
   });
 
   TaskListModel copyWith({

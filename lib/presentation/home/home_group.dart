@@ -82,7 +82,6 @@ class _HomeGroupState extends State<HomeGroup> {
                     return listPopupMenuItem.map((item) {
                       return PopupMenuItem(
                         onTap: () {
-                          print(widget.group.id);
                           item['onTap'](context, widget.group.id);
                         },
                         value: item['value'],
@@ -98,15 +97,21 @@ class _HomeGroupState extends State<HomeGroup> {
           Icon(isExpanded ? Icons.expand_more : Icons.keyboard_arrow_left),
         ],
       ),
-      children: (widget.group.taskLists != null)
-          ? widget.group.taskLists!.map((item) {
+      children: (widget.group.taskLists.isNotEmpty)
+          ? widget.group.taskLists.map((item) {
               return HomeItem(
                 text: item.listName,
                 icon: Icons.list_outlined,
                 iconColor: MyTheme.blueColor,
                 endNumber: 1,
                 onTap: () {
-                  Navigator.of(context).pushNamed(taskListRoute);
+                  Navigator.of(context).pushNamed(
+                    taskListRoute,
+                    arguments: {
+                      'haveCompletedList': true,
+                      'taskList': item,
+                    },
+                  );
                 },
               );
             }).toList()

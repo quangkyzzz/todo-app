@@ -2,7 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/models/task_list_model.dart';
 import 'package:todo_app/presentation/home/home_appbar.dart';
+import 'package:todo_app/presentation/task/task_list/task_list_page.dart';
 import 'package:todo_app/provider/group_provider.dart';
 import 'package:todo_app/provider/task_list_provider.dart';
 import 'package:todo_app/themes.dart';
@@ -20,28 +22,43 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool isExpanded = false;
-  onTapMyDay(BuildContext context) {
+  onTapMyDay(BuildContext context, TaskListModel taskList) {
     Navigator.of(context).pushNamed(myDayRoute);
   }
 
-  onTapImportant(BuildContext context) {
-    Navigator.of(context).pushNamed(taskListRoute, arguments: false);
+  onTapImportant(BuildContext context, TaskListModel taskList) {
+    Navigator.of(context).pushNamed(
+      taskListRoute,
+      arguments: {
+        'haveCompletedList': false,
+        'taskList': taskList,
+      },
+    );
   }
 
-  onTapPlanned(BuildContext context) {
+  onTapPlanned(BuildContext context, TaskListModel taskList) {
     Navigator.of(context).pushNamed(plannedRoute);
   }
 
-  onTapAssignToMe(BuildContext context) {
-    Navigator.of(context).pushNamed(taskListRoute);
+  onTapAssignToMe(BuildContext context, TaskListModel taskList) {
+    Navigator.of(context).pushNamed(taskListRoute, arguments: {
+      'haveCompletedList': true,
+      'taskList': taskList,
+    });
   }
 
-  onTapFlaggedEmail(BuildContext context) {
+  onTapFlaggedEmail(BuildContext context, TaskListModel taskListModel) {
     Navigator.of(context).pushNamed(flaggedRoute);
   }
 
-  onTapTask(BuildContext context) {
-    Navigator.of(context).pushNamed(taskListRoute);
+  onTapTask(BuildContext context, TaskListModel taskList) {
+    Navigator.of(context).pushNamed(
+      taskListRoute,
+      arguments: {
+        'haveCompletedList': true,
+        'taskList': taskList,
+      },
+    );
   }
 
   @override
@@ -97,19 +114,25 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           children: [
             //default list
-            Column(
-              children: listHomeItem.map((item) {
-                return HomeItem(
-                  text: item['text'],
-                  icon: item['icon'],
-                  iconColor: item['iconColor'],
-                  endNumber: item['endNumber'],
-                  onTap: () {
-                    item['ontap'](context);
-                  },
-                );
-              }).toList(),
-            ),
+            Consumer<TaskListProvider>(
+                builder: (context, taskListProvider, child) {
+              return Column(
+                children: listHomeItem.map((item) {
+                  return HomeItem(
+                    text: item['text'],
+                    icon: item['icon'],
+                    iconColor: item['iconColor'],
+                    endNumber: item['endNumber'],
+                    onTap: () {
+                      item['ontap'](
+                        context,
+                        taskListProvider.taskLists[0],
+                      );
+                    },
+                  );
+                }).toList(),
+              );
+            }),
             MyTheme.dividerWhiteStyle,
             //personal list
             Consumer<TaskListProvider>(
@@ -122,7 +145,13 @@ class _HomePageState extends State<HomePage> {
                     iconColor: MyTheme.blueColor,
                     endNumber: 1,
                     onTap: () {
-                      Navigator.of(context).pushNamed(taskListRoute);
+                      Navigator.of(context).pushNamed(
+                        taskListRoute,
+                        arguments: {
+                          'haveCompletedList': true,
+                          'taskList': item,
+                        },
+                      );
                     },
                   );
                 }).toList(),
