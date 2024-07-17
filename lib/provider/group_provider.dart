@@ -43,4 +43,9 @@ class GroupProvider extends ChangeNotifier {
     groups.removeWhere((element) => (element.id == id));
     notifyListeners();
   }
+
+  void renameGroup(String id, String newName) {
+    groups.firstWhere((element) => (element.id == id)).groupName = newName;
+    notifyListeners();
+  }
 }

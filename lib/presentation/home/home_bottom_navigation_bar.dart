@@ -1,8 +1,11 @@
 // ignore_for_file: sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/provider/group_provider.dart';
+import 'package:todo_app/provider/task_list_provider.dart';
 import 'package:todo_app/themes.dart';
-import 'home_dialog.dart';
+import 'show_home_dialog.dart';
 
 class HomePageBottomNavigationBar extends StatelessWidget {
   const HomePageBottomNavigationBar({
@@ -19,18 +22,18 @@ class HomePageBottomNavigationBar extends StatelessWidget {
             height: 36,
             width: 352,
             child: InkWell(
-              onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return HomeDialog(
-                      title: 'New List',
-                      hintText: 'Enter your list title',
-                      positiveButton: 'Create list',
-                      onTap: () {},
-                    );
-                  },
+              onTap: () async {
+                String? title = await showHomeDialog(
+                  context,
+                  'New list',
+                  'Enter your list title',
+                  'Create list',
                 );
+                if (!context.mounted) return;
+                if (title != null) {
+                  Provider.of<TaskListProvider>(context, listen: false)
+                      .createTaskList(title);
+                }
               },
               child: const Row(
                 children: [
@@ -50,17 +53,18 @@ class HomePageBottomNavigationBar extends StatelessWidget {
           ),
           const SizedBox(width: 6),
           IconButton(
-            onPressed: () {
-              showDialog(
-                  context: context,
-                  builder: (context) {
-                    return HomeDialog(
-                      title: 'Create a group',
-                      hintText: 'Name this group',
-                      positiveButton: 'Create group',
-                      onTap: () {},
-                    );
-                  });
+            onPressed: () async {
+              String? title = await showHomeDialog(
+                context,
+                'Create a group',
+                'Name this group',
+                'Create group',
+              );
+              if (!context.mounted) return;
+              if (title != null) {
+                Provider.of<GroupProvider>(context, listen: false)
+                    .createGroup(title);
+              }
             },
             icon: const Icon(
               Icons.post_add,

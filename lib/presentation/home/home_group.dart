@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/models/group_model.dart';
+import 'package:todo_app/presentation/home/show_home_dialog.dart';
+import 'package:todo_app/provider/group_provider.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/routes.dart';
 import 'package:todo_app/presentation/home/home_item.dart';
@@ -17,7 +20,7 @@ class HomeGroup extends StatefulWidget {
 }
 
 class _HomeGroupState extends State<HomeGroup> {
-  List<Map<String, dynamic>> listPopupMenuItem = [
+  late List<Map<String, dynamic>> listPopupMenuItem = [
     {
       'value': 'add_or_remove_lists',
       'text': 'Add/remove lists',
@@ -28,7 +31,7 @@ class _HomeGroupState extends State<HomeGroup> {
       'value': 'rename',
       'text': 'Rename group',
       'icon': Icons.edit_note_outlined,
-      'onTap': () {},
+      'onTap': onTapRenameGroup,
     },
     {
       'value': 'ungroup',
@@ -37,6 +40,19 @@ class _HomeGroupState extends State<HomeGroup> {
       'onTap': () {},
     },
   ];
+  void onTapRenameGroup(BuildContext context, String id) async {
+    String? title = await showHomeDialog(
+      context,
+      'Rename group ',
+      '',
+      'Rename',
+    );
+    if (!mounted) return;
+    if (title != null) {
+      Provider.of<GroupProvider>(context, listen: false).renameGroup(id, title);
+    }
+  }
+
   bool isExpanded = false;
   @override
   Widget build(BuildContext context) {
@@ -61,7 +77,10 @@ class _HomeGroupState extends State<HomeGroup> {
                   itemBuilder: (context) {
                     return listPopupMenuItem.map((item) {
                       return PopupMenuItem(
-                        onTap: item['onTap'],
+                        onTap: () {
+                          print(widget.group.id);
+                          item['onTap'](context, widget.group.id);
+                        },
                         value: item['value'],
                         child: PopupItem(
                           text: item['text'],
@@ -75,17 +94,24 @@ class _HomeGroupState extends State<HomeGroup> {
           Icon(isExpanded ? Icons.expand_more : Icons.keyboard_arrow_left),
         ],
       ),
-      children: widget.group.taskLists!.map((item) {
-        return HomeItem(
-          text: item.listName,
-          icon: Icons.list_outlined,
-          iconColor: MyTheme.blueColor,
-          endNumber: 1,
-          onTap: () {
-            Navigator.of(context).pushNamed(taskListRoute);
-          },
-        );
-      }).toList(),
+      children: (widget.group.taskLists != null)
+          ? widget.group.taskLists!.map((item) {
+              return HomeItem(
+                text: item.listName,
+                icon: Icons.list_outlined,
+                iconColor: MyTheme.blueColor,
+                endNumber: 1,
+                onTap: () {
+                  Navigator.of(context).pushNamed(taskListRoute);
+                },
+              );
+            }).toList()
+          : [
+              const Text(
+                'This group is empty',
+                style: MyTheme.itemSmallTextStyle,
+              )
+            ],
     );
   }
 }
