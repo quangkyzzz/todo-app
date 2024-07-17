@@ -37,7 +37,7 @@ class _HomeGroupState extends State<HomeGroup> {
       'value': 'ungroup',
       'text': 'Ungroup list',
       'icon': Icons.clear_all_outlined,
-      'onTap': () {},
+      'onTap': onTapUngroupList,
     },
   ];
   void onTapRenameGroup(BuildContext context, String id) async {
@@ -51,6 +51,10 @@ class _HomeGroupState extends State<HomeGroup> {
     if (title != null) {
       Provider.of<GroupProvider>(context, listen: false).renameGroup(id, title);
     }
+  }
+
+  void onTapUngroupList(BuildContext context, String id) {
+    Provider.of<GroupProvider>(context, listen: false).deleteGroup(id);
   }
 
   bool isExpanded = false;
