@@ -72,9 +72,10 @@ class _PlannedPageState extends State<PlannedPage> {
             color: MyTheme.redColor,
           ),
         ),
-        actions: const [
+        actions: [
           PopupMenu(
-            toRemove: [
+            taskList: incompleteTask,
+            toRemove: const [
               'reorder',
               'turn_on_suggestions',
               'duplicate_list',

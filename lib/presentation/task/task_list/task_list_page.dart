@@ -40,9 +40,10 @@ class _TaskListPageState extends State<TaskListPage> {
                   color: MyTheme.pinkColor,
                 ),
               ),
-        actions: const [
+        actions: [
           PopupMenu(
-            toRemove: ['hide_completed_tasks'],
+            taskList: widget.taskList,
+            toRemove: const ['hide_completed_tasks'],
           )
         ],
       ),

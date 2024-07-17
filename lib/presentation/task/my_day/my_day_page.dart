@@ -69,9 +69,10 @@ class _MyDayPageState extends State<MyDayPage> {
                     ]),
               ),
             ),
-            actions: const [
+            actions: [
               PopupMenu(
-                toRemove: [
+                taskList: incompleteTask,
+                toRemove: const [
                   'rename_list',
                   'reorder',
                   'turn_on_suggestions',

@@ -1,16 +1,21 @@
 // ignore_for_file: sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/models/task_list_model.dart';
 import 'package:todo_app/presentation/components/show_alert_dialog.dart';
+import 'package:todo_app/provider/task_list_provider.dart';
 import 'package:todo_app/routes.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/presentation/items/popup_item.dart';
 
 class PopupMenu extends StatefulWidget {
+  final TaskListModel taskList;
   final List<Map<String, dynamic>>? customListPopupMenuItem;
   final List<String> toRemove;
   const PopupMenu({
     super.key,
+    required this.taskList,
     this.toRemove = const [],
     this.customListPopupMenuItem,
   });
@@ -88,7 +93,7 @@ class _PopupMenuState extends State<PopupMenu> {
       'onTap': onTapTurnOnSuggestions,
     },
   ];
-  onTapSortBy(BuildContext context) {
+  onTapSortBy(BuildContext context, String id) {
     showModalBottomSheet(
       constraints: const BoxConstraints(maxHeight: 350),
       isDismissible: true,
@@ -101,11 +106,11 @@ class _PopupMenuState extends State<PopupMenu> {
     );
   }
 
-  onTapReorder(BuildContext context) {
+  onTapReorder(BuildContext context, String id) {
     Navigator.of(context).pushNamed(reorderRoute);
   }
 
-  onTapAddShortcut(BuildContext context) {
+  onTapAddShortcut(BuildContext context, String id) {
     showModalBottomSheet(
       isDismissible: true,
       enableDrag: true,
@@ -120,7 +125,7 @@ class _PopupMenuState extends State<PopupMenu> {
     );
   }
 
-  onTapChangeTheme(BuildContext context) {
+  onTapChangeTheme(BuildContext context, String id) {
     showModalBottomSheet(
       isDismissible: true,
       enableDrag: true,
@@ -132,7 +137,7 @@ class _PopupMenuState extends State<PopupMenu> {
     );
   }
 
-  onTapHideCompletedTasks(BuildContext context) {
+  onTapHideCompletedTasks(BuildContext context, String id) {
     showModalBottomSheet(
       isDismissible: true,
       enableDrag: true,
@@ -147,7 +152,7 @@ class _PopupMenuState extends State<PopupMenu> {
     );
   }
 
-  onTapSendCopy(BuildContext context) {
+  onTapSendCopy(BuildContext context, String id) {
     showModalBottomSheet(
       isDismissible: true,
       enableDrag: true,
@@ -162,7 +167,7 @@ class _PopupMenuState extends State<PopupMenu> {
     );
   }
 
-  onTapDuplicateList(BuildContext context) {
+  onTapDuplicateList(BuildContext context, String id) {
     showModalBottomSheet(
       isDismissible: true,
       enableDrag: true,
@@ -177,7 +182,7 @@ class _PopupMenuState extends State<PopupMenu> {
     );
   }
 
-  onTapPrintList(BuildContext context) {
+  onTapPrintList(BuildContext context, String id) {
     showModalBottomSheet(
       isDismissible: true,
       enableDrag: true,
@@ -192,11 +197,20 @@ class _PopupMenuState extends State<PopupMenu> {
     );
   }
 
-  onTapDeleteList(BuildContext context) {
-    showAlertDialog(context, 'Are you sure?', 'This list will be delete');
+  onTapDeleteList(BuildContext context, String id) async {
+    bool isDelete = await showAlertDialog(
+      context,
+      'Are you sure?',
+      'This list will be delete',
+    );
+    if (!mounted) return;
+    if (isDelete) {
+      Provider.of<TaskListProvider>(context, listen: false).deleteTaskList(id);
+      Navigator.pop(context);
+    }
   }
 
-  onTapTurnOnSuggestions(BuildContext context) {
+  onTapTurnOnSuggestions(BuildContext context, String id) {
     showModalBottomSheet(
       isDismissible: true,
       enableDrag: true,
@@ -225,7 +239,7 @@ class _PopupMenuState extends State<PopupMenu> {
           return PopupMenuItem(
             value: item['value'],
             onTap: () {
-              item['onTap'](context);
+              item['onTap'](context, widget.taskList.id);
             },
             child: PopupItem(
               text: item['text'],
