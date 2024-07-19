@@ -15,7 +15,7 @@ class _SearchPageState extends State<SearchPage> {
   TaskListModel incompleteTask = TaskListModel(
     id: '1',
     listName: 'list1',
-    taskList: [
+    tasks: [
       TaskModel(
         id: '1',
         title: 'task 1',

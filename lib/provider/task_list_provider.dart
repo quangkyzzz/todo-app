@@ -8,7 +8,7 @@ class TaskListProvider extends ChangeNotifier {
     TaskListModel(
       id: '1',
       listName: 'Tasks',
-      taskList: [
+      tasks: [
         TaskModel(
           id: '1',
           title: 'Tasks',
@@ -42,7 +42,7 @@ class TaskListProvider extends ChangeNotifier {
     TaskListModel(
       id: '2',
       listName: 'personal list 1',
-      taskList: [
+      tasks: [
         TaskModel(
           id: '3',
           title: 'few hour',

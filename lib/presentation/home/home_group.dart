@@ -42,10 +42,11 @@ class _HomeGroupState extends State<HomeGroup> {
   ];
   void onTapRenameGroup(BuildContext context, String id) async {
     String? title = await showTextEditDialog(
-      context,
-      'Rename group ',
-      '',
-      'Rename',
+      context: context,
+      title: 'Rename group ',
+      hintText: '',
+      initText: widget.group.groupName,
+      positiveButton: 'Rename',
     );
     if (!mounted) return;
     if (title != null) {

@@ -5,12 +5,12 @@ import 'package:todo_app/models/task_model.dart';
 class TaskListModel {
   final String id;
   String listName;
-  List<TaskModel> taskList;
+  List<TaskModel> tasks;
 
   TaskListModel({
     required this.id,
     required this.listName,
-    this.taskList = const [],
+    this.tasks = const [],
   });
 
   TaskListModel copyWith({
@@ -21,7 +21,7 @@ class TaskListModel {
     return TaskListModel(
       id: id ?? this.id,
       listName: listName ?? this.listName,
-      taskList: taskList ?? this.taskList,
+      tasks: taskList ?? this.tasks,
     );
   }
 
@@ -30,7 +30,7 @@ class TaskListModel {
 
     result.addAll({'id': id});
     result.addAll({'listName': listName});
-    result.addAll({'taskList': taskList});
+    result.addAll({'taskList': tasks});
 
     return result;
   }
@@ -39,7 +39,7 @@ class TaskListModel {
     return TaskListModel(
       id: map['id'] ?? '-1',
       listName: map['listName'] ?? 'Untitle list',
-      taskList: map['taskList'] ?? [],
+      tasks: map['taskList'] ?? [],
     );
   }
 }

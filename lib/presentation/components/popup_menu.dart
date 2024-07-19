@@ -97,10 +97,11 @@ class _PopupMenuState extends State<PopupMenu> {
 
   onTapRenameList(BuildContext context, String id) async {
     String? newName = await showTextEditDialog(
-      context,
-      'Rename your list',
-      '',
-      'Save',
+      context: context,
+      title: 'Rename your list',
+      hintText: '',
+      initText: widget.taskList.listName,
+      positiveButton: 'Save',
     );
     if (!mounted) return;
     if (newName != null) {

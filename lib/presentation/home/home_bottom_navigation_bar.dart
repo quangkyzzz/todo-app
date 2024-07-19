@@ -24,10 +24,10 @@ class HomePageBottomNavigationBar extends StatelessWidget {
             child: InkWell(
               onTap: () async {
                 String? title = await showTextEditDialog(
-                  context,
-                  'New list',
-                  'Enter your list title',
-                  'Create list',
+                  context: context,
+                  title: 'New list',
+                  hintText: 'Enter your list title',
+                  positiveButton: 'Create list',
                 );
                 if (!context.mounted) return;
                 if (title != null) {
@@ -55,10 +55,10 @@ class HomePageBottomNavigationBar extends StatelessWidget {
           IconButton(
             onPressed: () async {
               String? title = await showTextEditDialog(
-                context,
-                'Create a group',
-                'Name this group',
-                'Create group',
+                context: context,
+                title: 'Create a group',
+                hintText: 'Name this group',
+                positiveButton: 'Create group',
               );
               if (!context.mounted) return;
               if (title != null) {

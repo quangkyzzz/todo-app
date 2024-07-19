@@ -2,13 +2,15 @@
 
 import 'package:flutter/material.dart';
 
-Future<String?> showTextEditDialog(
-  BuildContext context,
-  String title,
-  String hintText,
-  String positiveButton,
-) {
+Future<String?> showTextEditDialog({
+  required BuildContext context,
+  required String title,
+  required String hintText,
+  String initText = '',
+  required String positiveButton,
+}) {
   TextEditingController controller = TextEditingController();
+  controller.text = initText;
   return showDialog<String?>(
     context: context,
     builder: (context) {
