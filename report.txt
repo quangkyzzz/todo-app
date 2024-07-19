@@ -1,9 +1,9 @@
-Báo cáo 17/7
+Báo cáo 19/7
 Đã làm:
-    -  Chỉnh sửa nhỏ về cấu trúc file.
-    -  Tích hợp user provider vào project.
-    -  Tích hợp taskList provider và group provider vào project.
+    -  Thêm các chức năng tạo, sửa tên, xóa taskList.
+    -  Thêm các chức năng tạo, sửa tên, xóa group.
+    -  Truyền dữ liệu đến các trang taskList tương ứng.
 Đang làm:
-    -  Hoàn thiện tích hợp taskList vào các màn còn thiếu
+    -  Truyền dữ liệu đến các trang taskPage tương ứng.
 Dự định làm:
-    -  Triển khai các chức năng lên quan đến taskList
+    -  Hoàn thành các chức năng liên quan đến taskPage.
