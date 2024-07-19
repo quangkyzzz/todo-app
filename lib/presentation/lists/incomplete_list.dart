@@ -17,6 +17,7 @@ class IncompleteList extends StatelessWidget {
         TaskModel task = taskList.tasks[index];
         return TaskListItem(
           task: task,
+          taskList: taskList,
         );
       },
     );

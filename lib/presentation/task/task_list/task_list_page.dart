@@ -62,36 +62,44 @@ class _TaskListPageState extends State<TaskListPage> {
         ],
       ),
       body: SingleChildScrollView(
-        child: Column(children: [
-          IncompleteList(taskList: widget.taskList),
-          (widget.haveCompletedList)
-              ? ExpansionTile(
-                  initiallyExpanded: true,
-                  title: const Text(
-                    'Completed',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: MyTheme.blueColor,
-                    ),
-                  ),
-                  onExpansionChanged: (bool expanded) {
-                    setState(() {
-                      isExpanded = expanded;
-                    });
-                  },
-                  trailing: Icon(isExpanded
-                      ? Icons.expand_more
-                      : Icons.keyboard_arrow_left),
-                  children: [
-                    IncompleteList(
-                      taskList: widget.taskList,
-                    ),
-                  ],
-                )
-              : const SizedBox()
-        ]),
+        child: Consumer<TaskListProvider>(
+          builder: (context, taskListProvider, child) {
+            TaskListModel taskList = taskListProvider.taskLists
+                .firstWhere((element) => (element.id == widget.taskList.id));
+            return Column(children: [
+              IncompleteList(taskList: taskList),
+              (widget.haveCompletedList)
+                  ? ExpansionTile(
+                      initiallyExpanded: true,
+                      title: const Text(
+                        'Completed',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: MyTheme.blueColor,
+                        ),
+                      ),
+                      onExpansionChanged: (bool expanded) {
+                        setState(() {
+                          isExpanded = expanded;
+                        });
+                      },
+                      trailing: Icon(isExpanded
+                          ? Icons.expand_more
+                          : Icons.keyboard_arrow_left),
+                      children: [
+                        IncompleteList(
+                          taskList: taskList,
+                        ),
+                      ],
+                    )
+                  : const SizedBox()
+            ]);
+          },
+        ),
       ),
-      floatingActionButton: const AddFloatingButton(),
+      floatingActionButton: AddFloatingButton(
+        taskList: widget.taskList,
+      ),
     );
   }
 }

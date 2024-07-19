@@ -134,7 +134,9 @@ class _PlannedPageState extends State<PlannedPage> {
           ],
         ),
       ),
-      floatingActionButton: const AddFloatingButton(),
+      floatingActionButton: AddFloatingButton(
+        taskList: incompleteTask,
+      ),
     );
   }
 }

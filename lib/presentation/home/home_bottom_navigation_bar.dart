@@ -32,7 +32,7 @@ class HomePageBottomNavigationBar extends StatelessWidget {
                 if (!context.mounted) return;
                 if (title != null) {
                   Provider.of<TaskListProvider>(context, listen: false)
-                      .createTaskList(title);
+                      .createTaskList(name: title);
                 }
               },
               child: const Row(

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:todo_app/models/step_model.dart';
+import 'package:todo_app/models/task_list_model.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/routes.dart';
 import 'package:todo_app/models/task_model.dart';
@@ -10,7 +11,12 @@ import 'package:intl/intl.dart';
 
 class TaskListItem extends StatefulWidget {
   final TaskModel task;
-  const TaskListItem({super.key, required this.task});
+  final TaskListModel taskList;
+  const TaskListItem({
+    super.key,
+    required this.task,
+    required this.taskList,
+  });
 
   @override
   State<TaskListItem> createState() => _TaskListItemState();
@@ -19,11 +25,21 @@ class TaskListItem extends StatefulWidget {
 class _TaskListItemState extends State<TaskListItem> {
   late bool isImportant;
   late bool isChecked;
+  late List<StepModel>? step;
+  late DateTime? dueDate;
+  late DateTime? notiTime;
+  late String? filePath;
+  late String? note;
 
   @override
   void initState() {
     isImportant = widget.task.isImportant;
     isChecked = widget.task.isCompleted;
+    step = widget.task.stepList;
+    dueDate = widget.task.dueDate;
+    notiTime = widget.task.remindTime;
+    filePath = widget.task.filePath;
+    note = widget.task.note;
     super.initState();
   }
 
@@ -31,11 +47,6 @@ class _TaskListItemState extends State<TaskListItem> {
   Widget build(BuildContext context) {
     initializeDateFormatting('vi');
 
-    List<StepModel>? step = widget.task.stepList;
-    DateTime? dueDate = widget.task.dueDate;
-    DateTime? notiTime = widget.task.remindTime;
-    String? filePath = widget.task.filePath;
-    String? note = widget.task.note;
     bool isAllBottomIconNull = ((step == null) &&
         (dueDate == null) &&
         (notiTime == null) &&
@@ -53,7 +64,10 @@ class _TaskListItemState extends State<TaskListItem> {
         onTap: () {
           Navigator.of(context).pushNamed(
             taskRoute,
-            arguments: widget.task,
+            arguments: {
+              'task': widget.task,
+              'taskList': widget.taskList,
+            },
           );
         },
         child: Row(
@@ -91,21 +105,21 @@ class _TaskListItemState extends State<TaskListItem> {
                         children: [
                           (step != null)
                               ? ItemBottomIcon(
-                                  text: '0 of ${step.length.toString()}')
+                                  text: '0 of ${step!.length.toString()}')
                               : const SizedBox(),
                           const SizedBox(width: 6),
                           (dueDate != null)
                               ? ItemBottomIcon(
                                   textIcon: Icons.calendar_today_outlined,
                                   text:
-                                      '${DateFormat.MMMEd('en_US').format(dueDate)}')
+                                      '${DateFormat.MMMEd('en_US').format(dueDate!)}')
                               : const SizedBox(),
                           const SizedBox(width: 6),
                           (notiTime != null)
                               ? ItemBottomIcon(
                                   textIcon: Icons.notifications_outlined,
                                   text:
-                                      '${DateFormat.MMMEd('en_US').format(notiTime)}')
+                                      '${DateFormat.MMMEd('en_US').format(notiTime!)}')
                               : const SizedBox(),
                           const SizedBox(width: 6),
                           (filePath != null)

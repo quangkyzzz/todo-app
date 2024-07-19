@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/models/step_model.dart';
 import 'package:todo_app/models/task_list_model.dart';
 import 'package:todo_app/models/task_model.dart';
+import 'package:collection/collection.dart';
 
 class TaskListProvider extends ChangeNotifier {
   List<TaskListModel> taskLists = [
@@ -68,19 +69,106 @@ class TaskListProvider extends ChangeNotifier {
     ),
   ];
 
-  void createTaskList(String name) {
+  void createTaskList({required String name}) {
     TaskListModel newTaskList = TaskListModel(id: '-1', listName: name);
     taskLists.add(newTaskList);
     notifyListeners();
   }
 
-  void deleteTaskList(String id) {
+  void deleteTaskList({required String id}) {
     taskLists.removeWhere((element) => (element.id == id));
     notifyListeners();
   }
 
-  void renameList(String id, String newName) {
-    taskLists.firstWhere((element) => (element.id == id)).listName = newName;
+  void renameList({
+    required String taskListID,
+    required String newName,
+  }) {
+    TaskListModel taskList =
+        taskLists.firstWhere((element) => (element.id == taskListID));
+    taskList.listName = newName;
+    notifyListeners();
+  }
+
+  void createTask({
+    required String taskListID,
+    required String taskName,
+    required bool isCompleted,
+  }) {
+    TaskModel task = TaskModel(
+      id: '10',
+      title: taskName,
+      isCompleted: isCompleted,
+      isImportant: false,
+      createDate: DateTime.now(),
+    );
+    TaskListModel? taskList = taskLists.firstWhereOrNull(
+      (element) => (element.id == taskListID),
+    );
+    if (taskList != null) {
+      taskList.tasks.add(task);
+    } else {} //TODO: complete this
+
+    notifyListeners();
+  }
+
+  void deleteTask({
+    required String taskListID,
+    required String taskID,
+  }) {
+    TaskListModel? taskList = taskLists.firstWhereOrNull(
+      (element) => (element.id == taskListID),
+    );
+    if (taskList != null) {
+      taskList.tasks.removeWhere((element) => (element.id == taskID));
+    }
+
+    notifyListeners();
+  }
+
+  void renameTask({
+    required String taskListID,
+    required String taskID,
+    required newName,
+  }) {
+    TaskListModel? taskList = taskLists.firstWhereOrNull(
+      (element) => (element.id == taskListID),
+    );
+    if (taskList != null) {
+      TaskModel task =
+          taskList.tasks.firstWhere((element) => (element.id == taskID));
+      task.title = newName;
+    }
+    notifyListeners();
+  }
+
+  void changeTaskCompleteStatus({
+    required String taskListID,
+    required String taskID,
+  }) {
+    TaskListModel? taskList = taskLists.firstWhereOrNull(
+      (element) => (element.id == taskListID),
+    );
+    if (taskList != null) {
+      TaskModel task =
+          taskList.tasks.firstWhere((element) => (element.id == taskID));
+      task.isCompleted = !task.isCompleted;
+    }
+    notifyListeners();
+  }
+
+  void changeTaskImportantStatus({
+    required String taskListID,
+    required String taskID,
+  }) {
+    TaskListModel? taskList = taskLists.firstWhereOrNull(
+      (element) => (element.id == taskListID),
+    );
+    if (taskList != null) {
+      TaskModel task =
+          taskList.tasks.firstWhere((element) => (element.id == taskID));
+      task.isImportant = !task.isImportant;
+    }
     notifyListeners();
   }
 }

@@ -106,7 +106,7 @@ class _PopupMenuState extends State<PopupMenu> {
     if (!mounted) return;
     if (newName != null) {
       Provider.of<TaskListProvider>(context, listen: false)
-          .renameList(id, newName);
+          .renameList(taskListID: id, newName: newName);
     }
   }
 
@@ -222,7 +222,8 @@ class _PopupMenuState extends State<PopupMenu> {
     );
     if (!mounted) return;
     if (isDelete) {
-      Provider.of<TaskListProvider>(context, listen: false).deleteTaskList(id);
+      Provider.of<TaskListProvider>(context, listen: false)
+          .deleteTaskList(id: id);
       Navigator.pop(context);
     }
   }

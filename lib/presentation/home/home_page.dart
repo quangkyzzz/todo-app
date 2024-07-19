@@ -46,7 +46,7 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  onTapFlaggedEmail(BuildContext context, TaskListModel taskListModel) {
+  onTapFlaggedEmail(BuildContext context, TaskListModel taskList) {
     Navigator.of(context).pushNamed(flaggedRoute);
   }
 

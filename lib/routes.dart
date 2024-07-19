@@ -44,8 +44,15 @@ var allRoute = {
   myDayRoute: (context) => const MyDayPage(),
   settingsRoute: (context) => const SettingsPage(),
   reorderRoute: (context) => const ReorderPage(),
-  taskRoute: (context) => TaskPage(
-        task: ModalRoute.of(context)!.settings.arguments as TaskModel,
-      ),
+  taskRoute: (context) {
+    Map<dynamic, dynamic> arg =
+        ModalRoute.of(context)?.settings.arguments as Map;
+    TaskModel task = arg['task'];
+    TaskListModel taskList = arg['taskList'];
+    return TaskPage(
+      task: task,
+      taskList: taskList,
+    );
+  },
   noteEditRoute: (context) => const NoteEditPage(),
 };

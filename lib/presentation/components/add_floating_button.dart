@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/models/task_list_model.dart';
+import 'package:todo_app/provider/task_list_provider.dart';
 import 'package:todo_app/themes.dart';
 
 class AddFloatingButton extends StatelessWidget {
-  const AddFloatingButton({super.key});
+  final TaskListModel taskList;
+  const AddFloatingButton({super.key, required this.taskList});
 
   @override
   Widget build(BuildContext context) {
@@ -12,12 +16,13 @@ class AddFloatingButton extends StatelessWidget {
         padding: const EdgeInsets.all(8),
       ),
       onPressed: () {
-        bool isChecked = false;
         showModalBottomSheet(
           isScrollControlled: true,
           context: context,
           builder: (BuildContext context) {
-            return AddTaskItem(isChecked: isChecked);
+            return AddTaskItem(
+              taskList: taskList,
+            );
           },
         );
       },
@@ -33,7 +38,13 @@ class AddFloatingButton extends StatelessWidget {
 // ignore: must_be_immutable
 class AddTaskItem extends StatelessWidget {
   bool isChecked;
-  AddTaskItem({super.key, required this.isChecked});
+  TextEditingController controller = TextEditingController();
+  final TaskListModel taskList;
+  AddTaskItem({
+    super.key,
+    this.isChecked = false,
+    required this.taskList,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -54,16 +65,25 @@ class AddTaskItem extends StatelessWidget {
                   });
                 },
               ),
-              const Expanded(
+              Expanded(
                 child: TextField(
+                  controller: controller,
                   autofocus: true,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: 'Add a task',
                   ),
                 ),
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Provider.of<TaskListProvider>(context, listen: false)
+                      .createTask(
+                    taskListID: taskList.id,
+                    taskName: controller.text,
+                    isCompleted: isChecked,
+                  );
+                  Navigator.pop(context);
+                },
                 icon: const Icon(Icons.arrow_upward),
               )
             ],

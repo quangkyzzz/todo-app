@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/models/step_model.dart';
+import 'package:todo_app/models/task_list_model.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/routes.dart';
 import 'package:todo_app/models/task_model.dart';
@@ -9,9 +10,11 @@ import 'task_page_item.dart';
 
 class TaskPage extends StatefulWidget {
   final TaskModel task;
+  final TaskListModel taskList;
   const TaskPage({
     super.key,
     required this.task,
+    required this.taskList,
   });
 
   @override
@@ -217,8 +220,8 @@ class _TaskPageState extends State<TaskPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Tasks',
+        title: Text(
+          widget.taskList.listName,
           style: MyTheme.titleTextStyle,
         ),
       ),
