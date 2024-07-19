@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/models/task_list_model.dart';
 import 'package:todo_app/presentation/components/show_alert_dialog.dart';
+import 'package:todo_app/presentation/components/show_text_edit_dialog.dart';
 import 'package:todo_app/provider/task_list_provider.dart';
 import 'package:todo_app/routes.dart';
 import 'package:todo_app/themes.dart';
@@ -30,7 +31,7 @@ class _PopupMenuState extends State<PopupMenu> {
       'value': 'rename_list',
       'text': 'Rename list',
       'icon': Icons.edit_outlined,
-      'onTap': onTapDeleteList,
+      'onTap': onTapRenameList,
     },
     {
       'value': 'sort_by',
@@ -93,6 +94,21 @@ class _PopupMenuState extends State<PopupMenu> {
       'onTap': onTapTurnOnSuggestions,
     },
   ];
+
+  onTapRenameList(BuildContext context, String id) async {
+    String? newName = await showTextEditDialog(
+      context,
+      'Rename your list',
+      '',
+      'Save',
+    );
+    if (!mounted) return;
+    if (newName != null) {
+      Provider.of<TaskListProvider>(context, listen: false)
+          .renameList(id, newName);
+    }
+  }
+
   onTapSortBy(BuildContext context, String id) {
     showModalBottomSheet(
       constraints: const BoxConstraints(maxHeight: 350),

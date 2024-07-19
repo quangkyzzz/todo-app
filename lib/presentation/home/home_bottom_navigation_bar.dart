@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/provider/group_provider.dart';
 import 'package:todo_app/provider/task_list_provider.dart';
 import 'package:todo_app/themes.dart';
-import 'show_home_dialog.dart';
+import '../components/show_text_edit_dialog.dart';
 
 class HomePageBottomNavigationBar extends StatelessWidget {
   const HomePageBottomNavigationBar({
@@ -23,7 +23,7 @@ class HomePageBottomNavigationBar extends StatelessWidget {
             width: 352,
             child: InkWell(
               onTap: () async {
-                String? title = await showHomeDialog(
+                String? title = await showTextEditDialog(
                   context,
                   'New list',
                   'Enter your list title',
@@ -54,7 +54,7 @@ class HomePageBottomNavigationBar extends StatelessWidget {
           const SizedBox(width: 6),
           IconButton(
             onPressed: () async {
-              String? title = await showHomeDialog(
+              String? title = await showTextEditDialog(
                 context,
                 'Create a group',
                 'Name this group',

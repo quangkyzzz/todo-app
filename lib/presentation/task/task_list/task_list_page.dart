@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/models/task_list_model.dart';
 import 'package:todo_app/presentation/components/add_floating_button.dart';
 import 'package:todo_app/presentation/lists/incomplete_list.dart';
 import 'package:todo_app/presentation/components/popup_menu.dart';
+import 'package:todo_app/provider/task_list_provider.dart';
 import 'package:todo_app/themes.dart';
 
 class TaskListPage extends StatefulWidget {
@@ -20,19 +22,31 @@ class TaskListPage extends StatefulWidget {
 
 class _TaskListPageState extends State<TaskListPage> {
   bool isExpanded = true;
+  late final String id;
+
+  @override
+  void initState() {
+    id = widget.taskList.id;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: (widget.haveCompletedList)
-            ? Text(
-                widget.taskList.listName,
-                style: const TextStyle(
-                  fontSize: 24,
-                  color: MyTheme.blueColor,
-                ),
-              )
+            ? Consumer<TaskListProvider>(
+                builder: (context, taskListProvider, child) {
+                return Text(
+                  taskListProvider.taskLists
+                      .firstWhere((element) => element.id == id)
+                      .listName,
+                  style: const TextStyle(
+                    fontSize: 24,
+                    color: MyTheme.blueColor,
+                  ),
+                );
+              })
             : const Text(
                 'Important',
                 style: TextStyle(

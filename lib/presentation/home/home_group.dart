@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/models/group_model.dart';
-import 'package:todo_app/presentation/home/show_home_dialog.dart';
+import 'package:todo_app/presentation/components/show_text_edit_dialog.dart';
 import 'package:todo_app/provider/group_provider.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/routes.dart';
@@ -41,7 +41,7 @@ class _HomeGroupState extends State<HomeGroup> {
     },
   ];
   void onTapRenameGroup(BuildContext context, String id) async {
-    String? title = await showHomeDialog(
+    String? title = await showTextEditDialog(
       context,
       'Rename group ',
       '',

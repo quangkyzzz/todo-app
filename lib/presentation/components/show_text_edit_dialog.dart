@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-Future<String?> showHomeDialog(
+Future<String?> showTextEditDialog(
   BuildContext context,
   String title,
   String hintText,
