@@ -7,3 +7,6 @@ Báo cáo 19/7
     -  Truyền dữ liệu đến các trang taskPage tương ứng.
 Dự định làm:
     -  Hoàn thành các chức năng liên quan đến taskPage.
+
+//ask about: repeat frequency, task contain task list id, 
+//task page contain only id.

@@ -10,11 +10,11 @@ class GroupProvider extends ChangeNotifier {
       taskLists: [
         TaskListModel(
           id: '1',
-          listName: 'my list 1',
+          listName: 'group 1 list 1',
         ),
         TaskListModel(
           id: '2',
-          listName: 'my list 2',
+          listName: 'group 1  list 2',
         ),
       ],
     ),
@@ -24,11 +24,11 @@ class GroupProvider extends ChangeNotifier {
       taskLists: [
         TaskListModel(
           id: '1',
-          listName: 'my list 1',
+          listName: 'group 2 list 1',
         ),
         TaskListModel(
           id: '2',
-          listName: 'my list 2',
+          listName: 'group 2 list 2',
         ),
       ],
     ),
@@ -39,13 +39,23 @@ class GroupProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteGroup(String id) {
-    groups.removeWhere((element) => (element.id == id));
+  void deleteGroup(String groupID) {
+    groups.removeWhere((element) => (element.id == groupID));
     notifyListeners();
   }
 
-  void renameGroup(String id, String newName) {
-    groups.firstWhere((element) => (element.id == id)).groupName = newName;
+  void renameGroup(String groupID, String newName) {
+    groups.firstWhere((element) => (element.id == groupID)).groupName = newName;
     notifyListeners();
+  }
+
+  void addTaskList(String groupID, List<TaskListModel> taskLists) {
+    GroupModel group = groups.firstWhere((element) => (element.id == groupID));
+    group.taskLists.addAll(taskLists);
+    notifyListeners();
+  }
+
+  GroupModel getGroup(String groupID) {
+    return groups.firstWhere((element) => (element.id == groupID));
   }
 }

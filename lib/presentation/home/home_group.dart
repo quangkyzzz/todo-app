@@ -1,8 +1,13 @@
+import 'dart:async';
+
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/models/group_model.dart';
+import 'package:todo_app/models/task_list_model.dart';
 import 'package:todo_app/presentation/components/show_text_edit_dialog.dart';
 import 'package:todo_app/provider/group_provider.dart';
+import 'package:todo_app/provider/task_list_provider.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/routes.dart';
 import 'package:todo_app/presentation/home/home_item.dart';
@@ -25,7 +30,7 @@ class _HomeGroupState extends State<HomeGroup> {
       'value': 'add_or_remove_lists',
       'text': 'Add/remove lists',
       'icon': Icons.list_outlined,
-      'onTap': () {},
+      'onTap': onTapAddRemoveList,
     },
     {
       'value': 'rename',
@@ -40,7 +45,35 @@ class _HomeGroupState extends State<HomeGroup> {
       'onTap': onTapUngroupList,
     },
   ];
-  void onTapRenameGroup(BuildContext context, String id) async {
+
+  void onTapAddRemoveList(BuildContext context, String groupID) async {
+    List<TaskListModel> oldTaskLists =
+        Provider.of<GroupProvider>(context, listen: false)
+            .getGroup(groupID)
+            .taskLists;
+    List<TaskListModel>? newTaskLists = await showAddListDialog(
+      context: context,
+      groupID: groupID,
+    );
+    if (!mounted) return;
+    if (newTaskLists != null) {
+      List<TaskListModel> addedTaskList = newTaskLists
+          .where((element) => !oldTaskLists.contains(element))
+          .toList();
+
+      List<TaskListModel> removeTaskList = oldTaskLists
+          .where((element) => !newTaskLists.contains(element))
+          .toList();
+
+      Provider.of<GroupProvider>(context, listen: false).addTaskList(
+        groupID,
+        addedTaskList,
+      );
+      //TODO: complete this
+    }
+  }
+
+  void onTapRenameGroup(BuildContext context, String groupID) async {
     String? title = await showTextEditDialog(
       context: context,
       title: 'Rename group ',
@@ -50,12 +83,13 @@ class _HomeGroupState extends State<HomeGroup> {
     );
     if (!mounted) return;
     if (title != null) {
-      Provider.of<GroupProvider>(context, listen: false).renameGroup(id, title);
+      Provider.of<GroupProvider>(context, listen: false)
+          .renameGroup(groupID, title);
     }
   }
 
-  void onTapUngroupList(BuildContext context, String id) {
-    Provider.of<GroupProvider>(context, listen: false).deleteGroup(id);
+  void onTapUngroupList(BuildContext context, String groupID) {
+    Provider.of<GroupProvider>(context, listen: false).deleteGroup(groupID);
   }
 
   bool isExpanded = false;
@@ -124,4 +158,94 @@ class _HomeGroupState extends State<HomeGroup> {
             ],
     );
   }
+}
+
+Future<List<TaskListModel>?> showAddListDialog({
+  required BuildContext context,
+  required String groupID,
+}) {
+  return showDialog(
+    context: context,
+    builder: (context) {
+      List<TaskListModel> checkedTaskList = [];
+      List<TaskListModel> allTaskList = [];
+
+      return AlertDialog(
+        scrollable: true,
+        title: const Text(
+          'Select lists to add or remove',
+          style: MyTheme.itemTextStyle,
+        ),
+        content: Container(
+          padding: const EdgeInsets.all(8),
+          height: 200,
+          width: 300,
+          child: SingleChildScrollView(
+            child: Consumer2<GroupProvider, TaskListProvider>(
+              builder: (
+                context,
+                groupProvider,
+                taskListProvider,
+                child,
+              ) {
+                GroupModel? group = groupProvider.groups
+                    .firstWhereOrNull((element) => (element.id == groupID));
+
+                if (group != null) {
+                  checkedTaskList.addAll(group.taskLists);
+                  allTaskList.addAll(checkedTaskList);
+                }
+                allTaskList.addAll(taskListProvider.taskLists);
+                return StatefulBuilder(builder: (context, setState) {
+                  return Column(
+                    children: allTaskList.map((item) {
+                      bool isChecked = checkedTaskList.contains(item);
+                      return Row(
+                        children: [
+                          Text(item.listName),
+                          const Spacer(),
+                          IconButton(
+                            icon: Icon(
+                                (isChecked) ? Icons.check : Icons.add_outlined),
+                            onPressed: () {
+                              setState(
+                                () {
+                                  if (checkedTaskList.contains(item)) {
+                                    checkedTaskList.remove(item);
+                                    isChecked = !isChecked;
+                                  } else {
+                                    checkedTaskList.add(item);
+                                    isChecked = !isChecked;
+                                  }
+                                },
+                              );
+                            },
+                          )
+                        ],
+                      );
+                    }).toList(),
+                  );
+                });
+              },
+            ),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('Cancel'),
+          ),
+          const SizedBox(width: 12),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context, checkedTaskList);
+            },
+            child: const Text('Save'),
+          ),
+        ],
+      );
+    },
+  );
 }
