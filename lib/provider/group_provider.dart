@@ -34,6 +34,10 @@ class GroupProvider extends ChangeNotifier {
     ),
   ];
 
+  GroupModel getGroup(String groupID) {
+    return groups.firstWhere((element) => (element.id == groupID));
+  }
+
   void createGroup(String name) {
     groups.add(GroupModel(id: '-1', groupName: name));
     notifyListeners();
@@ -50,12 +54,14 @@ class GroupProvider extends ChangeNotifier {
   }
 
   void addTaskList(String groupID, List<TaskListModel> taskLists) {
-    GroupModel group = groups.firstWhere((element) => (element.id == groupID));
+    GroupModel group = getGroup(groupID);
     group.taskLists.addAll(taskLists);
     notifyListeners();
   }
 
-  GroupModel getGroup(String groupID) {
-    return groups.firstWhere((element) => (element.id == groupID));
+  void deleteTaskList(String groupID, List<TaskListModel> taskLists) {
+    GroupModel group = getGroup(groupID);
+    group.taskLists.removeWhere((element) => (taskLists.contains(element)));
+    notifyListeners();
   }
 }

@@ -69,6 +69,7 @@ class TaskListProvider extends ChangeNotifier {
     ),
   ];
 
+  //Task List function
   TaskListModel getTaskList({required String taskListID}) {
     return taskLists.firstWhere((element) => (element.id == taskListID));
   }
@@ -79,8 +80,18 @@ class TaskListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void addTaskList({required List<TaskListModel> addTaskLists}) {
+    taskLists.addAll(addTaskLists);
+    notifyListeners();
+  }
+
   void deleteTaskList({required String id}) {
     taskLists.removeWhere((element) => (element.id == id));
+    notifyListeners();
+  }
+
+  void deleteMultipleTaskList({required List<TaskListModel> deleteTaskLists}) {
+    taskLists.removeWhere((element) => (deleteTaskLists.contains(element)));
     notifyListeners();
   }
 
@@ -93,6 +104,7 @@ class TaskListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  //Task function
   void createTask({
     required String taskListID,
     required String taskName,

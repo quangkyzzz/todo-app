@@ -69,7 +69,17 @@ class _HomeGroupState extends State<HomeGroup> {
         groupID,
         addedTaskList,
       );
-      //TODO: complete this
+
+      Provider.of<GroupProvider>(context, listen: false).deleteTaskList(
+        groupID,
+        removeTaskList,
+      );
+
+      Provider.of<TaskListProvider>(context, listen: false)
+          .addTaskList(addTaskLists: removeTaskList);
+
+      Provider.of<TaskListProvider>(context, listen: false)
+          .deleteMultipleTaskList(deleteTaskLists: addedTaskList);
     }
   }
 
@@ -178,7 +188,7 @@ Future<List<TaskListModel>?> showAddListDialog({
         ),
         content: Container(
           padding: const EdgeInsets.all(8),
-          height: 200,
+          height: 235,
           width: 300,
           child: SingleChildScrollView(
             child: Consumer2<GroupProvider, TaskListProvider>(
