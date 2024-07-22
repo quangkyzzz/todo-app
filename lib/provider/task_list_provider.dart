@@ -75,7 +75,10 @@ class TaskListProvider extends ChangeNotifier {
   }
 
   void createTaskList({required String name}) {
-    TaskListModel newTaskList = TaskListModel(id: '-1', listName: name);
+    TaskListModel newTaskList = TaskListModel(
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      listName: name,
+    );
     taskLists.add(newTaskList);
     notifyListeners();
   }

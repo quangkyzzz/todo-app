@@ -39,7 +39,10 @@ class GroupProvider extends ChangeNotifier {
   }
 
   void createGroup(String name) {
-    groups.add(GroupModel(id: '-1', groupName: name));
+    groups.add(GroupModel(
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      groupName: name,
+    ));
     notifyListeners();
   }
 
