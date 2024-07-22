@@ -4,15 +4,11 @@ class UserModel {
   final String id;
   String userName;
   String userEmail;
-  //final List<TaskListModel>? taskLists;
-  //final List<GroupModel>? groups;
 
   UserModel({
     required this.id,
     required this.userName,
     required this.userEmail,
-    //this.taskLists,
-    //this.groups,
   });
 
   UserModel copyWith({

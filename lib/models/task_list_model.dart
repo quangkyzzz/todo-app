@@ -10,8 +10,8 @@ class TaskListModel {
   TaskListModel({
     required this.id,
     required this.listName,
-    this.tasks = const [],
-  });
+    List<TaskModel>? tasks,
+  }) : tasks = tasks ?? [];
 
   TaskListModel copyWith({
     String? id,
@@ -21,7 +21,7 @@ class TaskListModel {
     return TaskListModel(
       id: id ?? this.id,
       listName: listName ?? this.listName,
-      tasks: taskList ?? this.tasks,
+      tasks: taskList ?? tasks,
     );
   }
 

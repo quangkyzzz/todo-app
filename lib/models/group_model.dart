@@ -10,8 +10,8 @@ class GroupModel {
   GroupModel({
     required this.id,
     required this.groupName,
-    this.taskLists = const [],
-  });
+    List<TaskListModel>? taskLists,
+  }) : taskLists = taskLists ?? [];
 
   GroupModel copyWith({
     String? id,
