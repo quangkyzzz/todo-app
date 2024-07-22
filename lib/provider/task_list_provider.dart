@@ -69,6 +69,10 @@ class TaskListProvider extends ChangeNotifier {
     ),
   ];
 
+  TaskListModel getTaskList({required String taskListID}) {
+    return taskLists.firstWhere((element) => (element.id == taskListID));
+  }
+
   void createTaskList({required String name}) {
     TaskListModel newTaskList = TaskListModel(id: '-1', listName: name);
     taskLists.add(newTaskList);
@@ -84,8 +88,7 @@ class TaskListProvider extends ChangeNotifier {
     required String taskListID,
     required String newName,
   }) {
-    TaskListModel taskList =
-        taskLists.firstWhere((element) => (element.id == taskListID));
+    TaskListModel taskList = getTaskList(taskListID: taskListID);
     taskList.listName = newName;
     notifyListeners();
   }

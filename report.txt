@@ -1,12 +1,14 @@
-Báo cáo 19/7
+Báo cáo 22/7
 Đã làm:
-    -  Thêm các chức năng tạo, sửa tên, xóa taskList.
-    -  Thêm các chức năng tạo, sửa tên, xóa group.
-    -  Truyền dữ liệu đến các trang taskList tương ứng.
+    -  Chỉnh sửa các provider.
+    -  Hoàn thiện chức năng sửa tên taskList,
+    -  Thêm chức năng tạo task mới
+    -  Thêm chức năng thêm, xóa taskList trong group
 Đang làm:
-    -  Truyền dữ liệu đến các trang taskPage tương ứng.
+    -  Hoàn thiện chức năng thêm, xóa taskList trong group
 Dự định làm:
-    -  Hoàn thành các chức năng liên quan đến taskPage.
+    -  Thêm chức năng đổi tên, check hoàn thành task, thêm task vào 
+    mục quan trọng.
 
 //ask about: repeat frequency, task contain task list id, 
 //task page contain only id.
