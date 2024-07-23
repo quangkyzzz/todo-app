@@ -38,7 +38,7 @@ class _TaskListPageState extends State<TaskListPage> {
             ? Consumer<TaskListProvider>(
                 builder: (context, taskListProvider, child) {
                 return Text(
-                  taskListProvider.taskLists
+                  taskListProvider.taskLists //TODO: fix this
                       .firstWhere((element) => element.id == id)
                       .listName,
                   style: const TextStyle(
@@ -63,6 +63,7 @@ class _TaskListPageState extends State<TaskListPage> {
       ),
       body: SingleChildScrollView(
         child: Consumer<TaskListProvider>(
+          //TODO: fix this
           builder: (context, taskListProvider, child) {
             TaskListModel taskList = taskListProvider.taskLists
                 .firstWhere((element) => (element.id == widget.taskList.id));

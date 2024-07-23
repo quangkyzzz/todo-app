@@ -25,6 +25,7 @@ class HomeGroup extends StatefulWidget {
 }
 
 class _HomeGroupState extends State<HomeGroup> {
+  late GroupProvider groupProvider;
   late List<Map<String, dynamic>> listPopupMenuItem = [
     {
       'value': 'add_or_remove_lists',
@@ -46,11 +47,15 @@ class _HomeGroupState extends State<HomeGroup> {
     },
   ];
 
+  @override
+  void initState() {
+    groupProvider = Provider.of<GroupProvider>(context, listen: false);
+    super.initState();
+  }
+
   void onTapAddRemoveList(BuildContext context, String groupID) async {
     List<TaskListModel> oldTaskLists =
-        Provider.of<GroupProvider>(context, listen: false)
-            .getGroup(groupID)
-            .taskLists;
+        groupProvider.getGroup(groupID).taskLists;
     List<TaskListModel>? newTaskLists = await showAddListDialog(
       context: context,
       groupID: groupID,
@@ -74,12 +79,6 @@ class _HomeGroupState extends State<HomeGroup> {
         groupID,
         removeTaskList,
       );
-
-      Provider.of<TaskListProvider>(context, listen: false)
-          .addTaskList(addTaskLists: removeTaskList);
-
-      Provider.of<TaskListProvider>(context, listen: false)
-          .deleteMultipleTaskList(deleteTaskLists: addedTaskList);
     }
   }
 
@@ -93,13 +92,12 @@ class _HomeGroupState extends State<HomeGroup> {
     );
     if (!mounted) return;
     if (title != null) {
-      Provider.of<GroupProvider>(context, listen: false)
-          .renameGroup(groupID, title);
+      groupProvider.renameGroup(groupID, title);
     }
   }
 
   void onTapUngroupList(BuildContext context, String groupID) {
-    Provider.of<GroupProvider>(context, listen: false).deleteGroup(groupID);
+    groupProvider.deleteGroup(groupID);
   }
 
   bool isExpanded = false;

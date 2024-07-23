@@ -33,6 +33,20 @@ class TaskModel {
     this.themeColor,
   });
 
+  void copy({required TaskModel copyTask}) {
+    title = copyTask.title;
+    isCompleted = copyTask.isCompleted;
+    isImportant = copyTask.isImportant;
+    stepList = copyTask.stepList;
+    dueDate = copyTask.dueDate;
+    remindTime = copyTask.remindTime;
+    repeatFrequency = copyTask.repeatFrequency;
+    filePath = copyTask.filePath;
+    note = copyTask.note;
+    backgroundImage = copyTask.backgroundImage;
+    themeColor = copyTask.themeColor;
+  }
+
   TaskModel copyWith({
     String? id,
     String? title,

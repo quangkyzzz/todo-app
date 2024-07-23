@@ -14,6 +14,8 @@ class HomePageBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    GroupProvider groupProvider =
+        Provider.of<GroupProvider>(context, listen: false);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 18),
       child: Row(
@@ -62,8 +64,7 @@ class HomePageBottomNavigationBar extends StatelessWidget {
               );
               if (!context.mounted) return;
               if (title != null) {
-                Provider.of<GroupProvider>(context, listen: false)
-                    .createGroup(title);
+                groupProvider.createGroup(title);
               }
             },
             icon: const Icon(

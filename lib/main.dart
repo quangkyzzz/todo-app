@@ -20,7 +20,11 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => UserProvider()),
         ChangeNotifierProvider(create: (constext) => TaskListProvider()),
-        ChangeNotifierProvider(create: (context) => GroupProvider())
+        ChangeNotifierProxyProvider<TaskListProvider, GroupProvider>(
+            create: (context) =>
+                GroupProvider(context.read<TaskListProvider>()),
+            update: (context, taskListProvider, groupProvider) =>
+                groupProvider ?? GroupProvider(taskListProvider))
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

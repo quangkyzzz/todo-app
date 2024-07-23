@@ -108,13 +108,19 @@ class TaskListProvider extends ChangeNotifier {
   }
 
   //Task function
+  TaskModel getTask({required String taskListID, required String taskID}) {
+    return getTaskList(taskListID: taskListID)
+        .tasks
+        .firstWhere((element) => (element.id == taskID));
+  }
+
   void createTask({
     required String taskListID,
     required String taskName,
     required bool isCompleted,
   }) {
     TaskModel task = TaskModel(
-      id: '10',
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
       title: taskName,
       isCompleted: isCompleted,
       isImportant: false,
@@ -126,7 +132,6 @@ class TaskListProvider extends ChangeNotifier {
     if (taskList != null) {
       taskList.tasks.add(task);
     } else {} //TODO: complete this
-
     notifyListeners();
   }
 
@@ -144,49 +149,13 @@ class TaskListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void renameTask({
+  void updateTask({
     required String taskListID,
     required String taskID,
-    required newName,
+    required TaskModel newTask,
   }) {
-    TaskListModel? taskList = taskLists.firstWhereOrNull(
-      (element) => (element.id == taskListID),
-    );
-    if (taskList != null) {
-      TaskModel task =
-          taskList.tasks.firstWhere((element) => (element.id == taskID));
-      task.title = newName;
-    }
-    notifyListeners();
-  }
-
-  void changeTaskCompleteStatus({
-    required String taskListID,
-    required String taskID,
-  }) {
-    TaskListModel? taskList = taskLists.firstWhereOrNull(
-      (element) => (element.id == taskListID),
-    );
-    if (taskList != null) {
-      TaskModel task =
-          taskList.tasks.firstWhere((element) => (element.id == taskID));
-      task.isCompleted = !task.isCompleted;
-    }
-    notifyListeners();
-  }
-
-  void changeTaskImportantStatus({
-    required String taskListID,
-    required String taskID,
-  }) {
-    TaskListModel? taskList = taskLists.firstWhereOrNull(
-      (element) => (element.id == taskListID),
-    );
-    if (taskList != null) {
-      TaskModel task =
-          taskList.tasks.firstWhere((element) => (element.id == taskID));
-      task.isImportant = !task.isImportant;
-    }
+    TaskModel task = getTask(taskListID: taskListID, taskID: taskID);
+    task.copy(copyTask: newTask);
     notifyListeners();
   }
 }

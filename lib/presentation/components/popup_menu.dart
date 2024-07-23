@@ -222,9 +222,9 @@ class _PopupMenuState extends State<PopupMenu> {
     );
     if (!mounted) return;
     if (isDelete) {
+      Navigator.pop(context);
       Provider.of<TaskListProvider>(context, listen: false)
           .deleteTaskList(id: id);
-      Navigator.pop(context);
     }
   }
 

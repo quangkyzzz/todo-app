@@ -1,33 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/models/group_model.dart';
 import 'package:todo_app/models/task_list_model.dart';
+import 'package:todo_app/provider/task_list_provider.dart';
 
 class GroupProvider extends ChangeNotifier {
+  TaskListProvider taskListProvider;
+  GroupProvider(this.taskListProvider);
   List<GroupModel> groups = [
     GroupModel(
-      id: '1',
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
       groupName: 'my group 1',
       taskLists: [
         TaskListModel(
-          id: '1',
+          id: DateTime.now().millisecondsSinceEpoch.toString(),
           listName: 'group 1 list 1',
         ),
         TaskListModel(
-          id: '2',
+          id: (DateTime.now().millisecondsSinceEpoch + 1).toString(),
           listName: 'group 1  list 2',
         ),
       ],
     ),
     GroupModel(
-      id: '2',
+      id: (DateTime.now().millisecondsSinceEpoch + 1).toString(),
       groupName: 'my group 2',
       taskLists: [
         TaskListModel(
-          id: '1',
+          id: (DateTime.now().millisecondsSinceEpoch + 2).toString(),
           listName: 'group 2 list 1',
         ),
         TaskListModel(
-          id: '2',
+          id: (DateTime.now().millisecondsSinceEpoch + 3).toString(),
           listName: 'group 2 list 2',
         ),
       ],
@@ -47,7 +50,9 @@ class GroupProvider extends ChangeNotifier {
   }
 
   void deleteGroup(String groupID) {
-    groups.removeWhere((element) => (element.id == groupID));
+    GroupModel group = getGroup(groupID);
+    taskListProvider.addTaskList(addTaskLists: group.taskLists);
+    groups.remove(group);
     notifyListeners();
   }
 
@@ -59,12 +64,14 @@ class GroupProvider extends ChangeNotifier {
   void addTaskList(String groupID, List<TaskListModel> taskLists) {
     GroupModel group = getGroup(groupID);
     group.taskLists.addAll(taskLists);
+    taskListProvider.deleteMultipleTaskList(deleteTaskLists: taskLists);
     notifyListeners();
   }
 
   void deleteTaskList(String groupID, List<TaskListModel> taskLists) {
     GroupModel group = getGroup(groupID);
     group.taskLists.removeWhere((element) => (taskLists.contains(element)));
+    taskListProvider.addTaskList(addTaskLists: taskLists);
     notifyListeners();
   }
 }

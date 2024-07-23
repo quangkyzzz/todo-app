@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/models/step_model.dart';
 import 'package:todo_app/models/task_list_model.dart';
+import 'package:todo_app/provider/group_provider.dart';
+import 'package:todo_app/provider/task_list_provider.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/routes.dart';
 import 'package:todo_app/models/task_model.dart';
@@ -22,14 +25,17 @@ class TaskPage extends StatefulWidget {
 }
 
 class _TaskPageState extends State<TaskPage> {
+  late TaskListProvider taskListProvider;
+  late GroupProvider groupProvider;
   GlobalKey key = GlobalKey();
+  late String title;
   late bool isOnMyDay;
   late bool isCompleted;
   late bool isImportant;
   late List<StepModel>? steps;
-  late DateTime? notiDate;
+  late DateTime? remindTime;
   late DateTime? dueDate;
-  late String? notiFrequency;
+  late String? repeatFrequency;
   late String? filePath;
   late final TextEditingController _taskNameController;
   List<Map<String, dynamic>> listPopupItem = [
@@ -164,13 +170,16 @@ class _TaskPageState extends State<TaskPage> {
 
   @override
   void initState() {
+    taskListProvider = Provider.of<TaskListProvider>(context, listen: false);
+    groupProvider = Provider.of<GroupProvider>(context, listen: false);
+    title = widget.task.title;
     isOnMyDay = false;
     isCompleted = widget.task.isCompleted;
     isImportant = widget.task.isImportant;
-    notiDate = widget.task.remindTime;
+    remindTime = widget.task.remindTime;
     dueDate = widget.task.dueDate;
     steps = widget.task.stepList;
-    notiFrequency = widget.task.repeatFrequency;
+    repeatFrequency = widget.task.repeatFrequency;
     filePath = widget.task.filePath;
     _taskNameController = TextEditingController();
     _taskNameController.text = widget.task.title;
@@ -192,7 +201,7 @@ class _TaskPageState extends State<TaskPage> {
         'text': 'Add to My Day',
       },
       {
-        'isActive': (notiDate != null),
+        'isActive': (remindTime != null),
         'icon': Icons.notifications_outlined,
         'text': 'Remind me',
         'onTap': onTapRemindMe,
@@ -204,7 +213,7 @@ class _TaskPageState extends State<TaskPage> {
         'onTap': onTapAddDueDate,
       },
       {
-        'isActive': (notiFrequency != null),
+        'isActive': (repeatFrequency != null),
         'icon': Icons.repeat_outlined,
         'key': key,
         'text': 'Repeat',
@@ -225,90 +234,117 @@ class _TaskPageState extends State<TaskPage> {
           style: MyTheme.titleTextStyle,
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            //Edit task row
-            TaskEditRow(taskNameController: _taskNameController),
-            const SizedBox(height: 8),
-            //Add step row
-            (steps != null)
-                ? Column(
-                    children: steps!.map(
-                    (item) {
-                      return StepItem(
-                        step: item,
-                      );
-                    },
-                  ).toList())
-                : const SizedBox(),
-            const Row(
-              children: [
-                SizedBox(width: 16),
-                Icon(
-                  Icons.add,
-                  color: MyTheme.greyColor,
-                ),
-                SizedBox(width: 8),
-                Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Add step',
-                      border: InputBorder.none,
+      body: WillPopScope(
+        onWillPop: () async {
+          TaskModel newTask = widget.task.copyWith(
+            title: _taskNameController.text,
+            isCompleted: isCompleted,
+            isImportant: isImportant,
+            remindTime: remindTime,
+            dueDate: dueDate,
+            stepList: steps,
+            repeatFrequency: repeatFrequency,
+            filePath: filePath,
+          );
+          taskListProvider.updateTask(
+            taskListID: widget.taskList.id,
+            taskID: widget.task.id,
+            newTask: newTask,
+          );
+          return true;
+        },
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              //Edit task row
+              TaskEditRow(
+                taskNameController: _taskNameController,
+                isChecked: isCompleted,
+                isImportant: isImportant,
+              ),
+              const SizedBox(height: 8),
+              //Add step row
+              (steps != null)
+                  ? Column(
+                      children: steps!.map(
+                      (item) {
+                        return StepItem(
+                          step: item,
+                        );
+                      },
+                    ).toList())
+                  : const SizedBox(),
+              const Row(
+                children: [
+                  SizedBox(width: 16),
+                  Icon(
+                    Icons.add,
+                    color: MyTheme.greyColor,
+                  ),
+                  SizedBox(width: 8),
+                  Expanded(
+                    child: TextField(
+                      decoration: InputDecoration(
+                        hintText: 'Add step',
+                        border: InputBorder.none,
+                      ),
+                      style: MyTheme.itemSmallTextStyle,
                     ),
-                    style: MyTheme.itemSmallTextStyle,
-                  ),
-                )
-              ],
-            ),
-            const SizedBox(height: 12),
-            //List uniform task page item
-            Column(
-              children: listTaskItem.map((item) {
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: TaskPageItem(
-                    key: item['key'],
-                    isActive: item['isActive'],
-                    icon: item['icon'],
-                    text: item['text'],
-                    onTap: () {
-                      item['onTap'](context);
+                  )
+                ],
+              ),
+              const SizedBox(height: 12),
+              //List uniform task page item
+              Column(
+                children: listTaskItem.map((item) {
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: TaskPageItem(
+                      key: item['key'],
+                      isActive: item['isActive'],
+                      icon: item['icon'],
+                      text: item['text'],
+                      onTap: () {
+                        item['onTap'](context);
+                      },
+                    ),
+                  );
+                }).toList(),
+              ),
+              const SizedBox(height: 18),
+              //Add and edit note button
+              Padding(
+                padding: const EdgeInsets.only(left: 16),
+                child: TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(noteEditRoute);
                     },
-                  ),
-                );
-              }).toList(),
-            ),
-            const SizedBox(height: 18),
-            //Add and edit note button
-            Padding(
-              padding: const EdgeInsets.only(left: 16),
-              child: TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(noteEditRoute);
-                  },
-                  child: const Text(
-                    'Add note',
-                    style: MyTheme.itemSmallGreyTextStyle,
-                  )),
-            )
-          ],
+                    child: const Text(
+                      'Add note',
+                      style: MyTheme.itemSmallGreyTextStyle,
+                    )),
+              )
+            ],
+          ),
         ),
       ),
-      bottomNavigationBar: TaskPageBottomNavigation(task: widget.task),
+      bottomNavigationBar: TaskPageBottomNavigation(
+        task: widget.task,
+        taskList: widget.taskList,
+      ),
     );
   }
 }
 
 class TaskEditRow extends StatefulWidget {
-  final bool isChecked;
-  final bool isImportant;
+  bool isChecked;
+  bool isImportant;
   final TextEditingController taskNameController;
-  const TaskEditRow({
+  TaskEditRow({
     super.key,
-    this.isChecked = false,
-    this.isImportant = false,
+    required this.isChecked,
+    required this.isImportant,
     required this.taskNameController,
   });
 
@@ -317,8 +353,8 @@ class TaskEditRow extends StatefulWidget {
 }
 
 class _TaskEditRowState extends State<TaskEditRow> {
-  bool _isChecked = false;
-  bool _isImportant = false;
+  late bool _isChecked;
+  late bool _isImportant;
 
   @override
   void initState() {
