@@ -112,6 +112,7 @@ class _HomePageState extends State<HomePage> {
         padding: EdgeInsets.only(left: 8, right: 6),
         child: Column(
           children: [
+            //////////////
             //default list
             Consumer<TaskListProvider>(
                 builder: (context, taskListProvider, child) {
@@ -133,29 +134,35 @@ class _HomePageState extends State<HomePage> {
               );
             }),
             MyTheme.dividerWhiteStyle,
+            ///////////////
             //personal list
             Consumer<TaskListProvider>(
                 builder: (context, taskListProvider, child) {
               return Column(
                 children: taskListProvider.taskLists.map((item) {
-                  return HomeItem(
-                    text: item.listName,
-                    icon: Icons.list_outlined,
-                    iconColor: MyTheme.blueColor,
-                    endNumber: 1,
-                    onTap: () {
-                      Navigator.of(context).pushNamed(
-                        taskListRoute,
-                        arguments: {
-                          'haveCompletedList': true,
-                          'taskList': item,
-                        },
-                      );
-                    },
-                  );
+                  if (item.groupID == null) {
+                    return HomeItem(
+                      text: item.listName,
+                      icon: Icons.list_outlined,
+                      iconColor: MyTheme.blueColor,
+                      endNumber: 1,
+                      onTap: () {
+                        Navigator.of(context).pushNamed(
+                          taskListRoute,
+                          arguments: {
+                            'haveCompletedList': true,
+                            'taskList': item,
+                          },
+                        );
+                      },
+                    );
+                  } else {
+                    return SizedBox(height: 0);
+                  }
                 }).toList(),
               );
             }),
+            ////////////////
             //personal group
             Consumer<GroupProvider>(builder: (context, groupProvider, child) {
               return Column(

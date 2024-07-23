@@ -67,6 +67,26 @@ class TaskListProvider extends ChangeNotifier {
         ),
       ],
     ),
+    TaskListModel(
+      id: 'group 1 list 1',
+      listName: 'group 1 list 1',
+      groupID: '111',
+    ),
+    TaskListModel(
+      id: 'group 1 list 2',
+      listName: 'group 1  list 2',
+      groupID: '111',
+    ),
+    TaskListModel(
+      id: 'group 2 list 1',
+      listName: 'group 2 list 1',
+      groupID: '222',
+    ),
+    TaskListModel(
+      id: 'group 2 list 2',
+      listName: 'group 2 list 2',
+      groupID: '222',
+    ),
   ];
 
   //Task List function
@@ -95,6 +115,16 @@ class TaskListProvider extends ChangeNotifier {
 
   void deleteMultipleTaskList({required List<TaskListModel> deleteTaskLists}) {
     taskLists.removeWhere((element) => (deleteTaskLists.contains(element)));
+    notifyListeners();
+  }
+
+  void moveToGroup({required String id, required String groupID}) {
+    getTaskList(taskListID: id).groupID = groupID;
+    notifyListeners();
+  }
+
+  void moveFromGroup({required String id}) {
+    getTaskList(taskListID: id).groupID = null;
     notifyListeners();
   }
 

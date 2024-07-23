@@ -8,31 +8,29 @@ class GroupProvider extends ChangeNotifier {
   GroupProvider(this.taskListProvider);
   List<GroupModel> groups = [
     GroupModel(
-      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      id: '111',
       groupName: 'my group 1',
       taskLists: [
         TaskListModel(
-          id: DateTime.now().millisecondsSinceEpoch.toString(),
+          id: 'group 1 list 1',
           listName: 'group 1 list 1',
+          groupID: '111',
         ),
         TaskListModel(
-          id: (DateTime.now().millisecondsSinceEpoch + 1).toString(),
+          id: 'group 1 list 2',
           listName: 'group 1  list 2',
+          groupID: '111',
         ),
       ],
     ),
     GroupModel(
-      id: (DateTime.now().millisecondsSinceEpoch + 1).toString(),
+      id: '222',
       groupName: 'my group 2',
       taskLists: [
         TaskListModel(
-          id: (DateTime.now().millisecondsSinceEpoch + 2).toString(),
-          listName: 'group 2 list 1',
-        ),
+            id: 'group 2 list 1', listName: 'group 2 list 1', groupID: '111'),
         TaskListModel(
-          id: (DateTime.now().millisecondsSinceEpoch + 3).toString(),
-          listName: 'group 2 list 2',
-        ),
+            id: 'group 2 list 2', listName: 'group 2 list 2', groupID: '111'),
       ],
     ),
   ];
@@ -63,15 +61,33 @@ class GroupProvider extends ChangeNotifier {
 
   void addTaskList(String groupID, List<TaskListModel> taskLists) {
     GroupModel group = getGroup(groupID);
-    group.taskLists.addAll(taskLists);
-    taskListProvider.deleteMultipleTaskList(deleteTaskLists: taskLists);
+
+    for (var e in taskLists) {
+      taskListProvider.moveToGroup(id: e.id, groupID: groupID);
+      group.taskLists.add(taskListProvider.getTaskList(taskListID: e.id));
+    }
+    // taskListProvider.taskLists.map((e) {
+    //   if (taskLists.contains(e)) {
+    //     e.groupID = groupID;
+    //     group.taskLists.add(e);
+    //   }
+    // });
+
     notifyListeners();
   }
 
   void deleteTaskList(String groupID, List<TaskListModel> taskLists) {
     GroupModel group = getGroup(groupID);
-    group.taskLists.removeWhere((element) => (taskLists.contains(element)));
-    taskListProvider.addTaskList(addTaskLists: taskLists);
+    taskLists.forEach((element) {
+      group.taskLists.remove(element);
+      taskListProvider.moveFromGroup(id: element.id);
+    });
+    // group.taskLists.removeWhere((element) => (taskLists.contains(element)));
+    // taskListProvider.taskLists.map((element) {
+    //   if (taskLists.contains(element)) {
+    //     element.groupID = null;
+    //   }
+    // });
     notifyListeners();
   }
 }

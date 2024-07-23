@@ -203,7 +203,10 @@ Future<List<TaskListModel>?> showAddListDialog({
                   checkedTaskList.addAll(group.taskLists);
                   allTaskList.addAll(checkedTaskList);
                 }
-                allTaskList.addAll(taskListProvider.taskLists);
+                allTaskList.addAll(
+                  taskListProvider.taskLists
+                      .where((element) => (element.groupID == null)),
+                );
                 return StatefulBuilder(builder: (context, setState) {
                   return Column(
                     children: allTaskList.map((item) {
@@ -213,11 +216,11 @@ Future<List<TaskListModel>?> showAddListDialog({
                           Text(item.listName),
                           const Spacer(),
                           IconButton(
-                            icon: Icon(
-                                (isChecked) ? Icons.check : Icons.add_outlined),
-                            onPressed: () {
-                              setState(
-                                () {
+                              icon: Icon((isChecked)
+                                  ? Icons.check
+                                  : Icons.add_outlined),
+                              onPressed: () {
+                                setState(() {
                                   if (checkedTaskList.contains(item)) {
                                     checkedTaskList.remove(item);
                                     isChecked = !isChecked;
@@ -225,10 +228,8 @@ Future<List<TaskListModel>?> showAddListDialog({
                                     checkedTaskList.add(item);
                                     isChecked = !isChecked;
                                   }
-                                },
-                              );
-                            },
-                          )
+                                });
+                              })
                         ],
                       );
                     }).toList(),
