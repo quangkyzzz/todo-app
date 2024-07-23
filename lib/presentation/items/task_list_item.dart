@@ -154,9 +154,6 @@ class _TaskListItemState extends State<TaskListItem> {
                     taskID: widget.task.id,
                     newTask: widget.task.copyWith(isImportant: !isImportant),
                   );
-                  // setState(() {
-                  //   isImportant = !isImportant;
-                  // });
                 },
                 icon: (isImportant)
                     ? const Icon(

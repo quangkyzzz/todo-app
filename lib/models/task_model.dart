@@ -14,8 +14,6 @@ class TaskModel {
   String? repeatFrequency;
   String? filePath;
   String? note;
-  String? backgroundImage;
-  String? themeColor;
 
   TaskModel({
     required this.id,
@@ -29,8 +27,6 @@ class TaskModel {
     this.repeatFrequency,
     this.filePath,
     this.note,
-    this.backgroundImage,
-    this.themeColor,
   });
 
   void copy({required TaskModel copyTask}) {
@@ -43,8 +39,6 @@ class TaskModel {
     repeatFrequency = copyTask.repeatFrequency;
     filePath = copyTask.filePath;
     note = copyTask.note;
-    backgroundImage = copyTask.backgroundImage;
-    themeColor = copyTask.themeColor;
   }
 
   TaskModel copyWith({
@@ -59,8 +53,6 @@ class TaskModel {
     String? repeatFrequency,
     String? filePath,
     String? note,
-    String? backgroundImage,
-    String? themeColor,
   }) {
     return TaskModel(
       id: id ?? this.id,
@@ -74,8 +66,6 @@ class TaskModel {
       repeatFrequency: repeatFrequency ?? this.repeatFrequency,
       filePath: filePath ?? this.filePath,
       note: note ?? this.note,
-      backgroundImage: backgroundImage ?? this.backgroundImage,
-      themeColor: themeColor ?? this.themeColor,
     );
   }
 
@@ -93,8 +83,7 @@ class TaskModel {
     result.addAll({'repeatFreaquency': repeatFrequency});
     result.addAll({'filePath': filePath});
     result.addAll({'note': note});
-    result.addAll({'backgroundImage': backgroundImage});
-    result.addAll({'themeColor': themeColor});
+
     return result;
   }
 
@@ -111,8 +100,6 @@ class TaskModel {
       repeatFrequency: map['repeatFrequency'],
       filePath: map['filePath'],
       note: map['note'],
-      backgroundImage: map['backgroundImage'],
-      themeColor: map['themeColor'],
     );
   }
 }
