@@ -1,8 +1,10 @@
 // ignore_for_file: unnecessary_string_interpolations
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/models/step_model.dart';
 import 'package:todo_app/models/task_list_model.dart';
+import 'package:todo_app/provider/task_list_provider.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/routes.dart';
 import 'package:todo_app/models/task_model.dart';
@@ -23,6 +25,8 @@ class TaskListItem extends StatefulWidget {
 }
 
 class _TaskListItemState extends State<TaskListItem> {
+  late TaskListProvider taskListProvider;
+  late String myTitle;
   late bool isImportant;
   late bool isChecked;
   late List<StepModel>? step;
@@ -33,6 +37,14 @@ class _TaskListItemState extends State<TaskListItem> {
 
   @override
   void initState() {
+    taskListProvider = Provider.of<TaskListProvider>(context, listen: false);
+    super.initState();
+  }
+
+  @override
+  @override
+  Widget build(BuildContext context) {
+    myTitle = widget.task.title;
     isImportant = widget.task.isImportant;
     isChecked = widget.task.isCompleted;
     step = widget.task.stepList;
@@ -40,11 +52,6 @@ class _TaskListItemState extends State<TaskListItem> {
     notiTime = widget.task.remindTime;
     filePath = widget.task.filePath;
     note = widget.task.note;
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
     initializeDateFormatting('vi');
 
     bool isAllBottomIconNull = ((step == null) &&
@@ -77,9 +84,11 @@ class _TaskListItemState extends State<TaskListItem> {
               shape: const CircleBorder(),
               value: isChecked,
               onChanged: (bool? value) {
-                setState(() {
-                  isChecked = value!;
-                });
+                taskListProvider.updateTask(
+                  taskListID: widget.taskList.id,
+                  taskID: widget.task.id,
+                  newTask: widget.task.copyWith(isCompleted: value),
+                );
               },
             ),
             (isAllBottomIconNull)
@@ -87,7 +96,7 @@ class _TaskListItemState extends State<TaskListItem> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        widget.task.title,
+                        myTitle,
                         style: MyTheme.itemTextStyle,
                       )
                     ],
@@ -97,7 +106,7 @@ class _TaskListItemState extends State<TaskListItem> {
                     children: [
                       const SizedBox(height: 8),
                       Text(
-                        widget.task.title,
+                        myTitle,
                         style: MyTheme.itemTextStyle,
                       ),
                       const SizedBox(height: 4),
@@ -140,9 +149,14 @@ class _TaskListItemState extends State<TaskListItem> {
               shape: const CircleBorder(),
               child: IconButton(
                 onPressed: () {
-                  setState(() {
-                    isImportant = !isImportant;
-                  });
+                  taskListProvider.updateTask(
+                    taskListID: widget.taskList.id,
+                    taskID: widget.task.id,
+                    newTask: widget.task.copyWith(isImportant: !isImportant),
+                  );
+                  // setState(() {
+                  //   isImportant = !isImportant;
+                  // });
                 },
                 icon: (isImportant)
                     ? const Icon(

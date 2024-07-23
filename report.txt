@@ -10,5 +10,4 @@ Dự định làm:
     -  Sửa các lỗi trong các chức năng liên quan đến group.
     -  Thêm chức năng tạo thông báo, tìm kiếm.
 
-//ask about: repeat frequency, task contain task list id, 
-//task page contain only id.
+

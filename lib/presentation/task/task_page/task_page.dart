@@ -192,6 +192,13 @@ class _TaskPageState extends State<TaskPage> {
     super.dispose();
   }
 
+  void callBack(bool setComplete, bool setImportant) {
+    setState(() {
+      isCompleted = setComplete;
+      isImportant = setImportant;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     late List<Map<String, dynamic>> listTaskItem = [
@@ -262,6 +269,7 @@ class _TaskPageState extends State<TaskPage> {
                 taskNameController: _taskNameController,
                 isChecked: isCompleted,
                 isImportant: isImportant,
+                callBack: callBack,
               ),
               const SizedBox(height: 8),
               //Add step row
@@ -338,15 +346,16 @@ class _TaskPageState extends State<TaskPage> {
 }
 
 class TaskEditRow extends StatefulWidget {
-  bool isChecked;
-  bool isImportant;
+  final bool isChecked;
+  final bool isImportant;
   final TextEditingController taskNameController;
-  TaskEditRow({
-    super.key,
-    required this.isChecked,
-    required this.isImportant,
-    required this.taskNameController,
-  });
+  final Function callBack;
+  const TaskEditRow(
+      {super.key,
+      required this.isChecked,
+      required this.isImportant,
+      required this.taskNameController,
+      required this.callBack});
 
   @override
   State<TaskEditRow> createState() => _TaskEditRowState();
@@ -376,6 +385,7 @@ class _TaskEditRowState extends State<TaskEditRow> {
               setState(() {
                 _isChecked = value!;
               });
+              widget.callBack(_isChecked, _isImportant);
             },
           ),
         ),
@@ -391,6 +401,7 @@ class _TaskEditRowState extends State<TaskEditRow> {
             setState(() {
               _isImportant = !_isImportant;
             });
+            widget.callBack(_isChecked, _isImportant);
           },
           child: (_isImportant)
               ? Transform.scale(
