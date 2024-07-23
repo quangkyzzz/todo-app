@@ -49,7 +49,9 @@ class GroupProvider extends ChangeNotifier {
 
   void deleteGroup(String groupID) {
     GroupModel group = getGroup(groupID);
-    taskListProvider.addTaskList(addTaskLists: group.taskLists);
+    group.taskLists.forEach((element) {
+      taskListProvider.moveFromGroup(id: element.id);
+    });
     groups.remove(group);
     notifyListeners();
   }
@@ -66,12 +68,6 @@ class GroupProvider extends ChangeNotifier {
       taskListProvider.moveToGroup(id: e.id, groupID: groupID);
       group.taskLists.add(taskListProvider.getTaskList(taskListID: e.id));
     }
-    // taskListProvider.taskLists.map((e) {
-    //   if (taskLists.contains(e)) {
-    //     e.groupID = groupID;
-    //     group.taskLists.add(e);
-    //   }
-    // });
 
     notifyListeners();
   }
@@ -82,12 +78,7 @@ class GroupProvider extends ChangeNotifier {
       group.taskLists.remove(element);
       taskListProvider.moveFromGroup(id: element.id);
     });
-    // group.taskLists.removeWhere((element) => (taskLists.contains(element)));
-    // taskListProvider.taskLists.map((element) {
-    //   if (taskLists.contains(element)) {
-    //     element.groupID = null;
-    //   }
-    // });
+
     notifyListeners();
   }
 }
