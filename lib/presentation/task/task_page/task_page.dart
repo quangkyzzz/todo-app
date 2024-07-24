@@ -71,31 +71,40 @@ class _TaskPageState extends State<TaskPage> {
     });
   }
 
-  Future<DateTime?> onTapRemindMe(BuildContext context) async {
-    final DateTime? selectedDate = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2020),
-      lastDate: DateTime(2030),
-    );
-    if (selectedDate == null) return DateTime.now();
+  onTapRemindMe(BuildContext context) async {
+    Future<DateTime?> getRemindTime(BuildContext context) async {
+      final DateTime? selectedDate = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2020),
+        lastDate: DateTime(2030),
+      );
+      if (selectedDate == null) return DateTime.now();
 
-    if (!context.mounted) return selectedDate;
+      if (!context.mounted) return selectedDate;
 
-    TimeOfDay? selectedTime = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.fromDateTime(DateTime(2000, 2, 2, 9)),
-    );
+      TimeOfDay? selectedTime = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.fromDateTime(DateTime(2000, 2, 2, 9)),
+      );
 
-    selectedTime ??= TimeOfDay.fromDateTime(DateTime(2000, 2, 2, 9));
+      selectedTime ??= TimeOfDay.fromDateTime(DateTime(2000, 2, 2, 9));
 
-    return DateTime(
-      selectedDate.year,
-      selectedDate.month,
-      selectedDate.day,
-      selectedTime.hour,
-      selectedTime.minute,
-    );
+      return DateTime(
+        selectedDate.year,
+        selectedDate.month,
+        selectedDate.day,
+        selectedTime.hour,
+        selectedTime.minute,
+      );
+    }
+
+    DateTime? tempRemindTime = await getRemindTime(context);
+    setState(() {
+      remindTime = tempRemindTime;
+    });
+    print('end ontap');
+    //TODO: fix this remind button
   }
 
   onTapAddDueDate(BuildContext context) {
@@ -201,7 +210,7 @@ class _TaskPageState extends State<TaskPage> {
 
   @override
   Widget build(BuildContext context) {
-    late List<Map<String, dynamic>> listTaskItem = [
+    List<Map<String, dynamic>> listTaskItem = [
       {
         'isActive': isOnMyDay,
         'icon': Icons.wb_sunny_outlined,

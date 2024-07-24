@@ -1,13 +1,15 @@
 Báo cáo 23/7
 Đã làm:
-    -  Hoàn thành chức năng thêm, xóa taskList trong group
-    -  Chỉnh sửa taskList, group provider
-    -  Chỉnh sửa taskList và user model
-    -  Thêm chức năng tạo, sửa thông tin, xóa task
+    -   Hoàn thiện chức năng thay đổi trạng thái hoàn thành,
+    quan trọng cuả task.
+    -   Sửa lỗi liên quan đến thêm, xóa taskList trong group.
+    -   Sửa lỗi liên quan đến xóa group.
+    -   Thêm chức năng lựa chọn thời điểm nhắc hẹn
 Đang làm:
-    -  Hoàn thiện chức năng sửa thông tin task
+    -   Lưu trữ lịch và tạo nhắc hẹn.
 Dự định làm:
-    -  Sửa các lỗi trong các chức năng liên quan đến group.
-    -  Thêm chức năng tạo thông báo, tìm kiếm.
+    -   Sửa lỗi liên quan đến task
+    -   Thêm chức năng tìm kiếm task, chỉnh sửa thứ tự sắp xếp.
+
 
 
