@@ -72,6 +72,7 @@ class _TaskPageState extends State<TaskPage> {
   }
 
   onTapRemindMe(BuildContext context) async {
+    //TODO: fix cancel pick
     Future<DateTime?> getRemindTime(BuildContext context) async {
       final DateTime? selectedDate = await showDatePicker(
         context: context,
@@ -101,9 +102,11 @@ class _TaskPageState extends State<TaskPage> {
 
     if (remindTime == null) {
       DateTime? tempRemindTime = await getRemindTime(context);
-      setState(() {
-        remindTime = tempRemindTime;
-      });
+      if (tempRemindTime != null) {
+        setState(() {
+          remindTime = tempRemindTime;
+        });
+      }
     } else {
       setState(() {
         remindTime = null;

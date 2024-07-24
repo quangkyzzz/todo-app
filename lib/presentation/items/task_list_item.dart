@@ -116,26 +116,22 @@ class _TaskListItemState extends State<TaskListItem> {
                               ? ItemBottomIcon(
                                   text: '0 of ${step!.length.toString()}')
                               : const SizedBox(),
-                          const SizedBox(width: 6),
                           (dueDate != null)
                               ? ItemBottomIcon(
                                   textIcon: Icons.calendar_today_outlined,
                                   text:
                                       '${DateFormat.MMMEd('en_US').format(dueDate!)}')
                               : const SizedBox(),
-                          const SizedBox(width: 6),
                           (notiTime != null)
                               ? ItemBottomIcon(
                                   textIcon: Icons.notifications_outlined,
                                   text:
                                       '${DateFormat.MMMEd('en_US').format(notiTime!)}')
                               : const SizedBox(),
-                          const SizedBox(width: 6),
                           (filePath != null)
                               ? const ItemBottomIcon(
                                   icon: Icons.attach_file_outlined)
                               : const SizedBox(),
-                          const SizedBox(width: 6),
                           (note != null)
                               ? const ItemBottomIcon(icon: Icons.note_outlined)
                               : const SizedBox(),
@@ -200,12 +196,18 @@ class ItemBottomIcon extends StatelessWidget {
                 text!,
                 style: MyTheme.itemExtraSmallGreyTextStyle,
               ),
+              const SizedBox(width: 6),
             ],
           )
-        : Icon(
-            icon,
-            size: 16,
-            color: MyTheme.greyColor,
+        : Row(
+            children: [
+              Icon(
+                icon,
+                size: 16,
+                color: MyTheme.greyColor,
+              ),
+              const SizedBox(width: 6),
+            ],
           );
   }
 }

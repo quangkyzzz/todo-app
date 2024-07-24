@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/models/task_list_model.dart';
 import 'package:todo_app/models/task_model.dart';
-import 'package:todo_app/provider/task_list_provider.dart';
 import 'package:todo_app/themes.dart';
-import 'package:provider/provider.dart';
 
 class TaskPageItem extends StatefulWidget {
   final TaskListModel taskList;
