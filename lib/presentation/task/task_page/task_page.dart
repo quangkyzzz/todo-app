@@ -99,12 +99,16 @@ class _TaskPageState extends State<TaskPage> {
       );
     }
 
-    DateTime? tempRemindTime = await getRemindTime(context);
-    setState(() {
-      remindTime = tempRemindTime;
-    });
-    print('end ontap');
-    //TODO: fix this remind button
+    if (remindTime == null) {
+      DateTime? tempRemindTime = await getRemindTime(context);
+      setState(() {
+        remindTime = tempRemindTime;
+      });
+    } else {
+      setState(() {
+        remindTime = null;
+      });
+    }
   }
 
   onTapAddDueDate(BuildContext context) {
@@ -160,12 +164,16 @@ class _TaskPageState extends State<TaskPage> {
             ),
             const SizedBox(height: 8),
             TaskPageItem(
+              task: widget.task,
+              taskList: widget.taskList,
               isActive: false,
               icon: Icons.folder_outlined,
               text: 'Device files',
               onTap: () {},
             ),
             TaskPageItem(
+              task: widget.task,
+              taskList: widget.taskList,
               isActive: false,
               icon: Icons.photo_camera_outlined,
               text: 'Camera',
@@ -221,12 +229,14 @@ class _TaskPageState extends State<TaskPage> {
         'icon': Icons.notifications_outlined,
         'text': 'Remind me',
         'onTap': onTapRemindMe,
+        'value': remindTime,
       },
       {
         'isActive': (dueDate != null),
         'icon': Icons.calendar_today_outlined,
         'text': 'Add due date',
         'onTap': onTapAddDueDate,
+        'value': dueDate,
       },
       {
         'isActive': (repeatFrequency != null),
@@ -234,12 +244,14 @@ class _TaskPageState extends State<TaskPage> {
         'key': key,
         'text': 'Repeat',
         'onTap': onTapRepeat,
+        'value': repeatFrequency,
       },
       {
         'isActive': false,
         'icon': Icons.attach_file_outlined,
         'text': 'Add file',
         'onTap': onTapAddFile,
+        'value': filePath,
       },
     ];
 
@@ -252,7 +264,9 @@ class _TaskPageState extends State<TaskPage> {
       ),
       body: WillPopScope(
         onWillPop: () async {
-          TaskModel newTask = widget.task.copyWith(
+          TaskModel newTask = TaskModel(
+            id: widget.task.id,
+            createDate: widget.task.createDate,
             title: _taskNameController.text,
             isCompleted: isCompleted,
             isImportant: isImportant,
@@ -318,6 +332,8 @@ class _TaskPageState extends State<TaskPage> {
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 8),
                     child: TaskPageItem(
+                      task: widget.task,
+                      taskList: widget.taskList,
                       key: item['key'],
                       isActive: item['isActive'],
                       icon: item['icon'],
@@ -359,12 +375,13 @@ class TaskEditRow extends StatefulWidget {
   final bool isImportant;
   final TextEditingController taskNameController;
   final Function callBack;
-  const TaskEditRow(
-      {super.key,
-      required this.isChecked,
-      required this.isImportant,
-      required this.taskNameController,
-      required this.callBack});
+  const TaskEditRow({
+    super.key,
+    required this.isChecked,
+    required this.isImportant,
+    required this.taskNameController,
+    required this.callBack,
+  });
 
   @override
   State<TaskEditRow> createState() => _TaskEditRowState();

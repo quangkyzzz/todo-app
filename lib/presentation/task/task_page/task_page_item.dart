@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/models/task_list_model.dart';
+import 'package:todo_app/models/task_model.dart';
+import 'package:todo_app/provider/task_list_provider.dart';
 import 'package:todo_app/themes.dart';
+import 'package:provider/provider.dart';
 
 class TaskPageItem extends StatefulWidget {
+  final TaskListModel taskList;
+  final TaskModel task;
   final bool isActive;
   final IconData icon;
   final String text;
@@ -13,6 +19,8 @@ class TaskPageItem extends StatefulWidget {
     required this.icon,
     required this.text,
     required this.onTap,
+    required this.taskList,
+    required this.task,
   });
 
   @override
@@ -25,6 +33,12 @@ class _TaskPageItemState extends State<TaskPageItem> {
   void initState() {
     isActive = widget.isActive;
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant TaskPageItem oldWidget) {
+    isActive = widget.isActive;
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -57,11 +71,7 @@ class _TaskPageItemState extends State<TaskPageItem> {
         const Spacer(),
         (isActive)
             ? IconButton(
-                onPressed: () {
-                  setState(() {
-                    isActive = !isActive;
-                  });
-                },
+                onPressed: widget.onTap,
                 icon: Transform.scale(
                   scale: 0.6,
                   child: const Icon(

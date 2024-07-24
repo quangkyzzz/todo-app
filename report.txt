@@ -1,4 +1,4 @@
-Báo cáo 23/7
+Báo cáo 24/7
 Đã làm:
     -   Hoàn thiện chức năng thay đổi trạng thái hoàn thành,
     quan trọng cuả task.
