@@ -1,15 +1,11 @@
-Báo cáo 24/7
+Báo cáo 25/7
 Đã làm:
-    -   Hoàn thiện chức năng thay đổi trạng thái hoàn thành,
-    quan trọng cuả task.
-    -   Sửa lỗi liên quan đến thêm, xóa taskList trong group.
-    -   Sửa lỗi liên quan đến xóa group.
-    -   Thêm chức năng lựa chọn thời điểm nhắc hẹn
+    -   Hoàn thành chức năng chỉnh sửa lịch nhắc hẹn
+    -   Sửa lỗi chức năng thay đổi thông tin trong taskPage
+    -   Sửa lỗi giao diện nhỏ
 Đang làm:
-    -   Lưu trữ lịch và tạo nhắc hẹn.
+    -   Thêm chức năng tạo nhắc hẹn và lập lịch nhắc hẹn lặp lại
 Dự định làm:
-    -   Sửa lỗi liên quan đến task
-    -   Thêm chức năng tìm kiếm task, chỉnh sửa thứ tự sắp xếp.
-
-
+    -   Thêm chức năng tạo, sửa, xóa ghi chú
+    -   Thêm chức năng tạo, sửa, xóa step.
 
