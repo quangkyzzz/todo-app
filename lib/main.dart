@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/notification_service.dart';
 import 'package:todo_app/provider/group_provider.dart';
 import 'package:todo_app/provider/task_list_provider.dart';
 import 'package:todo_app/provider/user_provider.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/routes.dart';
 
-void main() {
-  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
-  const AndroidInitializationSettings initializationSettingsAndroid =
-      AndroidInitializationSettings(''); //TODO: add icon
-
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await NotificationService.initNotification();
   runApp(const MyApp());
 }
 
