@@ -141,11 +141,15 @@ class _HomePageState extends State<HomePage> {
               return Column(
                 children: taskListProvider.taskLists.map((item) {
                   if (item.groupID == null) {
+                    int endNumber = 0;
+                    for (var element in item.tasks) {
+                      if (!element.isCompleted) endNumber++;
+                    }
                     return HomeItem(
                       text: item.listName,
                       icon: Icons.list_outlined,
                       iconColor: MyTheme.blueColor,
-                      endNumber: 1,
+                      endNumber: endNumber,
                       onTap: () {
                         Navigator.of(context).pushNamed(
                           taskListRoute,

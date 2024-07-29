@@ -26,6 +26,7 @@ class HomeGroup extends StatefulWidget {
 
 class _HomeGroupState extends State<HomeGroup> {
   late GroupProvider groupProvider;
+  late TaskListProvider taskListProvider;
   late List<Map<String, dynamic>> listPopupMenuItem = [
     {
       'value': 'add_or_remove_lists',
@@ -50,6 +51,7 @@ class _HomeGroupState extends State<HomeGroup> {
   @override
   void initState() {
     groupProvider = Provider.of<GroupProvider>(context, listen: false);
+    taskListProvider = Provider.of<TaskListProvider>(context, listen: false);
     super.initState();
   }
 
@@ -142,11 +144,17 @@ class _HomeGroupState extends State<HomeGroup> {
       ),
       children: (widget.group.taskLists.isNotEmpty)
           ? widget.group.taskLists.map((item) {
+              int endNumber = 0;
+              TaskListModel taskList =
+                  taskListProvider.getTaskList(taskListID: item.id);
+              for (var element in taskList.tasks) {
+                if (!element.isCompleted) endNumber++;
+              }
               return HomeItem(
                 text: item.listName,
                 icon: Icons.list_outlined,
                 iconColor: MyTheme.blueColor,
-                endNumber: 1,
+                endNumber: endNumber,
                 onTap: () {
                   Navigator.of(context).pushNamed(
                     taskListRoute,
