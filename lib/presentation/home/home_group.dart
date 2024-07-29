@@ -75,7 +75,7 @@ class _HomeGroupState extends State<HomeGroup> {
         addedTaskList,
       );
 
-      Provider.of<GroupProvider>(context, listen: false).deleteTaskList(
+      Provider.of<GroupProvider>(context, listen: false).deleteMultipleTaskList(
         groupID,
         removeTaskList,
       );
@@ -161,7 +161,7 @@ class _HomeGroupState extends State<HomeGroup> {
           : [
               const Text(
                 'This group is empty',
-                style: MyTheme.itemSmallTextStyle,
+                style: MyTheme.itemSmallGreyTextStyle,
               )
             ],
     );

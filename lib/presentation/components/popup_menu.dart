@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/models/task_list_model.dart';
 import 'package:todo_app/presentation/components/show_alert_dialog.dart';
 import 'package:todo_app/presentation/components/show_text_edit_dialog.dart';
+import 'package:todo_app/provider/group_provider.dart';
 import 'package:todo_app/provider/task_list_provider.dart';
 import 'package:todo_app/routes.dart';
 import 'package:todo_app/themes.dart';
@@ -14,6 +15,7 @@ class PopupMenu extends StatefulWidget {
   final TaskListModel taskList;
   final List<Map<String, dynamic>>? customListPopupMenuItem;
   final List<String> toRemove;
+
   const PopupMenu({
     super.key,
     required this.taskList,
@@ -26,6 +28,8 @@ class PopupMenu extends StatefulWidget {
 }
 
 class _PopupMenuState extends State<PopupMenu> {
+  late GroupProvider groupProvider;
+  late TaskListProvider taskListProvider;
   late List<Map<String, dynamic>> listPopupMenuItem = [
     {
       'value': 'rename_list',
@@ -105,8 +109,14 @@ class _PopupMenuState extends State<PopupMenu> {
     );
     if (!mounted) return;
     if (newName != null) {
-      Provider.of<TaskListProvider>(context, listen: false)
-          .renameList(taskListID: id, newName: newName);
+      taskListProvider.renameList(taskListID: id, newName: newName);
+      if (widget.taskList.groupID != null) {
+        groupProvider.renameTaskList(
+          groupID: widget.taskList.groupID!,
+          taskListID: widget.taskList.id,
+          newName: newName,
+        );
+      }
     }
   }
 
@@ -223,8 +233,13 @@ class _PopupMenuState extends State<PopupMenu> {
     if (!mounted) return;
     if (isDelete) {
       Navigator.pop(context);
-      Provider.of<TaskListProvider>(context, listen: false)
-          .deleteTaskList(id: id);
+      if (widget.taskList.groupID != null) {
+        groupProvider.deleteTaskListByID(
+          groupID: widget.taskList.groupID!,
+          taskListID: widget.taskList.id,
+        );
+      }
+      taskListProvider.deleteTaskList(id: id);
     }
   }
 
@@ -241,6 +256,13 @@ class _PopupMenuState extends State<PopupMenu> {
         );
       },
     );
+  }
+
+  @override
+  void initState() {
+    taskListProvider = Provider.of<TaskListProvider>(context, listen: false);
+    groupProvider = Provider.of<GroupProvider>(context, listen: false);
+    super.initState();
   }
 
   @override

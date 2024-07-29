@@ -38,6 +38,8 @@ class GroupProvider extends ChangeNotifier {
     ),
   ];
 
+  //////////////
+  //group method
   GroupModel getGroup(String groupID) {
     return groups.firstWhere((element) => (element.id == groupID));
   }
@@ -64,6 +66,16 @@ class GroupProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  /////////////
+  //Task method
+  TaskListModel getTaskList({
+    required String groupID,
+    required String taskListID,
+  }) {
+    GroupModel group = getGroup(groupID);
+    return group.taskLists.firstWhere((element) => (element.id == taskListID));
+  }
+
   void addTaskList(String groupID, List<TaskListModel> taskLists) {
     GroupModel group = getGroup(groupID);
 
@@ -75,12 +87,36 @@ class GroupProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteTaskList(String groupID, List<TaskListModel> taskLists) {
+  void deleteMultipleTaskList(String groupID, List<TaskListModel> taskLists) {
     GroupModel group = getGroup(groupID);
     taskLists.forEach((element) {
       group.taskLists.remove(element);
       taskListProvider.moveFromGroup(id: element.id);
     });
+
+    notifyListeners();
+  }
+
+  void deleteTaskListByID({
+    required String groupID,
+    required String taskListID,
+  }) {
+    GroupModel group = getGroup(groupID);
+    group.taskLists.removeWhere((element) => (element.id == taskListID));
+
+    notifyListeners();
+  }
+
+  void renameTaskList({
+    required String groupID,
+    required taskListID,
+    required newName,
+  }) {
+    TaskListModel taskList = getTaskList(
+      groupID: groupID,
+      taskListID: taskListID,
+    );
+    taskList.listName = newName;
 
     notifyListeners();
   }

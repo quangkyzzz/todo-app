@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/models/step_model.dart';
 import 'package:todo_app/models/task_list_model.dart';
+import 'package:todo_app/notification_service.dart';
 import 'package:todo_app/provider/group_provider.dart';
 import 'package:todo_app/provider/task_list_provider.dart';
 import 'package:todo_app/themes.dart';
@@ -72,7 +73,6 @@ class _TaskPageState extends State<TaskPage> {
   }
 
   onTapRemindMe(BuildContext context) async {
-    //TODO: fix cancel pick
     Future<DateTime?> getRemindTime(BuildContext context) async {
       final DateTime? selectedDate = await showDatePicker(
         context: context,
@@ -80,16 +80,16 @@ class _TaskPageState extends State<TaskPage> {
         firstDate: DateTime(2020),
         lastDate: DateTime(2030),
       );
-      if (selectedDate == null) return DateTime.now();
+      if (selectedDate == null) return null;
 
-      if (!context.mounted) return selectedDate;
+      if (!context.mounted) return null;
 
       TimeOfDay? selectedTime = await showTimePicker(
         context: context,
         initialTime: TimeOfDay.fromDateTime(DateTime(2000, 2, 2, 9)),
       );
 
-      selectedTime ??= TimeOfDay.fromDateTime(DateTime(2000, 2, 2, 9));
+      if (selectedTime == null) return null;
 
       return DateTime(
         selectedDate.year,
@@ -106,11 +106,20 @@ class _TaskPageState extends State<TaskPage> {
         setState(() {
           remindTime = tempRemindTime;
         });
+        NotificationService.setNotification(
+          tempRemindTime,
+          widget.taskList.listName,
+          title,
+          int.parse(widget.task.id),
+        );
       }
     } else {
       setState(() {
         remindTime = null;
       });
+      NotificationService.cancelNotification(
+        int.parse(widget.task.id),
+      );
     }
   }
 
