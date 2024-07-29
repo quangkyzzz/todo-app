@@ -10,6 +10,8 @@ import 'package:todo_app/routes.dart';
 import 'package:todo_app/models/task_model.dart';
 import 'package:todo_app/presentation/task/task_page/task_page_bottom_navigation.dart';
 import 'package:todo_app/presentation/items/popup_item.dart';
+import 'step_item.dart';
+import 'task_edit_row.dart';
 import 'task_page_item.dart';
 
 class TaskPage extends StatefulWidget {
@@ -38,7 +40,7 @@ class _TaskPageState extends State<TaskPage> {
   late DateTime? dueDate;
   late String? repeatFrequency;
   late String? filePath;
-
+  late final TextEditingController _stepController;
   late final TextEditingController _taskNameController;
   List<Map<String, dynamic>> listPopupItem = [
     {
@@ -67,7 +69,7 @@ class _TaskPageState extends State<TaskPage> {
     },
   ];
 
-  onTapAddToMyDay(BuildContext context) {
+  onTapAddToMyDay(BuildContext context, {bool isDisable = false}) {
     setState(() {
       isOnMyDay = !isOnMyDay;
     });
@@ -211,14 +213,15 @@ class _TaskPageState extends State<TaskPage> {
     steps = widget.task.stepList;
     repeatFrequency = widget.task.repeatFrequency;
     filePath = widget.task.filePath;
-    _taskNameController = TextEditingController();
-    _taskNameController.text = widget.task.title;
+    _taskNameController = TextEditingController(text: widget.task.title);
+    _stepController = TextEditingController();
     super.initState();
   }
 
   @override
   void dispose() {
     _taskNameController.dispose();
+    _stepController.dispose();
     super.dispose();
   }
 
@@ -229,6 +232,7 @@ class _TaskPageState extends State<TaskPage> {
     });
   }
 
+//TODO: add update step function
   @override
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> listTaskItem = [
@@ -301,6 +305,7 @@ class _TaskPageState extends State<TaskPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              ////////////////
               //Edit task row
               TaskEditRow(
                 taskNameController: _taskNameController,
@@ -309,6 +314,7 @@ class _TaskPageState extends State<TaskPage> {
                 callBack: callBack,
               ),
               const SizedBox(height: 8),
+              ///////////////
               //Add step row
               (steps != null)
                   ? Column(
@@ -320,26 +326,46 @@ class _TaskPageState extends State<TaskPage> {
                       },
                     ).toList())
                   : const SizedBox(),
-              const Row(
+              Row(
                 children: [
-                  SizedBox(width: 16),
-                  Icon(
+                  const SizedBox(width: 16),
+                  const Icon(
                     Icons.add,
                     color: MyTheme.greyColor,
                   ),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: TextField(
-                      decoration: InputDecoration(
+                      controller: _stepController,
+                      decoration: const InputDecoration(
                         hintText: 'Add step',
                         border: InputBorder.none,
                       ),
                       style: MyTheme.itemSmallTextStyle,
+                      onSubmitted: (value) {
+                        if (value != '') {
+                          if (steps == null) {
+                            setState(() {
+                              steps = List<StepModel>.empty(growable: true);
+                            });
+                          }
+                          setState(() {
+                            StepModel newStep = StepModel(
+                              id: DateTime.now().toString(),
+                              stepName: value,
+                              isCompleted: false,
+                            );
+                            steps!.add(newStep);
+                          });
+                          _stepController.clear();
+                        }
+                      },
                     ),
                   )
                 ],
               ),
               const SizedBox(height: 12),
+              //////////////////////////////
               //List uniform task page item
               Column(
                 children: listTaskItem.map((item) {
@@ -360,6 +386,7 @@ class _TaskPageState extends State<TaskPage> {
                 }).toList(),
               ),
               const SizedBox(height: 18),
+              //////////////////////////
               //Add and edit note button
               Consumer<TaskListProvider>(
                   builder: (context, taskListProvider, child) {
@@ -419,148 +446,6 @@ class _TaskPageState extends State<TaskPage> {
         task: widget.task,
         taskList: widget.taskList,
       ),
-    );
-  }
-}
-
-class TaskEditRow extends StatefulWidget {
-  final bool isChecked;
-  final bool isImportant;
-  final TextEditingController taskNameController;
-  final Function callBack;
-  const TaskEditRow({
-    super.key,
-    required this.isChecked,
-    required this.isImportant,
-    required this.taskNameController,
-    required this.callBack,
-  });
-
-  @override
-  State<TaskEditRow> createState() => _TaskEditRowState();
-}
-
-class _TaskEditRowState extends State<TaskEditRow> {
-  late bool _isChecked;
-  late bool _isImportant;
-
-  @override
-  void initState() {
-    super.initState();
-    _isChecked = widget.isChecked;
-    _isImportant = widget.isImportant;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Transform.scale(
-          scale: 1.3,
-          child: Checkbox(
-            value: _isChecked,
-            shape: const CircleBorder(),
-            onChanged: (bool? value) {
-              setState(() {
-                _isChecked = value!;
-              });
-              widget.callBack(_isChecked, _isImportant);
-            },
-          ),
-        ),
-        Expanded(
-          child: TextField(
-            decoration: const InputDecoration(border: InputBorder.none),
-            style: MyTheme.titleTextStyle,
-            controller: widget.taskNameController,
-          ),
-        ),
-        GestureDetector(
-          onTap: () {
-            setState(() {
-              _isImportant = !_isImportant;
-            });
-            widget.callBack(_isChecked, _isImportant);
-          },
-          child: (_isImportant)
-              ? Transform.scale(
-                  scale: 1.3,
-                  child: const Icon(
-                    Icons.star,
-                    color: MyTheme.blueColor,
-                  ),
-                )
-              : Transform.scale(
-                  scale: 1.3, child: const Icon(Icons.star_border_outlined)),
-        ),
-        const SizedBox(width: 16),
-      ],
-    );
-  }
-}
-
-class StepItem extends StatefulWidget {
-  final StepModel step;
-  const StepItem({
-    super.key,
-    required this.step,
-  });
-
-  @override
-  State<StepItem> createState() => _StepItemState();
-}
-
-class _StepItemState extends State<StepItem> {
-  late StepModel step;
-  late bool isCompleted;
-  late TextEditingController _controller;
-
-  @override
-  void initState() {
-    step = widget.step;
-    isCompleted = widget.step.isCompleted;
-    _controller = TextEditingController();
-    _controller.text = widget.step.stepName;
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Checkbox(
-          shape: const CircleBorder(),
-          value: isCompleted,
-          onChanged: (bool? value) {
-            setState(() {
-              isCompleted = value!;
-            });
-          },
-        ),
-        Expanded(
-          child: TextField(
-            controller: _controller,
-          ),
-        ),
-        PopupMenuButton(itemBuilder: (BuildContext context) {
-          return [
-            PopupMenuItem(
-              onTap: () {},
-              child: const PopupItem(
-                text: 'Promote to task',
-                icon: Icons.add_outlined,
-              ),
-            ),
-            PopupMenuItem(
-              onTap: () {},
-              child: const PopupItem(
-                text: 'Delete task',
-                icon: Icons.delete_outline,
-              ),
-            ),
-          ];
-        })
-      ],
     );
   }
 }
