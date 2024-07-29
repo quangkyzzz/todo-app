@@ -9,12 +9,14 @@ class IncompleteList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<TaskModel> incompleteList =
+        taskList.tasks.where((element) => (!element.isCompleted)).toList();
     return ListView.builder(
       shrinkWrap: true,
       physics: const ClampingScrollPhysics(),
-      itemCount: taskList.tasks.length,
+      itemCount: incompleteList.length,
       itemBuilder: (BuildContext context, int index) {
-        TaskModel task = taskList.tasks[index];
+        TaskModel task = incompleteList[index];
         return TaskListItem(
           task: task,
           taskList: taskList,

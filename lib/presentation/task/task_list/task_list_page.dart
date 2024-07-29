@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/models/task_list_model.dart';
 import 'package:todo_app/presentation/components/add_floating_button.dart';
+import 'package:todo_app/presentation/lists/completed_list.dart';
 import 'package:todo_app/presentation/lists/incomplete_list.dart';
 import 'package:todo_app/presentation/components/popup_menu.dart';
 import 'package:todo_app/provider/task_list_provider.dart';
@@ -65,34 +66,14 @@ class _TaskListPageState extends State<TaskListPage> {
         child: Consumer<TaskListProvider>(
           //TODO: fix this
           builder: (context, taskListProvider, child) {
-            TaskListModel taskList = taskListProvider.taskLists
-                .firstWhere((element) => (element.id == widget.taskList.id));
+            TaskListModel taskList = taskListProvider.taskLists.firstWhere(
+              (element) => (element.id == widget.taskList.id),
+            );
+
             return Column(children: [
               IncompleteList(taskList: taskList),
-              (widget.haveCompletedList)
-                  ? ExpansionTile(
-                      initiallyExpanded: true,
-                      title: const Text(
-                        'Completed',
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: MyTheme.blueColor,
-                        ),
-                      ),
-                      onExpansionChanged: (bool expanded) {
-                        setState(() {
-                          isExpanded = expanded;
-                        });
-                      },
-                      trailing: Icon(isExpanded
-                          ? Icons.expand_more
-                          : Icons.keyboard_arrow_left),
-                      children: [
-                        IncompleteList(
-                          taskList: taskList,
-                        ),
-                      ],
-                    )
+              ((widget.haveCompletedList))
+                  ? CompletedList(taskList: taskList)
                   : const SizedBox()
             ]);
           },
