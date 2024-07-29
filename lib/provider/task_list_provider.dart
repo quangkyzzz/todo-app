@@ -28,6 +28,7 @@ class TaskListProvider extends ChangeNotifier {
               isCompleted: true,
             ),
           ],
+          note: 'ntoe dd',
         ),
         TaskModel(
           id: '2',
@@ -186,6 +187,7 @@ class TaskListProvider extends ChangeNotifier {
   }) {
     TaskModel task = getTask(taskListID: taskListID, taskID: taskID);
     task.copy(copyTask: newTask);
+    if (task.note == '') task.note = null;
     notifyListeners();
   }
 }

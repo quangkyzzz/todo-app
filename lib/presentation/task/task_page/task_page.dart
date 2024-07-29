@@ -38,6 +38,7 @@ class _TaskPageState extends State<TaskPage> {
   late DateTime? dueDate;
   late String? repeatFrequency;
   late String? filePath;
+
   late final TextEditingController _taskNameController;
   List<Map<String, dynamic>> listPopupItem = [
     {
@@ -287,6 +288,7 @@ class _TaskPageState extends State<TaskPage> {
             stepList: steps,
             repeatFrequency: repeatFrequency,
             filePath: filePath,
+            note: widget.task.note,
           );
           taskListProvider.updateTask(
             taskListID: widget.taskList.id,
@@ -359,17 +361,56 @@ class _TaskPageState extends State<TaskPage> {
               ),
               const SizedBox(height: 18),
               //Add and edit note button
-              Padding(
-                padding: const EdgeInsets.only(left: 16),
-                child: TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pushNamed(noteEditRoute);
-                    },
-                    child: const Text(
-                      'Add note',
-                      style: MyTheme.itemSmallGreyTextStyle,
-                    )),
-              )
+              Consumer<TaskListProvider>(
+                  builder: (context, taskListProvider, child) {
+                return Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: (widget.task.note != null)
+                      ? InkWell(
+                          onTap: () {
+                            Navigator.of(context).pushNamed(
+                              noteEditRoute,
+                              arguments: {
+                                'task': widget.task,
+                                'taskList': widget.taskList,
+                              },
+                            );
+                          },
+                          child: Container(
+                            constraints: const BoxConstraints(
+                              maxHeight: 118,
+                              maxWidth: double.infinity,
+                            ),
+                            child: SingleChildScrollView(
+                              child: Text(
+                                taskListProvider
+                                    .getTask(
+                                      taskListID: widget.taskList.id,
+                                      taskID: widget.task.id,
+                                    )
+                                    .note!,
+                                maxLines: null,
+                                style: MyTheme.itemSmallTextStyle,
+                              ),
+                            ),
+                          ),
+                        )
+                      : TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pushNamed(
+                              noteEditRoute,
+                              arguments: {
+                                'task': widget.task,
+                                'taskList': widget.taskList,
+                              },
+                            );
+                          },
+                          child: const Text(
+                            'Add note',
+                            style: MyTheme.itemSmallGreyTextStyle,
+                          )),
+                );
+              })
             ],
           ),
         ),

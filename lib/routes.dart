@@ -54,5 +54,14 @@ var allRoute = {
       taskList: taskList,
     );
   },
-  noteEditRoute: (context) => const NoteEditPage(),
+  noteEditRoute: (context) {
+    Map<dynamic, dynamic> arg =
+        ModalRoute.of(context)?.settings.arguments as Map;
+    TaskModel task = arg['task'];
+    TaskListModel taskList = arg['taskList'];
+    return NoteEditPage(
+      task: task,
+      taskList: taskList,
+    );
+  },
 };
