@@ -1,11 +1,9 @@
-Báo cáo 25/7
+Báo cáo 29/7
 Đã làm:
-    -   Hoàn thành chức năng chỉnh sửa lịch nhắc hẹn
-    -   Sửa lỗi chức năng thay đổi thông tin trong taskPage
-    -   Sửa lỗi giao diện nhỏ
+    -   Hoàn thành chức năng thêm, sửa và tạo nhắc hẹn theo lịch
+    -   Hoàn thành chức năng tạo nhắc hẹn theo chu kỳ
 Đang làm:
-    -   Thêm chức năng tạo nhắc hẹn và lập lịch nhắc hẹn lặp lại
-Dự định làm:
     -   Thêm chức năng tạo, sửa, xóa ghi chú
-    -   Thêm chức năng tạo, sửa, xóa step.
-
+Dự định làm:
+    - Thêm chức năng tạo, sửa, xóa step.
+    - Thêm chức năng tạo, sửa, xóa due date.
