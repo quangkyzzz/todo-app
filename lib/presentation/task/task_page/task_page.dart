@@ -126,17 +126,24 @@ class _TaskPageState extends State<TaskPage> {
     }
   }
 
-  onTapAddDueDate(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return DatePickerDialog(
-          initialDate: DateTime.now(),
-          firstDate: DateTime(2020),
-          lastDate: DateTime(2030),
-        );
-      },
-    );
+  onTapAddDueDate(BuildContext context) async {
+    if (dueDate == null) {
+      DateTime? newDueDate = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2024),
+        lastDate: DateTime(2050),
+      );
+      if (newDueDate != null) {
+        setState(() {
+          dueDate = newDueDate;
+        });
+      }
+    } else {
+      setState(() {
+        dueDate = null;
+      });
+    }
   }
 
   onTapRepeat(BuildContext context) {
