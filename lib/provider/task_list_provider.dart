@@ -190,4 +190,28 @@ class TaskListProvider extends ChangeNotifier {
     if (task.note == '') task.note = null;
     notifyListeners();
   }
+
+  List<Map<TaskModel, TaskListModel>> getAllTaskWithTaskList() {
+    List<Map<TaskModel, TaskListModel>> result = [];
+    for (TaskListModel taskList in taskLists) {
+      for (TaskModel task in taskList.tasks) {
+        result.add({task: taskList});
+      }
+    }
+    return result;
+  }
+
+  List<Map<TaskModel, TaskListModel>> searchTaskByName({
+    required String searchName,
+  }) {
+    searchName = searchName.toLowerCase();
+    List<Map<TaskModel, TaskListModel>> result = [];
+    List<Map<TaskModel, TaskListModel>> all = getAllTaskWithTaskList();
+    for (var pair in all) {
+      if (pair.keys.first.title.toLowerCase().contains(searchName)) {
+        result.add(pair);
+      }
+    }
+    return result;
+  }
 }

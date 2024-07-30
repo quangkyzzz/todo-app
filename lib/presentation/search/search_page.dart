@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/models/task_list_model.dart';
 import 'package:todo_app/models/task_model.dart';
+import 'package:todo_app/presentation/items/task_list_item.dart';
+import 'package:todo_app/provider/task_list_provider.dart';
 import 'package:todo_app/themes.dart';
-import 'package:todo_app/presentation/lists/incomplete_list.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -12,26 +14,31 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  TaskListModel incompleteTask = TaskListModel(
-    id: '1',
-    listName: 'list1',
-    tasks: [
-      TaskModel(
-        id: '1',
-        title: 'task 1',
-        isCompleted: false,
-        isImportant: false,
-        createDate: DateTime.now(),
-      ),
-      TaskModel(
-        id: '2',
-        title: 'task 2',
-        isCompleted: false,
-        isImportant: false,
-        createDate: DateTime.now(),
-      ),
-    ],
-  );
+  List<Map<TaskModel, TaskListModel>> tasks = [];
+  List<Map<TaskModel, TaskListModel>> searchTasks = [];
+  String searchName = '';
+  late TaskListProvider taskListProvider;
+  late TextEditingController _controller;
+
+  void onSearchChange(String value) {
+    setState(() {
+      searchName = value;
+    });
+  }
+
+  @override
+  void initState() {
+    taskListProvider = Provider.of<TaskListProvider>(context, listen: false);
+    searchTasks = taskListProvider.getAllTaskWithTaskList();
+    _controller = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant SearchPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,9 +49,11 @@ class _SearchPageState extends State<SearchPage> {
             color: MyTheme.backgroundGreyColor,
             borderRadius: BorderRadius.circular(8),
           ),
-          child: const TextField(
+          child: TextField(
+            controller: _controller,
             style: MyTheme.itemTextStyle,
-            decoration: InputDecoration(hintText: 'Enter task name'),
+            decoration: const InputDecoration(hintText: 'Enter task name'),
+            onChanged: onSearchChange,
           ),
         ),
         actions: [
@@ -60,13 +69,12 @@ class _SearchPageState extends State<SearchPage> {
                 return [
                   PopupMenuItem(
                     child: InkWell(
-                      onTap: () {},
-                      child: const Text(
-                        'Hide completed item',
-                        style: MyTheme.itemTextStyle,
-                      ),
-                    ),
-                  ),
+                        onTap: () {},
+                        child: const Text(
+                          'Hide completed item',
+                          style: MyTheme.itemTextStyle,
+                        )),
+                  )
                 ];
               },
             ),
@@ -75,7 +83,26 @@ class _SearchPageState extends State<SearchPage> {
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.only(top: 8),
-        child: IncompleteList(taskList: incompleteTask),
+        child: Consumer<TaskListProvider>(builder: (
+          context,
+          consumerTaskListProvider,
+          child,
+        ) {
+          searchTasks = consumerTaskListProvider.searchTaskByName(
+            searchName: searchName,
+          );
+          return ListView.builder(
+            shrinkWrap: true,
+            physics: const ClampingScrollPhysics(),
+            itemCount: searchTasks.length,
+            itemBuilder: (BuildContext context, int index) {
+              return TaskListItem(
+                task: searchTasks[index].keys.first,
+                taskList: searchTasks[index].values.first,
+              );
+            },
+          );
+        }),
       ),
     );
   }
