@@ -29,32 +29,57 @@ class _TaskListItemState extends State<TaskListItem> {
   late String myTitle;
   late bool isImportant;
   late bool isChecked;
-  late List<StepModel>? step;
+  late List<StepModel>? steps;
   late DateTime? dueDate;
   late DateTime? notiTime;
   late String? filePath;
   late String? note;
+  late int countCompletedStep;
 
   @override
   void initState() {
+    myTitle = widget.task.title;
+    isImportant = widget.task.isImportant;
+    isChecked = widget.task.isCompleted;
+    steps = widget.task.stepList;
+    dueDate = widget.task.dueDate;
+    notiTime = widget.task.remindTime;
+    filePath = widget.task.filePath;
+    note = widget.task.note;
+    countCompletedStep = 0;
+    if (steps != null) {
+      for (var element in steps!) {
+        if (element.isCompleted) countCompletedStep++;
+      }
+    }
     taskListProvider = Provider.of<TaskListProvider>(context, listen: false);
     super.initState();
   }
 
   @override
-  @override
-  Widget build(BuildContext context) {
+  void didUpdateWidget(covariant TaskListItem oldWidget) {
     myTitle = widget.task.title;
     isImportant = widget.task.isImportant;
     isChecked = widget.task.isCompleted;
-    step = widget.task.stepList;
+    steps = widget.task.stepList;
     dueDate = widget.task.dueDate;
     notiTime = widget.task.remindTime;
     filePath = widget.task.filePath;
     note = widget.task.note;
+    countCompletedStep = 0;
+    if (steps != null) {
+      for (var element in steps!) {
+        if (element.isCompleted) countCompletedStep++;
+      }
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     initializeDateFormatting('vi');
 
-    bool isAllBottomIconNull = ((step == null) &&
+    bool isAllBottomIconNull = ((steps == null) &&
         (dueDate == null) &&
         (notiTime == null) &&
         (filePath == null) &&
@@ -112,9 +137,10 @@ class _TaskListItemState extends State<TaskListItem> {
                       const SizedBox(height: 4),
                       Row(
                         children: [
-                          (step != null)
+                          (steps != null)
                               ? ItemBottomIcon(
-                                  text: '0 of ${step!.length.toString()}')
+                                  text:
+                                      '$countCompletedStep of ${steps!.length.toString()}')
                               : const SizedBox(),
                           (dueDate != null)
                               ? ItemBottomIcon(

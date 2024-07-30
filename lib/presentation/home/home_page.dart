@@ -134,8 +134,8 @@ class _HomePageState extends State<HomePage> {
               );
             }),
             MyTheme.dividerWhiteStyle,
-            ///////////////
-            //personal list
+            /////////////////////
+            //personal task list
             Consumer<TaskListProvider>(
                 builder: (context, taskListProvider, child) {
               return Column(
@@ -166,7 +166,7 @@ class _HomePageState extends State<HomePage> {
                 }).toList(),
               );
             }),
-            ////////////////
+            /////////////////
             //personal group
             Consumer<GroupProvider>(builder: (context, groupProvider, child) {
               return Column(

@@ -186,7 +186,7 @@ class TaskListProvider extends ChangeNotifier {
     required TaskModel newTask,
   }) {
     TaskModel task = getTask(taskListID: taskListID, taskID: taskID);
-    task.copy(copyTask: newTask);
+    task.copyFrom(copyTask: newTask);
     if (task.note == '') task.note = null;
     notifyListeners();
   }

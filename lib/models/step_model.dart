@@ -23,6 +23,13 @@ class StepModel {
     );
   }
 
+  void copyFrom({
+    required StepModel newStep,
+  }) {
+    stepName = newStep.stepName;
+    isCompleted = newStep.isCompleted;
+  }
+
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 

@@ -200,6 +200,31 @@ class _TaskPageState extends State<TaskPage> {
     );
   }
 
+  void callBackEditTask(bool setComplete, bool setImportant) {
+    setState(() {
+      isCompleted = setComplete;
+      isImportant = setImportant;
+    });
+  }
+
+  void callBackEditStep(
+    StepModel newStep, {
+    bool isDelete = false,
+  }) {
+    if (isDelete) {
+      setState(() {
+        steps!.remove(newStep);
+        if (steps!.isEmpty) steps = null;
+      });
+    } else {
+      setState(() {
+        StepModel step =
+            steps!.firstWhere((element) => (element.id == newStep.id));
+        step.copyFrom(newStep: newStep);
+      });
+    }
+  }
+
   @override
   void initState() {
     taskListProvider = Provider.of<TaskListProvider>(context, listen: false);
@@ -223,13 +248,6 @@ class _TaskPageState extends State<TaskPage> {
     _taskNameController.dispose();
     _stepController.dispose();
     super.dispose();
-  }
-
-  void callBack(bool setComplete, bool setImportant) {
-    setState(() {
-      isCompleted = setComplete;
-      isImportant = setImportant;
-    });
   }
 
 //TODO: add update step function
@@ -311,17 +329,18 @@ class _TaskPageState extends State<TaskPage> {
                 taskNameController: _taskNameController,
                 isChecked: isCompleted,
                 isImportant: isImportant,
-                callBack: callBack,
+                callBack: callBackEditTask,
               ),
               const SizedBox(height: 8),
-              ///////////////
-              //Add step row
+              ////////////////
+              //Step edit row
               (steps != null)
                   ? Column(
                       children: steps!.map(
                       (item) {
                         return StepItem(
                           step: item,
+                          callBack: callBackEditStep,
                         );
                       },
                     ).toList())
@@ -351,7 +370,9 @@ class _TaskPageState extends State<TaskPage> {
                           }
                           setState(() {
                             StepModel newStep = StepModel(
-                              id: DateTime.now().toString(),
+                              id: DateTime.now()
+                                  .millisecondsSinceEpoch
+                                  .toString(),
                               stepName: value,
                               isCompleted: false,
                             );

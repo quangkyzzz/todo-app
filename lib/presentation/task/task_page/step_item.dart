@@ -4,9 +4,11 @@ import 'package:todo_app/presentation/items/popup_item.dart';
 
 class StepItem extends StatefulWidget {
   final StepModel step;
+  final Function callBack;
   const StepItem({
     super.key,
     required this.step,
+    required this.callBack,
   });
 
   @override
@@ -15,13 +17,11 @@ class StepItem extends StatefulWidget {
 
 class _StepItemState extends State<StepItem> {
   late StepModel step;
-  late bool isCompleted;
   late TextEditingController _controller;
 
   @override
   void initState() {
     step = widget.step;
-    isCompleted = widget.step.isCompleted;
     _controller = TextEditingController();
     _controller.text = widget.step.stepName;
     super.initState();
@@ -33,16 +33,21 @@ class _StepItemState extends State<StepItem> {
       children: [
         Checkbox(
           shape: const CircleBorder(),
-          value: isCompleted,
+          value: step.isCompleted,
           onChanged: (bool? value) {
             setState(() {
-              isCompleted = value!;
+              step.isCompleted = value!;
             });
+            widget.callBack(step);
           },
         ),
         Expanded(
           child: TextField(
             controller: _controller,
+            onSubmitted: (value) {
+              step.stepName = value;
+              widget.callBack(step);
+            },
           ),
         ),
         PopupMenuButton(itemBuilder: (BuildContext context) {
@@ -55,7 +60,9 @@ class _StepItemState extends State<StepItem> {
               ),
             ),
             PopupMenuItem(
-              onTap: () {},
+              onTap: () {
+                widget.callBack(step, isDelete: true);
+              },
               child: const PopupItem(
                 text: 'Delete step',
                 icon: Icons.delete_outline,

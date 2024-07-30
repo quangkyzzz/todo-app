@@ -29,7 +29,7 @@ class TaskModel {
     this.note,
   });
 
-  void copy({required TaskModel copyTask}) {
+  void copyFrom({required TaskModel copyTask}) {
     title = copyTask.title;
     isCompleted = copyTask.isCompleted;
     isImportant = copyTask.isImportant;
