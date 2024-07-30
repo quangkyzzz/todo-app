@@ -1,9 +1,9 @@
-Báo cáo 29/7
+Báo cáo 30/7
 Đã làm:
-    -   Hoàn thành chức năng thêm, sửa và tạo nhắc hẹn theo lịch
-    -   Hoàn thành chức năng tạo nhắc hẹn theo chu kỳ
+    -   Hoàn thành chức năng phân loại các task đã hoàn thành.
+    -   Hoàn thành chức năng tạo sửa, xóa ghi chú
+    -   Hoàn thành chức năng tạo, xóa, step
 Đang làm:
-    -   Thêm chức năng tạo, sửa, xóa ghi chú
+    -   Thêm chức năng chỉnh sửa step, nâng cấp step thành task.
 Dự định làm:
-    - Thêm chức năng tạo, sửa, xóa step.
-    - Thêm chức năng tạo, sửa, xóa due date.
+    -   Thêm chức năng tìm kiếm, thay đổi thứ tự sắp xếp task.
