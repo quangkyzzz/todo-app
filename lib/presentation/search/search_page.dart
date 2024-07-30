@@ -16,6 +16,7 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   List<Map<TaskModel, TaskListModel>> tasks = [];
   List<Map<TaskModel, TaskListModel>> searchTasks = [];
+  bool isHideCompletedTask = false;
   String searchName = '';
   late TaskListProvider taskListProvider;
   late TextEditingController _controller;
@@ -69,11 +70,24 @@ class _SearchPageState extends State<SearchPage> {
                 return [
                   PopupMenuItem(
                     child: InkWell(
-                        onTap: () {},
-                        child: const Text(
-                          'Hide completed item',
-                          style: MyTheme.itemTextStyle,
-                        )),
+                        onTap: () {
+                          setState(() {
+                            isHideCompletedTask = !isHideCompletedTask;
+                            searchTasks.removeWhere(
+                              (element) => (element.keys.first.isCompleted),
+                            );
+                          });
+                          Navigator.pop(context);
+                        },
+                        child: (isHideCompletedTask)
+                            ? const Text(
+                                'Show completed item',
+                                style: MyTheme.itemTextStyle,
+                              )
+                            : const Text(
+                                'Hide completed item',
+                                style: MyTheme.itemTextStyle,
+                              )),
                   )
                 ];
               },
@@ -91,16 +105,25 @@ class _SearchPageState extends State<SearchPage> {
           searchTasks = consumerTaskListProvider.searchTaskByName(
             searchName: searchName,
           );
-          return ListView.builder(
-            shrinkWrap: true,
-            physics: const ClampingScrollPhysics(),
-            itemCount: searchTasks.length,
-            itemBuilder: (BuildContext context, int index) {
-              return TaskListItem(
-                task: searchTasks[index].keys.first,
-                taskList: searchTasks[index].values.first,
-              );
-            },
+
+          return Column(
+            children: searchTasks.map((e) {
+              if (isHideCompletedTask) {
+                if (!e.keys.first.isCompleted) {
+                  return TaskListItem(
+                    task: e.keys.first,
+                    taskList: e.values.first,
+                  );
+                } else {
+                  return const SizedBox();
+                }
+              } else {
+                return TaskListItem(
+                  task: e.keys.first,
+                  taskList: e.values.first,
+                );
+              }
+            }).toList(),
           );
         }),
       ),
