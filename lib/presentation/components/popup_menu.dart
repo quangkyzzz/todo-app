@@ -134,7 +134,10 @@ class _PopupMenuState extends State<PopupMenu> {
   }
 
   onTapReorder(BuildContext context, String id) {
-    Navigator.of(context).pushNamed(reorderRoute);
+    Navigator.of(context).pushNamed(
+      reorderRoute,
+      arguments: widget.taskList,
+    );
   }
 
   onTapAddShortcut(BuildContext context, String id) {

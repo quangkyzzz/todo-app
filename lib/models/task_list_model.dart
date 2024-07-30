@@ -37,6 +37,14 @@ class TaskListModel {
     );
   }
 
+  void copyFrom({required TaskListModel copyTaskList}) {
+    listName = copyTaskList.listName;
+    groupID = copyTaskList.groupID;
+    backgroundImage = copyTaskList.backgroundImage;
+    themeColor = copyTaskList.themeColor;
+    tasks = copyTaskList.tasks;
+  }
+
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 

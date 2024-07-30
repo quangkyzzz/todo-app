@@ -43,7 +43,9 @@ var allRoute = {
   plannedRoute: (context) => const PlannedPage(),
   myDayRoute: (context) => const MyDayPage(),
   settingsRoute: (context) => const SettingsPage(),
-  reorderRoute: (context) => const ReorderPage(),
+  reorderRoute: (context) => ReorderPage(
+        taskList: ModalRoute.of(context)?.settings.arguments as TaskListModel,
+      ),
   taskRoute: (context) {
     Map<dynamic, dynamic> arg =
         ModalRoute.of(context)?.settings.arguments as Map;

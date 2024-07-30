@@ -91,11 +91,15 @@ class TaskListProvider extends ChangeNotifier {
   ];
 
   //Task List function
-  TaskListModel getTaskList({required String taskListID}) {
+  TaskListModel getTaskList({
+    required String taskListID,
+  }) {
     return taskLists.firstWhere((element) => (element.id == taskListID));
   }
 
-  void createTaskList({required String name}) {
+  void createTaskList({
+    required String name,
+  }) {
     TaskListModel newTaskList = TaskListModel(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       listName: name,
@@ -104,22 +108,31 @@ class TaskListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addTaskList({required List<TaskListModel> addTaskLists}) {
+  void addTaskList({
+    required List<TaskListModel> addTaskLists,
+  }) {
     taskLists.addAll(addTaskLists);
     notifyListeners();
   }
 
-  void deleteTaskList({required String id}) {
+  void deleteTaskList({
+    required String id,
+  }) {
     taskLists.removeWhere((element) => (element.id == id));
     notifyListeners();
   }
 
-  void deleteMultipleTaskList({required List<TaskListModel> deleteTaskLists}) {
+  void deleteMultipleTaskList({
+    required List<TaskListModel> deleteTaskLists,
+  }) {
     taskLists.removeWhere((element) => (deleteTaskLists.contains(element)));
     notifyListeners();
   }
 
-  void moveToGroup({required String id, required String groupID}) {
+  void moveToGroup({
+    required String id,
+    required String groupID,
+  }) {
     getTaskList(taskListID: id).groupID = groupID;
     notifyListeners();
   }
@@ -138,8 +151,20 @@ class TaskListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updateTaskList({
+    required String taskListID,
+    required TaskListModel newTaskList,
+  }) {
+    getTaskList(taskListID: taskListID).copyFrom(copyTaskList: newTaskList);
+
+    notifyListeners();
+  }
+
   //Task function
-  TaskModel getTask({required String taskListID, required String taskID}) {
+  TaskModel getTask({
+    required String taskListID,
+    required String taskID,
+  }) {
     return getTaskList(taskListID: taskListID)
         .tasks
         .firstWhere((element) => (element.id == taskID));
