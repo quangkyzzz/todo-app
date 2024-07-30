@@ -250,7 +250,6 @@ class _TaskPageState extends State<TaskPage> {
     super.dispose();
   }
 
-//TODO: add update step function
   @override
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> listTaskItem = [
@@ -339,6 +338,7 @@ class _TaskPageState extends State<TaskPage> {
                       children: steps!.map(
                       (item) {
                         return StepItem(
+                          taskList: widget.taskList,
                           step: item,
                           callBack: callBackEditStep,
                         );

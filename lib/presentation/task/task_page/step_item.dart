@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/models/step_model.dart';
+import 'package:todo_app/models/task_list_model.dart';
 import 'package:todo_app/presentation/items/popup_item.dart';
+import 'package:todo_app/provider/task_list_provider.dart';
 
 class StepItem extends StatefulWidget {
   final StepModel step;
+  final TaskListModel taskList;
   final Function callBack;
   const StepItem({
     super.key,
     required this.step,
     required this.callBack,
+    required this.taskList,
   });
 
   @override
@@ -16,11 +21,13 @@ class StepItem extends StatefulWidget {
 }
 
 class _StepItemState extends State<StepItem> {
+  late final TaskListProvider taskListProvider;
   late StepModel step;
   late TextEditingController _controller;
 
   @override
   void initState() {
+    taskListProvider = Provider.of<TaskListProvider>(context, listen: false);
     step = widget.step;
     _controller = TextEditingController();
     _controller.text = widget.step.stepName;
@@ -53,7 +60,14 @@ class _StepItemState extends State<StepItem> {
         PopupMenuButton(itemBuilder: (BuildContext context) {
           return [
             PopupMenuItem(
-              onTap: () {},
+              onTap: () {
+                widget.callBack(step, isDelete: true);
+                taskListProvider.createTask(
+                  taskListID: widget.taskList.id,
+                  taskName: step.stepName,
+                  isCompleted: step.isCompleted,
+                );
+              },
               child: const PopupItem(
                 text: 'Promote to task',
                 icon: Icons.add_outlined,
