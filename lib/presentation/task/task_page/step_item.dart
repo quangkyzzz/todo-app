@@ -4,6 +4,7 @@ import 'package:todo_app/models/step_model.dart';
 import 'package:todo_app/models/task_list_model.dart';
 import 'package:todo_app/presentation/items/popup_item.dart';
 import 'package:todo_app/provider/task_list_provider.dart';
+import 'package:todo_app/themes.dart';
 
 class StepItem extends StatefulWidget {
   final StepModel step;
@@ -39,6 +40,7 @@ class _StepItemState extends State<StepItem> {
     return Row(
       children: [
         Checkbox(
+          activeColor: MyTheme.blueColor,
           shape: const CircleBorder(),
           value: step.isCompleted,
           onChanged: (bool? value) {

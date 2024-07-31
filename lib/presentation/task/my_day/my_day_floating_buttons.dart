@@ -4,15 +4,22 @@ import 'package:todo_app/themes.dart';
 import 'package:todo_app/presentation/components/add_floating_button.dart';
 
 class MyDayFloatingButtons extends StatefulWidget {
-  const MyDayFloatingButtons({super.key});
+  final TaskListModel taskList;
+  const MyDayFloatingButtons({super.key, required this.taskList});
 
   @override
   State<MyDayFloatingButtons> createState() => _MyDayFloatingButtonsState();
 }
 
 class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
-  //fake data
-  TaskListModel taskList = TaskListModel(id: '00', listName: 'My day');
+  late TaskListModel taskList;
+
+  @override
+  void initState() {
+    taskList = widget.taskList;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -43,6 +50,7 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
         const Spacer(flex: 1),
         AddFloatingButton(
           taskList: taskList,
+          isAddToMyDay: true,
         ),
       ],
     );

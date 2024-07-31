@@ -179,13 +179,15 @@ class TaskListProvider extends ChangeNotifier {
     required String taskListID,
     required String taskName,
     required bool isCompleted,
+    bool isOnMyDay = false,
+    bool isImportant = false,
   }) {
     TaskModel task = TaskModel(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       title: taskName,
       isCompleted: isCompleted,
-      isImportant: false,
-      isOnMyDay: false,
+      isImportant: isImportant,
+      isOnMyDay: isOnMyDay,
       createDate: DateTime.now(),
     );
     TaskListModel? taskList = getTaskList(taskListID: taskListID);

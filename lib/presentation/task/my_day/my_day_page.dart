@@ -10,8 +10,6 @@ import 'package:todo_app/presentation/items/task_list_item.dart';
 import 'package:todo_app/provider/task_list_provider.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/presentation/task/my_day/my_day_floating_buttons.dart';
-import 'package:todo_app/presentation/lists/completed_list.dart';
-import 'package:todo_app/presentation/lists/incomplete_list.dart';
 import 'package:todo_app/presentation/components/popup_menu.dart';
 
 class MyDayPage extends StatefulWidget {
@@ -21,15 +19,20 @@ class MyDayPage extends StatefulWidget {
   State<MyDayPage> createState() => _MyDayPageState();
 }
 
+//TODO: add task to My Day function (belong to Task)
 class _MyDayPageState extends State<MyDayPage> {
+  late TaskListModel myDayTaskList;
   bool isExpanded = true;
 
   @override
+  void initState() {
+    myDayTaskList = Provider.of<TaskListProvider>(context, listen: false)
+        .getTaskList(taskListID: '1');
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    TaskListModel myDayTaskList = TaskListModel(
-      id: '-1',
-      listName: 'My Day',
-    );
     return Stack(
       fit: StackFit.expand,
       children: [
@@ -98,9 +101,9 @@ class _MyDayPageState extends State<MyDayPage> {
                   (completedlist.isNotEmpty)
                       ? ExpansionTile(
                           initiallyExpanded: true,
-                          title: const Text(
-                            'Completed',
-                            style: TextStyle(
+                          title: Text(
+                            'Completed ${completedlist.length}',
+                            style: const TextStyle(
                               fontSize: 18,
                               color: MyTheme.blueColor,
                             ),
@@ -132,7 +135,9 @@ class _MyDayPageState extends State<MyDayPage> {
               },
             ),
           ),
-          floatingActionButton: const MyDayFloatingButtons(),
+          floatingActionButton: MyDayFloatingButtons(
+            taskList: myDayTaskList,
+          ),
         ),
       ],
     );

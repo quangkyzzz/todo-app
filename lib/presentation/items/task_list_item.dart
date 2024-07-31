@@ -11,6 +11,7 @@ import 'package:todo_app/models/task_model.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
+//TODO: add my day icon
 class TaskListItem extends StatefulWidget {
   final TaskModel task;
   final TaskListModel taskList;
@@ -105,6 +106,7 @@ class _TaskListItemState extends State<TaskListItem> {
         child: Row(
           children: [
             Checkbox(
+              activeColor: MyTheme.blueColor,
               tristate: false,
               shape: const CircleBorder(),
               value: isChecked,
@@ -222,7 +224,10 @@ class ItemBottomIcon extends StatelessWidget {
                 text!,
                 style: MyTheme.itemExtraSmallGreyTextStyle,
               ),
-              const SizedBox(width: 6),
+              Transform.scale(
+                scale: 0.15,
+                child: const Icon(Icons.star),
+              ),
             ],
           )
         : Row(
@@ -232,7 +237,10 @@ class ItemBottomIcon extends StatelessWidget {
                 size: 16,
                 color: MyTheme.greyColor,
               ),
-              const SizedBox(width: 6),
+              Transform.scale(
+                scale: 0.15,
+                child: const Icon(Icons.star),
+              ),
             ],
           );
   }

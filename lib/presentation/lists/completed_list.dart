@@ -42,9 +42,9 @@ class _CompletedListState extends State<CompletedList> {
     } else {
       return ExpansionTile(
         initiallyExpanded: true,
-        title: const Text(
-          'Completed',
-          style: TextStyle(
+        title: Text(
+          'Completed ${completedList.length}',
+          style: const TextStyle(
             fontSize: 18,
             color: MyTheme.blueColor,
           ),

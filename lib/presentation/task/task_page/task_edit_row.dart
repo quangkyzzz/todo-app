@@ -36,6 +36,7 @@ class _TaskEditRowState extends State<TaskEditRow> {
         Transform.scale(
           scale: 1.3,
           child: Checkbox(
+            activeColor: MyTheme.blueColor,
             value: _isChecked,
             shape: const CircleBorder(),
             onChanged: (bool? value) {

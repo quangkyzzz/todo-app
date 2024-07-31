@@ -6,7 +6,14 @@ import 'package:todo_app/themes.dart';
 
 class AddFloatingButton extends StatelessWidget {
   final TaskListModel taskList;
-  const AddFloatingButton({super.key, required this.taskList});
+  final bool isAddToImportant;
+  final bool isAddToMyDay;
+  const AddFloatingButton({
+    super.key,
+    required this.taskList,
+    this.isAddToMyDay = false,
+    this.isAddToImportant = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +29,8 @@ class AddFloatingButton extends StatelessWidget {
           builder: (BuildContext context) {
             return AddTaskItem(
               taskList: taskList,
+              isAddToMyDay: isAddToMyDay,
+              isAddToImportant: isAddToImportant,
             );
           },
         );
@@ -38,13 +47,16 @@ class AddFloatingButton extends StatelessWidget {
 // ignore: must_be_immutable
 class AddTaskItem extends StatelessWidget {
   bool isChecked;
+  final bool isAddToMyDay;
+  final bool isAddToImportant;
   TextEditingController controller = TextEditingController();
   final TaskListModel taskList;
-  AddTaskItem({
-    super.key,
-    this.isChecked = false,
-    required this.taskList,
-  });
+  AddTaskItem(
+      {super.key,
+      this.isChecked = false,
+      required this.taskList,
+      required this.isAddToMyDay,
+      required this.isAddToImportant});
 
   @override
   Widget build(BuildContext context) {
@@ -76,12 +88,30 @@ class AddTaskItem extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {
-                  Provider.of<TaskListProvider>(context, listen: false)
-                      .createTask(
-                    taskListID: taskList.id,
-                    taskName: controller.text,
-                    isCompleted: isChecked,
-                  );
+                  if (isAddToMyDay) {
+                    Provider.of<TaskListProvider>(context, listen: false)
+                        .createTask(
+                      taskListID: taskList.id,
+                      taskName: controller.text,
+                      isCompleted: isChecked,
+                      isOnMyDay: true,
+                    );
+                  } else if (isAddToImportant) {
+                    Provider.of<TaskListProvider>(context, listen: false)
+                        .createTask(
+                      taskListID: taskList.id,
+                      taskName: controller.text,
+                      isCompleted: isChecked,
+                      isImportant: true,
+                    );
+                  } else {
+                    Provider.of<TaskListProvider>(context, listen: false)
+                        .createTask(
+                      taskListID: taskList.id,
+                      taskName: controller.text,
+                      isCompleted: isChecked,
+                    );
+                  }
                   Navigator.pop(context);
                 },
                 icon: const Icon(Icons.arrow_upward),
