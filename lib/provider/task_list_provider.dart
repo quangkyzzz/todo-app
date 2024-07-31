@@ -189,7 +189,7 @@ class TaskListProvider extends ChangeNotifier {
       createDate: DateTime.now(),
     );
     TaskListModel? taskList = getTaskList(taskListID: taskListID);
-    taskList.tasks.add(task);
+    taskList.tasks.insert(0, task);
 
     notifyListeners();
   }
@@ -237,6 +237,17 @@ class TaskListProvider extends ChangeNotifier {
     List<Map<TaskModel, TaskListModel>> all = getAllTaskWithTaskList();
     for (var pair in all) {
       if (pair.keys.first.title.toLowerCase().contains(searchName)) {
+        result.add(pair);
+      }
+    }
+    return result;
+  }
+
+  List<Map<TaskModel, TaskListModel>> getOnMyDayTask() {
+    List<Map<TaskModel, TaskListModel>> result = [];
+    List<Map<TaskModel, TaskListModel>> allTask = getAllTaskWithTaskList();
+    for (var pair in allTask) {
+      if (pair.keys.first.isOnMyDay) {
         result.add(pair);
       }
     }
