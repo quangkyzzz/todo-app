@@ -3,6 +3,7 @@ import 'package:todo_app/models/task_list_model.dart';
 import 'package:todo_app/presentation/home/home_page.dart';
 import 'package:todo_app/presentation/task/flagged_email/flagged_email_page.dart';
 import 'package:todo_app/models/task_model.dart';
+import 'package:todo_app/presentation/task/important/important_page.dart';
 import 'package:todo_app/presentation/task/my_day/my_day_page.dart';
 import 'package:todo_app/presentation/task/planned/planned_page.dart';
 import 'package:todo_app/presentation/search/search_page.dart';
@@ -20,6 +21,7 @@ const searchRoute = '/home/search';
 const flaggedRoute = '/home/flagged';
 const plannedRoute = '/home/planned';
 const myDayRoute = '/home/my_day';
+const importantRoute = '/home/important';
 const settingsRoute = '/home/user_profile/settings';
 const reorderRoute = '/home/task_list/reorder';
 const taskRoute = '/task_list/task';
@@ -37,6 +39,10 @@ var allRoute = {
       haveCompletedList: havecompletedList,
       taskList: taskList,
     );
+  },
+  importantRoute: (context) {
+    return ImportantPage(
+        taskList: ModalRoute.of(context)?.settings.arguments as TaskListModel);
   },
   searchRoute: (context) => const SearchPage(),
   flaggedRoute: (context) => const FlaggedEmailPage(),

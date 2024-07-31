@@ -27,11 +27,8 @@ class _HomePageState extends State<HomePage> {
 
   onTapImportant(BuildContext context, TaskListModel taskList) {
     Navigator.of(context).pushNamed(
-      taskListRoute,
-      arguments: {
-        'haveCompletedList': false,
-        'taskList': taskList,
-      },
+      importantRoute,
+      arguments: taskList,
     );
   }
 
