@@ -237,7 +237,7 @@ class _TaskPageState extends State<TaskPage> {
     taskListProvider = Provider.of<TaskListProvider>(context, listen: false);
     groupProvider = Provider.of<GroupProvider>(context, listen: false);
     title = widget.task.title;
-    isOnMyDay = false;
+    isOnMyDay = widget.task.isOnMyDay;
     isCompleted = widget.task.isCompleted;
     isImportant = widget.task.isImportant;
     remindTime = widget.task.remindTime;
@@ -311,6 +311,7 @@ class _TaskPageState extends State<TaskPage> {
             title: _taskNameController.text,
             isCompleted: isCompleted,
             isImportant: isImportant,
+            isOnMyDay: isOnMyDay,
             remindTime: remindTime,
             dueDate: dueDate,
             stepList: steps,

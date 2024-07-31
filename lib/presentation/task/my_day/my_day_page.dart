@@ -29,6 +29,7 @@ class _MyDayPageState extends State<MyDayPage> {
         title: 'task 1',
         isCompleted: false,
         isImportant: false,
+        isOnMyDay: false,
         createDate: DateTime.now(),
       ),
       TaskModel(
@@ -36,6 +37,7 @@ class _MyDayPageState extends State<MyDayPage> {
         title: 'task 2',
         isCompleted: false,
         isImportant: false,
+        isOnMyDay: false,
         createDate: DateTime.now(),
       ),
     ],

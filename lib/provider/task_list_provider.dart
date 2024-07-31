@@ -15,6 +15,7 @@ class TaskListProvider extends ChangeNotifier {
           title: 'Tasks',
           isCompleted: false,
           isImportant: false,
+          isOnMyDay: false,
           createDate: DateTime(2024, 6, 9),
           stepList: [
             StepModel(
@@ -35,6 +36,7 @@ class TaskListProvider extends ChangeNotifier {
           title: 'few day',
           isCompleted: false,
           isImportant: false,
+          isOnMyDay: true,
           createDate: DateTime(2024, 6, 2),
           dueDate: DateTime(2024, 6, 2),
           repeatFrequency: 'gg',
@@ -50,6 +52,7 @@ class TaskListProvider extends ChangeNotifier {
           title: 'few hour',
           isCompleted: false,
           isImportant: false,
+          isOnMyDay: true,
           createDate: DateTime(2024, 7, 2, 7),
         ),
         TaskModel(
@@ -57,6 +60,7 @@ class TaskListProvider extends ChangeNotifier {
           title: 'recent',
           isCompleted: false,
           isImportant: false,
+          isOnMyDay: false,
           createDate: DateTime(2024, 7, 2, 9, 38),
         ),
         TaskModel(
@@ -64,6 +68,7 @@ class TaskListProvider extends ChangeNotifier {
           title: 'few minute',
           isCompleted: false,
           isImportant: false,
+          isOnMyDay: true,
           createDate: DateTime(2024, 7, 2, 9, 30),
         ),
       ],
@@ -180,14 +185,12 @@ class TaskListProvider extends ChangeNotifier {
       title: taskName,
       isCompleted: isCompleted,
       isImportant: false,
+      isOnMyDay: false,
       createDate: DateTime.now(),
     );
-    TaskListModel? taskList = taskLists.firstWhereOrNull(
-      (element) => (element.id == taskListID),
-    );
-    if (taskList != null) {
-      taskList.tasks.add(task);
-    } else {} //TODO: complete this
+    TaskListModel? taskList = getTaskList(taskListID: taskListID);
+    taskList.tasks.add(task);
+
     notifyListeners();
   }
 

@@ -24,6 +24,7 @@ class _PlannedPageState extends State<PlannedPage> {
         title: 'task 1',
         isCompleted: false,
         isImportant: false,
+        isOnMyDay: false,
         createDate: DateTime.now(),
       ),
       TaskModel(
@@ -31,6 +32,7 @@ class _PlannedPageState extends State<PlannedPage> {
         title: 'task 2',
         isCompleted: false,
         isImportant: false,
+        isOnMyDay: false,
         createDate: DateTime.now(),
       ),
     ],

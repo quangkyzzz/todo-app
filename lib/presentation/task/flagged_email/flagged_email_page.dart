@@ -22,6 +22,7 @@ class _FlaggedEmailPageState extends State<FlaggedEmailPage> {
         title: 'task 1',
         isCompleted: false,
         isImportant: false,
+        isOnMyDay: false,
         createDate: DateTime.now(),
       ),
       TaskModel(
@@ -29,6 +30,7 @@ class _FlaggedEmailPageState extends State<FlaggedEmailPage> {
         title: 'task 2',
         isCompleted: false,
         isImportant: false,
+        isOnMyDay: false,
         createDate: DateTime.now(),
       ),
     ],

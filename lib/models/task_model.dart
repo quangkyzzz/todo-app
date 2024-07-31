@@ -7,6 +7,7 @@ class TaskModel {
   String title;
   bool isCompleted;
   bool isImportant;
+  bool isOnMyDay;
   final DateTime createDate;
   List<StepModel>? stepList;
   DateTime? dueDate;
@@ -20,6 +21,7 @@ class TaskModel {
     required this.title,
     required this.isCompleted,
     required this.isImportant,
+    required this.isOnMyDay,
     required this.createDate,
     this.stepList,
     this.dueDate,
@@ -33,6 +35,7 @@ class TaskModel {
     title = copyTask.title;
     isCompleted = copyTask.isCompleted;
     isImportant = copyTask.isImportant;
+    isOnMyDay = copyTask.isOnMyDay;
     stepList = copyTask.stepList;
     dueDate = copyTask.dueDate;
     remindTime = copyTask.remindTime;
@@ -46,6 +49,7 @@ class TaskModel {
     String? title,
     bool? isCompleted,
     bool? isImportant,
+    bool? isOnMyDay,
     DateTime? createDate,
     List<StepModel>? stepList,
     DateTime? dueDate,
@@ -59,6 +63,7 @@ class TaskModel {
       title: title ?? this.title,
       isCompleted: isCompleted ?? this.isCompleted,
       isImportant: isImportant ?? this.isImportant,
+      isOnMyDay: isOnMyDay ?? this.isOnMyDay,
       createDate: createDate ?? this.createDate,
       stepList: stepList ?? this.stepList,
       dueDate: dueDate ?? this.dueDate,
@@ -76,6 +81,7 @@ class TaskModel {
     result.addAll({'title': title});
     result.addAll({'isCompleted': isCompleted});
     result.addAll({'isImportant': isImportant});
+    result.addAll({'isOnMyDay': isOnMyDay});
     result.addAll({'createDate': createDate});
     result.addAll({'stepList': stepList});
     result.addAll({'dueDate': dueDate});
@@ -89,10 +95,11 @@ class TaskModel {
 
   factory TaskModel.fromMap(Map<String, dynamic> map) {
     return TaskModel(
-      id: map['id'] ?? '-1',
+      id: map['id'] ?? DateTime.now().millisecondsSinceEpoch.toString(),
       title: map['title'] ?? 'title',
       isCompleted: map['isCompleted'] ?? false,
       isImportant: map['isImportant'] ?? false,
+      isOnMyDay: map['isOnMyDay'] ?? false,
       createDate: map['createDate'] ?? DateTime.now(),
       stepList: map['stepList'],
       dueDate: map['dueDate'],

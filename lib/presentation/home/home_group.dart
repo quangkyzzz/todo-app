@@ -144,23 +144,28 @@ class _HomeGroupState extends State<HomeGroup> {
       ),
       children: (widget.group.taskLists.isNotEmpty)
           ? widget.group.taskLists.map((item) {
-              int endNumber = 0;
-              TaskListModel taskList =
-                  taskListProvider.getTaskList(taskListID: item.id);
-              for (var element in taskList.tasks) {
-                if (!element.isCompleted) endNumber++;
-              }
-              return HomeItem(
-                text: item.listName,
-                icon: Icons.list_outlined,
-                iconColor: MyTheme.blueColor,
-                endNumber: endNumber,
-                onTap: () {
-                  Navigator.of(context).pushNamed(
-                    taskListRoute,
-                    arguments: {
-                      'haveCompletedList': true,
-                      'taskList': item,
+              return Consumer<TaskListProvider>(
+                builder: (context, taskListProvider, child) {
+                  int endNumber = 0;
+
+                  TaskListModel taskList =
+                      taskListProvider.getTaskList(taskListID: item.id);
+                  for (var element in taskList.tasks) {
+                    if (!element.isCompleted) endNumber++;
+                  }
+                  return HomeItem(
+                    text: item.listName,
+                    icon: Icons.list_outlined,
+                    iconColor: MyTheme.blueColor,
+                    endNumber: endNumber,
+                    onTap: () {
+                      Navigator.of(context).pushNamed(
+                        taskListRoute,
+                        arguments: {
+                          'haveCompletedList': true,
+                          'taskList': item,
+                        },
+                      );
                     },
                   );
                 },
