@@ -59,7 +59,6 @@ class _TaskListItemState extends State<TaskListItem> {
     super.initState();
   }
 
-  //TODO: fix seperate dot between 2 icon
   @override
   void didUpdateWidget(covariant TaskListItem oldWidget) {
     isFirstIcon = true;
@@ -163,7 +162,7 @@ class _TaskListItemState extends State<TaskListItem> {
                               return ItemBottomIcon(
                                 textIcon: Icons.calendar_today_outlined,
                                 text:
-                                    '${DateFormat.MMMEd('en_US').format(dueDate!)}',
+                                    '${DateFormat('E, MMM d').format(dueDate!)}',
                                 isFirstIcon: tempFirstIcon,
                               );
                             } else {
@@ -177,7 +176,7 @@ class _TaskListItemState extends State<TaskListItem> {
                               return ItemBottomIcon(
                                 textIcon: Icons.notifications_outlined,
                                 text:
-                                    '${DateFormat.MMMEd('en_US').format(notiTime!)}',
+                                    '${DateFormat('E, MMM d').format(notiTime!)}',
                                 isFirstIcon: tempFirstIcon,
                               );
                             } else {
@@ -248,11 +247,11 @@ class ItemBottomIcon extends StatelessWidget {
   final IconData? icon;
   final bool isFirstIcon;
   const ItemBottomIcon({
+    required this.isFirstIcon,
     super.key,
     this.text,
     this.icon,
     this.textIcon,
-    required this.isFirstIcon,
   });
 
   @override

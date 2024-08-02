@@ -82,6 +82,7 @@ class NotificationService {
         dateTime.minute,
       ),
       platformChannelSpecifics,
+      matchDateTimeComponents: DateTimeComponents.time,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
     );

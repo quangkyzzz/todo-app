@@ -13,6 +13,8 @@ import 'package:todo_app/presentation/items/popup_item.dart';
 import 'step_item.dart';
 import 'task_edit_row.dart';
 import 'task_page_item.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 
 class TaskPage extends StatefulWidget {
   final TaskModel task;
@@ -236,6 +238,8 @@ class _TaskPageState extends State<TaskPage> {
 
   @override
   void initState() {
+    initializeDateFormatting();
+
     taskListProvider = Provider.of<TaskListProvider>(context, listen: false);
     groupProvider = Provider.of<GroupProvider>(context, listen: false);
     title = widget.task.title;
@@ -273,14 +277,16 @@ class _TaskPageState extends State<TaskPage> {
         'isActive': (remindTime != null),
         'icon': Icons.notifications_outlined,
         'text': 'Remind me',
-        'activeText': 'Remind on $remindTime',
+        'activeText':
+            'Remind at ${DateFormat('h:mm a, MMM d').format(remindTime ?? DateTime(2000))}',
         'onTap': onTapRemindMe,
       },
       {
         'isActive': (dueDate != null),
         'icon': Icons.calendar_today_outlined,
         'text': 'Add due date',
-        'activeText': 'Due $dueDate',
+        'activeText':
+            'Due ${DateFormat('E, MMM d').format(dueDate ?? DateTime(2000))}',
         'onTap': onTapAddDueDate,
       },
       {
