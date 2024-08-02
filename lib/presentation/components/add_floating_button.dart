@@ -8,6 +8,7 @@ class AddFloatingButton extends StatelessWidget {
   final TaskListModel taskList;
   final bool isAddToImportant;
   final bool isAddToMyDay;
+
   const AddFloatingButton({
     super.key,
     required this.taskList,

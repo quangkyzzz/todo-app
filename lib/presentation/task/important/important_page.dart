@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/models/task_list_model.dart';
+import 'package:todo_app/models/task_model.dart';
 import 'package:todo_app/presentation/components/add_floating_button.dart';
-import 'package:todo_app/presentation/lists/completed_list.dart';
-import 'package:todo_app/presentation/lists/incomplete_list.dart';
+import 'package:todo_app/presentation/items/task_list_item.dart';
 import 'package:todo_app/presentation/components/popup_menu.dart';
 import 'package:todo_app/provider/task_list_provider.dart';
 import 'package:todo_app/themes.dart';
 
-//TODO: complete content of important  page
 class ImportantPage extends StatefulWidget {
   final bool haveCompletedList;
-  final TaskListModel taskList;
+
   const ImportantPage({
     super.key,
-    this.haveCompletedList = false,
-    required this.taskList,
+    this.haveCompletedList = true,
   });
 
   @override
@@ -23,12 +21,13 @@ class ImportantPage extends StatefulWidget {
 }
 
 class _TaskListPageState extends State<ImportantPage> {
-  bool isExpanded = true;
-  late final String id;
+  late TaskListModel importantTaskList;
+  bool isExpanded = false;
 
   @override
   void initState() {
-    id = widget.taskList.id;
+    importantTaskList = Provider.of<TaskListProvider>(context, listen: false)
+        .getTaskList(taskListID: '1');
     super.initState();
   }
 
@@ -45,7 +44,7 @@ class _TaskListPageState extends State<ImportantPage> {
         ),
         actions: [
           PopupMenu(
-            taskList: widget.taskList,
+            taskList: importantTaskList,
             toRemove: const [
               'rename_list',
               'reorder',
@@ -59,23 +58,26 @@ class _TaskListPageState extends State<ImportantPage> {
       ),
       body: SingleChildScrollView(
         child: Consumer<TaskListProvider>(
-          //TODO: fix this
           builder: (context, taskListProvider, child) {
-            TaskListModel taskList = taskListProvider.taskLists.firstWhere(
-              (element) => (element.id == widget.taskList.id),
+            List<Map<TaskModel, TaskListModel>> importantTasks =
+                taskListProvider.getImportantTask();
+            return ListView.builder(
+              shrinkWrap: true,
+              physics: const ClampingScrollPhysics(),
+              itemCount: importantTasks.length,
+              itemBuilder: (BuildContext context, int index) {
+                return TaskListItem(
+                  task: importantTasks[index].keys.first,
+                  taskList: importantTasks[index].values.first,
+                );
+              },
             );
-
-            return Column(children: [
-              IncompleteList(taskList: taskList),
-              ((widget.haveCompletedList))
-                  ? CompletedList(taskList: taskList)
-                  : const SizedBox()
-            ]);
           },
         ),
       ),
       floatingActionButton: AddFloatingButton(
-        taskList: widget.taskList,
+        taskList: importantTaskList,
+        isAddToImportant: true,
       ),
     );
   }

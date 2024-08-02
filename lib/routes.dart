@@ -40,10 +40,7 @@ var allRoute = {
       taskList: taskList,
     );
   },
-  importantRoute: (context) {
-    return ImportantPage(
-        taskList: ModalRoute.of(context)?.settings.arguments as TaskListModel);
-  },
+  importantRoute: (context) => const ImportantPage(),
   searchRoute: (context) => const SearchPage(),
   flaggedRoute: (context) => const FlaggedEmailPage(),
   plannedRoute: (context) => const PlannedPage(),

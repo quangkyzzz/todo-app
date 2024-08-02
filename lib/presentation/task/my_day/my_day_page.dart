@@ -19,7 +19,6 @@ class MyDayPage extends StatefulWidget {
   State<MyDayPage> createState() => _MyDayPageState();
 }
 
-//TODO: add task to My Day function (belong to Task)
 class _MyDayPageState extends State<MyDayPage> {
   late TaskListModel myDayTaskList;
   bool isExpanded = true;

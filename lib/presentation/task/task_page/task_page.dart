@@ -163,64 +163,76 @@ class _TaskPageState extends State<TaskPage> {
   onTapRepeat(BuildContext context, {bool isDisable = false}) {
     RenderBox box = key.currentContext!.findRenderObject() as RenderBox;
     Offset possition = box.localToGlobal(Offset.zero);
-    showMenu(
-      context: context,
-      position: RelativeRect.fromLTRB(
-        possition.dx,
-        possition.dy,
-        0,
-        0,
-      ),
-      items: listPopupItem.map((item) {
-        return PopupMenuItem(
-          onTap: () {},
-          child: PopupItem(
-            text: item['text'],
-            icon: item['icon'],
-          ),
-        );
-      }).toList(),
-    );
+    if (!isDisable) {
+      showMenu(
+        context: context,
+        position: RelativeRect.fromLTRB(
+          possition.dx,
+          possition.dy,
+          0,
+          0,
+        ),
+        items: listPopupItem.map((item) {
+          return PopupMenuItem(
+            onTap: () {},
+            child: PopupItem(
+              text: item['text'],
+              icon: item['icon'],
+            ),
+          );
+        }).toList(),
+      );
+    } else {
+      setState(() {
+        repeatFrequency = null;
+      });
+    }
   }
 
   onTapAddFile(BuildContext context, {bool isDisable = false}) {
-    showModalBottomSheet(
-      showDragHandle: true,
-      constraints: const BoxConstraints(
-        maxHeight: 198,
-      ),
-      context: context,
-      builder: (BuildContext context) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Upload from',
-              style: MyTheme.itemTextStyle,
-            ),
-            const SizedBox(height: 8),
-            TaskPageItem(
-              task: widget.task,
-              taskList: widget.taskList,
-              isActive: false,
-              icon: Icons.folder_outlined,
-              text: 'Device files',
-              activeText: 'active',
-              onTap: ({bool isDisable = false}) {},
-            ),
-            TaskPageItem(
-              task: widget.task,
-              taskList: widget.taskList,
-              isActive: false,
-              icon: Icons.photo_camera_outlined,
-              text: 'Camera',
-              activeText: 'active',
-              onTap: ({bool isDisable = false}) {},
-            ),
-          ],
-        );
-      },
-    );
+    if (!isDisable) {
+      showModalBottomSheet(
+        showDragHandle: true,
+        constraints: const BoxConstraints(
+          maxHeight: 198,
+        ),
+        context: context,
+        builder: (BuildContext context) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Upload from',
+                style: MyTheme.itemTextStyle,
+              ),
+              const SizedBox(height: 8),
+              TaskPageItem(
+                task: widget.task,
+                taskList: widget.taskList,
+                isActive: false,
+                icon: Icons.folder_outlined,
+                text: 'Device files',
+                activeText: 'active',
+                onTap: ({bool isDisable = false}) {},
+              ),
+              TaskPageItem(
+                task: widget.task,
+                taskList: widget.taskList,
+                isActive: false,
+                icon: Icons.photo_camera_outlined,
+                text: 'Camera',
+                activeText: 'active',
+                onTap: ({bool isDisable = false}) {},
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      setState(() {
+        filePath = null;
+      });
+    }
   }
 
   void callBackEditTask(bool setComplete, bool setImportant) {

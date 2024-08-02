@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/models/task_list_model.dart';
 import 'package:todo_app/models/task_model.dart';
+import 'package:todo_app/presentation/items/task_list_item.dart';
+import 'package:todo_app/provider/task_list_provider.dart';
 import 'package:todo_app/themes.dart';
-import 'package:todo_app/presentation/components/add_floating_button.dart';
-import 'package:todo_app/presentation/lists/incomplete_list.dart';
 import 'package:todo_app/presentation/components/popup_menu.dart';
 import 'package:todo_app/presentation/items/popup_item.dart';
 
@@ -16,26 +17,8 @@ class PlannedPage extends StatefulWidget {
 
 class _PlannedPageState extends State<PlannedPage> {
   TaskListModel incompleteTask = TaskListModel(
-    id: '1',
+    id: 'planned',
     listName: 'list1',
-    tasks: [
-      TaskModel(
-        id: '1',
-        title: 'task 1',
-        isCompleted: false,
-        isImportant: false,
-        isOnMyDay: false,
-        createDate: DateTime.now(),
-      ),
-      TaskModel(
-        id: '2',
-        title: 'task 2',
-        isCompleted: false,
-        isImportant: false,
-        isOnMyDay: false,
-        createDate: DateTime.now(),
-      ),
-    ],
   );
   List<Map<String, dynamic>> listPopupMennu = [
     {
@@ -78,11 +61,13 @@ class _PlannedPageState extends State<PlannedPage> {
           PopupMenu(
             taskList: incompleteTask,
             toRemove: const [
+              'sort_by',
               'reorder',
               'turn_on_suggestions',
               'duplicate_list',
               'delete_list',
               'rename_list',
+              'hide_completed_tasks'
             ],
           )
         ],
@@ -132,12 +117,25 @@ class _PlannedPageState extends State<PlannedPage> {
             const SizedBox(height: 18),
 
             //task list
-            IncompleteList(taskList: incompleteTask),
+            Consumer<TaskListProvider>(
+              builder: (context, taskListProvider, child) {
+                List<Map<TaskModel, TaskListModel>> plannedTasks =
+                    taskListProvider.getPlannedTask();
+                return ListView.builder(
+                  shrinkWrap: true,
+                  physics: const ClampingScrollPhysics(),
+                  itemCount: plannedTasks.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return TaskListItem(
+                      task: plannedTasks[index].keys.first,
+                      taskList: plannedTasks[index].values.first,
+                    );
+                  },
+                );
+              },
+            ),
           ],
         ),
-      ),
-      floatingActionButton: AddFloatingButton(
-        taskList: incompleteTask,
       ),
     );
   }

@@ -14,7 +14,7 @@ class TaskListProvider extends ChangeNotifier {
           id: '2',
           title: 'few day',
           isCompleted: false,
-          isImportant: false,
+          isImportant: true,
           isOnMyDay: true,
           createDate: DateTime(2024, 6, 2),
           dueDate: DateTime(2024, 6, 2),
@@ -70,7 +70,7 @@ class TaskListProvider extends ChangeNotifier {
           id: '4',
           title: 'recent',
           isCompleted: false,
-          isImportant: false,
+          isImportant: true,
           isOnMyDay: false,
           createDate: DateTime(2024, 7, 2, 9, 38),
         ),
@@ -78,7 +78,7 @@ class TaskListProvider extends ChangeNotifier {
           id: '5',
           title: 'few minute',
           isCompleted: false,
-          isImportant: false,
+          isImportant: true,
           isOnMyDay: true,
           createDate: DateTime(2024, 7, 2, 9, 30),
         ),
@@ -261,6 +261,28 @@ class TaskListProvider extends ChangeNotifier {
     List<Map<TaskModel, TaskListModel>> allTask = getAllTaskWithTaskList();
     for (var pair in allTask) {
       if (pair.keys.first.isOnMyDay) {
+        result.add(pair);
+      }
+    }
+    return result;
+  }
+
+  List<Map<TaskModel, TaskListModel>> getImportantTask() {
+    List<Map<TaskModel, TaskListModel>> result = [];
+    List<Map<TaskModel, TaskListModel>> allTask = getAllTaskWithTaskList();
+    for (var pair in allTask) {
+      if (pair.keys.first.isImportant) {
+        result.add(pair);
+      }
+    }
+    return result;
+  }
+
+  List<Map<TaskModel, TaskListModel>> getPlannedTask() {
+    List<Map<TaskModel, TaskListModel>> result = [];
+    List<Map<TaskModel, TaskListModel>> allTask = getAllTaskWithTaskList();
+    for (var pair in allTask) {
+      if (pair.keys.first.dueDate != null) {
         result.add(pair);
       }
     }

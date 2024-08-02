@@ -26,10 +26,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   onTapImportant(BuildContext context, TaskListModel taskList) {
-    Navigator.of(context).pushNamed(
-      importantRoute,
-      arguments: taskList,
-    );
+    Navigator.of(context).pushNamed(importantRoute);
   }
 
   onTapPlanned(BuildContext context, TaskListModel taskList) {
@@ -72,21 +69,21 @@ class _HomePageState extends State<HomePage> {
         'ontap': onTapImportant,
         'icon': Icons.star_border,
         'iconColor': MyTheme.pinkColor,
-        'endNumber': 1,
+        'endNumber': 0,
       },
       {
         'text': 'Planned',
         'ontap': onTapPlanned,
         'icon': Icons.list_alt_outlined,
         'iconColor': MyTheme.redColor,
-        'endNumber': 1,
+        'endNumber': 0,
       },
       {
         'text': 'Assign to me',
         'ontap': onTapAssignToMe,
         'icon': Icons.person_outline,
         'iconColor': MyTheme.greenColor,
-        'endNumber': 1,
+        'endNumber': 0,
       },
       {
         'text': 'Flagged email',
@@ -100,7 +97,7 @@ class _HomePageState extends State<HomePage> {
         'ontap': onTapTask,
         'icon': Icons.task_outlined,
         'iconColor': MyTheme.blueColor,
-        'endNumber': 1,
+        'endNumber': 0,
       },
     ];
     return Scaffold(
