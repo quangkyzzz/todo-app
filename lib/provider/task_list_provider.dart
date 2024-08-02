@@ -158,6 +158,19 @@ class TaskListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void duplicateTaskList({
+    required String taskListID,
+  }) {
+    TaskListModel originTaskList = getTaskList(taskListID: taskListID);
+    TaskListModel newTaskList = originTaskList.copyWith(
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      listName: '${originTaskList.listName} copy',
+    );
+    taskLists.add(newTaskList);
+
+    notifyListeners();
+  }
+
   void renameList({
     required String taskListID,
     required String newName,

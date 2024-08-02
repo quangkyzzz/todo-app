@@ -96,7 +96,7 @@ class _SearchPageState extends State<SearchPage> {
         ],
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.only(top: 8),
+        padding: const EdgeInsets.only(top: 16),
         child: Consumer<TaskListProvider>(builder: (
           context,
           consumerTaskListProvider,
@@ -106,25 +106,34 @@ class _SearchPageState extends State<SearchPage> {
             searchName: searchName,
           );
 
-          return Column(
-            children: searchTasks.map((e) {
-              if (isHideCompletedTask) {
-                if (!e.keys.first.isCompleted) {
+          if (searchTasks.isEmpty) {
+            return const Center(
+              child: Text(
+                'No match result!',
+                style: MyTheme.itemTextStyle,
+              ),
+            );
+          } else {
+            return Column(
+              children: searchTasks.map((e) {
+                if (isHideCompletedTask) {
+                  if (!e.keys.first.isCompleted) {
+                    return TaskListItem(
+                      task: e.keys.first,
+                      taskList: e.values.first,
+                    );
+                  } else {
+                    return const SizedBox();
+                  }
+                } else {
                   return TaskListItem(
                     task: e.keys.first,
                     taskList: e.values.first,
                   );
-                } else {
-                  return const SizedBox();
                 }
-              } else {
-                return TaskListItem(
-                  task: e.keys.first,
-                  taskList: e.values.first,
-                );
-              }
-            }).toList(),
-          );
+              }).toList(),
+            );
+          }
         }),
       ),
     );

@@ -39,9 +39,7 @@ class _TaskListPageState extends State<TaskListPage> {
             ? Consumer<TaskListProvider>(
                 builder: (context, taskListProvider, child) {
                 return Text(
-                  taskListProvider.taskLists //TODO: fix this
-                      .firstWhere((element) => element.id == id)
-                      .listName,
+                  taskListProvider.getTaskList(taskListID: id).listName,
                   style: const TextStyle(
                     fontSize: 24,
                     color: MyTheme.blueColor,
@@ -67,9 +65,8 @@ class _TaskListPageState extends State<TaskListPage> {
       body: SingleChildScrollView(
         child: Consumer<TaskListProvider>(
           builder: (context, taskListProvider, child) {
-            TaskListModel taskList = taskListProvider.taskLists.firstWhere(
-              (element) => (element.id == widget.taskList.id),
-            );
+            TaskListModel taskList =
+                taskListProvider.getTaskList(taskListID: id);
 
             return Column(children: [
               IncompleteList(taskList: taskList),

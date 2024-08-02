@@ -147,9 +147,10 @@ class _PopupMenuState extends State<PopupMenu> {
       context: context,
       showDragHandle: true,
       builder: (BuildContext context) {
-        return const NormalBottomSheet(
+        return NormalBottomSheet(
           title: 'Add to Home screen?',
-          button: 'Add',
+          acceptText: 'Add',
+          onAccept: () {},
         );
       },
     );
@@ -174,9 +175,10 @@ class _PopupMenuState extends State<PopupMenu> {
       context: context,
       showDragHandle: true,
       builder: (BuildContext context) {
-        return const NormalBottomSheet(
+        return NormalBottomSheet(
           title: 'Hide completed tasks?',
-          button: 'Yes',
+          acceptText: 'Yes',
+          onAccept: () {},
         );
       },
     );
@@ -189,9 +191,10 @@ class _PopupMenuState extends State<PopupMenu> {
       context: context,
       showDragHandle: true,
       builder: (BuildContext context) {
-        return const NormalBottomSheet(
+        return NormalBottomSheet(
           title: 'Send a copy?',
-          button: 'Send',
+          acceptText: 'Send',
+          onAccept: () {},
         );
       },
     );
@@ -204,9 +207,13 @@ class _PopupMenuState extends State<PopupMenu> {
       context: context,
       showDragHandle: true,
       builder: (BuildContext context) {
-        return const NormalBottomSheet(
+        return NormalBottomSheet(
           title: 'Duplicate list?',
-          button: 'Yes',
+          acceptText: 'Yes',
+          onAccept: () {
+            taskListProvider.duplicateTaskList(taskListID: widget.taskList.id);
+            Navigator.of(context).pop();
+          },
         );
       },
     );
@@ -219,9 +226,10 @@ class _PopupMenuState extends State<PopupMenu> {
       context: context,
       showDragHandle: true,
       builder: (BuildContext context) {
-        return const NormalBottomSheet(
+        return NormalBottomSheet(
           title: 'Print list?',
-          button: 'Print',
+          acceptText: 'Print',
+          onAccept: () {},
         );
       },
     );
@@ -253,9 +261,10 @@ class _PopupMenuState extends State<PopupMenu> {
       context: context,
       showDragHandle: true,
       builder: (BuildContext context) {
-        return const NormalBottomSheet(
+        return NormalBottomSheet(
           title: 'Turn on suggestions?',
-          button: 'Turn on',
+          acceptText: 'Turn on',
+          onAccept: () {},
         );
       },
     );
@@ -297,11 +306,13 @@ class _PopupMenuState extends State<PopupMenu> {
 
 class NormalBottomSheet extends StatelessWidget {
   final String title;
-  final String button;
+  final String acceptText;
+  final Function() onAccept;
   const NormalBottomSheet({
     super.key,
     required this.title,
-    required this.button,
+    required this.acceptText,
+    required this.onAccept,
   });
 
   @override
@@ -331,9 +342,9 @@ class NormalBottomSheet extends StatelessWidget {
               ),
               const Spacer(),
               TextButton(
-                onPressed: () {},
+                onPressed: onAccept,
                 child: Text(
-                  button,
+                  acceptText,
                   style: MyTheme.itemTextStyle,
                 ),
               ),

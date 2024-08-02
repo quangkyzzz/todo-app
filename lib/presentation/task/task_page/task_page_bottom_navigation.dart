@@ -49,7 +49,7 @@ class TaskPageBottomNavigation extends StatelessWidget {
                   style: MyTheme.itemGreyTextStyle,
                 )
               : Text(
-                  'Create on ${DateFormat.MMMEd('en_US').format(task.createDate)}',
+                  'Created on ${DateFormat.MMMEd('en_US').format(task.createDate)}',
                   style: MyTheme.itemGreyTextStyle,
                 ),
           const Spacer(),
