@@ -77,12 +77,15 @@ class _TaskPageState extends State<TaskPage> {
     });
   }
 
-  onTapRemindMe(BuildContext context) async {
-    Future<DateTime?> getRemindTime(BuildContext context) async {
+  onTapRemindMe(BuildContext context, {bool isDisable = false}) async {
+    Future<DateTime?> getRemindTime({
+      required BuildContext context,
+      required DateTime initialDate,
+    }) async {
       final DateTime? selectedDate = await showDatePicker(
         context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime(2020),
+        initialDate: initialDate,
+        firstDate: DateTime.now(),
         lastDate: DateTime(2030),
       );
       if (selectedDate == null) return null;
@@ -91,7 +94,7 @@ class _TaskPageState extends State<TaskPage> {
 
       TimeOfDay? selectedTime = await showTimePicker(
         context: context,
-        initialTime: TimeOfDay.fromDateTime(DateTime(2000, 2, 2, 9)),
+        initialTime: TimeOfDay.fromDateTime(initialDate),
       );
 
       if (selectedTime == null) return null;
@@ -105,8 +108,17 @@ class _TaskPageState extends State<TaskPage> {
       );
     }
 
-    if (remindTime == null) {
-      DateTime? tempRemindTime = await getRemindTime(context);
+    if (!isDisable) {
+      DateTime? tempRemindTime = await getRemindTime(
+        context: context,
+        initialDate: remindTime ??
+            DateTime(
+              DateTime.now().year,
+              DateTime.now().month,
+              DateTime.now().day,
+              9,
+            ),
+      );
       if (tempRemindTime != null) {
         setState(() {
           remindTime = tempRemindTime;
@@ -128,12 +140,12 @@ class _TaskPageState extends State<TaskPage> {
     }
   }
 
-  onTapAddDueDate(BuildContext context) async {
-    if (dueDate == null) {
+  onTapAddDueDate(BuildContext context, {bool isDisable = false}) async {
+    if (!isDisable) {
       DateTime? newDueDate = await showDatePicker(
         context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime(2024),
+        initialDate: dueDate ?? DateTime.now(),
+        firstDate: DateTime(2020),
         lastDate: DateTime(2050),
       );
       if (newDueDate != null) {
@@ -148,7 +160,7 @@ class _TaskPageState extends State<TaskPage> {
     }
   }
 
-  onTapRepeat(BuildContext context) {
+  onTapRepeat(BuildContext context, {bool isDisable = false}) {
     RenderBox box = key.currentContext!.findRenderObject() as RenderBox;
     Offset possition = box.localToGlobal(Offset.zero);
     showMenu(
@@ -171,7 +183,7 @@ class _TaskPageState extends State<TaskPage> {
     );
   }
 
-  onTapAddFile(BuildContext context) {
+  onTapAddFile(BuildContext context, {bool isDisable = false}) {
     showModalBottomSheet(
       showDragHandle: true,
       constraints: const BoxConstraints(
@@ -194,7 +206,7 @@ class _TaskPageState extends State<TaskPage> {
               icon: Icons.folder_outlined,
               text: 'Device files',
               activeText: 'active',
-              onTap: () {},
+              onTap: ({bool isDisable = false}) {},
             ),
             TaskPageItem(
               task: widget.task,
@@ -203,7 +215,7 @@ class _TaskPageState extends State<TaskPage> {
               icon: Icons.photo_camera_outlined,
               text: 'Camera',
               activeText: 'active',
-              onTap: () {},
+              onTap: ({bool isDisable = false}) {},
             ),
           ],
         );
@@ -418,8 +430,8 @@ class _TaskPageState extends State<TaskPage> {
                       icon: item['icon'],
                       text: item['text'],
                       activeText: item['activeText'],
-                      onTap: () {
-                        item['onTap'](context);
+                      onTap: ({bool isDisable = false}) {
+                        item['onTap'](context, isDisable: isDisable);
                       },
                     ),
                   );

@@ -10,7 +10,7 @@ class TaskPageItem extends StatefulWidget {
   final IconData icon;
   final String text;
   final String activeText;
-  final void Function() onTap;
+  final void Function({bool isDisable}) onTap;
 
   const TaskPageItem({
     super.key,
@@ -65,7 +65,9 @@ class _TaskPageItemState extends State<TaskPageItem> {
         const Spacer(),
         (isActive)
             ? IconButton(
-                onPressed: widget.onTap,
+                onPressed: () {
+                  widget.onTap(isDisable: true);
+                },
                 icon: Transform.scale(
                   scale: 0.6,
                   child: const Icon(

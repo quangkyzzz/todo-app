@@ -54,7 +54,7 @@ class _MyDayPageState extends State<MyDayPage> {
                     children: [
                       TextSpan(
                         text:
-                            '\n${DateFormat.MMMMEEEEd('en_US').format(DateTime.now())}',
+                            '\n${DateFormat('EEEE, MMMM d').format(DateTime.now())}',
                         style: MyTheme.secondaryTitleTextStyle,
                       )
                     ]),
