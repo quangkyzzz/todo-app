@@ -58,13 +58,14 @@ class _TaskListPageState extends State<TaskListPage> {
         actions: [
           PopupMenu(
             taskList: widget.taskList,
-            toRemove: const ['hide_completed_tasks'],
+            toRemove: (id == '1')
+                ? (['rename_list', 'hide_completed_tasks', 'delete_list'])
+                : (['hide_completed_tasks']),
           )
         ],
       ),
       body: SingleChildScrollView(
         child: Consumer<TaskListProvider>(
-          //TODO: fix this
           builder: (context, taskListProvider, child) {
             TaskListModel taskList = taskListProvider.taskLists.firstWhere(
               (element) => (element.id == widget.taskList.id),

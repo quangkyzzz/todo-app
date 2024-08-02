@@ -134,7 +134,7 @@ class _HomePageState extends State<HomePage> {
                 builder: (context, taskListProvider, child) {
               return Column(
                 children: taskListProvider.taskLists.map((item) {
-                  if (item.groupID == null) {
+                  if ((item.groupID == null) && (item.id != '1')) {
                     int endNumber = 0;
                     for (var element in item.tasks) {
                       if (!element.isCompleted) endNumber++;
