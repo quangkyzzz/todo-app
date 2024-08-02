@@ -11,6 +11,16 @@ class TaskListProvider extends ChangeNotifier {
       listName: 'Tasks',
       tasks: [
         TaskModel(
+          id: '2',
+          title: 'few day',
+          isCompleted: false,
+          isImportant: false,
+          isOnMyDay: true,
+          createDate: DateTime(2024, 6, 2),
+          dueDate: DateTime(2024, 6, 2),
+          repeatFrequency: 'gg',
+        ),
+        TaskModel(
           id: '1',
           title: 'Tasks',
           isCompleted: false,
@@ -32,11 +42,12 @@ class TaskListProvider extends ChangeNotifier {
           note: 'ntoe dd',
         ),
         TaskModel(
-          id: '2',
-          title: 'few day',
+          id: '66',
+          title: 'No step',
           isCompleted: false,
           isImportant: false,
           isOnMyDay: true,
+          remindTime: DateTime(2024, 9, 1),
           createDate: DateTime(2024, 6, 2),
           dueDate: DateTime(2024, 6, 2),
           repeatFrequency: 'gg',

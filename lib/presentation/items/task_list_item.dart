@@ -80,10 +80,6 @@ class _TaskListItemState extends State<TaskListItem> {
     super.didUpdateWidget(oldWidget);
   }
 
-  callBack() {
-    isFirstIcon = false;
-  }
-
   @override
   Widget build(BuildContext context) {
     initializeDateFormatting('vi');
@@ -147,46 +143,71 @@ class _TaskListItemState extends State<TaskListItem> {
                       const SizedBox(height: 4),
                       Row(
                         children: [
-                          (steps != null)
-                              ? ItemBottomIcon(
-                                  text:
-                                      '$countCompletedStep of ${steps!.length.toString()}',
-                                  isFirstIcon: isFirstIcon,
-                                  callBack: callBack,
-                                )
-                              : const SizedBox(),
-                          (dueDate != null)
-                              ? ItemBottomIcon(
-                                  textIcon: Icons.calendar_today_outlined,
-                                  text:
-                                      '${DateFormat.MMMEd('en_US').format(dueDate!)}',
-                                  isFirstIcon: isFirstIcon,
-                                  callBack: callBack,
-                                )
-                              : const SizedBox(),
-                          (notiTime != null)
-                              ? ItemBottomIcon(
-                                  textIcon: Icons.notifications_outlined,
-                                  text:
-                                      '${DateFormat.MMMEd('en_US').format(notiTime!)}',
-                                  isFirstIcon: isFirstIcon,
-                                  callBack: callBack,
-                                )
-                              : const SizedBox(),
-                          (filePath != null)
-                              ? ItemBottomIcon(
-                                  icon: Icons.attach_file_outlined,
-                                  isFirstIcon: isFirstIcon,
-                                  callBack: callBack,
-                                )
-                              : const SizedBox(),
-                          (note != null)
-                              ? ItemBottomIcon(
-                                  icon: Icons.note_outlined,
-                                  isFirstIcon: isFirstIcon,
-                                  callBack: callBack,
-                                )
-                              : const SizedBox(),
+                          Builder(builder: (context) {
+                            if (steps != null) {
+                              bool tempFirstIcon = isFirstIcon;
+                              isFirstIcon = false;
+                              return ItemBottomIcon(
+                                text:
+                                    '$countCompletedStep of ${steps!.length.toString()}',
+                                isFirstIcon: tempFirstIcon,
+                              );
+                            } else {
+                              return const SizedBox();
+                            }
+                          }),
+                          Builder(builder: (context) {
+                            if (dueDate != null) {
+                              bool tempFirstIcon = isFirstIcon;
+                              isFirstIcon = false;
+                              return ItemBottomIcon(
+                                textIcon: Icons.calendar_today_outlined,
+                                text:
+                                    '${DateFormat.MMMEd('en_US').format(dueDate!)}',
+                                isFirstIcon: tempFirstIcon,
+                              );
+                            } else {
+                              return const SizedBox();
+                            }
+                          }),
+                          Builder(builder: (context) {
+                            if (notiTime != null) {
+                              bool tempFirstIcon = isFirstIcon;
+                              isFirstIcon = false;
+                              return ItemBottomIcon(
+                                textIcon: Icons.notifications_outlined,
+                                text:
+                                    '${DateFormat.MMMEd('en_US').format(notiTime!)}',
+                                isFirstIcon: tempFirstIcon,
+                              );
+                            } else {
+                              return const SizedBox();
+                            }
+                          }),
+                          Builder(builder: (context) {
+                            if (filePath != null) {
+                              bool tempFirstIcon = isFirstIcon;
+                              isFirstIcon = false;
+                              return ItemBottomIcon(
+                                icon: Icons.attach_file_outlined,
+                                isFirstIcon: tempFirstIcon,
+                              );
+                            } else {
+                              return const SizedBox();
+                            }
+                          }),
+                          Builder(builder: (context) {
+                            if (note != null) {
+                              bool tempFirstIcon = isFirstIcon;
+                              isFirstIcon = false;
+                              return ItemBottomIcon(
+                                icon: Icons.note_outlined,
+                                isFirstIcon: tempFirstIcon,
+                              );
+                            } else {
+                              return const SizedBox();
+                            }
+                          }),
                         ],
                       ),
                     ],
@@ -225,7 +246,6 @@ class ItemBottomIcon extends StatelessWidget {
   final IconData? textIcon;
   final String? text;
   final IconData? icon;
-  final Function callBack;
   final bool isFirstIcon;
   const ItemBottomIcon({
     super.key,
@@ -233,12 +253,10 @@ class ItemBottomIcon extends StatelessWidget {
     this.icon,
     this.textIcon,
     required this.isFirstIcon,
-    required this.callBack,
   });
 
   @override
   Widget build(BuildContext context) {
-    callBack();
     return (text != null)
         ? Row(
             children: [
@@ -266,13 +284,15 @@ class ItemBottomIcon extends StatelessWidget {
           )
         : Row(
             children: [
-              Transform.scale(
-                scale: 0.3,
-                child: const Icon(
-                  Icons.star,
-                  size: 12,
-                ),
-              ),
+              (!isFirstIcon)
+                  ? Transform.scale(
+                      scale: 0.3,
+                      child: const Icon(
+                        Icons.star,
+                        size: 12,
+                      ),
+                    )
+                  : const SizedBox(),
               Icon(
                 icon,
                 size: 16,
