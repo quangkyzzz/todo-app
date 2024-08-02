@@ -191,6 +191,7 @@ class _TaskPageState extends State<TaskPage> {
               isActive: false,
               icon: Icons.folder_outlined,
               text: 'Device files',
+              activeText: 'active',
               onTap: () {},
             ),
             TaskPageItem(
@@ -199,6 +200,7 @@ class _TaskPageState extends State<TaskPage> {
               isActive: false,
               icon: Icons.photo_camera_outlined,
               text: 'Camera',
+              activeText: 'active',
               onTap: () {},
             ),
           ],
@@ -264,35 +266,37 @@ class _TaskPageState extends State<TaskPage> {
         'isActive': isOnMyDay,
         'icon': Icons.wb_sunny_outlined,
         'text': 'Add to My Day',
+        'activeText': 'Added to My Day',
+        'onTap': onTapAddToMyDay,
       },
       {
         'isActive': (remindTime != null),
         'icon': Icons.notifications_outlined,
         'text': 'Remind me',
+        'activeText': 'Remind on $remindTime',
         'onTap': onTapRemindMe,
-        'value': remindTime,
       },
       {
         'isActive': (dueDate != null),
         'icon': Icons.calendar_today_outlined,
         'text': 'Add due date',
+        'activeText': 'Due $dueDate',
         'onTap': onTapAddDueDate,
-        'value': dueDate,
       },
       {
         'isActive': (repeatFrequency != null),
         'icon': Icons.repeat_outlined,
         'key': key,
         'text': 'Repeat',
+        'activeText': 'active',
         'onTap': onTapRepeat,
-        'value': repeatFrequency,
       },
       {
         'isActive': false,
         'icon': Icons.attach_file_outlined,
         'text': 'Add file',
+        'activeText': 'active',
         'onTap': onTapAddFile,
-        'value': filePath,
       },
     ];
 
@@ -407,6 +411,7 @@ class _TaskPageState extends State<TaskPage> {
                       isActive: item['isActive'],
                       icon: item['icon'],
                       text: item['text'],
+                      activeText: item['activeText'],
                       onTap: () {
                         item['onTap'](context);
                       },

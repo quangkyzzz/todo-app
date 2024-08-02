@@ -1,12 +1,11 @@
-Báo cáo 31/7
+Báo cáo 2/8
 Đã làm:
-    -   Hoàn thành chức năng nâng cấp step thành task
-    -   Cập nhật giao diện hiển thị số task chưa hoàn thành
-    -   Thêm chức năng tìm kiếm, chỉnh sửa task trong 
-    giao diện tìm kiếm
-    -   Thêm chức năng thay đổi thứ tự task trong taskList
-    -   Thêm chức năng sửa, xóa due date
+    -   Hoàn thành chức năng trang My Day.
+    -   Phân loại, thêm, xóa task trong trang My Day.
+    -   Thêm trang Important, phân loại, thêm, xóa task trong trang Important.
 Đang làm:
-    -   Chỉnh sửa giao diện taskPage và sửa lỗi trong taskPage
+    -   CHỉnh sửa giao diện trong taskPage
+    -   Thêm chức năng cho trang Planned
 Dự định làm:
-    -   Hoàn thiện chức năng trong các trang My Day, Important, Planned 
+    -   Thêm chức năng thay đổi backGround, màu chủ đạo
+    -   Thêm chức năng thay đổi setting

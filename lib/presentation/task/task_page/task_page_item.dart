@@ -9,6 +9,7 @@ class TaskPageItem extends StatefulWidget {
   final bool isActive;
   final IconData icon;
   final String text;
+  final String activeText;
   final void Function() onTap;
 
   const TaskPageItem({
@@ -19,6 +20,7 @@ class TaskPageItem extends StatefulWidget {
     required this.onTap,
     required this.taskList,
     required this.task,
+    required this.activeText,
   });
 
   @override
@@ -50,15 +52,9 @@ class _TaskPageItemState extends State<TaskPageItem> {
         ),
         const SizedBox(width: 8),
         TextButton(
-          onPressed: (widget.text != 'Add to My Day')
-              ? widget.onTap
-              : () {
-                  setState(() {
-                    isActive = !isActive;
-                  });
-                },
+          onPressed: widget.onTap,
           child: Text(
-            widget.text,
+            (isActive) ? widget.activeText : widget.text,
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w400,

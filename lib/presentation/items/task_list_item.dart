@@ -26,6 +26,7 @@ class TaskListItem extends StatefulWidget {
 }
 
 class _TaskListItemState extends State<TaskListItem> {
+  late bool isFirstIcon;
   late TaskListProvider taskListProvider;
   late String myTitle;
   late bool isImportant;
@@ -39,6 +40,7 @@ class _TaskListItemState extends State<TaskListItem> {
 
   @override
   void initState() {
+    isFirstIcon = true;
     myTitle = widget.task.title;
     isImportant = widget.task.isImportant;
     isChecked = widget.task.isCompleted;
@@ -57,8 +59,10 @@ class _TaskListItemState extends State<TaskListItem> {
     super.initState();
   }
 
+  //TODO: fix seperate dot between 2 icon
   @override
   void didUpdateWidget(covariant TaskListItem oldWidget) {
+    isFirstIcon = true;
     myTitle = widget.task.title;
     isImportant = widget.task.isImportant;
     isChecked = widget.task.isCompleted;
@@ -74,6 +78,10 @@ class _TaskListItemState extends State<TaskListItem> {
       }
     }
     super.didUpdateWidget(oldWidget);
+  }
+
+  callBack() {
+    isFirstIcon = false;
   }
 
   @override
@@ -142,29 +150,45 @@ class _TaskListItemState extends State<TaskListItem> {
                           (steps != null)
                               ? ItemBottomIcon(
                                   text:
-                                      '$countCompletedStep of ${steps!.length.toString()}')
+                                      '$countCompletedStep of ${steps!.length.toString()}',
+                                  isFirstIcon: isFirstIcon,
+                                  callBack: callBack,
+                                )
                               : const SizedBox(),
                           (dueDate != null)
                               ? ItemBottomIcon(
                                   textIcon: Icons.calendar_today_outlined,
                                   text:
-                                      '${DateFormat.MMMEd('en_US').format(dueDate!)}')
+                                      '${DateFormat.MMMEd('en_US').format(dueDate!)}',
+                                  isFirstIcon: isFirstIcon,
+                                  callBack: callBack,
+                                )
                               : const SizedBox(),
                           (notiTime != null)
                               ? ItemBottomIcon(
                                   textIcon: Icons.notifications_outlined,
                                   text:
-                                      '${DateFormat.MMMEd('en_US').format(notiTime!)}')
+                                      '${DateFormat.MMMEd('en_US').format(notiTime!)}',
+                                  isFirstIcon: isFirstIcon,
+                                  callBack: callBack,
+                                )
                               : const SizedBox(),
                           (filePath != null)
-                              ? const ItemBottomIcon(
-                                  icon: Icons.attach_file_outlined)
+                              ? ItemBottomIcon(
+                                  icon: Icons.attach_file_outlined,
+                                  isFirstIcon: isFirstIcon,
+                                  callBack: callBack,
+                                )
                               : const SizedBox(),
                           (note != null)
-                              ? const ItemBottomIcon(icon: Icons.note_outlined)
+                              ? ItemBottomIcon(
+                                  icon: Icons.note_outlined,
+                                  isFirstIcon: isFirstIcon,
+                                  callBack: callBack,
+                                )
                               : const SizedBox(),
                         ],
-                      )
+                      ),
                     ],
                   ),
             const Spacer(),
@@ -201,18 +225,32 @@ class ItemBottomIcon extends StatelessWidget {
   final IconData? textIcon;
   final String? text;
   final IconData? icon;
+  final Function callBack;
+  final bool isFirstIcon;
   const ItemBottomIcon({
     super.key,
     this.text,
     this.icon,
     this.textIcon,
+    required this.isFirstIcon,
+    required this.callBack,
   });
 
   @override
   Widget build(BuildContext context) {
+    callBack();
     return (text != null)
         ? Row(
             children: [
+              (!isFirstIcon)
+                  ? Transform.scale(
+                      scale: 0.3,
+                      child: const Icon(
+                        Icons.star,
+                        size: 12,
+                      ),
+                    )
+                  : const SizedBox(),
               (textIcon != null)
                   ? Icon(
                       textIcon,
@@ -224,22 +262,21 @@ class ItemBottomIcon extends StatelessWidget {
                 text!,
                 style: MyTheme.itemExtraSmallGreyTextStyle,
               ),
-              Transform.scale(
-                scale: 0.15,
-                child: const Icon(Icons.star),
-              ),
             ],
           )
         : Row(
             children: [
+              Transform.scale(
+                scale: 0.3,
+                child: const Icon(
+                  Icons.star,
+                  size: 12,
+                ),
+              ),
               Icon(
                 icon,
                 size: 16,
                 color: MyTheme.greyColor,
-              ),
-              Transform.scale(
-                scale: 0.15,
-                child: const Icon(Icons.star),
               ),
             ],
           );
