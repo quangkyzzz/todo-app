@@ -68,7 +68,7 @@ class HomePageBottomNavigationBar extends StatelessWidget {
               }
             },
             icon: const Icon(
-              Icons.delete_outlined,
+              Icons.post_add_outlined,
               color: MyTheme.greyColor,
               size: 32,
             ),

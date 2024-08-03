@@ -11,7 +11,6 @@ import 'package:todo_app/models/task_model.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
-//TODO: add my day icon
 class TaskListItem extends StatefulWidget {
   final TaskModel task;
   final TaskListModel taskList;
@@ -30,6 +29,7 @@ class _TaskListItemState extends State<TaskListItem> {
   late TaskListProvider taskListProvider;
   late String myTitle;
   late bool isImportant;
+  late bool isOnMyDay;
   late bool isChecked;
   late List<StepModel>? steps;
   late DateTime? dueDate;
@@ -43,6 +43,7 @@ class _TaskListItemState extends State<TaskListItem> {
     isFirstIcon = true;
     myTitle = widget.task.title;
     isImportant = widget.task.isImportant;
+    isOnMyDay = widget.task.isOnMyDay;
     isChecked = widget.task.isCompleted;
     steps = widget.task.stepList;
     dueDate = widget.task.dueDate;
@@ -64,6 +65,7 @@ class _TaskListItemState extends State<TaskListItem> {
     isFirstIcon = true;
     myTitle = widget.task.title;
     isImportant = widget.task.isImportant;
+    isOnMyDay = widget.task.isOnMyDay;
     isChecked = widget.task.isCompleted;
     steps = widget.task.stepList;
     dueDate = widget.task.dueDate;
@@ -83,7 +85,8 @@ class _TaskListItemState extends State<TaskListItem> {
   Widget build(BuildContext context) {
     initializeDateFormatting('vi');
 
-    bool isAllBottomIconNull = ((steps == null) &&
+    bool isAllBottomIconNull = ((!isOnMyDay) &&
+        (steps == null) &&
         (dueDate == null) &&
         (notiTime == null) &&
         (filePath == null) &&
@@ -142,6 +145,19 @@ class _TaskListItemState extends State<TaskListItem> {
                       const SizedBox(height: 4),
                       Row(
                         children: [
+                          Builder(builder: (context) {
+                            if (isOnMyDay) {
+                              bool tempFirstIcon = isFirstIcon;
+                              isFirstIcon = false;
+                              return ItemBottomIcon(
+                                textIcon: Icons.wb_sunny_outlined,
+                                text: 'My Day',
+                                isFirstIcon: tempFirstIcon,
+                              );
+                            } else {
+                              return const SizedBox();
+                            }
+                          }),
                           Builder(builder: (context) {
                             if (steps != null) {
                               bool tempFirstIcon = isFirstIcon;
@@ -275,6 +291,7 @@ class ItemBottomIcon extends StatelessWidget {
                       color: MyTheme.greyColor,
                     )
                   : const SizedBox(),
+              const SizedBox(width: 2),
               Text(
                 text!,
                 style: MyTheme.itemExtraSmallGreyTextStyle,

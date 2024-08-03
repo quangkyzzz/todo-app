@@ -5,7 +5,6 @@ import 'package:todo_app/models/group_model.dart';
 import 'package:todo_app/models/task_list_model.dart';
 import 'package:todo_app/provider/task_list_provider.dart';
 
-//TODO: fix group provider to fully depent
 class GroupProvider extends ChangeNotifier {
   TaskListProvider taskListProvider;
   GroupProvider(this.taskListProvider);

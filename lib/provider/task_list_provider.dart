@@ -91,7 +91,7 @@ class TaskListProvider extends ChangeNotifier {
     ),
     TaskListModel(
       id: 'group 1 list 2',
-      listName: 'group 1  list 2',
+      listName: 'group 1 list 2',
       groupID: '111',
     ),
     TaskListModel(

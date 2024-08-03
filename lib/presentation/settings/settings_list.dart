@@ -14,8 +14,7 @@ class _SettingsListState extends State<SettingsList> {
   bool isPlaySoundOnComplete = true;
   bool isConfirmBeforeDelete = true;
   bool isShowDueToday = true;
-  bool isRecognizeDateAndTime = true;
-  bool isRemoveDateTimeFromTasksTitle = false;
+
   late List<Map<String, dynamic>> listSettingItem = [
     {
       'text': 'Add new tasks on top',
@@ -36,14 +35,6 @@ class _SettingsListState extends State<SettingsList> {
     {
       'text': "Show 'Due Today' tasks in My Day",
       'isActive': isShowDueToday,
-    },
-    {
-      'text': 'Recognize dates and times in task titles',
-      'isActive': isRecognizeDateAndTime,
-    },
-    {
-      'text': 'Remove dates and times from tasks titles once recognized',
-      'isActive': isRemoveDateTimeFromTasksTitle,
     },
   ];
   @override
