@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+
 import 'package:todo_app/models/step_model.dart';
 import 'package:todo_app/models/task_list_model.dart';
 import 'package:todo_app/models/task_model.dart';
 import 'package:collection/collection.dart';
+import 'package:todo_app/provider/settings_provider.dart';
 
 class TaskListProvider extends ChangeNotifier {
+  SettingsProvider settingsProvider;
+
+  TaskListProvider({required this.settingsProvider});
+
   List<TaskListModel> taskLists = [
     TaskListModel(
       id: '1',
@@ -226,7 +232,11 @@ class TaskListProvider extends ChangeNotifier {
       createDate: DateTime.now(),
     );
     TaskListModel? taskList = getTaskList(taskListID: taskListID);
-    taskList.tasks.insert(0, task);
+    if (settingsProvider.settings.isAddNewTaskOnTop) {
+      taskList.tasks.insert(0, task);
+    } else {
+      taskList.tasks.add(task);
+    }
 
     notifyListeners();
   }
@@ -250,9 +260,20 @@ class TaskListProvider extends ChangeNotifier {
     required String taskID,
     required TaskModel newTask,
   }) {
+    TaskListModel taskList = getTaskList(taskListID: taskListID);
     TaskModel task = getTask(taskListID: taskListID, taskID: taskID);
-    task.copyFrom(copyTask: newTask);
-    if (task.note == '') task.note = null;
+    if ((settingsProvider.settings.isMoveStarTaskToTop) &&
+        (newTask.isImportant) &&
+        (!task.isImportant)) {
+      task.copyFrom(copyTask: newTask);
+      if (task.note == '') task.note = null;
+      taskList.tasks.remove(task);
+      taskList.tasks.insert(0, task);
+    } else {
+      task.copyFrom(copyTask: newTask);
+      if (task.note == '') task.note = null;
+    }
+
     notifyListeners();
   }
 

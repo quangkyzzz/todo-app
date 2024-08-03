@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/notification_service.dart';
 import 'package:todo_app/provider/group_provider.dart';
+import 'package:todo_app/provider/settings_provider.dart';
 import 'package:todo_app/provider/task_list_provider.dart';
 import 'package:todo_app/provider/user_provider.dart';
 import 'package:todo_app/themes.dart';
@@ -22,7 +23,14 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => UserProvider()),
-        ChangeNotifierProvider(create: (constext) => TaskListProvider()),
+        ChangeNotifierProvider(create: (context) => SettingsProvider()),
+        ChangeNotifierProxyProvider<SettingsProvider, TaskListProvider>(
+          create: (context) => TaskListProvider(
+              settingsProvider: context.read<SettingsProvider>()),
+          update: (context, settingsProvider, taskListProvider) =>
+              taskListProvider ??
+              TaskListProvider(settingsProvider: settingsProvider),
+        ),
         ChangeNotifierProxyProvider<TaskListProvider, GroupProvider>(
             create: (context) =>
                 GroupProvider(context.read<TaskListProvider>()),

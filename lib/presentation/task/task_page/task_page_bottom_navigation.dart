@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/models/task_list_model.dart';
+import 'package:todo_app/provider/settings_provider.dart';
 import 'package:todo_app/provider/task_list_provider.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/models/task_model.dart';
@@ -30,6 +31,8 @@ class TaskPageBottomNavigation extends StatelessWidget {
   Widget build(BuildContext context) {
     TaskListProvider taskListProvider =
         Provider.of<TaskListProvider>(context, listen: false);
+    SettingsProvider settingsProvider =
+        Provider.of<SettingsProvider>(context, listen: false);
     Duration diffTime = DateTime.now().difference(task.createDate);
     return Container(
       padding: const EdgeInsets.only(left: 8, right: 8, bottom: 12),
@@ -55,13 +58,19 @@ class TaskPageBottomNavigation extends StatelessWidget {
           const Spacer(),
           IconButton(
             onPressed: () async {
-              bool isDelete = await showAlertDialog(
-                context,
-                'Are you sure?',
-                '"${task.title}" will be permanently deleted',
-              );
-              if (!context.mounted) return;
-              if (isDelete) {
+              if (settingsProvider.settings.isConfirmBeforeDelete) {
+                bool isDelete = await showAlertDialog(
+                  context,
+                  'Are you sure?',
+                  '"${task.title}" will be permanently deleted',
+                );
+                if (!context.mounted) return;
+                if (isDelete) {
+                  taskListProvider.deleteTask(
+                      taskListID: taskList.id, taskID: task.id);
+                  Navigator.pop(context);
+                }
+              } else {
                 taskListProvider.deleteTask(
                     taskListID: taskList.id, taskID: task.id);
                 Navigator.pop(context);

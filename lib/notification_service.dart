@@ -7,6 +7,7 @@ import 'package:timezone/data/latest_all.dart' as tz;
 
 class NotificationService {
   NotificationService();
+
   static final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
   static final BehaviorSubject<String> behaviorSubject = BehaviorSubject();
@@ -27,22 +28,22 @@ class NotificationService {
     );
   }
 
-  static Future<NotificationDetails> _notificationDetails() async {
-    const AndroidNotificationDetails androidPlatform =
-        AndroidNotificationDetails(
+  static Future<NotificationDetails> _notificationDetails(
+      bool isPlaySound) async {
+    AndroidNotificationDetails androidPlatform = AndroidNotificationDetails(
       'channel id',
       'channel name',
       groupKey: 'dd',
       channelDescription: 'des',
       importance: Importance.max,
       priority: Priority.max,
-      playSound: true,
+      playSound: isPlaySound,
       ticker: 'ticker',
       color: MyTheme.blueColor,
     );
     // final details =
     //     await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
-    NotificationDetails platformChannelSpecifics = const NotificationDetails(
+    NotificationDetails platformChannelSpecifics = NotificationDetails(
       android: androidPlatform,
     );
     return platformChannelSpecifics;
@@ -52,8 +53,9 @@ class NotificationService {
     required int id,
     required String title,
     required String body,
+    required bool isPlaySound,
   }) async {
-    final platformChannelSpecifics = await _notificationDetails();
+    final platformChannelSpecifics = await _notificationDetails(isPlaySound);
     await flutterLocalNotificationsPlugin.show(
       id,
       title,
@@ -62,13 +64,14 @@ class NotificationService {
     );
   }
 
-  static Future<void> setNotification(
-    DateTime dateTime,
-    String title,
-    String body,
-    int id,
-  ) async {
-    final platformChannelSpecifics = await _notificationDetails();
+  static Future<void> setNotification({
+    required DateTime dateTime,
+    required String title,
+    required String body,
+    required int id,
+    required bool isPlaySound,
+  }) async {
+    final platformChannelSpecifics = await _notificationDetails(isPlaySound);
     await flutterLocalNotificationsPlugin.zonedSchedule(
       id,
       title,
@@ -92,8 +95,9 @@ class NotificationService {
     required int id,
     required String title,
     required String body,
+    required bool isPlaySound,
   }) async {
-    final platformChannelSpecifics = await _notificationDetails();
+    final platformChannelSpecifics = await _notificationDetails(isPlaySound);
     await flutterLocalNotificationsPlugin.periodicallyShow(
       id,
       title,

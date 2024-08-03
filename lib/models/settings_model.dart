@@ -1,30 +1,30 @@
 import 'dart:core';
 
 class SettingsModel {
-  bool isAddNewTask;
-  bool isMoveToTop;
+  bool isAddNewTaskOnTop;
+  bool isMoveStarTaskToTop;
   bool isPlaySoundOnComplete;
   bool isConfirmBeforeDelete;
   bool isShowDueToday;
 
   SettingsModel({
-    required this.isAddNewTask,
-    required this.isMoveToTop,
+    required this.isAddNewTaskOnTop,
+    required this.isMoveStarTaskToTop,
     required this.isPlaySoundOnComplete,
     required this.isConfirmBeforeDelete,
     required this.isShowDueToday,
   });
 
   SettingsModel copyWith({
-    bool? isAddNewTask,
-    bool? isMoveToTop,
+    bool? isAddNewTaskOnTop,
+    bool? isMoveStarTaskToTop,
     bool? isPlaySoundOnComplete,
     bool? isConfirmBeforeDelete,
     bool? isShowDueToday,
   }) {
     return SettingsModel(
-      isAddNewTask: isAddNewTask ?? this.isAddNewTask,
-      isMoveToTop: isMoveToTop ?? this.isMoveToTop,
+      isAddNewTaskOnTop: isAddNewTaskOnTop ?? this.isAddNewTaskOnTop,
+      isMoveStarTaskToTop: isMoveStarTaskToTop ?? this.isMoveStarTaskToTop,
       isPlaySoundOnComplete:
           isPlaySoundOnComplete ?? this.isPlaySoundOnComplete,
       isConfirmBeforeDelete:
@@ -36,8 +36,8 @@ class SettingsModel {
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
-    result.addAll({'isAddNewTask': isAddNewTask});
-    result.addAll({'isMoveToTop': isMoveToTop});
+    result.addAll({'isAddNewTaskOnTop': isAddNewTaskOnTop});
+    result.addAll({'isMoveStarTaskToTop': isMoveStarTaskToTop});
     result.addAll({'isPlaySoundOnComplete': isPlaySoundOnComplete});
     result.addAll({'isConfirmBeforeDelete': isConfirmBeforeDelete});
     result.addAll({'isShowDueToday': isShowDueToday});
@@ -46,8 +46,8 @@ class SettingsModel {
 
   factory SettingsModel.fromMap(Map<String, dynamic> map) {
     return SettingsModel(
-      isAddNewTask: map['isAddNewTask'],
-      isMoveToTop: map['isMoveToTop'],
+      isAddNewTaskOnTop: map['isAddNewTaskOnTop'],
+      isMoveStarTaskToTop: map['isMoveStarTaskToTop'],
       isPlaySoundOnComplete: map['isPlaySoundOnComplete'],
       isConfirmBeforeDelete: map['isConfirmBeforeDelete'],
       isShowDueToday: map['isShowDueToday'],

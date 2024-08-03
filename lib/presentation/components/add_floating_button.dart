@@ -50,7 +50,7 @@ class AddTaskItem extends StatelessWidget {
   bool isChecked;
   final bool isAddToMyDay;
   final bool isAddToImportant;
-  TextEditingController controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
   final TaskListModel taskList;
   AddTaskItem(
       {super.key,
@@ -80,7 +80,7 @@ class AddTaskItem extends StatelessWidget {
               ),
               Expanded(
                 child: TextField(
-                  controller: controller,
+                  controller: _controller,
                   autofocus: true,
                   decoration: const InputDecoration(
                     hintText: 'Add a task',
@@ -93,7 +93,7 @@ class AddTaskItem extends StatelessWidget {
                     Provider.of<TaskListProvider>(context, listen: false)
                         .createTask(
                       taskListID: taskList.id,
-                      taskName: controller.text,
+                      taskName: _controller.text,
                       isCompleted: isChecked,
                       isOnMyDay: true,
                     );
@@ -101,7 +101,7 @@ class AddTaskItem extends StatelessWidget {
                     Provider.of<TaskListProvider>(context, listen: false)
                         .createTask(
                       taskListID: taskList.id,
-                      taskName: controller.text,
+                      taskName: _controller.text,
                       isCompleted: isChecked,
                       isImportant: true,
                     );
@@ -109,11 +109,11 @@ class AddTaskItem extends StatelessWidget {
                     Provider.of<TaskListProvider>(context, listen: false)
                         .createTask(
                       taskListID: taskList.id,
-                      taskName: controller.text,
+                      taskName: _controller.text,
                       isCompleted: isChecked,
                     );
                   }
-                  Navigator.pop(context);
+                  _controller.clear();
                 },
                 icon: const Icon(Icons.arrow_upward),
               )

@@ -6,6 +6,7 @@ import 'package:todo_app/models/task_list_model.dart';
 import 'package:todo_app/presentation/components/show_alert_dialog.dart';
 import 'package:todo_app/presentation/components/show_text_edit_dialog.dart';
 import 'package:todo_app/provider/group_provider.dart';
+import 'package:todo_app/provider/settings_provider.dart';
 import 'package:todo_app/provider/task_list_provider.dart';
 import 'package:todo_app/routes.dart';
 import 'package:todo_app/themes.dart';
@@ -30,6 +31,7 @@ class PopupMenu extends StatefulWidget {
 class _PopupMenuState extends State<PopupMenu> {
   late GroupProvider groupProvider;
   late TaskListProvider taskListProvider;
+  late SettingsProvider settingsProvider;
   late List<Map<String, dynamic>> listPopupMenuItem = [
     {
       'value': 'rename_list',
@@ -236,13 +238,24 @@ class _PopupMenuState extends State<PopupMenu> {
   }
 
   onTapDeleteList(BuildContext context, String id) async {
-    bool isDelete = await showAlertDialog(
-      context,
-      'Are you sure?',
-      'This list will be delete',
-    );
-    if (!mounted) return;
-    if (isDelete) {
+    if (settingsProvider.settings.isConfirmBeforeDelete) {
+      bool isDelete = await showAlertDialog(
+        context,
+        'Are you sure?',
+        'This list will be delete',
+      );
+      if (!mounted) return;
+      if (isDelete) {
+        Navigator.pop(context);
+        if (widget.taskList.groupID != null) {
+          groupProvider.deleteTaskListByID(
+            groupID: widget.taskList.groupID!,
+            taskListID: widget.taskList.id,
+          );
+        }
+        taskListProvider.deleteTaskList(id: id);
+      }
+    } else {
       Navigator.pop(context);
       if (widget.taskList.groupID != null) {
         groupProvider.deleteTaskListByID(
@@ -274,6 +287,7 @@ class _PopupMenuState extends State<PopupMenu> {
   void initState() {
     taskListProvider = Provider.of<TaskListProvider>(context, listen: false);
     groupProvider = Provider.of<GroupProvider>(context, listen: false);
+    settingsProvider = Provider.of<SettingsProvider>(context, listen: false);
     super.initState();
   }
 

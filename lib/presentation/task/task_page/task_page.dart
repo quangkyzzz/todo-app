@@ -4,6 +4,7 @@ import 'package:todo_app/models/step_model.dart';
 import 'package:todo_app/models/task_list_model.dart';
 import 'package:todo_app/notification_service.dart';
 import 'package:todo_app/provider/group_provider.dart';
+import 'package:todo_app/provider/settings_provider.dart';
 import 'package:todo_app/provider/task_list_provider.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/routes.dart';
@@ -32,6 +33,7 @@ class TaskPage extends StatefulWidget {
 class _TaskPageState extends State<TaskPage> {
   late TaskListProvider taskListProvider;
   late GroupProvider groupProvider;
+  late SettingsProvider settingsProvider;
   GlobalKey key = GlobalKey();
   late String title;
   late bool isOnMyDay;
@@ -124,10 +126,11 @@ class _TaskPageState extends State<TaskPage> {
           remindTime = tempRemindTime;
         });
         NotificationService.setNotification(
-          tempRemindTime,
-          widget.taskList.listName,
-          title,
-          int.parse(widget.task.id),
+          dateTime: tempRemindTime,
+          title: widget.taskList.listName,
+          body: title,
+          id: int.parse(widget.task.id),
+          isPlaySound: settingsProvider.settings.isPlaySoundOnComplete,
         );
       }
     } else {
@@ -152,6 +155,16 @@ class _TaskPageState extends State<TaskPage> {
         setState(() {
           dueDate = newDueDate;
         });
+        if (!context.mounted) return;
+        DateTime today = DateTime(
+          DateTime.now().year,
+          DateTime.now().month,
+          DateTime.now().day,
+        );
+        if ((settingsProvider.settings.isShowDueToday) &&
+            (dueDate!.isAtSameMomentAs(today))) {
+          onTapAddToMyDay(context);
+        }
       }
     } else {
       setState(() {
@@ -263,9 +276,9 @@ class _TaskPageState extends State<TaskPage> {
   @override
   void initState() {
     initializeDateFormatting();
-
     taskListProvider = Provider.of<TaskListProvider>(context, listen: false);
     groupProvider = Provider.of<GroupProvider>(context, listen: false);
+    settingsProvider = Provider.of<SettingsProvider>(context, listen: false);
     title = widget.task.title;
     isOnMyDay = widget.task.isOnMyDay;
     isCompleted = widget.task.isCompleted;
