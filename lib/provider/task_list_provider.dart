@@ -106,6 +106,7 @@ class TaskListProvider extends ChangeNotifier {
     ),
   ];
 
+  /////////////////////
   //Task List function
   TaskListModel getTaskList({
     required String taskListID,
@@ -153,7 +154,9 @@ class TaskListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void moveFromGroup({required String id}) {
+  void moveFromGroup({
+    required String id,
+  }) {
     getTaskList(taskListID: id).groupID = null;
     notifyListeners();
   }
@@ -162,10 +165,17 @@ class TaskListProvider extends ChangeNotifier {
     required String taskListID,
   }) {
     TaskListModel originTaskList = getTaskList(taskListID: taskListID);
+    List<TaskModel> newTasks = originTaskList.tasks.map((task) {
+      return task.copyWith(
+        id: DateTime.now().millisecondsSinceEpoch.toString(),
+      );
+    }).toList();
     TaskListModel newTaskList = originTaskList.copyWith(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       listName: '${originTaskList.listName} copy',
+      taskList: newTasks,
     );
+    newTaskList.groupID = null;
     taskLists.add(newTaskList);
 
     notifyListeners();
@@ -189,6 +199,7 @@ class TaskListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  ////////////////
   //Task function
   TaskModel getTask({
     required String taskListID,
