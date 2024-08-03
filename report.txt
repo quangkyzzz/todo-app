@@ -1,12 +1,12 @@
-Báo cáo 2/8
+Báo cáo 3/8
 Đã làm:
-    -   Hoàn thành chức năng trang My Day.
-    -   Phân loại, thêm, xóa task trong trang My Day.
-    -   Thêm trang Important, phân loại, thêm, xóa task trong trang Important.
+    -   Sửa lỗi giao diện, định dạng ngày tháng trong taskPage
+    -   Sửa lỗi chức năng trong trang Important, My Day Tasks
+    -   Hoàn thành chức năng cho trang Planned
+    -   Thêm chức năng duplicate taskList
 Đang làm:
-    -   CHỉnh sửa giao diện trong taskPage
-    -   Thêm chức năng cho trang Planned
+    -   Thêm chức năng thay đổi settings
 Dự định làm:
-    -   Thêm chức năng thay đổi setting
-    -   Thêm chức năng thay đổi backGround, màu chủ đạo
+    -   Thêm chức năng thay đổi backGround, màu chủ đạo.
+    -   Thêm chức năng đăng nhập, đăng xuất.
     
