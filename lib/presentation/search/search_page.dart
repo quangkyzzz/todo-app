@@ -121,6 +121,7 @@ class _SearchPageState extends State<SearchPage> {
                     return TaskListItem(
                       task: e.keys.first,
                       taskList: e.values.first,
+                      themeColor: MyTheme.blueColor,
                     );
                   } else {
                     return const SizedBox();
@@ -129,6 +130,7 @@ class _SearchPageState extends State<SearchPage> {
                   return TaskListItem(
                     task: e.keys.first,
                     taskList: e.values.first,
+                    themeColor: MyTheme.blueColor,
                   );
                 }
               }).toList(),

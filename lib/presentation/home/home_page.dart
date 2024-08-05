@@ -58,27 +58,34 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> listHomeItem = [
       {
+        'ID': '2',
         'text': 'My Day',
         'ontap': onTapMyDay,
         'icon': Icons.wb_sunny_outlined,
         'iconColor': MyTheme.greyColor,
-        'endNumber': 0
+        'endNumber':
+            context.watch<TaskListProvider>().countIncompletedMyDayTask(),
       },
       {
+        'ID': '3',
         'text': 'Important',
         'ontap': onTapImportant,
         'icon': Icons.star_border,
         'iconColor': MyTheme.pinkColor,
-        'endNumber': 0,
+        'endNumber':
+            context.watch<TaskListProvider>().countIncompletedImportantTask(),
       },
       {
+        'ID': '4',
         'text': 'Planned',
         'ontap': onTapPlanned,
         'icon': Icons.list_alt_outlined,
         'iconColor': MyTheme.redColor,
-        'endNumber': 0,
+        'endNumber':
+            context.watch<TaskListProvider>().countIncompletedPlannedTask(),
       },
       {
+        'ID': '1',
         'text': 'Assign to me',
         'ontap': onTapAssignToMe,
         'icon': Icons.person_outline,
@@ -86,6 +93,7 @@ class _HomePageState extends State<HomePage> {
         'endNumber': 0,
       },
       {
+        'ID': '1',
         'text': 'Flagged email',
         'ontap': onTapFlaggedEmail,
         'icon': Icons.flag_outlined,
@@ -93,11 +101,14 @@ class _HomePageState extends State<HomePage> {
         'endNumber': 0,
       },
       {
+        'ID': '1',
         'text': 'Tasks',
         'ontap': onTapTask,
         'icon': Icons.task_outlined,
         'iconColor': MyTheme.blueColor,
-        'endNumber': 0,
+        'endNumber': context
+            .watch<TaskListProvider>()
+            .countIncompletedTaskByID(taskListID: '1'),
       },
     ];
     return Scaffold(
@@ -115,7 +126,9 @@ class _HomePageState extends State<HomePage> {
                   return HomeItem(
                     text: item['text'],
                     icon: item['icon'],
-                    iconColor: item['iconColor'],
+                    iconColor: taskListProvider
+                        .getTaskList(taskListID: item['ID'])
+                        .themeColor,
                     endNumber: item['endNumber'],
                     onTap: () {
                       item['ontap'](
@@ -134,15 +147,15 @@ class _HomePageState extends State<HomePage> {
                 builder: (context, taskListProvider, child) {
               return Column(
                 children: taskListProvider.taskLists.map((item) {
-                  if ((item.groupID == null) && (item.id != '1')) {
-                    int endNumber = 0;
-                    for (var element in item.tasks) {
-                      if (!element.isCompleted) endNumber++;
-                    }
+                  if ((item.groupID == null) && (int.parse(item.id) > 10)) {
+                    int endNumber = taskListProvider.countIncompletedTaskByID(
+                      taskListID: item.id,
+                    );
+
                     return HomeItem(
                       text: item.listName,
                       icon: Icons.list_outlined,
-                      iconColor: MyTheme.blueColor,
+                      iconColor: item.themeColor,
                       endNumber: endNumber,
                       onTap: () {
                         Navigator.of(context).pushNamed(

@@ -8,7 +8,6 @@ import 'package:todo_app/models/task_list_model.dart';
 import 'package:todo_app/models/task_model.dart';
 import 'package:todo_app/presentation/items/task_list_item.dart';
 import 'package:todo_app/provider/task_list_provider.dart';
-import 'package:todo_app/themes.dart';
 import 'package:todo_app/presentation/task/my_day/my_day_floating_buttons.dart';
 import 'package:todo_app/presentation/components/popup_menu.dart';
 
@@ -20,18 +19,21 @@ class MyDayPage extends StatefulWidget {
 }
 
 class _MyDayPageState extends State<MyDayPage> {
+  late TaskListModel defaultTaskList;
   late TaskListModel myDayTaskList;
   bool isExpanded = true;
 
   @override
   void initState() {
-    myDayTaskList = Provider.of<TaskListProvider>(context, listen: false)
+    defaultTaskList = Provider.of<TaskListProvider>(context, listen: false)
         .getTaskList(taskListID: '1');
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    myDayTaskList = Provider.of<TaskListProvider>(context, listen: true)
+        .getTaskList(taskListID: '2');
     return Stack(
       fit: StackFit.expand,
       children: [
@@ -42,6 +44,7 @@ class _MyDayPageState extends State<MyDayPage> {
         Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
+            iconTheme: IconThemeData(color: myDayTaskList.themeColor),
             backgroundColor: Colors.transparent,
             title: Container(
               height: 48,
@@ -49,12 +52,20 @@ class _MyDayPageState extends State<MyDayPage> {
               child: RichText(
                 text: TextSpan(
                     text: 'My Day',
-                    style: MyTheme.titleTextStyle,
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w500,
+                      color: myDayTaskList.themeColor,
+                    ),
                     children: [
                       TextSpan(
                         text:
                             '\n${DateFormat('EEEE, MMMM d').format(DateTime.now())}',
-                        style: MyTheme.secondaryTitleTextStyle,
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: myDayTaskList.themeColor,
+                        ),
                       )
                     ]),
               ),
@@ -94,6 +105,7 @@ class _MyDayPageState extends State<MyDayPage> {
                       return TaskListItem(
                         task: inCompleteList[index].keys.first,
                         taskList: inCompleteList[index].values.first,
+                        themeColor: myDayTaskList.themeColor,
                       );
                     },
                   ),
@@ -102,9 +114,9 @@ class _MyDayPageState extends State<MyDayPage> {
                           initiallyExpanded: true,
                           title: Text(
                             'Completed ${completedlist.length}',
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 18,
-                              color: MyTheme.blueColor,
+                              color: myDayTaskList.themeColor,
                             ),
                           ),
                           onExpansionChanged: (bool expanded) {
@@ -124,6 +136,7 @@ class _MyDayPageState extends State<MyDayPage> {
                                 return TaskListItem(
                                   task: completedlist[index].keys.first,
                                   taskList: completedlist[index].values.first,
+                                  themeColor: myDayTaskList.themeColor,
                                 );
                               },
                             )
@@ -135,7 +148,8 @@ class _MyDayPageState extends State<MyDayPage> {
             ),
           ),
           floatingActionButton: MyDayFloatingButtons(
-            taskList: myDayTaskList,
+            taskList: defaultTaskList,
+            themeColor: myDayTaskList.themeColor,
           ),
         ),
       ],

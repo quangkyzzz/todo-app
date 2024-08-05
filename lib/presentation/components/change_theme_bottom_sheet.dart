@@ -1,29 +1,47 @@
 // ignore_for_file: sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/models/task_list_model.dart';
+import 'package:todo_app/provider/task_list_provider.dart';
 import 'package:todo_app/themes.dart';
 
 class ChangeThemeBottomSheet extends StatefulWidget {
-  const ChangeThemeBottomSheet({super.key});
+  final TaskListModel taskList;
+  const ChangeThemeBottomSheet({super.key, required this.taskList});
 
   @override
   State<ChangeThemeBottomSheet> createState() => _ChangeThemeBottomSheetState();
 }
 
 class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
-  int _page = 0;
-  Color _selectedColor = MyTheme.whiteColor;
+  late int _page;
+  late Color _selectedColor;
+  late TaskListProvider taskListProvider;
 
   onColorChange(Color value) {
     setState(() {
       _selectedColor = value;
     });
+    TaskListModel newTaskList = widget.taskList.copyWith(themeColor: value);
+    taskListProvider.updateTaskList(
+      taskListID: widget.taskList.id,
+      newTaskList: newTaskList,
+    );
   }
 
   onPageChange(int value) {
     setState(() {
       _page = value;
     });
+  }
+
+  @override
+  void initState() {
+    taskListProvider = Provider.of<TaskListProvider>(context, listen: false);
+    _page = 0;
+    _selectedColor = widget.taskList.themeColor;
+    super.initState();
   }
 
   @override
@@ -95,18 +113,20 @@ class SelectColorButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
-        onPressed: onTap,
-        style: OutlinedButton.styleFrom(
-          backgroundColor: color,
-          shape: const CircleBorder(),
-          side: (isHighLighted)
-              ? const BorderSide(width: 8, color: MyTheme.blackColor)
-              : null,
-        ),
-        child: Container(
-          height: 50,
-          width: 1,
-        ));
+      onPressed: onTap,
+      style: OutlinedButton.styleFrom(
+        fixedSize: const Size(50, 50),
+        backgroundColor: color,
+        shape: const CircleBorder(),
+      ),
+      child: (isHighLighted)
+          ? const Icon(
+              Icons.check_circle_outline,
+              color: MyTheme.blackColor,
+              size: 32,
+            )
+          : null,
+    );
   }
 }
 

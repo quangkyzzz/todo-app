@@ -14,10 +14,12 @@ import 'package:intl/intl.dart';
 class TaskListItem extends StatefulWidget {
   final TaskModel task;
   final TaskListModel taskList;
+  final Color themeColor;
   const TaskListItem({
     super.key,
     required this.task,
     required this.taskList,
+    required this.themeColor,
   });
 
   @override
@@ -112,7 +114,10 @@ class _TaskListItemState extends State<TaskListItem> {
         child: Row(
           children: [
             Checkbox(
-              activeColor: MyTheme.blueColor,
+              checkColor: (widget.themeColor == MyTheme.whiteColor)
+                  ? MyTheme.blackColor
+                  : null,
+              activeColor: widget.themeColor,
               tristate: false,
               shape: const CircleBorder(),
               value: isChecked,
@@ -240,9 +245,9 @@ class _TaskListItemState extends State<TaskListItem> {
                   );
                 },
                 icon: (isImportant)
-                    ? const Icon(
+                    ? Icon(
                         Icons.star,
-                        color: MyTheme.blueColor,
+                        color: widget.themeColor,
                       )
                     : const Icon(
                         Icons.star_border_outlined,

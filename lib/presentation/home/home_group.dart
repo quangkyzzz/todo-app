@@ -1,6 +1,4 @@
 import 'dart:async';
-
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/models/group_model.dart';
@@ -209,16 +207,15 @@ Future<List<TaskListModel>?> showAddListDialog({
                 taskListProvider,
                 child,
               ) {
-                GroupModel? group = groupProvider.groups
-                    .firstWhereOrNull((element) => (element.id == groupID));
+                GroupModel group = groupProvider.getGroup(groupID);
 
-                if (group != null) {
-                  checkedTaskList.addAll(group.taskLists);
-                  allTaskList.addAll(checkedTaskList);
-                }
+                checkedTaskList.addAll(group.taskLists);
+                allTaskList.addAll(checkedTaskList);
+
                 allTaskList.addAll(
-                  taskListProvider.taskLists
-                      .where((element) => (element.groupID == null)),
+                  taskListProvider.taskLists.where((element) =>
+                      ((element.groupID == null) &&
+                          (int.parse(element.id) > 10))),
                 );
                 return StatefulBuilder(builder: (context, setState) {
                   return Column(

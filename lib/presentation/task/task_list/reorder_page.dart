@@ -55,6 +55,7 @@ class _ReorderPageState extends State<ReorderPage> {
                 key: Key(item.id),
                 task: item,
                 taskList: widget.taskList,
+                themeColor: widget.taskList.themeColor,
               );
             }).toList(),
             onReorder: (int oldIndex, int newIndex) {

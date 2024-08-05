@@ -167,7 +167,7 @@ class _PopupMenuState extends State<PopupMenu> {
       context: context,
       showDragHandle: true,
       builder: (BuildContext context) {
-        return const ChangeThemeBottomSheet();
+        return ChangeThemeBottomSheet(taskList: widget.taskList);
       },
     );
   }

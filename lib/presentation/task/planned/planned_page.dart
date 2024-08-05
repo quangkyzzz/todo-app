@@ -16,10 +16,7 @@ class PlannedPage extends StatefulWidget {
 }
 
 class _PlannedPageState extends State<PlannedPage> {
-  TaskListModel incompleteTask = TaskListModel(
-    id: 'planned',
-    listName: 'list1',
-  );
+  late TaskListModel plannedTaskList;
   List<Map<String, dynamic>> listPopupMennu = [
     {
       'text': 'Overdue',
@@ -46,20 +43,29 @@ class _PlannedPageState extends State<PlannedPage> {
       'icon': Icons.event_note_outlined,
     },
   ];
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    plannedTaskList = Provider.of<TaskListProvider>(context, listen: true)
+        .getTaskList(taskListID: '4');
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        iconTheme: IconThemeData(color: plannedTaskList.themeColor),
+        title: Text(
           'Planned',
           style: TextStyle(
             fontSize: 24,
-            color: MyTheme.redColor,
+            color: plannedTaskList.themeColor,
           ),
         ),
         actions: [
           PopupMenu(
-            taskList: incompleteTask,
+            taskList: plannedTaskList,
             toRemove: const [
               'sort_by',
               'reorder',
@@ -97,18 +103,19 @@ class _PlannedPageState extends State<PlannedPage> {
                   color: MyTheme.backgroundGreyColor,
                   borderRadius: BorderRadius.circular(6),
                 ),
-                child: const Row(
+                child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Icon(
                       Icons.list,
                       size: 32,
-                      color: MyTheme.redColor,
+                      color: plannedTaskList.themeColor,
                     ),
-                    SizedBox(width: 8),
+                    const SizedBox(width: 8),
                     Text(
                       'All planned',
-                      style: TextStyle(fontSize: 18, color: MyTheme.redColor),
+                      style: TextStyle(
+                          fontSize: 18, color: plannedTaskList.themeColor),
                     ),
                   ],
                 ),
@@ -129,6 +136,7 @@ class _PlannedPageState extends State<PlannedPage> {
                     return TaskListItem(
                       task: plannedTasks[index].keys.first,
                       taskList: plannedTasks[index].values.first,
+                      themeColor: plannedTaskList.themeColor,
                     );
                   },
                 );

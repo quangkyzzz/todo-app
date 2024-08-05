@@ -1,12 +1,11 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
-
 import 'package:todo_app/models/step_model.dart';
 import 'package:todo_app/models/task_list_model.dart';
 import 'package:todo_app/models/task_model.dart';
 import 'package:collection/collection.dart';
 import 'package:todo_app/provider/settings_provider.dart';
+import 'package:todo_app/themes.dart';
 
 class TaskListProvider extends ChangeNotifier {
   SettingsProvider settingsProvider;
@@ -62,8 +61,12 @@ class TaskListProvider extends ChangeNotifier {
         ),
       ],
     ),
+    TaskListModel(id: '2', listName: 'My Day', themeColor: MyTheme.whiteColor),
     TaskListModel(
-      id: '2',
+        id: '3', listName: 'Important', themeColor: MyTheme.pinkColor),
+    TaskListModel(id: '4', listName: 'Planned', themeColor: MyTheme.redColor),
+    TaskListModel(
+      id: '222',
       listName: 'personal list 1',
       tasks: [
         TaskModel(
@@ -93,22 +96,22 @@ class TaskListProvider extends ChangeNotifier {
       ],
     ),
     TaskListModel(
-      id: 'group 1 list 1',
+      id: '333',
       listName: 'group 1 list 1',
       groupID: '111',
     ),
     TaskListModel(
-      id: 'group 1 list 2',
+      id: '444',
       listName: 'group 1 list 2',
       groupID: '111',
     ),
     TaskListModel(
-      id: 'group 2 list 1',
+      id: '555',
       listName: 'group 2 list 1',
       groupID: '222',
     ),
     TaskListModel(
-      id: 'group 2 list 2',
+      id: '666',
       listName: 'group 2 list 2',
       groupID: '222',
     ),
@@ -335,5 +338,41 @@ class TaskListProvider extends ChangeNotifier {
       }
     }
     return result;
+  }
+
+  int countIncompletedTaskByID({required String taskListID}) {
+    int count = 0;
+    TaskListModel taskList = getTaskList(taskListID: taskListID);
+    for (var task in taskList.tasks) {
+      if (!task.isCompleted) count++;
+    }
+    return count;
+  }
+
+  int countIncompletedMyDayTask() {
+    int count = 0;
+    List<Map<TaskModel, TaskListModel>> taskList = getOnMyDayTask();
+    for (var task in taskList) {
+      if (!task.keys.first.isCompleted) count++;
+    }
+    return count;
+  }
+
+  int countIncompletedImportantTask() {
+    int count = 0;
+    List<Map<TaskModel, TaskListModel>> taskList = getImportantTask();
+    for (var task in taskList) {
+      if (!task.keys.first.isCompleted) count++;
+    }
+    return count;
+  }
+
+  int countIncompletedPlannedTask() {
+    int count = 0;
+    List<Map<TaskModel, TaskListModel>> taskList = getPlannedTask();
+    for (var task in taskList) {
+      if (!task.keys.first.isCompleted) count++;
+    }
+    return count;
   }
 }

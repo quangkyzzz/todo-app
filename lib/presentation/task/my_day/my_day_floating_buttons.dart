@@ -4,8 +4,10 @@ import 'package:todo_app/themes.dart';
 import 'package:todo_app/presentation/components/add_floating_button.dart';
 
 class MyDayFloatingButtons extends StatefulWidget {
+  final Color themeColor;
   final TaskListModel taskList;
-  const MyDayFloatingButtons({super.key, required this.taskList});
+  const MyDayFloatingButtons(
+      {super.key, required this.taskList, required this.themeColor});
 
   @override
   State<MyDayFloatingButtons> createState() => _MyDayFloatingButtonsState();
@@ -30,7 +32,7 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
           decoration: BoxDecoration(
             shape: BoxShape.rectangle,
             borderRadius: BorderRadius.circular(18),
-            color: MyTheme.blueColor,
+            color: widget.themeColor,
           ),
           child: InkWell(
             splashColor: MyTheme.blackColor,
@@ -40,9 +42,15 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
             },
             child: Ink(
               decoration: const BoxDecoration(shape: BoxShape.circle),
-              child: const Text(
+              child: Text(
                 'Suggestions',
-                style: MyTheme.itemTextStyle,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                  color: (widget.themeColor == MyTheme.whiteColor)
+                      ? MyTheme.blackColor
+                      : MyTheme.whiteColor,
+                ),
               ),
             ),
           ),
@@ -51,6 +59,7 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
         AddFloatingButton(
           taskList: taskList,
           isAddToMyDay: true,
+          themeColor: widget.themeColor,
         ),
       ],
     );

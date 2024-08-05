@@ -6,7 +6,6 @@ import 'package:todo_app/presentation/components/add_floating_button.dart';
 import 'package:todo_app/presentation/items/task_list_item.dart';
 import 'package:todo_app/presentation/components/popup_menu.dart';
 import 'package:todo_app/provider/task_list_provider.dart';
-import 'package:todo_app/themes.dart';
 
 class ImportantPage extends StatefulWidget {
   final bool haveCompletedList;
@@ -21,25 +20,29 @@ class ImportantPage extends StatefulWidget {
 }
 
 class _TaskListPageState extends State<ImportantPage> {
+  late TaskListModel defaultTaskList;
   late TaskListModel importantTaskList;
   bool isExpanded = false;
 
   @override
   void initState() {
-    importantTaskList = Provider.of<TaskListProvider>(context, listen: false)
+    defaultTaskList = Provider.of<TaskListProvider>(context, listen: false)
         .getTaskList(taskListID: '1');
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    importantTaskList = Provider.of<TaskListProvider>(context, listen: true)
+        .getTaskList(taskListID: '3');
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        iconTheme: IconThemeData(color: importantTaskList.themeColor),
+        title: Text(
           'Important',
           style: TextStyle(
             fontSize: 24,
-            color: MyTheme.pinkColor,
+            color: importantTaskList.themeColor,
           ),
         ),
         actions: [
@@ -69,6 +72,7 @@ class _TaskListPageState extends State<ImportantPage> {
                 return TaskListItem(
                   task: importantTasks[index].keys.first,
                   taskList: importantTasks[index].values.first,
+                  themeColor: importantTaskList.themeColor,
                 );
               },
             );
@@ -76,8 +80,9 @@ class _TaskListPageState extends State<ImportantPage> {
         ),
       ),
       floatingActionButton: AddFloatingButton(
-        taskList: importantTaskList,
+        taskList: defaultTaskList,
         isAddToImportant: true,
+        themeColor: importantTaskList.themeColor,
       ),
     );
   }

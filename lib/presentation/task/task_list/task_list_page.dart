@@ -6,7 +6,6 @@ import 'package:todo_app/presentation/lists/completed_list.dart';
 import 'package:todo_app/presentation/lists/incomplete_list.dart';
 import 'package:todo_app/presentation/components/popup_menu.dart';
 import 'package:todo_app/provider/task_list_provider.dart';
-import 'package:todo_app/themes.dart';
 
 class TaskListPage extends StatefulWidget {
   final bool haveCompletedList;
@@ -35,24 +34,21 @@ class _TaskListPageState extends State<TaskListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: (widget.haveCompletedList)
-            ? Consumer<TaskListProvider>(
-                builder: (context, taskListProvider, child) {
-                return Text(
-                  taskListProvider.getTaskList(taskListID: id).listName,
-                  style: const TextStyle(
-                    fontSize: 24,
-                    color: MyTheme.blueColor,
-                  ),
-                );
-              })
-            : const Text(
-                'Important',
-                style: TextStyle(
-                  fontSize: 24,
-                  color: MyTheme.pinkColor,
-                ),
-              ),
+        iconTheme: IconThemeData(
+            color: context
+                .watch<TaskListProvider>()
+                .getTaskList(taskListID: id)
+                .themeColor),
+        title: Consumer<TaskListProvider>(
+            builder: (context, taskListProvider, child) {
+          return Text(
+            taskListProvider.getTaskList(taskListID: id).listName,
+            style: TextStyle(
+              fontSize: 24,
+              color: widget.taskList.themeColor,
+            ),
+          );
+        }),
         actions: [
           PopupMenu(
             taskList: widget.taskList,
@@ -79,6 +75,7 @@ class _TaskListPageState extends State<TaskListPage> {
       ),
       floatingActionButton: AddFloatingButton(
         taskList: widget.taskList,
+        themeColor: widget.taskList.themeColor,
       ),
     );
   }

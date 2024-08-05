@@ -1,13 +1,15 @@
 import 'dart:core';
 
+import 'package:flutter/material.dart';
 import 'package:todo_app/models/task_model.dart';
+import 'package:todo_app/themes.dart';
 
 class TaskListModel {
   final String id;
   String listName;
   String? groupID;
   String? backgroundImage;
-  String? themeColor;
+  Color themeColor;
   List<TaskModel> tasks;
 
   TaskListModel({
@@ -15,7 +17,7 @@ class TaskListModel {
     required this.listName,
     this.groupID,
     this.backgroundImage,
-    this.themeColor,
+    this.themeColor = MyTheme.blueColor,
     List<TaskModel>? tasks,
   }) : tasks = tasks ?? [];
 
@@ -24,7 +26,7 @@ class TaskListModel {
     String? listName,
     String? groupID,
     String? backgroundImage,
-    String? themeColor,
+    Color? themeColor,
     List<TaskModel>? taskList,
   }) {
     return TaskListModel(

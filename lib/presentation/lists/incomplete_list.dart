@@ -20,6 +20,7 @@ class IncompleteList extends StatelessWidget {
         return TaskListItem(
           task: task,
           taskList: taskList,
+          themeColor: taskList.themeColor,
         );
       },
     );

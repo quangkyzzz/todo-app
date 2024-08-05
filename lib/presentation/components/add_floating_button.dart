@@ -5,6 +5,7 @@ import 'package:todo_app/provider/task_list_provider.dart';
 import 'package:todo_app/themes.dart';
 
 class AddFloatingButton extends StatelessWidget {
+  final Color themeColor;
   final TaskListModel taskList;
   final bool isAddToImportant;
   final bool isAddToMyDay;
@@ -14,12 +15,14 @@ class AddFloatingButton extends StatelessWidget {
     required this.taskList,
     this.isAddToMyDay = false,
     this.isAddToImportant = false,
+    required this.themeColor,
   });
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
+        backgroundColor: themeColor,
         shape: const CircleBorder(),
         padding: const EdgeInsets.all(8),
       ),
@@ -36,10 +39,12 @@ class AddFloatingButton extends StatelessWidget {
           },
         );
       },
-      child: const Icon(
+      child: Icon(
         Icons.add,
         size: 40,
-        color: MyTheme.whiteColor,
+        color: (themeColor == MyTheme.whiteColor)
+            ? MyTheme.blackColor
+            : MyTheme.whiteColor,
       ),
     );
   }

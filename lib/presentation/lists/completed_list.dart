@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/models/task_list_model.dart';
 import 'package:todo_app/models/task_model.dart';
 import 'package:todo_app/presentation/items/task_list_item.dart';
-import 'package:todo_app/themes.dart';
 
 class CompletedList extends StatefulWidget {
   final TaskListModel taskList;
@@ -44,9 +43,9 @@ class _CompletedListState extends State<CompletedList> {
         initiallyExpanded: true,
         title: Text(
           'Completed ${completedList.length}',
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 18,
-            color: MyTheme.blueColor,
+            color: widget.taskList.themeColor,
           ),
         ),
         onExpansionChanged: (bool expanded) {
@@ -66,6 +65,7 @@ class _CompletedListState extends State<CompletedList> {
               return TaskListItem(
                 task: task,
                 taskList: widget.taskList,
+                themeColor: widget.taskList.themeColor,
               );
             },
           )
