@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import 'package:todo_app/models/step_model.dart';
@@ -173,7 +175,8 @@ class TaskListProvider extends ChangeNotifier {
     TaskListModel originTaskList = getTaskList(taskListID: taskListID);
     List<TaskModel> newTasks = originTaskList.tasks.map((task) {
       return task.copyWith(
-        id: DateTime.now().millisecondsSinceEpoch.toString(),
+        id: (DateTime.now().millisecondsSinceEpoch + Random().nextInt(500))
+            .toString(),
       );
     }).toList();
     TaskListModel newTaskList = originTaskList.copyWith(

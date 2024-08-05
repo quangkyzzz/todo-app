@@ -371,6 +371,7 @@ class NormalBottomSheet extends StatelessWidget {
   }
 }
 
+//TODO: fix duplicate list when change task to important
 class SortByBottomSheet extends StatelessWidget {
   const SortByBottomSheet({super.key});
 
@@ -448,27 +449,43 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
               'Pick a theme',
               style: MyTheme.itemTextStyle,
             ),
-            Expanded(
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: MyTheme.colorThemeList.map((color) {
-                    return GestureDetector(
-                      onTap: () {},
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 8),
-                        child: Container(
-                          height: 32,
-                          width: 32,
-                          decoration: ShapeDecoration(
-                            shape: const CircleBorder(),
-                            color: color,
-                          ),
+            Row(
+              children: [
+                TextButton(
+                  onPressed: () {},
+                  child: const Text(
+                    'Color:',
+                    style: MyTheme.itemSmallTextStyle,
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: const Text(
+                    'Image:',
+                    style: MyTheme.itemSmallTextStyle,
+                  ),
+                ),
+              ],
+            ),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: MyTheme.colorThemeList.map((color) {
+                  return GestureDetector(
+                    onTap: () {},
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: Container(
+                        height: 32,
+                        width: 32,
+                        decoration: ShapeDecoration(
+                          shape: const CircleBorder(),
+                          color: color,
                         ),
                       ),
-                    );
-                  }).toList(),
-                ),
+                    ),
+                  );
+                }).toList(),
               ),
             ),
           ],
