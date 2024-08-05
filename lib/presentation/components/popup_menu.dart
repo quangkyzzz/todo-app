@@ -440,7 +440,7 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Container(
-        height: 100,
+        height: 120,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -449,21 +449,26 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
               style: MyTheme.itemTextStyle,
             ),
             Expanded(
-              child: ListView(
+              child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                      height: 32,
-                      width: 32,
-                      decoration: const ShapeDecoration(
-                        shape: CircleBorder(),
-                        color: MyTheme.redColor,
+                child: Row(
+                  children: MyTheme.colorThemeList.map((color) {
+                    return GestureDetector(
+                      onTap: () {},
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 8),
+                        child: Container(
+                          height: 32,
+                          width: 32,
+                          decoration: ShapeDecoration(
+                            shape: const CircleBorder(),
+                            color: color,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ],
+                    );
+                  }).toList(),
+                ),
               ),
             ),
           ],

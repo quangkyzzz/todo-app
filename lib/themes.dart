@@ -25,6 +25,26 @@ class MyTheme {
   static const Color pinkColor = Color.fromRGBO(202, 113, 153, 1);
   static const Color greenColor = Color.fromRGBO(134, 202, 145, 1);
   static const Color orangeColor = Color.fromRGBO(236, 115, 35, 1);
+  static const Color yellowColor = Color.fromRGBO(231, 197, 45, 1);
+  static const Color darkGreenColor = Color.fromRGBO(23, 131, 41, 1);
+  static const Color lightBlueColor = Color.fromRGBO(35, 236, 219, 1);
+  static const Color darkBlueColor = Color.fromRGBO(35, 72, 236, 1);
+  static const Color blackPinkColor = Color.fromRGBO(143, 12, 88, 1);
+
+  //TaksList theme color
+  static const List<Color> colorThemeList = [
+    whiteColor,
+    blueColor,
+    redColor,
+    pinkColor,
+    greenColor,
+    orangeColor,
+    yellowColor,
+    darkGreenColor,
+    lightBlueColor,
+    darkBlueColor,
+    blackPinkColor
+  ];
 
   //text style
   static const TextStyle titleTextStyle = TextStyle(
