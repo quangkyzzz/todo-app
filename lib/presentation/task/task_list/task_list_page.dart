@@ -32,51 +32,68 @@ class _TaskListPageState extends State<TaskListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(
-            color: context
-                .watch<TaskListProvider>()
-                .getTaskList(taskListID: id)
-                .themeColor),
-        title: Consumer<TaskListProvider>(
-            builder: (context, taskListProvider, child) {
-          return Text(
-            taskListProvider.getTaskList(taskListID: id).listName,
-            style: TextStyle(
-              fontSize: 24,
-              color: widget.taskList.themeColor,
-            ),
-          );
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        Consumer<TaskListProvider>(builder: (context, taskListProvider, child) {
+          TaskListModel tasklist =
+              taskListProvider.getTaskList(taskListID: widget.taskList.id);
+          return (tasklist.backgroundImage != null)
+              ? Image.file(
+                  tasklist.backgroundImage!,
+                  fit: BoxFit.fitHeight,
+                )
+              : const SizedBox();
         }),
-        actions: [
-          PopupMenu(
-            taskList: widget.taskList,
-            toRemove: (id == '1')
-                ? (['rename_list', 'hide_completed_tasks', 'delete_list'])
-                : (['hide_completed_tasks']),
-          )
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Consumer<TaskListProvider>(
-          builder: (context, taskListProvider, child) {
-            TaskListModel taskList =
-                taskListProvider.getTaskList(taskListID: id);
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            iconTheme: IconThemeData(
+                color: context
+                    .watch<TaskListProvider>()
+                    .getTaskList(taskListID: id)
+                    .themeColor),
+            title: Consumer<TaskListProvider>(
+                builder: (context, taskListProvider, child) {
+              return Text(
+                taskListProvider.getTaskList(taskListID: id).listName,
+                style: TextStyle(
+                  fontSize: 24,
+                  color: widget.taskList.themeColor,
+                ),
+              );
+            }),
+            actions: [
+              PopupMenu(
+                taskList: widget.taskList,
+                toRemove: (id == '1')
+                    ? (['rename_list', 'hide_completed_tasks', 'delete_list'])
+                    : (['hide_completed_tasks']),
+              )
+            ],
+          ),
+          body: SingleChildScrollView(
+            child: Consumer<TaskListProvider>(
+              builder: (context, taskListProvider, child) {
+                TaskListModel taskList =
+                    taskListProvider.getTaskList(taskListID: id);
 
-            return Column(children: [
-              IncompleteList(taskList: taskList),
-              ((widget.haveCompletedList))
-                  ? CompletedList(taskList: taskList)
-                  : const SizedBox()
-            ]);
-          },
+                return Column(children: [
+                  IncompleteList(taskList: taskList),
+                  ((widget.haveCompletedList))
+                      ? CompletedList(taskList: taskList)
+                      : const SizedBox()
+                ]);
+              },
+            ),
+          ),
+          floatingActionButton: AddFloatingButton(
+            taskList: widget.taskList,
+            themeColor: widget.taskList.themeColor,
+          ),
         ),
-      ),
-      floatingActionButton: AddFloatingButton(
-        taskList: widget.taskList,
-        themeColor: widget.taskList.themeColor,
-      ),
+      ],
     );
   }
 }

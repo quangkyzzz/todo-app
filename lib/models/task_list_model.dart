@@ -1,4 +1,5 @@
 import 'dart:core';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:todo_app/models/task_model.dart';
@@ -8,7 +9,7 @@ class TaskListModel {
   final String id;
   String listName;
   String? groupID;
-  String? backgroundImage;
+  File? backgroundImage;
   Color themeColor;
   List<TaskModel> tasks;
 
@@ -25,7 +26,7 @@ class TaskListModel {
     String? id,
     String? listName,
     String? groupID,
-    String? backgroundImage,
+    File? backgroundImage,
     Color? themeColor,
     List<TaskModel>? taskList,
   }) {

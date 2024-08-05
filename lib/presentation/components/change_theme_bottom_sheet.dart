@@ -1,5 +1,8 @@
 // ignore_for_file: sized_box_for_whitespace
 
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/models/task_list_model.dart';
@@ -54,7 +57,7 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'Pick a theme',
+              'Choose your theme',
               style: MyTheme.itemTextStyle,
             ),
             Row(
@@ -90,7 +93,30 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
                         );
                       }).toList(),
                     )
-                  : Text('image'),
+                  : TextButton(
+                      onPressed: () async {
+                        FilePickerResult? result =
+                            await FilePicker.platform.pickFiles(
+                          type: FileType.custom,
+                          allowedExtensions: [
+                            'jpg',
+                            'png',
+                          ],
+                        );
+                        if (result != null) {
+                          File file = File(result.files.single.path!);
+                          TaskListModel newTaskList =
+                              widget.taskList.copyWith(backgroundImage: file);
+                          taskListProvider.updateTaskList(
+                              taskListID: widget.taskList.id,
+                              newTaskList: newTaskList);
+                        }
+                      },
+                      child: const Text(
+                        'Choose from file',
+                        style: MyTheme.itemSmallTextStyle,
+                      ),
+                    ),
             ),
           ],
         ),
