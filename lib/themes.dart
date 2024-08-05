@@ -20,6 +20,7 @@ class MyTheme {
   static const Color blueColor = Color.fromRGBO(29, 155, 240, 1);
   static const Color whiteColor = Colors.white;
   static const Color greyColor = Colors.grey;
+  static const Color dardGreyColor = Color.fromARGB(255, 97, 96, 96);
   static const Color redColor = Color.fromRGBO(249, 25, 25, 1);
   static const Color blackColor = Colors.black;
   static const Color pinkColor = Color.fromRGBO(202, 113, 153, 1);
@@ -28,6 +29,7 @@ class MyTheme {
   static const Color yellowColor = Color.fromRGBO(231, 197, 45, 1);
   static const Color darkGreenColor = Color.fromRGBO(23, 131, 41, 1);
   static const Color lightBlueColor = Color.fromRGBO(35, 236, 219, 1);
+  static const Color lightGreyColor = Color.fromRGBO(102, 104, 104, 1);
   static const Color darkBlueColor = Color.fromRGBO(35, 72, 236, 1);
   static const Color blackPinkColor = Color.fromRGBO(143, 12, 88, 1);
 

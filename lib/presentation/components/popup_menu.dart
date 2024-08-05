@@ -12,6 +12,8 @@ import 'package:todo_app/routes.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/presentation/items/popup_item.dart';
 
+import 'change_theme_bottom_sheet.dart';
+
 class PopupMenu extends StatefulWidget {
   final TaskListModel taskList;
   final List<Map<String, dynamic>>? customListPopupMenuItem;
@@ -371,7 +373,6 @@ class NormalBottomSheet extends StatelessWidget {
   }
 }
 
-//TODO: fix duplicate list when change task to important
 class SortByBottomSheet extends StatelessWidget {
   const SortByBottomSheet({super.key});
 
@@ -423,73 +424,6 @@ class SortByBottomSheet extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class ChangeThemeBottomSheet extends StatefulWidget {
-  const ChangeThemeBottomSheet({super.key});
-
-  @override
-  State<ChangeThemeBottomSheet> createState() => _ChangeThemeBottomSheetState();
-}
-
-class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Container(
-        height: 120,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Pick a theme',
-              style: MyTheme.itemTextStyle,
-            ),
-            Row(
-              children: [
-                TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    'Color:',
-                    style: MyTheme.itemSmallTextStyle,
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    'Image:',
-                    style: MyTheme.itemSmallTextStyle,
-                  ),
-                ),
-              ],
-            ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: MyTheme.colorThemeList.map((color) {
-                  return GestureDetector(
-                    onTap: () {},
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: Container(
-                        height: 32,
-                        width: 32,
-                        decoration: ShapeDecoration(
-                          shape: const CircleBorder(),
-                          color: color,
-                        ),
-                      ),
-                    ),
-                  );
-                }).toList(),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
