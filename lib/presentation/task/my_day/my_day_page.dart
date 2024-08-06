@@ -37,10 +37,15 @@ class _MyDayPageState extends State<MyDayPage> {
     return Stack(
       fit: StackFit.expand,
       children: [
-        Image.asset(
-          AppConfigs.backGroundImage,
-          fit: BoxFit.fitHeight,
-        ),
+        (myDayTaskList.backgroundImage == null)
+            ? Image.asset(
+                AppConfigs.backGroundImage,
+                fit: BoxFit.fitHeight,
+              )
+            : Image.file(
+                myDayTaskList.backgroundImage!,
+                fit: BoxFit.fitHeight,
+              ),
         Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(

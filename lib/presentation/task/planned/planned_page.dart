@@ -79,113 +79,128 @@ class _PlannedPageState extends State<PlannedPage> {
   Widget build(BuildContext context) {
     plannedTaskList = Provider.of<TaskListProvider>(context, listen: true)
         .getTaskList(taskListID: '4');
-    return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(color: plannedTaskList.themeColor),
-        title: Text(
-          'Planned',
-          style: TextStyle(
-            fontSize: 24,
-            color: plannedTaskList.themeColor,
-          ),
-        ),
-        actions: [
-          PopupMenu(
-            taskList: plannedTaskList,
-            toRemove: const [
-              'sort_by',
-              'reorder',
-              'turn_on_suggestions',
-              'duplicate_list',
-              'delete_list',
-              'rename_list',
-              'hide_completed_tasks'
-            ],
-          )
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 48),
-
-            //popup menu
-            PopupMenuButton(
-              offset: const Offset(0, 48),
-              itemBuilder: (BuildContext context) {
-                return listPopupMennu.map((item) {
-                  return PopupMenuItem(
-                    onTap: item['onTap'],
-                    child: PopupItem(
-                      text: item['text'],
-                      icon: item['icon'],
-                    ),
-                  );
-                }).toList();
-              },
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: MyTheme.backgroundGreyColor,
-                  borderRadius: BorderRadius.circular(6),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      Icons.list,
-                      size: 32,
-                      color: plannedTaskList.themeColor,
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      listPopupMennu[plannedState]['text'],
-                      style: TextStyle(
-                          fontSize: 18, color: plannedTaskList.themeColor),
-                    ),
-                  ],
-                ),
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        (plannedTaskList.backgroundImage != null)
+            ? Image.file(
+                plannedTaskList.backgroundImage!,
+                fit: BoxFit.fitHeight,
+              )
+            : const SizedBox(),
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            iconTheme: IconThemeData(color: plannedTaskList.themeColor),
+            title: Text(
+              'Planned',
+              style: TextStyle(
+                fontSize: 24,
+                color: plannedTaskList.themeColor,
               ),
             ),
-            const SizedBox(height: 18),
+            actions: [
+              PopupMenu(
+                taskList: plannedTaskList,
+                toRemove: const [
+                  'sort_by',
+                  'reorder',
+                  'turn_on_suggestions',
+                  'duplicate_list',
+                  'delete_list',
+                  'rename_list',
+                  'hide_completed_tasks'
+                ],
+              )
+            ],
+          ),
+          body: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 48),
 
-            //task list
-            Consumer<TaskListProvider>(
-              builder: (context, taskListProvider, child) {
-                List<Map<TaskModel, TaskListModel>> plannedTasks = [];
-                switch (plannedState) {
-                  case 0:
-                    plannedTasks = taskListProvider.getPlannedOverdueTask();
-                  case 1:
-                    plannedTasks = taskListProvider.getPlannedTodayTask();
-                  case 2:
-                    plannedTasks = taskListProvider.getPlannedTomorrowTask();
-                  case 3:
-                    plannedTasks = taskListProvider.getPlannedThisWeekTask();
-                  case 4:
-                    plannedTasks = taskListProvider.getPlannedLaterTask();
-                  case 5:
-                    plannedTasks = taskListProvider.getPlannedTask();
-                }
+                //popup menu
+                PopupMenuButton(
+                  offset: const Offset(0, 48),
+                  itemBuilder: (BuildContext context) {
+                    return listPopupMennu.map((item) {
+                      return PopupMenuItem(
+                        onTap: item['onTap'],
+                        child: PopupItem(
+                          text: item['text'],
+                          icon: item['icon'],
+                        ),
+                      );
+                    }).toList();
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: MyTheme.backgroundGreyColor,
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.list,
+                          size: 32,
+                          color: plannedTaskList.themeColor,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          listPopupMennu[plannedState]['text'],
+                          style: TextStyle(
+                              fontSize: 18, color: plannedTaskList.themeColor),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 18),
 
-                return ListView.builder(
-                  shrinkWrap: true,
-                  physics: const ClampingScrollPhysics(),
-                  itemCount: plannedTasks.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return TaskListItem(
-                      task: plannedTasks[index].keys.first,
-                      taskList: plannedTasks[index].values.first,
-                      themeColor: plannedTaskList.themeColor,
+                //task list
+                Consumer<TaskListProvider>(
+                  builder: (context, taskListProvider, child) {
+                    List<Map<TaskModel, TaskListModel>> plannedTasks = [];
+                    switch (plannedState) {
+                      case 0:
+                        plannedTasks = taskListProvider.getPlannedOverdueTask();
+                      case 1:
+                        plannedTasks = taskListProvider.getPlannedTodayTask();
+                      case 2:
+                        plannedTasks =
+                            taskListProvider.getPlannedTomorrowTask();
+                      case 3:
+                        plannedTasks =
+                            taskListProvider.getPlannedThisWeekTask();
+                      case 4:
+                        plannedTasks = taskListProvider.getPlannedLaterTask();
+                      case 5:
+                        plannedTasks = taskListProvider.getPlannedTask();
+                    }
+
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      physics: const ClampingScrollPhysics(),
+                      itemCount: plannedTasks.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return TaskListItem(
+                          task: plannedTasks[index].keys.first,
+                          taskList: plannedTasks[index].values.first,
+                          themeColor: plannedTaskList.themeColor,
+                        );
+                      },
                     );
                   },
-                );
-              },
+                ),
+              ],
             ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }
