@@ -52,7 +52,7 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Container(
-        height: 120,
+        height: 132,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
