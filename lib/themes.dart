@@ -98,6 +98,11 @@ class MyTheme {
     fontWeight: FontWeight.w400,
     color: MyTheme.greyColor,
   );
+  static const TextStyle itemExtraSmallRedTextStyle = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    color: MyTheme.redColor,
+  );
 
   //divider style
   static const Divider dividerGreyStyle = Divider(

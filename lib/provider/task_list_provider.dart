@@ -118,7 +118,8 @@ class TaskListProvider extends ChangeNotifier {
       groupID: '222',
     ),
   ];
-
+  ////////////////////
+  //Ultility function
   bool isTheSameWeekAsToday(DateTime date) {
     DateTime today = DateTime(
       DateTime.now().year,
@@ -344,6 +345,44 @@ class TaskListProvider extends ChangeNotifier {
     return result;
   }
 
+  int countIncompletedTaskByID({required String taskListID}) {
+    int count = 0;
+    TaskListModel taskList = getTaskList(taskListID: taskListID);
+    for (var task in taskList.tasks) {
+      if (!task.isCompleted) count++;
+    }
+    return count;
+  }
+
+  int countIncompletedMyDayTask() {
+    int count = 0;
+    ListTaskMap taskList = getOnMyDayTask();
+    for (var task in taskList) {
+      if (!task.keys.first.isCompleted) count++;
+    }
+    return count;
+  }
+
+  int countIncompletedImportantTask() {
+    int count = 0;
+    ListTaskMap taskList = getImportantTask();
+    for (var task in taskList) {
+      if (!task.keys.first.isCompleted) count++;
+    }
+    return count;
+  }
+
+  int countIncompletedPlannedTask() {
+    int count = 0;
+    ListTaskMap taskList = getPlannedTask();
+    for (var task in taskList) {
+      if (!task.keys.first.isCompleted) count++;
+    }
+    return count;
+  }
+
+  ////////////////////////
+  //Planned Task Function
   ListTaskMap getPlannedTask() {
     ListTaskMap result = [];
     ListTaskMap allTask = getAllTaskWithTaskList();
@@ -438,41 +477,5 @@ class TaskListProvider extends ChangeNotifier {
       }
     }
     return result;
-  }
-
-  int countIncompletedTaskByID({required String taskListID}) {
-    int count = 0;
-    TaskListModel taskList = getTaskList(taskListID: taskListID);
-    for (var task in taskList.tasks) {
-      if (!task.isCompleted) count++;
-    }
-    return count;
-  }
-
-  int countIncompletedMyDayTask() {
-    int count = 0;
-    ListTaskMap taskList = getOnMyDayTask();
-    for (var task in taskList) {
-      if (!task.keys.first.isCompleted) count++;
-    }
-    return count;
-  }
-
-  int countIncompletedImportantTask() {
-    int count = 0;
-    ListTaskMap taskList = getImportantTask();
-    for (var task in taskList) {
-      if (!task.keys.first.isCompleted) count++;
-    }
-    return count;
-  }
-
-  int countIncompletedPlannedTask() {
-    int count = 0;
-    ListTaskMap taskList = getPlannedTask();
-    for (var task in taskList) {
-      if (!task.keys.first.isCompleted) count++;
-    }
-    return count;
   }
 }

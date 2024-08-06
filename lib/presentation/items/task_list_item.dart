@@ -179,12 +179,23 @@ class _TaskListItemState extends State<TaskListItem> {
                           Builder(builder: (context) {
                             if (dueDate != null) {
                               bool tempFirstIcon = isFirstIcon;
+                              bool isOverDue = false;
+                              DateTime today = DateTime(
+                                DateTime.now().year,
+                                DateTime.now().month,
+                                DateTime.now().day,
+                              );
+                              (dueDate!.isBefore(today))
+                                  ? isOverDue = true
+                                  : isOverDue = false;
                               isFirstIcon = false;
+
                               return ItemBottomIcon(
                                 textIcon: Icons.calendar_today_outlined,
                                 text:
                                     '${DateFormat('E, MMM d').format(dueDate!)}',
                                 isFirstIcon: tempFirstIcon,
+                                isOverdue: isOverDue,
                               );
                             } else {
                               return const SizedBox();
@@ -266,6 +277,7 @@ class ItemBottomIcon extends StatelessWidget {
   final IconData? textIcon;
   final String? text;
   final IconData? icon;
+  final bool isOverdue;
   final bool isFirstIcon;
   const ItemBottomIcon({
     required this.isFirstIcon,
@@ -273,6 +285,7 @@ class ItemBottomIcon extends StatelessWidget {
     this.text,
     this.icon,
     this.textIcon,
+    this.isOverdue = false,
   });
 
   @override
@@ -293,13 +306,15 @@ class ItemBottomIcon extends StatelessWidget {
                   ? Icon(
                       textIcon,
                       size: 12,
-                      color: MyTheme.greyColor,
+                      color: (isOverdue) ? MyTheme.redColor : MyTheme.greyColor,
                     )
                   : const SizedBox(),
               const SizedBox(width: 2),
               Text(
                 text!,
-                style: MyTheme.itemExtraSmallGreyTextStyle,
+                style: (isOverdue)
+                    ? MyTheme.itemExtraSmallRedTextStyle
+                    : MyTheme.itemExtraSmallGreyTextStyle,
               ),
             ],
           )
