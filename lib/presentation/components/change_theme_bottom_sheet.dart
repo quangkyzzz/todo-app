@@ -57,7 +57,7 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'Choose your theme',
+              'Custom your theme',
               style: MyTheme.itemTextStyle,
             ),
             Row(

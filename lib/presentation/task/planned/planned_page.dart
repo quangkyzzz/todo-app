@@ -16,36 +16,62 @@ class PlannedPage extends StatefulWidget {
 }
 
 class _PlannedPageState extends State<PlannedPage> {
+  late List<Map<String, dynamic>> listPopupMennu;
+  int plannedState = 5;
   late TaskListModel plannedTaskList;
-  List<Map<String, dynamic>> listPopupMennu = [
-    {
-      'text': 'Overdue',
-      'icon': Icons.event_busy_outlined,
-    },
-    {
-      'text': 'Today',
-      'icon': Icons.today_outlined,
-    },
-    {
-      'text': 'Tomorrow',
-      'icon': Icons.event_outlined,
-    },
-    {
-      'text': 'This week',
-      'icon': Icons.date_range_outlined,
-    },
-    {
-      'text': 'Later',
-      'icon': Icons.calendar_month_outlined,
-    },
-    {
-      'text': 'All planned',
-      'icon': Icons.event_note_outlined,
-    },
-  ];
+
+  void onPlannedStateChange(int value) {
+    setState(() {
+      plannedState = value;
+    });
+  }
 
   @override
   void initState() {
+    listPopupMennu = [
+      {
+        'text': 'Overdue',
+        'icon': Icons.event_busy_outlined,
+        'onTap': () {
+          onPlannedStateChange(0);
+        }
+      },
+      {
+        'text': 'Today',
+        'icon': Icons.today_outlined,
+        'onTap': () {
+          onPlannedStateChange(1);
+        }
+      },
+      {
+        'text': 'Tomorrow',
+        'icon': Icons.event_outlined,
+        'onTap': () {
+          onPlannedStateChange(2);
+        }
+      },
+      {
+        'text': 'This week',
+        'icon': Icons.date_range_outlined,
+        'onTap': () {
+          onPlannedStateChange(3);
+        }
+      },
+      {
+        'text': 'Later',
+        'icon': Icons.calendar_month_outlined,
+        'onTap': () {
+          onPlannedStateChange(4);
+        }
+      },
+      {
+        'text': 'All planned',
+        'icon': Icons.event_note_outlined,
+        'onTap': () {
+          onPlannedStateChange(5);
+        }
+      },
+    ];
     super.initState();
   }
 
@@ -90,6 +116,7 @@ class _PlannedPageState extends State<PlannedPage> {
               itemBuilder: (BuildContext context) {
                 return listPopupMennu.map((item) {
                   return PopupMenuItem(
+                    onTap: item['onTap'],
                     child: PopupItem(
                       text: item['text'],
                       icon: item['icon'],
@@ -113,7 +140,7 @@ class _PlannedPageState extends State<PlannedPage> {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      'All planned',
+                      listPopupMennu[plannedState]['text'],
                       style: TextStyle(
                           fontSize: 18, color: plannedTaskList.themeColor),
                     ),
@@ -126,8 +153,22 @@ class _PlannedPageState extends State<PlannedPage> {
             //task list
             Consumer<TaskListProvider>(
               builder: (context, taskListProvider, child) {
-                List<Map<TaskModel, TaskListModel>> plannedTasks =
-                    taskListProvider.getPlannedTask();
+                List<Map<TaskModel, TaskListModel>> plannedTasks = [];
+                switch (plannedState) {
+                  case 0:
+                    plannedTasks = taskListProvider.getPlannedOverdueTask();
+                  case 1:
+                    plannedTasks = taskListProvider.getPlannedTodayTask();
+                  case 2:
+                    plannedTasks = taskListProvider.getPlannedTomorrowTask();
+                  case 3:
+                    plannedTasks = taskListProvider.getPlannedThisWeekTask();
+                  case 4:
+                    plannedTasks = taskListProvider.getPlannedLaterTask();
+                  case 5:
+                    plannedTasks = taskListProvider.getPlannedTask();
+                }
+
                 return ListView.builder(
                   shrinkWrap: true,
                   physics: const ClampingScrollPhysics(),
