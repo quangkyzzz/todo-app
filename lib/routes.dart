@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/models/task_list_model.dart';
+import 'package:todo_app/presentation/auth/signup_page.dart';
 import 'package:todo_app/presentation/home/home_page.dart';
+import 'package:todo_app/presentation/auth/login_page.dart';
 import 'package:todo_app/presentation/task/flagged_email/flagged_email_page.dart';
 import 'package:todo_app/models/task_model.dart';
 import 'package:todo_app/presentation/task/important/important_page.dart';
@@ -13,8 +16,11 @@ import 'package:todo_app/presentation/task/task_list/task_list_page.dart';
 import 'package:todo_app/presentation/task/task_page/task_page.dart';
 import 'package:todo_app/presentation/settings/settings_page.dart';
 import 'package:todo_app/presentation/user_profile/user_profile_page.dart';
+import 'package:todo_app/provider/user_provider.dart';
 
 const initialRoute = '/home';
+const loginRoute = '/login';
+const signupRoute = '/signup';
 const userProfileRoute = '/home/user_profile';
 const taskListRoute = '/home/task_list';
 const searchRoute = '/home/search';
@@ -28,7 +34,17 @@ const taskRoute = '/task_list/task';
 const noteEditRoute = '/task/note_edit';
 
 var allRoute = {
-  initialRoute: (context) => const HomePage(),
+  initialRoute: (context) {
+    bool isLogin =
+        Provider.of<UserProvider>(context, listen: true).getIsLoginStatus();
+    if (isLogin) {
+      return const HomePage();
+    } else {
+      return const LoginPage();
+    }
+  },
+  loginRoute: (context) => const LoginPage(),
+  signupRoute: (context) => const SignUpPage(),
   userProfileRoute: (context) => const UserProfilePage(),
   taskListRoute: (context) {
     Map<dynamic, dynamic> arg =

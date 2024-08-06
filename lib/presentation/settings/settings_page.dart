@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/app_configs.dart';
 import 'package:todo_app/provider/user_provider.dart';
+import 'package:todo_app/routes.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/presentation/settings/settings_list.dart';
 
@@ -71,7 +72,12 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                         ),
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Provider.of<UserProvider>(context, listen: false)
+                                .logout();
+                            Navigator.pushNamedAndRemoveUntil(
+                                context, initialRoute, (route) => false);
+                          },
                           child: Container(
                             padding: const EdgeInsets.only(top: 8, bottom: 18),
                             child: const Text(

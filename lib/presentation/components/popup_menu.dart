@@ -412,7 +412,7 @@ class SortByBottomSheet extends StatelessWidget {
           InkWell(
             onTap: () {},
             child: const PopupItem(
-              text: 'Alphabetiaclly',
+              text: 'Alphabetically',
               icon: Icons.import_export_outlined,
             ),
           ),
