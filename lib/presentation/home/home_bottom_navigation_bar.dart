@@ -14,6 +14,8 @@ class HomePageBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     GroupProvider groupProvider =
         Provider.of<GroupProvider>(context, listen: false);
     return Padding(
@@ -21,8 +23,8 @@ class HomePageBottomNavigationBar extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            height: 36,
-            width: 352,
+            height: screenHeight * 0.05,
+            width: screenWidth * 0.85,
             child: InkWell(
               onTap: () async {
                 String? title = await showTextEditDialog(

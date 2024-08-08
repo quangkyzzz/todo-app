@@ -12,7 +12,7 @@ class TaskModel {
   List<StepModel>? stepList;
   DateTime? dueDate;
   DateTime? remindTime;
-  String? repeatFrequency;
+  Duration? repeatFrequency;
   List<String>? filePath;
   String? note;
 
@@ -44,7 +44,6 @@ class TaskModel {
     note = copyTask.note;
   }
 
-//TODO: fix repeat time to DatetimeComponent
   TaskModel copyWith({
     String? id,
     String? title,
@@ -55,7 +54,7 @@ class TaskModel {
     List<StepModel>? stepList,
     DateTime? dueDate,
     DateTime? remindTime,
-    String? repeatFrequency,
+    Duration? repeatFrequency,
     List<String>? filePath,
     String? note,
   }) {

@@ -1,3 +1,5 @@
+// ignore_for_file: sized_box_for_whitespace
+
 import 'dart:async';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/models/step_model.dart';
 import 'package:todo_app/models/task_list_model.dart';
 import 'package:todo_app/notification_service.dart';
+import 'package:todo_app/presentation/components/show_custom_repeat_time_dialog.dart';
 import 'package:todo_app/presentation/task/task_page/file_item.dart';
 import 'package:todo_app/provider/group_provider.dart';
 import 'package:todo_app/provider/settings_provider.dart';
@@ -46,36 +49,11 @@ class _TaskPageState extends State<TaskPage> {
   late List<StepModel>? steps;
   late DateTime? remindTime;
   late DateTime? dueDate;
-  late String? repeatFrequency;
+  late Duration? repeatFrequency;
   late List<String>? filePaths;
   late final TextEditingController _stepController;
   late final TextEditingController _taskNameController;
-  List<Map<String, dynamic>> listPopupItem = [
-    {
-      'text': 'Daily',
-      'icon': Icons.calendar_today_outlined,
-    },
-    {
-      'text': 'Weekdays',
-      'icon': Icons.calendar_today_outlined,
-    },
-    {
-      'text': 'Weekly',
-      'icon': Icons.calendar_today_outlined,
-    },
-    {
-      'text': 'Monthly',
-      'icon': Icons.calendar_today_outlined,
-    },
-    {
-      'text': 'Yearly',
-      'icon': Icons.calendar_today_outlined,
-    },
-    {
-      'text': 'Custom',
-      'icon': Icons.calendar_today_outlined,
-    },
-  ];
+  late List<Map<String, dynamic>> listRepeatPopupItem;
 
   onTapAddToMyDay(BuildContext context, {bool isDisable = false}) {
     setState(() {
@@ -166,7 +144,8 @@ class _TaskPageState extends State<TaskPage> {
           DateTime.now().day,
         );
         if ((settingsProvider.settings.isShowDueToday) &&
-            (dueDate!.isAtSameMomentAs(today))) {
+            (dueDate!.isAtSameMomentAs(today)) &&
+            (!isOnMyDay)) {
           onTapAddToMyDay(context);
         }
       }
@@ -189,9 +168,11 @@ class _TaskPageState extends State<TaskPage> {
           0,
           0,
         ),
-        items: listPopupItem.map((item) {
+        items: listRepeatPopupItem.map((item) {
           return PopupMenuItem(
-            onTap: () {},
+            onTap: () {
+              item['onTap'](context);
+            },
             child: PopupItem(
               text: item['text'],
               icon: item['icon'],
@@ -208,7 +189,7 @@ class _TaskPageState extends State<TaskPage> {
 
   onTapAddFile(BuildContext context) async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
-      allowMultiple: false,
+      allowMultiple: true,
     );
     if (result != null) {
       setState(() {
@@ -268,6 +249,63 @@ class _TaskPageState extends State<TaskPage> {
     filePaths = widget.task.filePath;
     _taskNameController = TextEditingController(text: widget.task.title);
     _stepController = TextEditingController();
+    listRepeatPopupItem = [
+      {
+        'text': 'Daily',
+        'icon': Icons.calendar_today_outlined,
+        'onTap': (BuildContext context) {
+          setState(() {
+            repeatFrequency = const Duration(days: 1);
+          });
+        },
+      },
+      {
+        'text': 'Weekdays',
+        'icon': Icons.calendar_today_outlined,
+        'onTap': (BuildContext context) {
+          setState(() {
+            repeatFrequency = const Duration(hours: 1);
+          });
+        },
+      },
+      {
+        'text': 'Weekly',
+        'icon': Icons.calendar_today_outlined,
+        'onTap': (BuildContext context) {
+          setState(() {
+            repeatFrequency = const Duration(days: 7);
+          });
+        },
+      },
+      {
+        'text': 'Monthly',
+        'icon': Icons.calendar_today_outlined,
+        'onTap': (BuildContext context) {
+          setState(() {
+            repeatFrequency = const Duration(days: 30);
+          });
+        }
+      },
+      {
+        'text': 'Yearly',
+        'icon': Icons.calendar_today_outlined,
+        'onTap': (BuildContext context) {
+          setState(() {
+            repeatFrequency = const Duration(days: 365);
+          });
+        },
+      },
+      {
+        'text': 'Custom',
+        'icon': Icons.calendar_today_outlined,
+        'onTap': (BuildContext context) async {
+          Duration? result = await showCustomRepeatTimeDialog(context);
+          setState(() {
+            repeatFrequency = result;
+          });
+        },
+      },
+    ];
     super.initState();
   }
 
@@ -309,7 +347,8 @@ class _TaskPageState extends State<TaskPage> {
         'icon': Icons.repeat_outlined,
         'key': key,
         'text': 'Repeat',
-        'activeText': 'active',
+        'activeText':
+            'Repeat every ${(repeatFrequency ?? const Duration(days: 1)).inDays} days',
         'onTap': onTapRepeat,
       },
     ];

@@ -27,7 +27,7 @@ class TaskListProvider extends ChangeNotifier {
           isOnMyDay: true,
           createDate: DateTime(2024, 6, 2),
           dueDate: DateTime(2024, 6, 2),
-          repeatFrequency: 'gg',
+          repeatFrequency: const Duration(days: 1),
         ),
         TaskModel(
           id: '1',
@@ -59,7 +59,7 @@ class TaskListProvider extends ChangeNotifier {
           remindTime: DateTime(2024, 9, 1),
           createDate: DateTime(2024, 6, 2),
           dueDate: DateTime(2024, 6, 2),
-          repeatFrequency: 'gg',
+          repeatFrequency: const Duration(days: 7),
         ),
       ],
     ),

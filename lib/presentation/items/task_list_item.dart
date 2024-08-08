@@ -36,6 +36,7 @@ class _TaskListItemState extends State<TaskListItem> {
   late List<StepModel>? steps;
   late DateTime? dueDate;
   late DateTime? notiTime;
+  late Duration? repeatFrequency;
   late List<String>? filePath;
   late String? note;
   late int countCompletedStep;
@@ -50,6 +51,7 @@ class _TaskListItemState extends State<TaskListItem> {
     steps = widget.task.stepList;
     dueDate = widget.task.dueDate;
     notiTime = widget.task.remindTime;
+    repeatFrequency = widget.task.repeatFrequency;
     filePath = widget.task.filePath;
     note = widget.task.note;
     countCompletedStep = 0;
@@ -72,6 +74,7 @@ class _TaskListItemState extends State<TaskListItem> {
     steps = widget.task.stepList;
     dueDate = widget.task.dueDate;
     notiTime = widget.task.remindTime;
+    repeatFrequency = widget.task.repeatFrequency;
     filePath = widget.task.filePath;
     note = widget.task.note;
     countCompletedStep = 0;
@@ -91,6 +94,7 @@ class _TaskListItemState extends State<TaskListItem> {
         (steps == null) &&
         (dueDate == null) &&
         (notiTime == null) &&
+        (repeatFrequency == null) &&
         (filePath == null) &&
         (note == null));
     return Container(
@@ -207,8 +211,22 @@ class _TaskListItemState extends State<TaskListItem> {
                               isFirstIcon = false;
                               return ItemBottomIcon(
                                 textIcon: Icons.notifications_outlined,
-                                text:
-                                    '${DateFormat('E, MMM d').format(notiTime!)}',
+                                text: ((dueDate == null) && (!isOnMyDay))
+                                    ? '${DateFormat('E, MMM d').format(notiTime!)}'
+                                    : '',
+                                isFirstIcon: tempFirstIcon,
+                              );
+                            } else {
+                              return const SizedBox();
+                            }
+                          }),
+                          Builder(builder: (context) {
+                            if (repeatFrequency != null) {
+                              bool tempFirstIcon = isFirstIcon;
+                              isFirstIcon = false;
+                              return ItemBottomIcon(
+                                textIcon: Icons.repeat_outlined,
+                                text: '',
                                 isFirstIcon: tempFirstIcon,
                               );
                             } else {
