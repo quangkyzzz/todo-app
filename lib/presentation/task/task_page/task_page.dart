@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +19,7 @@ import 'task_edit_row.dart';
 import 'task_page_item.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
+import 'package:open_filex/open_filex.dart';
 
 class TaskPage extends StatefulWidget {
   final TaskModel task;
@@ -440,6 +440,9 @@ class _TaskPageState extends State<TaskPage> {
                       children: filePaths!.map((path) {
                         return FileItem(
                           filePath: path,
+                          onTap: () {
+                            OpenFilex.open(path);
+                          },
                           onClose: () {
                             setState(() {
                               filePaths!.remove(path);

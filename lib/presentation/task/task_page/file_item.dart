@@ -8,10 +8,12 @@ import 'package:path/path.dart' as p;
 class FileItem extends StatelessWidget {
   final String filePath;
   final Function onClose;
+  final Function onTap;
   const FileItem({
     super.key,
     required this.filePath,
     required this.onClose,
+    required this.onTap,
   });
 
   String fileSizeConvert(int size) {
@@ -53,20 +55,25 @@ class FileItem extends StatelessWidget {
           const SizedBox(
             width: 8,
           ),
-          Container(
-            width: screenWidth * 0.7,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  p.basename(filePath),
-                  style: MyTheme.itemSmallTextStyle,
-                ),
-                Text(
-                  fileSizeConvert(file.lengthSync()),
-                  style: MyTheme.itemExtraSmallGreyTextStyle,
-                ),
-              ],
+          InkWell(
+            onTap: () {
+              onTap();
+            },
+            child: Container(
+              width: screenWidth * 0.7,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    p.basename(filePath),
+                    style: MyTheme.itemSmallTextStyle,
+                  ),
+                  Text(
+                    fileSizeConvert(file.lengthSync()),
+                    style: MyTheme.itemExtraSmallGreyTextStyle,
+                  ),
+                ],
+              ),
             ),
           ),
           const Spacer(),
