@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -45,7 +47,7 @@ class _TaskPageState extends State<TaskPage> {
   late DateTime? remindTime;
   late DateTime? dueDate;
   late String? repeatFrequency;
-  late List<String>? filePath;
+  late List<String>? filePaths;
   late final TextEditingController _stepController;
   late final TextEditingController _taskNameController;
   List<Map<String, dynamic>> listPopupItem = [
@@ -210,13 +212,13 @@ class _TaskPageState extends State<TaskPage> {
     );
     if (result != null) {
       setState(() {
-        if (filePath == null) {
-          filePath = [];
-          filePath!.addAll(
+        if (filePaths == null) {
+          filePaths = [];
+          filePaths!.addAll(
             result.files.map((file) => file.path!).toList(),
           );
         } else {
-          filePath!.addAll(
+          filePaths!.addAll(
             result.files.map((file) => file.path!).toList(),
           );
         }
@@ -263,7 +265,7 @@ class _TaskPageState extends State<TaskPage> {
     dueDate = widget.task.dueDate;
     steps = widget.task.stepList;
     repeatFrequency = widget.task.repeatFrequency;
-    filePath = widget.task.filePath;
+    filePaths = widget.task.filePath;
     _taskNameController = TextEditingController(text: widget.task.title);
     _stepController = TextEditingController();
     super.initState();
@@ -332,7 +334,7 @@ class _TaskPageState extends State<TaskPage> {
             dueDate: dueDate,
             stepList: steps,
             repeatFrequency: repeatFrequency,
-            filePath: filePath,
+            filePath: filePaths,
             note: widget.task.note,
           );
           taskListProvider.updateTask(
@@ -433,10 +435,20 @@ class _TaskPageState extends State<TaskPage> {
               ),
               //////////////////////////
               //Add and edit file button
-              (filePath != null)
+              (filePaths != null)
                   ? Column(
-                      children: filePath!.map((path) {
-                        return FileItem(filePath: path);
+                      children: filePaths!.map((path) {
+                        return FileItem(
+                          filePath: path,
+                          onClose: () {
+                            setState(() {
+                              filePaths!.remove(path);
+                            });
+                            if (filePaths!.isEmpty) {
+                              filePaths = null;
+                            }
+                          },
+                        );
                       }).toList(),
                     )
                   : const SizedBox(),
