@@ -1,8 +1,10 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/models/step_model.dart';
 import 'package:todo_app/models/task_list_model.dart';
 import 'package:todo_app/notification_service.dart';
+import 'package:todo_app/presentation/task/task_page/file_item.dart';
 import 'package:todo_app/provider/group_provider.dart';
 import 'package:todo_app/provider/settings_provider.dart';
 import 'package:todo_app/provider/task_list_provider.dart';
@@ -43,7 +45,7 @@ class _TaskPageState extends State<TaskPage> {
   late DateTime? remindTime;
   late DateTime? dueDate;
   late String? repeatFrequency;
-  late String? filePath;
+  late List<String>? filePath;
   late final TextEditingController _stepController;
   late final TextEditingController _taskNameController;
   List<Map<String, dynamic>> listPopupItem = [
@@ -202,48 +204,22 @@ class _TaskPageState extends State<TaskPage> {
     }
   }
 
-  onTapAddFile(BuildContext context, {bool isDisable = false}) {
-    if (!isDisable) {
-      showModalBottomSheet(
-        showDragHandle: true,
-        constraints: const BoxConstraints(
-          maxHeight: 198,
-        ),
-        context: context,
-        builder: (BuildContext context) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Upload from',
-                style: MyTheme.itemTextStyle,
-              ),
-              const SizedBox(height: 8),
-              TaskPageItem(
-                task: widget.task,
-                taskList: widget.taskList,
-                isActive: false,
-                icon: Icons.folder_outlined,
-                text: 'Device files',
-                activeText: 'active',
-                onTap: ({bool isDisable = false}) {},
-              ),
-              TaskPageItem(
-                task: widget.task,
-                taskList: widget.taskList,
-                isActive: false,
-                icon: Icons.photo_camera_outlined,
-                text: 'Camera',
-                activeText: 'active',
-                onTap: ({bool isDisable = false}) {},
-              ),
-            ],
-          );
-        },
-      );
-    } else {
+  onTapAddFile(BuildContext context) async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      allowMultiple: false,
+    );
+    if (result != null) {
       setState(() {
-        filePath = null;
+        if (filePath == null) {
+          filePath = [];
+          filePath!.addAll(
+            result.files.map((file) => file.path!).toList(),
+          );
+        } else {
+          filePath!.addAll(
+            result.files.map((file) => file.path!).toList(),
+          );
+        }
       });
     }
   }
@@ -333,13 +309,6 @@ class _TaskPageState extends State<TaskPage> {
         'text': 'Repeat',
         'activeText': 'active',
         'onTap': onTapRepeat,
-      },
-      {
-        'isActive': false,
-        'icon': Icons.attach_file_outlined,
-        'text': 'Add file',
-        'activeText': 'active',
-        'onTap': onTapAddFile,
       },
     ];
 
@@ -462,9 +431,29 @@ class _TaskPageState extends State<TaskPage> {
                   );
                 }).toList(),
               ),
-              const SizedBox(height: 18),
+              //////////////////////////
+              //Add and edit file button
+              (filePath != null)
+                  ? Column(
+                      children: filePath!.map((path) {
+                        return FileItem(filePath: path);
+                      }).toList(),
+                    )
+                  : const SizedBox(),
+              TaskPageItem(
+                isActive: false,
+                icon: Icons.attach_file_outlined,
+                text: 'Add file',
+                onTap: ({bool isDisable = false}) {
+                  onTapAddFile(context);
+                },
+                taskList: widget.taskList,
+                task: widget.task,
+                activeText: 'active',
+              ),
               //////////////////////////
               //Add and edit note button
+              const SizedBox(height: 18),
               Consumer<TaskListProvider>(
                   builder: (context, taskListProvider, child) {
                 return Padding(

@@ -5,7 +5,6 @@ import 'package:todo_app/models/group_model.dart';
 import 'package:todo_app/models/task_list_model.dart';
 import 'package:todo_app/provider/task_list_provider.dart';
 
-//TODO: fix: update taskList attribute inside group also update all taskList
 class GroupProvider extends ChangeNotifier {
   TaskListProvider taskListProvider;
   GroupProvider(this.taskListProvider);
@@ -70,8 +69,7 @@ class GroupProvider extends ChangeNotifier {
     required String groupID,
     required String taskListID,
   }) {
-    GroupModel group = getGroup(groupID);
-    return group.taskLists.firstWhere((element) => (element.id == taskListID));
+    return taskListProvider.getTaskList(taskListID: taskListID);
   }
 
   void addTaskList(String groupID, List<TaskListModel> taskLists) {

@@ -152,16 +152,16 @@ class _HomeGroupState extends State<HomeGroup> {
                     if (!element.isCompleted) endNumber++;
                   }
                   return HomeItem(
-                    text: item.listName,
+                    text: taskList.listName,
                     icon: Icons.list_outlined,
-                    iconColor: MyTheme.blueColor,
+                    iconColor: taskList.themeColor,
                     endNumber: endNumber,
                     onTap: () {
                       Navigator.of(context).pushNamed(
                         taskListRoute,
                         arguments: {
                           'haveCompletedList': true,
-                          'taskList': item,
+                          'taskList': taskList,
                         },
                       );
                     },

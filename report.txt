@@ -1,11 +1,12 @@
-Báo cáo 6/8
+Báo cáo 8/8
 Đã làm:
-    -   Hoàn thành chức năng thay đổi màu chủ đạo
-    -   Hoàn thành chức năng chọn ảnh từ thư viện và đặt làm ảnh nền
+    -   Hoàn thành chức năng đăng nhập, đang xuất,
+    -   Sửa chức năng thay đổi ảnh nền
+    -   Thêm chức năng lọc các task đã lên lịch
 Đang làm:
-    -   Sửa chức năng xắp xếp task trong taskList
-    -   Thêm chức năng đăng nhập, đăng xuất
+    -   Sửa chức năng đính kèm file trong task
 Dự định làm:
-    -   Hoàn thành chức năng đăng nhập, đăng xuất
-    -   Chỉnh sửa các lỗi còn lại.
+    -   Hoàn thành chức năng đính kèm file
+    -   Sửa chức năng tạo nhắc hẹn theo lịch
+    -   Rà soát các lỗi còn lại
     

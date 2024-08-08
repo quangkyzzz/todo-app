@@ -13,7 +13,7 @@ class TaskModel {
   DateTime? dueDate;
   DateTime? remindTime;
   String? repeatFrequency;
-  String? filePath;
+  List<String>? filePath;
   String? note;
 
   TaskModel({
@@ -26,8 +26,8 @@ class TaskModel {
     this.stepList,
     this.dueDate,
     this.remindTime,
-    this.repeatFrequency,
     this.filePath,
+    this.repeatFrequency,
     this.note,
   });
 
@@ -56,7 +56,7 @@ class TaskModel {
     DateTime? dueDate,
     DateTime? remindTime,
     String? repeatFrequency,
-    String? filePath,
+    List<String>? filePath,
     String? note,
   }) {
     return TaskModel(

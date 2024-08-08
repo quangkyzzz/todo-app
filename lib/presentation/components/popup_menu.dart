@@ -114,13 +114,6 @@ class _PopupMenuState extends State<PopupMenu> {
     if (!mounted) return;
     if (newName != null) {
       taskListProvider.renameList(taskListID: id, newName: newName);
-      if (widget.taskList.groupID != null) {
-        groupProvider.renameTaskList(
-          groupID: widget.taskList.groupID!,
-          taskListID: widget.taskList.id,
-          newName: newName,
-        );
-      }
     }
   }
 
