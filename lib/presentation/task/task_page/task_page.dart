@@ -118,6 +118,9 @@ class _TaskPageState extends State<TaskPage> {
     } else {
       setState(() {
         remindTime = null;
+        if (repeatFrequency != null) {
+          repeatFrequency = null;
+        }
       });
       NotificationService.cancelNotification(
         int.parse(widget.task.id),
@@ -256,6 +259,12 @@ class _TaskPageState extends State<TaskPage> {
         'onTap': (BuildContext context) {
           setState(() {
             repeatFrequency = const Duration(days: 1);
+            remindTime ??= DateTime(
+              DateTime.now().year,
+              DateTime.now().month,
+              DateTime.now().day,
+              9,
+            );
           });
         },
       },
@@ -265,6 +274,12 @@ class _TaskPageState extends State<TaskPage> {
         'onTap': (BuildContext context) {
           setState(() {
             repeatFrequency = const Duration(hours: 1);
+            remindTime ??= DateTime(
+              DateTime.now().year,
+              DateTime.now().month,
+              DateTime.now().day,
+              9,
+            );
           });
         },
       },
@@ -274,6 +289,12 @@ class _TaskPageState extends State<TaskPage> {
         'onTap': (BuildContext context) {
           setState(() {
             repeatFrequency = const Duration(days: 7);
+            remindTime ??= DateTime(
+              DateTime.now().year,
+              DateTime.now().month,
+              DateTime.now().day,
+              9,
+            );
           });
         },
       },
@@ -283,6 +304,12 @@ class _TaskPageState extends State<TaskPage> {
         'onTap': (BuildContext context) {
           setState(() {
             repeatFrequency = const Duration(days: 30);
+            remindTime ??= DateTime(
+              DateTime.now().year,
+              DateTime.now().month,
+              DateTime.now().day,
+              9,
+            );
           });
         }
       },
@@ -292,6 +319,12 @@ class _TaskPageState extends State<TaskPage> {
         'onTap': (BuildContext context) {
           setState(() {
             repeatFrequency = const Duration(days: 365);
+            remindTime ??= DateTime(
+              DateTime.now().year,
+              DateTime.now().month,
+              DateTime.now().day,
+              9,
+            );
           });
         },
       },
@@ -303,6 +336,12 @@ class _TaskPageState extends State<TaskPage> {
           if (result != null) {
             setState(() {
               repeatFrequency = result;
+              remindTime ??= DateTime(
+                DateTime.now().year,
+                DateTime.now().month,
+                DateTime.now().day,
+                9,
+              );
             });
           }
         },

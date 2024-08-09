@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/models/task_list_model.dart';
+import 'package:todo_app/notification_service.dart';
 import 'package:todo_app/provider/settings_provider.dart';
 import 'package:todo_app/provider/task_list_provider.dart';
 import 'package:todo_app/themes.dart';
@@ -66,6 +67,7 @@ class TaskPageBottomNavigation extends StatelessWidget {
                 );
                 if (!context.mounted) return;
                 if (isDelete) {
+                  NotificationService.cancelNotification(int.parse(task.id));
                   taskListProvider.deleteTask(
                       taskListID: taskList.id, taskID: task.id);
                   Navigator.pop(context);
