@@ -300,9 +300,11 @@ class _TaskPageState extends State<TaskPage> {
         'icon': Icons.calendar_today_outlined,
         'onTap': (BuildContext context) async {
           Duration? result = await showCustomRepeatTimeDialog(context);
-          setState(() {
-            repeatFrequency = result;
-          });
+          if (result != null) {
+            setState(() {
+              repeatFrequency = result; //TODO: fix when cancel dialog
+            });
+          }
         },
       },
     ];
