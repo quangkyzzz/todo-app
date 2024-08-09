@@ -1,12 +1,9 @@
-Báo cáo 8/8
+Báo cáo 9/8
 Đã làm:
-    -   Hoàn thành chức năng đăng nhập, đang xuất,
-    -   Sửa chức năng thay đổi ảnh nền
-    -   Thêm chức năng lọc các task đã lên lịch
-Đang làm:
-    -   Sửa chức năng đính kèm file trong task
-Dự định làm:
     -   Hoàn thành chức năng đính kèm file
+    -   Hoàn thành chức năng mở file đã lưu
+Đang làm:
     -   Sửa chức năng tạo nhắc hẹn theo lịch
-    -   Rà soát các lỗi còn lại
+Dự định làm:
+    -   Sửa 
     
