@@ -227,6 +227,58 @@ class TaskListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void sortTaskListBy({
+    required String taskListID,
+    required String sortType,
+    required bool isAscending,
+  }) {
+    TaskListModel taskList = getTaskList(taskListID: taskListID);
+    int asc = (isAscending) ? 1 : -1;
+    switch (sortType) {
+      case 'important':
+        taskList.tasks.sort((a, b) {
+          if (a.isImportant && !b.isImportant) {
+            return 1 * asc;
+          } else if (a.isImportant && b.isImportant) {
+            return 0;
+          } else {
+            return -1 * asc;
+          }
+        });
+      case 'due_date':
+        taskList.tasks.sort((a, b) {
+          if ((a.dueDate == null) && (b.dueDate == null)) {
+            return 0;
+          } else if ((a.dueDate != null) && (b.dueDate == null)) {
+            return -1;
+          } else if ((a.dueDate == null) && (b.dueDate != null)) {
+            return 1;
+          } else {
+            return a.dueDate!.compareTo(b.dueDate!) * asc;
+          }
+        });
+      case 'my_day':
+        taskList.tasks.sort((a, b) {
+          if (a.isOnMyDay && !b.isOnMyDay) {
+            return 1 * asc;
+          } else if (a.isOnMyDay && b.isOnMyDay) {
+            return 0;
+          } else {
+            return -1 * asc;
+          }
+        });
+      case 'alphabetically':
+        taskList.tasks.sort((a, b) {
+          return a.title.compareTo(b.title);
+        });
+      case 'create_date':
+        taskList.tasks.sort((a, b) {
+          return a.createDate.compareTo(b.createDate) * asc;
+        });
+    }
+    notifyListeners();
+  }
+
   ////////////////
   //Task function
   TaskModel getTask({

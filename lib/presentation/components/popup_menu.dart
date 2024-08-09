@@ -13,6 +13,7 @@ import 'package:todo_app/themes.dart';
 import 'package:todo_app/presentation/items/popup_item.dart';
 
 import 'change_theme_bottom_sheet.dart';
+import 'sort_by_bottom_sheet.dart';
 
 class PopupMenu extends StatefulWidget {
   final TaskListModel taskList;
@@ -95,12 +96,6 @@ class _PopupMenuState extends State<PopupMenu> {
       'icon': Icons.delete_outline,
       'onTap': onTapDeleteList,
     },
-    {
-      'value': 'turn_on_suggestions',
-      'text': 'Turn on suggestions',
-      'icon': Icons.lightbulb_outline,
-      'onTap': onTapTurnOnSuggestions,
-    },
   ];
 
   onTapRenameList(BuildContext context, String id) async {
@@ -125,7 +120,9 @@ class _PopupMenuState extends State<PopupMenu> {
       context: context,
       showDragHandle: true,
       builder: (BuildContext context) {
-        return const SortByBottomSheet();
+        return SortByBottomSheet(
+          taskList: widget.taskList,
+        );
       },
     );
   }
@@ -262,22 +259,6 @@ class _PopupMenuState extends State<PopupMenu> {
     }
   }
 
-  onTapTurnOnSuggestions(BuildContext context, String id) {
-    showModalBottomSheet(
-      isDismissible: true,
-      enableDrag: true,
-      context: context,
-      showDragHandle: true,
-      builder: (BuildContext context) {
-        return NormalBottomSheet(
-          title: 'Turn on suggestions?',
-          acceptText: 'Turn on',
-          onAccept: () {},
-        );
-      },
-    );
-  }
-
   @override
   void initState() {
     taskListProvider = Provider.of<TaskListProvider>(context, listen: false);
@@ -360,62 +341,6 @@ class NormalBottomSheet extends StatelessWidget {
               const Spacer(),
             ],
           )
-        ],
-      ),
-    );
-  }
-}
-
-class SortByBottomSheet extends StatelessWidget {
-  const SortByBottomSheet({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'Sort by',
-            style: MyTheme.itemTextStyle,
-          ),
-          const SizedBox(height: 8),
-          InkWell(
-            onTap: () {},
-            child: const PopupItem(
-              text: 'Important',
-              icon: Icons.star_border_outlined,
-            ),
-          ),
-          InkWell(
-            onTap: () {},
-            child: const PopupItem(
-              text: 'Due date',
-              icon: Icons.calendar_today_outlined,
-            ),
-          ),
-          InkWell(
-            onTap: () {},
-            child: const PopupItem(
-              text: 'Added to My Day',
-              icon: Icons.wb_sunny_outlined,
-            ),
-          ),
-          InkWell(
-            onTap: () {},
-            child: const PopupItem(
-              text: 'Alphabetically',
-              icon: Icons.import_export_outlined,
-            ),
-          ),
-          InkWell(
-            onTap: () {},
-            child: const PopupItem(
-              text: 'Creation date',
-              icon: Icons.more_time_outlined,
-            ),
-          ),
         ],
       ),
     );

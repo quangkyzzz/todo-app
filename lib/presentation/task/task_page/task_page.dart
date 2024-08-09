@@ -302,7 +302,7 @@ class _TaskPageState extends State<TaskPage> {
           Duration? result = await showCustomRepeatTimeDialog(context);
           if (result != null) {
             setState(() {
-              repeatFrequency = result; //TODO: fix when cancel dialog
+              repeatFrequency = result;
             });
           }
         },
