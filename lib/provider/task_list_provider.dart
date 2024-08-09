@@ -194,10 +194,14 @@ class TaskListProvider extends ChangeNotifier {
   }) {
     TaskListModel originTaskList = getTaskList(taskListID: taskListID);
     List<TaskModel> newTasks = originTaskList.tasks.map((task) {
-      return task.copyWith(
+      TaskModel newTask = task.copyWith(
         id: (DateTime.now().millisecondsSinceEpoch + Random().nextInt(500))
             .toString(),
+        createDate: DateTime.now(),
       );
+      newTask.remindTime = null;
+      newTask.repeatFrequency = null;
+      return newTask;
     }).toList();
     TaskListModel newTaskList = originTaskList.copyWith(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
