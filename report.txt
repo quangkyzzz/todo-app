@@ -5,5 +5,7 @@ Báo cáo 9/8
 Đang làm:
     -   Sửa chức năng tạo nhắc hẹn theo lịch
 Dự định làm:
-    -   Sửa 
+    -   Sửa cấu trúc project
+    -   Sửa chức năng thay đổi cách xắp xếp task.
+    -   Rà soát các lỗi còn lại
     
