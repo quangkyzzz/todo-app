@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/models/task_list_model.dart';
+import 'package:todo_app/provider/settings_provider.dart';
 import 'package:todo_app/provider/task_list_provider.dart';
 
 class ChangeSortTypeButton extends StatefulWidget {
@@ -16,9 +17,11 @@ class ChangeSortTypeButton extends StatefulWidget {
 
 class _ChangeSortTypeButtonState extends State<ChangeSortTypeButton> {
   late TaskListProvider taskListProvider;
+  late SettingsProvider settingsProvider;
   @override
   void initState() {
     taskListProvider = Provider.of<TaskListProvider>(context, listen: false);
+    settingsProvider = Provider.of<SettingsProvider>(context, listen: false);
     super.initState();
   }
 
@@ -60,7 +63,8 @@ class _ChangeSortTypeButtonState extends State<ChangeSortTypeButton> {
             taskListProvider.sortTaskListBy(
               taskListID: widget.taskList.id,
               sortType: 'create date',
-              isAscending: true,
+              isAscending:
+                  (settingsProvider.settings.isAddNewTaskOnTop) ? false : true,
             );
             TaskListModel newTaskList = widget.taskList.copyWith();
             newTaskList.sortByType = null;

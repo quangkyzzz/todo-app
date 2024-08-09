@@ -207,6 +207,15 @@ class _PopupMenuState extends State<PopupMenu> {
           onAccept: () {
             taskListProvider.duplicateTaskList(taskListID: widget.taskList.id);
             Navigator.of(context).pop();
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text(
+                  'List duplicate successful!',
+                  style: TextStyle(color: MyTheme.whiteColor),
+                ),
+                backgroundColor: MyTheme.backgroundGreyColor,
+              ),
+            );
           },
         );
       },
