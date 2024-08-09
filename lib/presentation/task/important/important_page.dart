@@ -60,6 +60,7 @@ class _TaskListPageState extends State<ImportantPage> {
               PopupMenu(
                 taskList: importantTaskList,
                 toRemove: const [
+                  'sort_by',
                   'rename_list',
                   'reorder',
                   'hide_completed_tasks',

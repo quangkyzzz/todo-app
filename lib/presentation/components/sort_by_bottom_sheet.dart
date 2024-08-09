@@ -32,6 +32,13 @@ class SortByBottomSheet extends StatelessWidget {
                 sortType: 'important',
                 isAscending: false,
               );
+              taskListProvider.updateTaskListWith(
+                taskListID: taskList.id,
+                sortByType: {
+                  'sortType': 'important',
+                  'asc': false,
+                },
+              );
               Navigator.pop(context);
             },
             child: const PopupItem(
@@ -43,8 +50,15 @@ class SortByBottomSheet extends StatelessWidget {
             onTap: () {
               taskListProvider.sortTaskListBy(
                 taskListID: taskList.id,
-                sortType: 'due_date',
+                sortType: 'due date',
                 isAscending: true,
+              );
+              taskListProvider.updateTaskListWith(
+                taskListID: taskList.id,
+                sortByType: {
+                  'sortType': 'due date',
+                  'asc': true,
+                },
               );
               Navigator.pop(context);
             },
@@ -57,8 +71,15 @@ class SortByBottomSheet extends StatelessWidget {
             onTap: () {
               taskListProvider.sortTaskListBy(
                 taskListID: taskList.id,
-                sortType: 'my_day',
+                sortType: 'my day',
                 isAscending: false,
+              );
+              taskListProvider.updateTaskListWith(
+                taskListID: taskList.id,
+                sortByType: {
+                  'sortType': 'my day',
+                  'asc': false,
+                },
               );
               Navigator.pop(context);
             },
@@ -74,6 +95,13 @@ class SortByBottomSheet extends StatelessWidget {
                 sortType: 'alphabetically',
                 isAscending: true,
               );
+              taskListProvider.updateTaskListWith(
+                taskListID: taskList.id,
+                sortByType: {
+                  'sortType': 'alphabetically',
+                  'asc': true,
+                },
+              );
               Navigator.pop(context);
             },
             child: const PopupItem(
@@ -85,8 +113,15 @@ class SortByBottomSheet extends StatelessWidget {
             onTap: () {
               taskListProvider.sortTaskListBy(
                 taskListID: taskList.id,
-                sortType: 'create_date',
+                sortType: 'create date',
                 isAscending: true,
+              );
+              taskListProvider.updateTaskListWith(
+                taskListID: taskList.id,
+                sortByType: {
+                  'sortType': 'create date',
+                  'asc': true,
+                },
               );
               Navigator.pop(context);
             },

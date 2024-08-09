@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:todo_app/models/step_model.dart';
@@ -201,8 +202,9 @@ class TaskListProvider extends ChangeNotifier {
     TaskListModel newTaskList = originTaskList.copyWith(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       listName: '${originTaskList.listName} copy',
-      taskList: newTasks,
+      tasks: newTasks,
     );
+    newTaskList.sortByType = null;
     newTaskList.groupID = null;
     taskLists.add(newTaskList);
 
@@ -227,6 +229,22 @@ class TaskListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updateTaskListWith({
+    required String taskListID,
+    String? listName,
+    String? groupID,
+    File? backgroundImage,
+    Map<String, dynamic>? sortByType,
+    List<TaskModel>? tasks,
+  }) {
+    TaskListModel taskList = getTaskList(taskListID: taskListID);
+    taskList.listName = listName ?? taskList.listName;
+    taskList.groupID = groupID ?? taskList.groupID;
+    taskList.backgroundImage = backgroundImage ?? taskList.backgroundImage;
+    taskList.sortByType = sortByType ?? taskList.sortByType;
+    taskList.tasks = tasks ?? taskList.tasks;
+  }
+
   void sortTaskListBy({
     required String taskListID,
     required String sortType,
@@ -245,7 +263,7 @@ class TaskListProvider extends ChangeNotifier {
             return -1 * asc;
           }
         });
-      case 'due_date':
+      case 'due date':
         taskList.tasks.sort((a, b) {
           if ((a.dueDate == null) && (b.dueDate == null)) {
             return 0;
@@ -257,7 +275,7 @@ class TaskListProvider extends ChangeNotifier {
             return a.dueDate!.compareTo(b.dueDate!) * asc;
           }
         });
-      case 'my_day':
+      case 'my day':
         taskList.tasks.sort((a, b) {
           if (a.isOnMyDay && !b.isOnMyDay) {
             return 1 * asc;
@@ -269,9 +287,9 @@ class TaskListProvider extends ChangeNotifier {
         });
       case 'alphabetically':
         taskList.tasks.sort((a, b) {
-          return a.title.compareTo(b.title);
+          return a.title.compareTo(b.title) * asc;
         });
-      case 'create_date':
+      case 'create date':
         taskList.tasks.sort((a, b) {
           return a.createDate.compareTo(b.createDate) * asc;
         });

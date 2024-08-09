@@ -10,6 +10,7 @@ class TaskListModel {
   String listName;
   String? groupID;
   File? backgroundImage;
+  Map<String, dynamic>? sortByType;
   Color themeColor;
   List<TaskModel> tasks;
 
@@ -19,6 +20,7 @@ class TaskListModel {
     this.groupID,
     this.backgroundImage,
     this.themeColor = MyTheme.blueColor,
+    this.sortByType,
     List<TaskModel>? tasks,
   }) : tasks = tasks ?? [];
 
@@ -27,16 +29,18 @@ class TaskListModel {
     String? listName,
     String? groupID,
     File? backgroundImage,
+    Map<String, String>? sortByType,
     Color? themeColor,
-    List<TaskModel>? taskList,
+    List<TaskModel>? tasks,
   }) {
     return TaskListModel(
       id: id ?? this.id,
       listName: listName ?? this.listName,
       groupID: groupID ?? this.groupID,
       backgroundImage: backgroundImage ?? this.backgroundImage,
+      sortByType: sortByType ?? this.sortByType,
       themeColor: themeColor ?? this.themeColor,
-      tasks: taskList ?? tasks,
+      tasks: tasks ?? this.tasks,
     );
   }
 
@@ -44,6 +48,7 @@ class TaskListModel {
     listName = copyTaskList.listName;
     groupID = copyTaskList.groupID;
     backgroundImage = copyTaskList.backgroundImage;
+    sortByType = copyTaskList.sortByType;
     themeColor = copyTaskList.themeColor;
     tasks = copyTaskList.tasks;
   }
@@ -54,6 +59,7 @@ class TaskListModel {
     result.addAll({'id': id});
     result.addAll({'listName': listName});
     result.addAll({'backgroundImage': backgroundImage});
+    result.addAll({'sortByType': sortByType});
     result.addAll({'themeColor': themeColor});
     result.addAll({'groupID': groupID});
     result.addAll({'taskList': tasks});
@@ -66,6 +72,7 @@ class TaskListModel {
       id: map['id'] ?? '-1',
       listName: map['listName'] ?? 'Untitle list',
       backgroundImage: map['backgroundImage'],
+      sortByType: map['sortByType'],
       themeColor: map['themeColor'],
       groupID: map['groupID'],
       tasks: map['taskList'] ?? [],

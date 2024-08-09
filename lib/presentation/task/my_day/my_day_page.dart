@@ -79,6 +79,7 @@ class _MyDayPageState extends State<MyDayPage> {
               PopupMenu(
                 taskList: myDayTaskList,
                 toRemove: const [
+                  'sort_by',
                   'rename_list',
                   'reorder',
                   'turn_on_suggestions',

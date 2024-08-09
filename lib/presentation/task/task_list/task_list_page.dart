@@ -7,6 +7,8 @@ import 'package:todo_app/presentation/lists/incomplete_list.dart';
 import 'package:todo_app/presentation/components/popup_menu.dart';
 import 'package:todo_app/provider/task_list_provider.dart';
 
+import 'change_sort_type_button.dart';
+
 class TaskListPage extends StatefulWidget {
   final bool haveCompletedList;
   final TaskListModel taskList;
@@ -79,12 +81,17 @@ class _TaskListPageState extends State<TaskListPage> {
                 TaskListModel taskList =
                     taskListProvider.getTaskList(taskListID: id);
 
-                return Column(children: [
-                  IncompleteList(taskList: taskList),
-                  ((widget.haveCompletedList))
-                      ? CompletedList(taskList: taskList)
-                      : const SizedBox()
-                ]);
+                return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      (taskList.sortByType != null)
+                          ? ChangeSortTypeButton(taskList: taskList)
+                          : const SizedBox(),
+                      IncompleteList(taskList: taskList),
+                      ((widget.haveCompletedList))
+                          ? CompletedList(taskList: taskList)
+                          : const SizedBox()
+                    ]);
               },
             ),
           ),
