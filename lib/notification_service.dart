@@ -64,8 +64,8 @@ class NotificationService {
     );
   }
 
-  static Future<void> setNotification({
-    required DateTime dateTime,
+  static Future<void> setScheduleNotification({
+    required DateTime scheduleDateTime,
     required String title,
     required String body,
     required int id,
@@ -78,11 +78,11 @@ class NotificationService {
       body,
       tz.TZDateTime(
         tz.local,
-        dateTime.year,
-        dateTime.month,
-        dateTime.day,
-        dateTime.hour,
-        dateTime.minute,
+        scheduleDateTime.year,
+        scheduleDateTime.month,
+        scheduleDateTime.day,
+        scheduleDateTime.hour,
+        scheduleDateTime.minute,
       ),
       platformChannelSpecifics,
       matchDateTimeComponents: DateTimeComponents.time,

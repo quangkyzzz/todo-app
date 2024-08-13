@@ -36,7 +36,7 @@ class _TaskListItemState extends State<TaskListItem> {
   late List<StepModel>? steps;
   late DateTime? dueDate;
   late DateTime? notiTime;
-  late Duration? repeatFrequency;
+  late String? repeatFrequency;
   late List<String>? filePath;
   late String? note;
   late int countCompletedStep;

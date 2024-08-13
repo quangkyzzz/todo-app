@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/themes.dart';
 
-Future<Duration?> showCustomRepeatTimeDialog(BuildContext context) {
-  return showDialog<Duration>(
+Future<String?> showCustomRepeatTimeDialog(BuildContext context) {
+  return showDialog<String>(
     context: context,
     builder: (context) {
       int popUpIndex = 0;
@@ -9,22 +10,18 @@ Future<Duration?> showCustomRepeatTimeDialog(BuildContext context) {
         {
           'index': 0,
           'text': 'Days',
-          'value': 1,
         },
         {
           'index': 1,
           'text': 'Weeks',
-          'value': 7,
         },
         {
           'index': 2,
           'text': 'Months',
-          'value': 30,
         },
         {
           'index': 3,
           'text': 'Years',
-          'value': 365,
         },
       ];
 
@@ -44,20 +41,26 @@ Future<Duration?> showCustomRepeatTimeDialog(BuildContext context) {
                     )),
                 keyboardType: TextInputType.number,
               ),
-              PopupMenuButton(
-                itemBuilder: (BuildContext context) {
-                  return listPopUpMennu.map((item) {
-                    return PopupMenuItem(
-                      child: Text(item['text']),
-                      onTap: () {
-                        setState(() {
-                          popUpIndex = item['index'];
-                        });
-                      },
-                    );
-                  }).toList();
-                },
-                child: Text(listPopUpMennu[popUpIndex]['text']),
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  border: Border.all(color: MyTheme.whiteColor, width: 0.6),
+                ),
+                child: PopupMenuButton(
+                  itemBuilder: (BuildContext context) {
+                    return listPopUpMennu.map((item) {
+                      return PopupMenuItem(
+                        child: Text(item['text']),
+                        onTap: () {
+                          setState(() {
+                            popUpIndex = item['index'];
+                          });
+                        },
+                      );
+                    }).toList();
+                  },
+                  child: Text(listPopUpMennu[popUpIndex]['text']),
+                ),
               )
             ],
           ),
@@ -73,9 +76,10 @@ Future<Duration?> showCustomRepeatTimeDialog(BuildContext context) {
                 if (controller.text.isEmpty) {
                   Navigator.pop(context);
                 } else {
-                  int numberOfDay = int.parse(controller.text) *
-                      listPopUpMennu[popUpIndex]['value'] as int;
-                  Duration result = Duration(days: numberOfDay);
+                  int numberOfDay = int.parse(controller.text);
+
+                  String result =
+                      '$numberOfDay ${listPopUpMennu[popUpIndex]['text']}';
                   Navigator.pop(context, result);
                 }
               },

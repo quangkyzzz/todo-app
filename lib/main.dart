@@ -7,9 +7,24 @@ import 'package:todo_app/provider/task_list_provider.dart';
 import 'package:todo_app/provider/user_provider.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/routes.dart';
+import 'package:workmanager/workmanager.dart';
+
+@pragma('vm:entry-point')
+void callbackDispatcher() {
+  Workmanager().executeTask((taskName, inputData) {
+    NotificationService.showLocalNotification(
+      id: 1,
+      title: 'title',
+      body: 'test background',
+      isPlaySound: true,
+    );
+    return Future.value(true);
+  });
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
   await NotificationService.initNotification();
   runApp(const MyApp());
 }

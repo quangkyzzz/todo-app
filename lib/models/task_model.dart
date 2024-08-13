@@ -12,7 +12,7 @@ class TaskModel {
   List<StepModel>? stepList;
   DateTime? dueDate;
   DateTime? remindTime;
-  Duration? repeatFrequency;
+  String? repeatFrequency;
   List<String>? filePath;
   String? note;
 
@@ -54,7 +54,7 @@ class TaskModel {
     List<StepModel>? stepList,
     DateTime? dueDate,
     DateTime? remindTime,
-    Duration? repeatFrequency,
+    String? repeatFrequency,
     List<String>? filePath,
     String? note,
   }) {

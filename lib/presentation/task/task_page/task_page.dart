@@ -17,6 +17,7 @@ import 'package:todo_app/routes.dart';
 import 'package:todo_app/models/task_model.dart';
 import 'package:todo_app/presentation/task/task_page/task_page_bottom_navigation.dart';
 import 'package:todo_app/presentation/items/popup_item.dart';
+import 'package:workmanager/workmanager.dart';
 import 'step_item.dart';
 import 'task_edit_row.dart';
 import 'task_page_item.dart';
@@ -49,7 +50,7 @@ class _TaskPageState extends State<TaskPage> {
   late List<StepModel>? steps;
   late DateTime? remindTime;
   late DateTime? dueDate;
-  late Duration? repeatFrequency;
+  late String? repeatFrequency;
   late List<String>? filePaths;
   late final TextEditingController _stepController;
   late final TextEditingController _taskNameController;
@@ -107,13 +108,19 @@ class _TaskPageState extends State<TaskPage> {
         setState(() {
           remindTime = tempRemindTime;
         });
-        NotificationService.setNotification(
-          dateTime: tempRemindTime,
-          title: widget.taskList.listName,
-          body: title,
-          id: int.parse(widget.task.id),
-          isPlaySound: settingsProvider.settings.isPlaySoundOnComplete,
+        Workmanager().registerPeriodicTask(
+          'task id',
+          'name',
+          initialDelay: const Duration(minutes: 1),
+          frequency: const Duration(minutes: 15),
         );
+        // NotificationService.setScheduleNotification(
+        //   scheduleDateTime: tempRemindTime,
+        //   title: widget.taskList.listName,
+        //   body: title,
+        //   id: int.parse(widget.task.id),
+        //   isPlaySound: settingsProvider.settings.isPlaySoundOnComplete,
+        // );
       }
     } else {
       setState(() {
@@ -125,6 +132,8 @@ class _TaskPageState extends State<TaskPage> {
       NotificationService.cancelNotification(
         int.parse(widget.task.id),
       );
+      Workmanager().cancelAll();
+      //NotificationService.cancelAllNotification();
     }
   }
 
@@ -188,6 +197,18 @@ class _TaskPageState extends State<TaskPage> {
         repeatFrequency = null;
       });
     }
+  }
+
+  void onCompleteSetRepeat(String frequency) {
+    setState(() {
+      repeatFrequency = frequency;
+      remindTime ??= DateTime(
+        DateTime.now().year,
+        DateTime.now().month,
+        DateTime.now().day,
+        9,
+      );
+    });
   }
 
   onTapAddFile(BuildContext context) async {
@@ -257,92 +278,44 @@ class _TaskPageState extends State<TaskPage> {
         'text': 'Daily',
         'icon': Icons.calendar_today_outlined,
         'onTap': (BuildContext context) {
-          setState(() {
-            repeatFrequency = const Duration(days: 1);
-            remindTime ??= DateTime(
-              DateTime.now().year,
-              DateTime.now().month,
-              DateTime.now().day,
-              9,
-            );
-          });
+          onCompleteSetRepeat('1 Days');
         },
       },
       {
         'text': 'Weekdays',
         'icon': Icons.calendar_today_outlined,
         'onTap': (BuildContext context) {
-          setState(() {
-            repeatFrequency = const Duration(hours: 1);
-            remindTime ??= DateTime(
-              DateTime.now().year,
-              DateTime.now().month,
-              DateTime.now().day,
-              9,
-            );
-          });
+          onCompleteSetRepeat('1 Weekdays');
         },
       },
       {
         'text': 'Weekly',
         'icon': Icons.calendar_today_outlined,
         'onTap': (BuildContext context) {
-          setState(() {
-            repeatFrequency = const Duration(days: 7);
-            remindTime ??= DateTime(
-              DateTime.now().year,
-              DateTime.now().month,
-              DateTime.now().day,
-              9,
-            );
-          });
+          onCompleteSetRepeat('1 Weeks');
         },
       },
       {
         'text': 'Monthly',
         'icon': Icons.calendar_today_outlined,
         'onTap': (BuildContext context) {
-          setState(() {
-            repeatFrequency = const Duration(days: 30);
-            remindTime ??= DateTime(
-              DateTime.now().year,
-              DateTime.now().month,
-              DateTime.now().day,
-              9,
-            );
-          });
+          onCompleteSetRepeat('1 Months');
         }
       },
       {
         'text': 'Yearly',
         'icon': Icons.calendar_today_outlined,
         'onTap': (BuildContext context) {
-          setState(() {
-            repeatFrequency = const Duration(days: 365);
-            remindTime ??= DateTime(
-              DateTime.now().year,
-              DateTime.now().month,
-              DateTime.now().day,
-              9,
-            );
-          });
+          onCompleteSetRepeat('1 Years');
         },
       },
       {
         'text': 'Custom',
         'icon': Icons.calendar_today_outlined,
         'onTap': (BuildContext context) async {
-          Duration? result = await showCustomRepeatTimeDialog(context);
+          String? result = await showCustomRepeatTimeDialog(context);
           if (result != null) {
-            setState(() {
-              repeatFrequency = result;
-              remindTime ??= DateTime(
-                DateTime.now().year,
-                DateTime.now().month,
-                DateTime.now().day,
-                9,
-              );
-            });
+            onCompleteSetRepeat(result);
           }
         },
       },
@@ -388,8 +361,7 @@ class _TaskPageState extends State<TaskPage> {
         'icon': Icons.repeat_outlined,
         'key': key,
         'text': 'Repeat',
-        'activeText':
-            'Repeat every ${(repeatFrequency ?? const Duration(days: 1)).inDays} days',
+        'activeText': 'Repeat every ${repeatFrequency ?? ''}',
         'onTap': onTapRepeat,
       },
     ];
