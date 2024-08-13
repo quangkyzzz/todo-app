@@ -1,11 +1,12 @@
-Báo cáo 9/8
+Báo cáo 13/8
 Đã làm:
-    -   Hoàn thành chức năng đính kèm file
-    -   Hoàn thành chức năng mở file đã lưu
+    -   Thêm chức năng xắp sếp task và thay đổi kiểu sắp xếp
+    -   Sửa lỗi chức năng xóa task
+    -   Sửa lỗi chức năng duplicate taskList
+    -   Sửa lỗi chức năng tùy chỉnh lịch nhắc hẹn
 Đang làm:
     -   Sửa chức năng tạo nhắc hẹn theo lịch
 Dự định làm:
     -   Sửa cấu trúc project
-    -   Sửa chức năng thay đổi cách xắp xếp task.
     -   Rà soát các lỗi còn lại
     
