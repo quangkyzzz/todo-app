@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/background_service.dart';
 import 'package:todo_app/notification_service.dart';
 import 'package:todo_app/provider/group_provider.dart';
 import 'package:todo_app/provider/settings_provider.dart';
@@ -8,19 +9,6 @@ import 'package:todo_app/provider/user_provider.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/routes.dart';
 import 'package:workmanager/workmanager.dart';
-
-@pragma('vm:entry-point')
-void callbackDispatcher() {
-  Workmanager().executeTask((taskName, inputData) {
-    NotificationService.showLocalNotification(
-      id: 1,
-      title: 'title',
-      body: 'test background',
-      isPlaySound: true,
-    );
-    return Future.value(true);
-  });
-}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

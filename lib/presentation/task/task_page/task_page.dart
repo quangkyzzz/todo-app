@@ -4,9 +4,9 @@ import 'dart:async';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/background_service.dart';
 import 'package:todo_app/models/step_model.dart';
 import 'package:todo_app/models/task_list_model.dart';
-import 'package:todo_app/notification_service.dart';
 import 'package:todo_app/presentation/components/show_custom_repeat_time_dialog.dart';
 import 'package:todo_app/presentation/task/task_page/file_item.dart';
 import 'package:todo_app/provider/group_provider.dart';
@@ -17,7 +17,6 @@ import 'package:todo_app/routes.dart';
 import 'package:todo_app/models/task_model.dart';
 import 'package:todo_app/presentation/task/task_page/task_page_bottom_navigation.dart';
 import 'package:todo_app/presentation/items/popup_item.dart';
-import 'package:workmanager/workmanager.dart';
 import 'step_item.dart';
 import 'task_edit_row.dart';
 import 'task_page_item.dart';
@@ -105,22 +104,18 @@ class _TaskPageState extends State<TaskPage> {
             ),
       );
       if (tempRemindTime != null) {
+        if (remindTime != null) {
+          BackGroundService.cancelTaskByID(id: widget.task.id);
+        }
         setState(() {
           remindTime = tempRemindTime;
         });
-        Workmanager().registerPeriodicTask(
-          'task id',
-          'name',
-          initialDelay: const Duration(minutes: 1),
-          frequency: const Duration(minutes: 15),
+        BackGroundService.executeScheduleBackGroundTask(
+          task: widget.task,
+          taskList: widget.taskList,
+          isPlaySound: settingsProvider.settings.isPlaySoundOnComplete,
+          remindTime: remindTime!,
         );
-        // NotificationService.setScheduleNotification(
-        //   scheduleDateTime: tempRemindTime,
-        //   title: widget.taskList.listName,
-        //   body: title,
-        //   id: int.parse(widget.task.id),
-        //   isPlaySound: settingsProvider.settings.isPlaySoundOnComplete,
-        // );
       }
     } else {
       setState(() {
@@ -129,11 +124,7 @@ class _TaskPageState extends State<TaskPage> {
           repeatFrequency = null;
         }
       });
-      NotificationService.cancelNotification(
-        int.parse(widget.task.id),
-      );
-      Workmanager().cancelAll();
-      //NotificationService.cancelAllNotification();
+      BackGroundService.cancelTaskByID(id: widget.task.id);
     }
   }
 
@@ -209,6 +200,14 @@ class _TaskPageState extends State<TaskPage> {
         9,
       );
     });
+    BackGroundService.cancelTaskByID(id: widget.task.id);
+    BackGroundService.executePeriodicBackGroundTask(
+      task: widget.task,
+      taskList: widget.taskList,
+      remindTime: remindTime!,
+      frequency: frequency,
+      isPlaySound: settingsProvider.settings.isPlaySoundOnComplete,
+    );
   }
 
   onTapAddFile(BuildContext context) async {
