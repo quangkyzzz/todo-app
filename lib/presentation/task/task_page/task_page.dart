@@ -55,13 +55,13 @@ class _TaskPageState extends State<TaskPage> {
   late final TextEditingController _taskNameController;
   late List<Map<String, dynamic>> listRepeatPopupItem;
 
-  onTapAddToMyDay(BuildContext context, {bool isDisable = false}) {
+  void onTapAddToMyDay(BuildContext context, {bool isDisable = false}) {
     setState(() {
       isOnMyDay = !isOnMyDay;
     });
   }
 
-  onTapRemindMe(BuildContext context, {bool isDisable = false}) async {
+  void onTapRemindMe(BuildContext context, {bool isDisable = false}) async {
     Future<DateTime?> getRemindTime({
       required BuildContext context,
       required DateTime initialDate,
@@ -128,7 +128,7 @@ class _TaskPageState extends State<TaskPage> {
     }
   }
 
-  onTapAddDueDate(BuildContext context, {bool isDisable = false}) async {
+  void onTapAddDueDate(BuildContext context, {bool isDisable = false}) async {
     if (!isDisable) {
       DateTime? newDueDate = await showDatePicker(
         context: context,
@@ -159,7 +159,7 @@ class _TaskPageState extends State<TaskPage> {
     }
   }
 
-  onTapRepeat(BuildContext context, {bool isDisable = false}) {
+  void onTapRepeat(BuildContext context, {bool isDisable = false}) {
     RenderBox box = key.currentContext!.findRenderObject() as RenderBox;
     Offset possition = box.localToGlobal(Offset.zero);
     if (!isDisable) {
@@ -210,7 +210,7 @@ class _TaskPageState extends State<TaskPage> {
     );
   }
 
-  onTapAddFile(BuildContext context) async {
+  void onTapAddFile(BuildContext context) async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       allowMultiple: true,
     );

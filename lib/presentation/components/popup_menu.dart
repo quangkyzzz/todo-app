@@ -98,7 +98,7 @@ class _PopupMenuState extends State<PopupMenu> {
     },
   ];
 
-  onTapRenameList(BuildContext context, String id) async {
+  void onTapRenameList(BuildContext context, String id) async {
     String? newName = await showTextEditDialog(
       context: context,
       title: 'Rename your list',
@@ -112,7 +112,7 @@ class _PopupMenuState extends State<PopupMenu> {
     }
   }
 
-  onTapSortBy(BuildContext context, String id) {
+  void onTapSortBy(BuildContext context, String id) {
     showModalBottomSheet(
       constraints: const BoxConstraints(maxHeight: 350),
       isDismissible: true,
@@ -127,14 +127,14 @@ class _PopupMenuState extends State<PopupMenu> {
     );
   }
 
-  onTapReorder(BuildContext context, String id) {
+  void onTapReorder(BuildContext context, String id) {
     Navigator.of(context).pushNamed(
       reorderRoute,
       arguments: widget.taskList,
     );
   }
 
-  onTapAddShortcut(BuildContext context, String id) {
+  void onTapAddShortcut(BuildContext context, String id) {
     showModalBottomSheet(
       isDismissible: true,
       enableDrag: true,
@@ -150,7 +150,7 @@ class _PopupMenuState extends State<PopupMenu> {
     );
   }
 
-  onTapChangeTheme(BuildContext context, String id) {
+  void onTapChangeTheme(BuildContext context, String id) {
     showModalBottomSheet(
       isDismissible: true,
       enableDrag: true,
@@ -162,7 +162,7 @@ class _PopupMenuState extends State<PopupMenu> {
     );
   }
 
-  onTapHideCompletedTasks(BuildContext context, String id) {
+  void onTapHideCompletedTasks(BuildContext context, String id) {
     showModalBottomSheet(
       isDismissible: true,
       enableDrag: true,
@@ -178,7 +178,7 @@ class _PopupMenuState extends State<PopupMenu> {
     );
   }
 
-  onTapSendCopy(BuildContext context, String id) {
+  void onTapSendCopy(BuildContext context, String id) {
     showModalBottomSheet(
       isDismissible: true,
       enableDrag: true,
@@ -194,7 +194,7 @@ class _PopupMenuState extends State<PopupMenu> {
     );
   }
 
-  onTapDuplicateList(BuildContext context, String id) {
+  void onTapDuplicateList(BuildContext context, String id) {
     showModalBottomSheet(
       isDismissible: true,
       enableDrag: true,
@@ -222,7 +222,7 @@ class _PopupMenuState extends State<PopupMenu> {
     );
   }
 
-  onTapPrintList(BuildContext context, String id) {
+  void onTapPrintList(BuildContext context, String id) {
     showModalBottomSheet(
       isDismissible: true,
       enableDrag: true,
@@ -238,7 +238,7 @@ class _PopupMenuState extends State<PopupMenu> {
     );
   }
 
-  onTapDeleteList(BuildContext context, String id) async {
+  void onTapDeleteList(BuildContext context, String id) async {
     if (settingsProvider.settings.isConfirmBeforeDelete) {
       bool isDelete = await showAlertDialog(
         context,
