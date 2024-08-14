@@ -1,12 +1,9 @@
-Báo cáo 13/8
+Báo cáo 14/8
 Đã làm:
-    -   Thêm chức năng xắp sếp task và thay đổi kiểu sắp xếp
-    -   Sửa lỗi chức năng xóa task
-    -   Sửa lỗi chức năng duplicate taskList
-    -   Sửa lỗi chức năng tùy chỉnh lịch nhắc hẹn
-Đang làm:
     -   Sửa chức năng tạo nhắc hẹn theo lịch
-Dự định làm:
+    -   Sửa các task model, taskList model
+Đang làm:
     -   Sửa cấu trúc project
+Dự định làm:
     -   Rà soát các lỗi còn lại
     
