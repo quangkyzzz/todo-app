@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:todo_app/background_service.dart';
 import 'package:todo_app/models/step_model.dart';
 import 'package:todo_app/models/task_list_model.dart';
 import 'package:todo_app/models/task_model.dart';
@@ -163,7 +164,12 @@ class TaskListProvider extends ChangeNotifier {
   void deleteTaskList({
     required String id,
   }) {
-    taskLists.removeWhere((element) => (element.id == id));
+    TaskListModel taskList = getTaskList(taskListID: id);
+    for (TaskModel task in taskList.tasks) {
+      deleteTask(taskListID: taskList.id, taskID: task.id);
+    }
+
+    taskLists.remove(taskList);
     notifyListeners();
   }
 
@@ -345,7 +351,12 @@ class TaskListProvider extends ChangeNotifier {
       (element) => (element.id == taskListID),
     );
     if (taskList != null) {
-      taskList.tasks.removeWhere((element) => (element.id == taskID));
+      taskList.tasks.removeWhere((element) {
+        if ((element.id == taskID) && (element.remindTime != null)) {
+          BackGroundService.cancelTaskByID(id: taskID);
+        }
+        return (element.id == taskID);
+      });
     }
 
     notifyListeners();

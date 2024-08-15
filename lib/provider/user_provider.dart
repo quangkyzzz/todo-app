@@ -3,7 +3,7 @@ import 'package:todo_app/models/user_model.dart';
 
 class UserProvider extends ChangeNotifier {
   bool isLogin = false;
-  UserModel user = UserModel(
+  UserModel currentUser = UserModel(
     id: '1',
     userName: 'Nguyễn Quang',
     userEmail: 'quang.ndt@outlook.com',
@@ -14,12 +14,12 @@ class UserProvider extends ChangeNotifier {
   }
 
   void updateUserName(String newName) {
-    user = user.copyWith(userName: newName);
+    currentUser = currentUser.copyWith(userName: newName);
     notifyListeners();
   }
 
   void updateUserEmail(String newEmail) {
-    user = user.copyWith(userEmail: newEmail);
+    currentUser = currentUser.copyWith(userEmail: newEmail);
     notifyListeners();
   }
 

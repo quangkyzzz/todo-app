@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/background_service.dart';
 import 'package:todo_app/models/step_model.dart';
 import 'package:todo_app/models/task_list_model.dart';
+import 'package:todo_app/notification_service.dart';
 import 'package:todo_app/presentation/components/show_custom_repeat_time_dialog.dart';
 import 'package:todo_app/presentation/task/task_page/file_item.dart';
 import 'package:todo_app/provider/group_provider.dart';
@@ -110,6 +111,7 @@ class _TaskPageState extends State<TaskPage> {
         setState(() {
           remindTime = tempRemindTime;
         });
+
         BackGroundService.executeScheduleBackGroundTask(
           task: widget.task,
           taskList: widget.taskList,
@@ -125,37 +127,7 @@ class _TaskPageState extends State<TaskPage> {
         }
       });
       BackGroundService.cancelTaskByID(id: widget.task.id);
-    }
-  }
-
-  void onTapAddDueDate(BuildContext context, {bool isDisable = false}) async {
-    if (!isDisable) {
-      DateTime? newDueDate = await showDatePicker(
-        context: context,
-        initialDate: dueDate ?? DateTime.now(),
-        firstDate: DateTime(2020),
-        lastDate: DateTime(2050),
-      );
-      if (newDueDate != null) {
-        setState(() {
-          dueDate = newDueDate;
-        });
-        if (!context.mounted) return;
-        DateTime today = DateTime(
-          DateTime.now().year,
-          DateTime.now().month,
-          DateTime.now().day,
-        );
-        if ((settingsProvider.settings.isShowDueToday) &&
-            (dueDate!.isAtSameMomentAs(today)) &&
-            (!isOnMyDay)) {
-          onTapAddToMyDay(context);
-        }
-      }
-    } else {
-      setState(() {
-        dueDate = null;
-      });
+      NotificationService.cancelAllNotification();
     }
   }
 
@@ -210,6 +182,37 @@ class _TaskPageState extends State<TaskPage> {
     );
   }
 
+  void onTapAddDueDate(BuildContext context, {bool isDisable = false}) async {
+    if (!isDisable) {
+      DateTime? newDueDate = await showDatePicker(
+        context: context,
+        initialDate: dueDate ?? DateTime.now(),
+        firstDate: DateTime(2020),
+        lastDate: DateTime(2050),
+      );
+      if (newDueDate != null) {
+        setState(() {
+          dueDate = newDueDate;
+        });
+        if (!context.mounted) return;
+        DateTime today = DateTime(
+          DateTime.now().year,
+          DateTime.now().month,
+          DateTime.now().day,
+        );
+        if ((settingsProvider.settings.isShowDueToday) &&
+            (dueDate!.isAtSameMomentAs(today)) &&
+            (!isOnMyDay)) {
+          onTapAddToMyDay(context);
+        }
+      }
+    } else {
+      setState(() {
+        dueDate = null;
+      });
+    }
+  }
+
   void onTapAddFile(BuildContext context) async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       allowMultiple: true,
@@ -237,7 +240,7 @@ class _TaskPageState extends State<TaskPage> {
     });
   }
 
-  void callBackEditStep(
+  void callBackEditStepItem(
     StepModel newStep, {
     bool isDelete = false,
   }) {
@@ -252,6 +255,25 @@ class _TaskPageState extends State<TaskPage> {
             steps!.firstWhere((element) => (element.id == newStep.id));
         step.copyFrom(newStep: newStep);
       });
+    }
+  }
+
+  void onSubmittedAddStep(String value) {
+    if (value != '') {
+      if (steps == null) {
+        setState(() {
+          steps = List<StepModel>.empty(growable: true);
+        });
+      }
+      setState(() {
+        StepModel newStep = StepModel(
+          id: DateTime.now().millisecondsSinceEpoch.toString(),
+          stepName: value,
+          isCompleted: false,
+        );
+        steps!.add(newStep);
+      });
+      _stepController.clear();
     }
   }
 
@@ -331,6 +353,11 @@ class _TaskPageState extends State<TaskPage> {
 
   @override
   Widget build(BuildContext context) {
+    String repeatActiveText = (repeatFrequency ?? '').toLowerCase();
+    if (repeatActiveText.split(' ').first == '1') {
+      var temp = repeatActiveText.split(' ')[1];
+      repeatActiveText = temp.substring(0, temp.length - 1);
+    }
     List<Map<String, dynamic>> listTaskItem = [
       {
         'isActive': isOnMyDay,
@@ -360,7 +387,7 @@ class _TaskPageState extends State<TaskPage> {
         'icon': Icons.repeat_outlined,
         'key': key,
         'text': 'Repeat',
-        'activeText': 'Repeat every ${repeatFrequency ?? ''}',
+        'activeText': 'Repeat every $repeatActiveText',
         'onTap': onTapRepeat,
       },
     ];
@@ -417,16 +444,21 @@ class _TaskPageState extends State<TaskPage> {
                         return StepItem(
                           taskList: widget.taskList,
                           step: item,
-                          callBack: callBackEditStep,
+                          callBack: callBackEditStepItem,
                         );
                       },
                     ).toList())
                   : const SizedBox(),
               Row(
                 children: [
-                  const SizedBox(width: 16),
-                  const Icon(
-                    Icons.add,
+                  const SizedBox(width: 6),
+                  IconButton(
+                    onPressed: () {
+                      onSubmittedAddStep(_stepController.text);
+                    },
+                    icon: const Icon(
+                      Icons.add,
+                    ),
                     color: MyTheme.greyColor,
                   ),
                   const SizedBox(width: 8),
@@ -438,26 +470,7 @@ class _TaskPageState extends State<TaskPage> {
                         border: InputBorder.none,
                       ),
                       style: MyTheme.itemSmallTextStyle,
-                      onSubmitted: (value) {
-                        if (value != '') {
-                          if (steps == null) {
-                            setState(() {
-                              steps = List<StepModel>.empty(growable: true);
-                            });
-                          }
-                          setState(() {
-                            StepModel newStep = StepModel(
-                              id: DateTime.now()
-                                  .millisecondsSinceEpoch
-                                  .toString(),
-                              stepName: value,
-                              isCompleted: false,
-                            );
-                            steps!.add(newStep);
-                          });
-                          _stepController.clear();
-                        }
-                      },
+                      onSubmitted: onSubmittedAddStep,
                     ),
                   )
                 ],
@@ -522,52 +535,10 @@ class _TaskPageState extends State<TaskPage> {
               const SizedBox(height: 18),
               Consumer<TaskListProvider>(
                   builder: (context, taskListProvider, child) {
-                return Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: (widget.task.note != null)
-                      ? InkWell(
-                          onTap: () {
-                            Navigator.of(context).pushNamed(
-                              noteEditRoute,
-                              arguments: {
-                                'task': widget.task,
-                                'taskList': widget.taskList,
-                              },
-                            );
-                          },
-                          child: Container(
-                            constraints: const BoxConstraints(
-                              maxHeight: 118,
-                              maxWidth: double.infinity,
-                            ),
-                            child: SingleChildScrollView(
-                              child: Text(
-                                taskListProvider
-                                    .getTask(
-                                      taskListID: widget.taskList.id,
-                                      taskID: widget.task.id,
-                                    )
-                                    .note!,
-                                maxLines: null,
-                                style: MyTheme.itemSmallTextStyle,
-                              ),
-                            ),
-                          ),
-                        )
-                      : TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pushNamed(
-                              noteEditRoute,
-                              arguments: {
-                                'task': widget.task,
-                                'taskList': widget.taskList,
-                              },
-                            );
-                          },
-                          child: const Text(
-                            'Add note',
-                            style: MyTheme.itemSmallGreyTextStyle,
-                          )),
+                return AddAndEditNoteButton(
+                  task: widget.task,
+                  taskList: widget.taskList,
+                  taskListProvider: taskListProvider,
                 );
               })
             ],
@@ -578,6 +549,70 @@ class _TaskPageState extends State<TaskPage> {
         task: widget.task,
         taskList: widget.taskList,
       ),
+    );
+  }
+}
+
+class AddAndEditNoteButton extends StatelessWidget {
+  const AddAndEditNoteButton({
+    super.key,
+    required this.task,
+    required this.taskList,
+    required this.taskListProvider,
+  });
+
+  final TaskModel task;
+  final TaskListModel taskList;
+  final TaskListProvider taskListProvider;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: (task.note != null)
+          ? InkWell(
+              onTap: () {
+                Navigator.of(context).pushNamed(
+                  noteEditRoute,
+                  arguments: {
+                    'task': task,
+                    'taskList': taskList,
+                  },
+                );
+              },
+              child: Container(
+                constraints: const BoxConstraints(
+                  maxHeight: 118,
+                  maxWidth: double.infinity,
+                ),
+                child: SingleChildScrollView(
+                  child: Text(
+                    taskListProvider
+                        .getTask(
+                          taskListID: taskList.id,
+                          taskID: task.id,
+                        )
+                        .note!,
+                    maxLines: null,
+                    style: MyTheme.itemSmallTextStyle,
+                  ),
+                ),
+              ),
+            )
+          : TextButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed(
+                  noteEditRoute,
+                  arguments: {
+                    'task': task,
+                    'taskList': taskList,
+                  },
+                );
+              },
+              child: const Text(
+                'Add note',
+                style: MyTheme.itemSmallGreyTextStyle,
+              )),
     );
   }
 }

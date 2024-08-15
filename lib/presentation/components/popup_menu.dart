@@ -11,7 +11,6 @@ import 'package:todo_app/provider/task_list_provider.dart';
 import 'package:todo_app/routes.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/presentation/items/popup_item.dart';
-
 import 'change_theme_bottom_sheet.dart';
 import 'sort_by_bottom_sheet.dart';
 

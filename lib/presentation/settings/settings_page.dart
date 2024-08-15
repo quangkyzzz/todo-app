@@ -49,11 +49,11 @@ class _SettingsPageState extends State<SettingsPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          userProvider.user.userName,
+                          userProvider.currentUser.userName,
                           style: MyTheme.itemTextStyle,
                         ),
                         Text(
-                          userProvider.user.userEmail,
+                          userProvider.currentUser.userEmail,
                           style: MyTheme.secondaryTitleGreyTextStyle,
                         ),
                         const SizedBox(height: 8),

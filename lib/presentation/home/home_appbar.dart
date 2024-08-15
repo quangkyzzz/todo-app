@@ -38,11 +38,11 @@ class HomeAppBar {
               Consumer<UserProvider>(builder: (context, userProvider, child) {
             return RichText(
               text: TextSpan(
-                text: userProvider.user.userName,
+                text: userProvider.currentUser.userName,
                 style: MyTheme.titleTextStyle,
                 children: [
                   TextSpan(
-                    text: '\n${userProvider.user.userEmail}',
+                    text: '\n${userProvider.currentUser.userEmail}',
                     style: MyTheme.secondaryTitleGreyTextStyle,
                   )
                 ],

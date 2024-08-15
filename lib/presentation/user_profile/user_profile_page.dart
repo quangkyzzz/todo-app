@@ -53,11 +53,11 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 ],
               ),
               Text(
-                userProvider.user.userName,
+                userProvider.currentUser.userName,
                 style: MyTheme.titleTextStyle,
               ),
               Text(
-                userProvider.user.userEmail,
+                userProvider.currentUser.userEmail,
                 style: MyTheme.secondaryTitleGreyTextStyle,
               ),
               MyTheme.dividerGreyStyle,
