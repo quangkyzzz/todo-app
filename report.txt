@@ -1,9 +1,10 @@
-Báo cáo 14/8
+Báo cáo 15/8
 Đã làm:
-    -   Sửa chức năng tạo nhắc hẹn theo lịch
     -   Sửa các task model, taskList model
+    -   Sửa chức năng tạo nhắc hẹn theo lịch
 Đang làm:
-    -   Sửa cấu trúc project
+    -   Test chức năng tạo nhắc hẹn theo lịch
 Dự định làm:
+    -   Sửa cấu trúc project.
     -   Rà soát các lỗi còn lại
     
