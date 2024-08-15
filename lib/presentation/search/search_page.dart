@@ -72,87 +72,103 @@ class _SearchPageState extends State<SearchPage> {
         actions: [
           IconButton(
             onPressed: () {
-              speechToText.listen(onResult: onSpeechToTextResult);
+              setState(() {
+                isSpeechEnable = true;
+              });
+              speechToText.listen(
+                onResult: onSpeechToTextResult,
+                listenFor: const Duration(seconds: 3),
+              );
+              //TODO: fix delay
+              Future.delayed(const Duration(seconds: 3), () {
+                setState(() {
+                  isSpeechEnable = false;
+                });
+              });
             },
             icon: const Icon(Icons.mic_outlined),
           ),
           const SizedBox(width: 8),
-          InkWell(
-            onTap: () {},
-            child: PopupMenuButton(
-              itemBuilder: (context) {
-                return [
-                  PopupMenuItem(
-                    child: InkWell(
-                      onTap: () {
-                        setState(() {
-                          isHideCompletedTask = !isHideCompletedTask;
-                          searchTasks.removeWhere(
-                            (element) => (element.keys.first.isCompleted),
-                          );
-                        });
-                        Navigator.pop(context);
-                      },
-                      child: (isHideCompletedTask)
-                          ? const Text(
-                              'Show completed item',
-                              style: MyTheme.itemTextStyle,
-                            )
-                          : const Text(
-                              'Hide completed item',
-                              style: MyTheme.itemTextStyle,
-                            ),
-                    ),
-                  )
-                ];
-              },
-            ),
+          PopupMenuButton(
+            itemBuilder: (context) {
+              return [
+                PopupMenuItem(
+                  child: InkWell(
+                    onTap: () {
+                      setState(() {
+                        isHideCompletedTask = !isHideCompletedTask;
+                        searchTasks.removeWhere(
+                          (element) => (element.keys.first.isCompleted),
+                        );
+                      });
+                      Navigator.pop(context);
+                    },
+                    child: (isHideCompletedTask)
+                        ? const Text(
+                            'Show completed item',
+                            style: MyTheme.itemTextStyle,
+                          )
+                        : const Text(
+                            'Hide completed item',
+                            style: MyTheme.itemTextStyle,
+                          ),
+                  ),
+                )
+              ];
+            },
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.only(top: 16),
-        child: Consumer<TaskListProvider>(builder: (
-          context,
-          consumerTaskListProvider,
-          child,
-        ) {
-          searchTasks = consumerTaskListProvider.searchTaskByName(
-            searchName: searchName,
-          );
-
-          if (searchTasks.isEmpty) {
-            return const Center(
+      body: (isSpeechEnable)
+          ? const Center(
               child: Text(
-                'No match result!',
+                'Say keyword to search!',
                 style: MyTheme.itemTextStyle,
               ),
-            );
-          } else {
-            return Column(
-              children: searchTasks.map((e) {
-                if (isHideCompletedTask) {
-                  if (!e.keys.first.isCompleted) {
-                    return TaskListItem(
-                      task: e.keys.first,
-                      taskList: e.values.first,
-                      themeColor: MyTheme.blueColor,
-                    );
-                  } else {
-                    return const SizedBox();
-                  }
+            )
+          : SingleChildScrollView(
+              padding: const EdgeInsets.only(top: 16),
+              child: Consumer<TaskListProvider>(builder: (
+                context,
+                consumerTaskListProvider,
+                child,
+              ) {
+                searchTasks = consumerTaskListProvider.searchTaskByName(
+                  searchName: searchName,
+                );
+
+                if (searchTasks.isEmpty) {
+                  return const Center(
+                    child: Text(
+                      'No match result!',
+                      style: MyTheme.itemTextStyle,
+                    ),
+                  );
                 } else {
-                  return TaskListItem(
-                    task: e.keys.first,
-                    taskList: e.values.first,
-                    themeColor: MyTheme.blueColor,
+                  return Column(
+                    children: searchTasks.map((e) {
+                      if (isHideCompletedTask) {
+                        if (!e.keys.first.isCompleted) {
+                          return TaskListItem(
+                            task: e.keys.first,
+                            taskList: e.values.first,
+                            themeColor: MyTheme.blueColor,
+                          );
+                        } else {
+                          return const SizedBox();
+                        }
+                      } else {
+                        return TaskListItem(
+                          task: e.keys.first,
+                          taskList: e.values.first,
+                          themeColor: MyTheme.blueColor,
+                        );
+                      }
+                    }).toList(),
                   );
                 }
-              }).toList(),
-            );
-          }
-        }),
-      ),
+              }),
+            ),
     );
   }
 }
