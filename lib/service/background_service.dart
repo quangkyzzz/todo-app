@@ -1,6 +1,6 @@
 import 'package:todo_app/models/task_list_model.dart';
 import 'package:todo_app/models/task_model.dart';
-import 'package:todo_app/notification_service.dart';
+import 'package:todo_app/service/notification_service.dart';
 import 'package:workmanager/workmanager.dart';
 
 //TODO: check logic and test this

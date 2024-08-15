@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/background_service.dart';
-import 'package:todo_app/notification_service.dart';
+import 'package:todo_app/service/background_service.dart';
+import 'package:todo_app/service/notification_service.dart';
 import 'package:todo_app/provider/group_provider.dart';
 import 'package:todo_app/provider/settings_provider.dart';
 import 'package:todo_app/provider/task_list_provider.dart';
@@ -12,7 +12,7 @@ import 'package:workmanager/workmanager.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
+  await Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
   await NotificationService.initNotification();
   runApp(const MyApp());
 }

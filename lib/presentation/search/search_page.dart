@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:speech_to_text/speech_recognition_result.dart';
+import 'package:speech_to_text/speech_to_text.dart';
 import 'package:todo_app/models/task_list_model.dart';
 import 'package:todo_app/models/task_model.dart';
 import 'package:todo_app/presentation/items/task_list_item.dart';
 import 'package:todo_app/provider/task_list_provider.dart';
+
 import 'package:todo_app/themes.dart';
 
 class SearchPage extends StatefulWidget {
@@ -14,6 +17,8 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
+  bool isSpeechEnable = false;
+  SpeechToText speechToText = SpeechToText();
   List<Map<TaskModel, TaskListModel>> tasks = [];
   List<Map<TaskModel, TaskListModel>> searchTasks = [];
   bool isHideCompletedTask = false;
@@ -27,8 +32,15 @@ class _SearchPageState extends State<SearchPage> {
     });
   }
 
+  void onSpeechToTextResult(SpeechRecognitionResult result) {
+    setState(() {
+      _controller.text = result.recognizedWords;
+    });
+  }
+
   @override
   void initState() {
+    speechToText.initialize();
     taskListProvider = Provider.of<TaskListProvider>(context, listen: false);
     searchTasks = taskListProvider.getAllTaskWithTaskList();
     _controller = TextEditingController();
@@ -59,7 +71,9 @@ class _SearchPageState extends State<SearchPage> {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              speechToText.listen(onResult: onSpeechToTextResult);
+            },
             icon: const Icon(Icons.mic_outlined),
           ),
           const SizedBox(width: 8),
@@ -70,24 +84,25 @@ class _SearchPageState extends State<SearchPage> {
                 return [
                   PopupMenuItem(
                     child: InkWell(
-                        onTap: () {
-                          setState(() {
-                            isHideCompletedTask = !isHideCompletedTask;
-                            searchTasks.removeWhere(
-                              (element) => (element.keys.first.isCompleted),
-                            );
-                          });
-                          Navigator.pop(context);
-                        },
-                        child: (isHideCompletedTask)
-                            ? const Text(
-                                'Show completed item',
-                                style: MyTheme.itemTextStyle,
-                              )
-                            : const Text(
-                                'Hide completed item',
-                                style: MyTheme.itemTextStyle,
-                              )),
+                      onTap: () {
+                        setState(() {
+                          isHideCompletedTask = !isHideCompletedTask;
+                          searchTasks.removeWhere(
+                            (element) => (element.keys.first.isCompleted),
+                          );
+                        });
+                        Navigator.pop(context);
+                      },
+                      child: (isHideCompletedTask)
+                          ? const Text(
+                              'Show completed item',
+                              style: MyTheme.itemTextStyle,
+                            )
+                          : const Text(
+                              'Hide completed item',
+                              style: MyTheme.itemTextStyle,
+                            ),
+                    ),
                   )
                 ];
               },
