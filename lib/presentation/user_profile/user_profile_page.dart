@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/app_configs.dart';
-import 'package:todo_app/models/user_model.dart';
 import 'package:todo_app/provider/user_provider.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/routes.dart';
@@ -14,11 +13,6 @@ class UserProfilePage extends StatefulWidget {
 }
 
 class _UserProfilePageState extends State<UserProfilePage> {
-  UserModel user = UserModel(
-    id: '1',
-    userName: 'Quang Nguyễn',
-    userEmail: 'quang.ndt@outlook.com',
-  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,11 +55,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 style: MyTheme.secondaryTitleGreyTextStyle,
               ),
               MyTheme.dividerGreyStyle,
-              UserProfileItem(
-                text: 'Add account',
-                icon: Icons.add,
-                onTap: () {},
-              ),
               MyTheme.dividerGreyStyle,
               UserProfileItem(
                 text: 'Manage account',

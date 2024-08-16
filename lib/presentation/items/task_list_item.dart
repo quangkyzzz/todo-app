@@ -15,11 +15,15 @@ class TaskListItem extends StatefulWidget {
   final TaskModel task;
   final TaskListModel taskList;
   final Color themeColor;
+  final bool havePlusIcon;
+  final Function()? onTapPlus;
   const TaskListItem({
     super.key,
     required this.task,
     required this.taskList,
     required this.themeColor,
+    this.havePlusIcon = false,
+    this.onTapPlus,
   });
 
   @override
@@ -265,24 +269,30 @@ class _TaskListItemState extends State<TaskListItem> {
             Material(
               color: Colors.transparent,
               shape: const CircleBorder(),
-              child: IconButton(
-                onPressed: () {
-                  taskListProvider.updateTask(
-                    taskListID: widget.taskList.id,
-                    taskID: widget.task.id,
-                    newTask: widget.task.copyWith(isImportant: !isImportant),
-                  );
-                },
-                icon: (isImportant)
-                    ? Icon(
-                        Icons.star,
-                        color: widget.themeColor,
-                      )
-                    : const Icon(
-                        Icons.star_border_outlined,
-                        color: MyTheme.greyColor,
-                      ),
-              ),
+              child: (!widget.havePlusIcon)
+                  ? IconButton(
+                      onPressed: () {
+                        taskListProvider.updateTask(
+                          taskListID: widget.taskList.id,
+                          taskID: widget.task.id,
+                          newTask:
+                              widget.task.copyWith(isImportant: !isImportant),
+                        );
+                      },
+                      icon: (isImportant)
+                          ? Icon(
+                              Icons.star,
+                              color: widget.themeColor,
+                            )
+                          : const Icon(
+                              Icons.star_border_outlined,
+                              color: MyTheme.greyColor,
+                            ),
+                    )
+                  : IconButton(
+                      onPressed: widget.onTapPlus,
+                      icon: const Icon(Icons.add),
+                    ),
             ),
           ],
         ),

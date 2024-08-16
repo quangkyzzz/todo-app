@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/models/task_list_model.dart';
+import 'package:todo_app/models/task_model.dart';
+import 'package:todo_app/presentation/items/task_list_item.dart';
+import 'package:todo_app/provider/task_list_provider.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/presentation/components/add_floating_button.dart';
 
@@ -38,7 +42,7 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
             splashColor: MyTheme.blackColor,
             customBorder: const CircleBorder(),
             onTap: () {
-              onSuggestionsTap(context);
+              onSuggestionsTap(context, widget.themeColor);
             },
             child: Ink(
               decoration: const BoxDecoration(shape: BoxShape.circle),
@@ -65,47 +69,107 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
     );
   }
 
-  Future<dynamic> onSuggestionsTap(BuildContext context) {
-    bool isChecked = false;
-    return showModalBottomSheet(
-      showDragHandle: true,
-      constraints: const BoxConstraints(maxHeight: 198),
+  onSuggestionsTap(BuildContext context, Color themeColor) {
+    showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return StatefulBuilder(builder: (context, setState) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'From earlier',
-                style: MyTheme.itemTextStyle,
+        return DraggableScrollableSheet(
+          snap: true,
+          minChildSize: 0.2,
+          snapSizes: const [0.3, 0.7, 0.8],
+          expand: false,
+          initialChildSize: 0.3,
+          builder: (context, scrollController) {
+            return SingleChildScrollView(
+              controller: scrollController,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Center(
+                      child: Icon(
+                        Icons.horizontal_rule_rounded,
+                        size: 48,
+                      ),
+                    ),
+                    Consumer<TaskListProvider>(builder:
+                        (BuildContext context, taskListProvider, child) {
+                      ListTaskMap listRecentTask =
+                          taskListProvider.getRecentNotInMyDayTask();
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          (listRecentTask.isEmpty)
+                              ? const SizedBox()
+                              : const Text(
+                                  'Recenly added',
+                                  style: MyTheme.itemTextStyle,
+                                ),
+                          const SizedBox(height: 8),
+                          ...listRecentTask.map((pair) {
+                            TaskModel task = pair.keys.first;
+                            TaskListModel taskList = pair.values.first;
+                            return TaskListItem(
+                              task: task,
+                              taskList: taskList,
+                              themeColor: themeColor,
+                              havePlusIcon: true,
+                              onTapPlus: () {
+                                taskListProvider.updateTaskWith(
+                                  taskListID: taskList.id,
+                                  taskID: task.id,
+                                  isOnMyDay: true,
+                                );
+                              },
+                            );
+                          })
+                        ],
+                      );
+                    }),
+                    const SizedBox(height: 8),
+                    Consumer<TaskListProvider>(
+                      builder: (BuildContext context, taskListProvider, child) {
+                        ListTaskMap listAllSuggetTask =
+                            taskListProvider.getAllTaskNotInMyDay();
+
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            (listAllSuggetTask.isEmpty)
+                                ? const SizedBox()
+                                : const Text(
+                                    'Later',
+                                    style: MyTheme.itemTextStyle,
+                                  ),
+                            const SizedBox(height: 8),
+                            ...listAllSuggetTask.map((pair) {
+                              TaskModel task = pair.keys.first;
+                              TaskListModel taskList = pair.values.first;
+                              return TaskListItem(
+                                task: task,
+                                taskList: taskList,
+                                themeColor: themeColor,
+                                havePlusIcon: true,
+                                onTapPlus: () {
+                                  taskListProvider.updateTaskWith(
+                                    taskListID: taskList.id,
+                                    taskID: task.id,
+                                    isOnMyDay: true,
+                                  );
+                                },
+                              );
+                            }),
+                          ],
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Checkbox(
-                    shape: const CircleBorder(),
-                    value: isChecked,
-                    onChanged: (bool? value) {
-                      setState(() {
-                        isChecked = value!;
-                      });
-                    },
-                  ),
-                  const Text(
-                    'Task 1',
-                    style: MyTheme.itemTextStyle,
-                  ),
-                  const Spacer(),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.add_outlined),
-                  )
-                ],
-              ),
-            ],
-          );
-        });
+            );
+          },
+        );
       },
     );
   }

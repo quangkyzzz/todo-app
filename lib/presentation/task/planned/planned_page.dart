@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/models/task_list_model.dart';
-import 'package:todo_app/models/task_model.dart';
 import 'package:todo_app/presentation/items/task_list_item.dart';
 import 'package:todo_app/provider/task_list_provider.dart';
 import 'package:todo_app/themes.dart';
@@ -164,7 +163,7 @@ class _PlannedPageState extends State<PlannedPage> {
                 //task list
                 Consumer<TaskListProvider>(
                   builder: (context, taskListProvider, child) {
-                    List<Map<TaskModel, TaskListModel>> plannedTasks = [];
+                    ListTaskMap plannedTasks = [];
                     switch (plannedState) {
                       case 0:
                         plannedTasks = taskListProvider.getPlannedOverdueTask();

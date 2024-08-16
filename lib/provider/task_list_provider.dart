@@ -384,6 +384,40 @@ class TaskListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updateTaskWith({
+    required String taskListID,
+    required String taskID,
+    String? title,
+    bool? isCompleted,
+    bool? isImportant,
+    bool? isOnMyDay,
+    DateTime? createDate,
+    List<StepModel>? stepList,
+    DateTime? dueDate,
+    DateTime? remindTime,
+    String? repeatFrequency,
+    List<String>? filePath,
+    String? note,
+  }) {
+    TaskModel task = getTask(taskListID: taskListID, taskID: taskID);
+    if (note == '') {
+      note = null;
+    }
+
+    task.title = title ?? task.title;
+    task.isCompleted = isCompleted ?? task.isCompleted;
+    task.isImportant = isImportant ?? task.isImportant;
+    task.isOnMyDay = isOnMyDay ?? task.isOnMyDay;
+    task.stepList = stepList ?? task.stepList;
+    task.dueDate = dueDate ?? task.dueDate;
+    task.remindTime = remindTime ?? task.remindTime;
+    task.repeatFrequency = repeatFrequency ?? task.repeatFrequency;
+    task.filePath = filePath ?? task.filePath;
+    task.note = note ?? task.note;
+
+    notifyListeners();
+  }
+
   ListTaskMap getAllTaskWithTaskList() {
     ListTaskMap result = [];
     for (TaskListModel taskList in taskLists) {
@@ -413,6 +447,38 @@ class TaskListProvider extends ChangeNotifier {
     ListTaskMap allTask = getAllTaskWithTaskList();
     for (var pair in allTask) {
       if (pair.keys.first.isOnMyDay) {
+        result.add(pair);
+      }
+    }
+    return result;
+  }
+
+  ListTaskMap getRecentNotInMyDayTask() {
+    ListTaskMap result = [];
+    ListTaskMap allTask = getAllTaskWithTaskList();
+    for (var pair in allTask) {
+      DateTime createDate = DateTime(
+        pair.keys.first.createDate.year,
+        pair.keys.first.createDate.month,
+        pair.keys.first.createDate.day,
+      );
+      DateTime today = DateTime(
+        DateTime.now().year,
+        DateTime.now().month,
+        DateTime.now().day,
+      );
+      if ((createDate == today) && (!pair.keys.first.isOnMyDay)) {
+        result.add(pair);
+      }
+    }
+    return result;
+  }
+
+  ListTaskMap getAllTaskNotInMyDay() {
+    ListTaskMap result = [];
+    ListTaskMap allTask = getAllTaskWithTaskList();
+    for (var pair in allTask) {
+      if (!pair.keys.first.isOnMyDay) {
         result.add(pair);
       }
     }
