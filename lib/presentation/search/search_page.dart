@@ -6,7 +6,6 @@ import 'package:todo_app/models/task_list_model.dart';
 import 'package:todo_app/models/task_model.dart';
 import 'package:todo_app/presentation/items/task_list_item.dart';
 import 'package:todo_app/provider/task_list_provider.dart';
-
 import 'package:todo_app/themes.dart';
 
 class SearchPage extends StatefulWidget {
@@ -34,7 +33,9 @@ class _SearchPageState extends State<SearchPage> {
 
   void onSpeechToTextResult(SpeechRecognitionResult result) {
     setState(() {
+      isSpeechEnable = false;
       _controller.text = result.recognizedWords;
+      onSearchChange(_controller.text);
     });
   }
 
@@ -71,22 +72,33 @@ class _SearchPageState extends State<SearchPage> {
         ),
         actions: [
           IconButton(
-            onPressed: () {
-              setState(() {
-                isSpeechEnable = true;
-              });
-              speechToText.listen(
-                onResult: onSpeechToTextResult,
-                listenFor: const Duration(seconds: 3),
-              );
-              //TODO: fix delay
-              Future.delayed(const Duration(seconds: 3), () {
+            onPressed: () async {
+              if (!isSpeechEnable) {
+                setState(() {
+                  isSpeechEnable = true;
+                });
+                await speechToText.listen(
+                  listenOptions: SpeechListenOptions(
+                    listenMode: ListenMode.search,
+                    cancelOnError: 1,
+                  ),
+                  onResult: onSpeechToTextResult,
+                  listenFor: const Duration(seconds: 5),
+                );
+                Future.delayed(const Duration(seconds: 5), () {
+                  setState(() {
+                    isSpeechEnable = false;
+                  });
+                });
+              } else {
                 setState(() {
                   isSpeechEnable = false;
                 });
-              });
+              }
             },
-            icon: const Icon(Icons.mic_outlined),
+            icon: (!isSpeechEnable)
+                ? const Icon(Icons.mic_outlined)
+                : const Icon(Icons.mic_off),
           ),
           const SizedBox(width: 8),
           PopupMenuButton(
