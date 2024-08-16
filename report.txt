@@ -1,9 +1,8 @@
-Báo cáo 15/8
+Báo cáo 16/8
 Đã làm:
-    -   Sửa các task model, taskList model
-    -   Sửa chức năng tạo nhắc hẹn theo lịch
+    -   Hoàn thành test chức năng nhắc hẹn
 Đang làm:
-    -   Test chức năng tạo nhắc hẹn theo lịch
+    -   Thêm chức năng tìm kiếm bằng giọng nói
 Dự định làm:
     -   Sửa cấu trúc project.
     -   Rà soát các lỗi còn lại
