@@ -474,11 +474,21 @@ class TaskListProvider extends ChangeNotifier {
     return result;
   }
 
-  ListTaskMap getAllTaskNotInMyDay() {
+  ListTaskMap getOlderNotInMyDayTask() {
     ListTaskMap result = [];
     ListTaskMap allTask = getAllTaskWithTaskList();
     for (var pair in allTask) {
-      if (!pair.keys.first.isOnMyDay) {
+      DateTime createDate = DateTime(
+        pair.keys.first.createDate.year,
+        pair.keys.first.createDate.month,
+        pair.keys.first.createDate.day,
+      );
+      DateTime today = DateTime(
+        DateTime.now().year,
+        DateTime.now().month,
+        DateTime.now().day,
+      );
+      if ((!pair.keys.first.isOnMyDay) && (createDate.isBefore(today))) {
         result.add(pair);
       }
     }

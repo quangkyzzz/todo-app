@@ -97,73 +97,73 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
                         (BuildContext context, taskListProvider, child) {
                       ListTaskMap listRecentTask =
                           taskListProvider.getRecentNotInMyDayTask();
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          (listRecentTask.isEmpty)
-                              ? const SizedBox()
-                              : const Text(
-                                  'Recenly added',
-                                  style: MyTheme.itemTextStyle,
-                                ),
-                          const SizedBox(height: 8),
-                          ...listRecentTask.map((pair) {
-                            TaskModel task = pair.keys.first;
-                            TaskListModel taskList = pair.values.first;
-                            return TaskListItem(
-                              task: task,
-                              taskList: taskList,
-                              themeColor: themeColor,
-                              havePlusIcon: true,
-                              onTapPlus: () {
-                                taskListProvider.updateTaskWith(
-                                  taskListID: taskList.id,
-                                  taskID: task.id,
-                                  isOnMyDay: true,
-                                );
-                              },
-                            );
-                          })
-                        ],
-                      );
-                    }),
-                    const SizedBox(height: 8),
-                    Consumer<TaskListProvider>(
-                      builder: (BuildContext context, taskListProvider, child) {
-                        ListTaskMap listAllSuggetTask =
-                            taskListProvider.getAllTaskNotInMyDay();
-
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            (listAllSuggetTask.isEmpty)
-                                ? const SizedBox()
-                                : const Text(
-                                    'Later',
-                                    style: MyTheme.itemTextStyle,
-                                  ),
-                            const SizedBox(height: 8),
-                            ...listAllSuggetTask.map((pair) {
-                              TaskModel task = pair.keys.first;
-                              TaskListModel taskList = pair.values.first;
-                              return TaskListItem(
-                                task: task,
-                                taskList: taskList,
-                                themeColor: themeColor,
-                                havePlusIcon: true,
-                                onTapPlus: () {
-                                  taskListProvider.updateTaskWith(
-                                    taskListID: taskList.id,
-                                    taskID: task.id,
-                                    isOnMyDay: true,
+                      ListTaskMap listOlderSuggetTask =
+                          taskListProvider.getOlderNotInMyDayTask();
+                      return ((listRecentTask.isEmpty) &&
+                              (listOlderSuggetTask.isEmpty))
+                          ? const Center(
+                              child: Text(
+                              'There is no suggetion right now !',
+                              style: MyTheme.itemTextStyle,
+                            ))
+                          : Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                //////////////
+                                //Recent task
+                                (listRecentTask.isEmpty)
+                                    ? const SizedBox()
+                                    : const Text(
+                                        'Recenly added:',
+                                        style: MyTheme.itemTextStyle,
+                                      ),
+                                const SizedBox(height: 8),
+                                ...listRecentTask.map((pair) {
+                                  TaskModel task = pair.keys.first;
+                                  TaskListModel taskList = pair.values.first;
+                                  return TaskListItem(
+                                    task: task,
+                                    taskList: taskList,
+                                    themeColor: themeColor,
+                                    havePlusIcon: true,
+                                    onTapPlus: () {
+                                      taskListProvider.updateTaskWith(
+                                        taskListID: taskList.id,
+                                        taskID: task.id,
+                                        isOnMyDay: true,
+                                      );
+                                    },
                                   );
-                                },
-                              );
-                            }),
-                          ],
-                        );
-                      },
-                    ),
+                                }),
+                                ////////////
+                                //Older task
+                                (listOlderSuggetTask.isEmpty)
+                                    ? const SizedBox()
+                                    : const Text(
+                                        'Older:',
+                                        style: MyTheme.itemTextStyle,
+                                      ),
+                                const SizedBox(height: 8),
+                                ...listOlderSuggetTask.map((pair) {
+                                  TaskModel task = pair.keys.first;
+                                  TaskListModel taskList = pair.values.first;
+                                  return TaskListItem(
+                                    task: task,
+                                    taskList: taskList,
+                                    themeColor: themeColor,
+                                    havePlusIcon: true,
+                                    onTapPlus: () {
+                                      taskListProvider.updateTaskWith(
+                                        taskListID: taskList.id,
+                                        taskID: task.id,
+                                        isOnMyDay: true,
+                                      );
+                                    },
+                                  );
+                                }),
+                              ],
+                            );
+                    }),
                   ],
                 ),
               ),
