@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/models/task_list_model.dart';
@@ -40,12 +42,19 @@ class _TaskListPageState extends State<TaskListPage> {
         Consumer<TaskListProvider>(builder: (context, taskListProvider, child) {
           TaskListModel tasklist =
               taskListProvider.getTaskList(taskListID: widget.taskList.id);
-          return (tasklist.backgroundImage != null)
-              ? Image.file(
-                  tasklist.backgroundImage!,
-                  fit: BoxFit.fitHeight,
-                )
-              : const SizedBox();
+          if ((tasklist.backgroundImage != null)) {
+            return (tasklist.isDefaultImage == -1)
+                ? Image.file(
+                    File(tasklist.backgroundImage!),
+                    fit: BoxFit.fitHeight,
+                  )
+                : Image.asset(
+                    tasklist.backgroundImage!,
+                    fit: BoxFit.fitHeight,
+                  );
+          } else {
+            return const SizedBox();
+          }
         }),
         Scaffold(
           backgroundColor: Colors.transparent,

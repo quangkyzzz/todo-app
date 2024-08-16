@@ -1,7 +1,4 @@
 // ignore_for_file: sized_box_for_whitespace
-
-import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +17,7 @@ class ChangeThemeBottomSheet extends StatefulWidget {
 class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
   late int _page;
   late Color _selectedColor;
+  late int _selectedImage;
   late TaskListProvider taskListProvider;
 
   onColorChange(Color value) {
@@ -27,6 +25,36 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
       _selectedColor = value;
     });
     TaskListModel newTaskList = widget.taskList.copyWith(themeColor: value);
+    taskListProvider.updateTaskList(
+      taskListID: widget.taskList.id,
+      newTaskList: newTaskList,
+    );
+  }
+
+  onImageChange(int value) {
+    setState(() {
+      _selectedImage = value;
+    });
+    TaskListModel newTaskList = widget.taskList.copyWith(
+      backgroundImage: MyTheme.imageList[value],
+      isDefaultImage: value,
+    );
+    taskListProvider.updateTaskList(
+      taskListID: widget.taskList.id,
+      newTaskList: newTaskList,
+    );
+  }
+
+  onPickFile() async {}
+
+  onClean() {
+    setState(() {
+      _selectedImage = -1;
+    });
+    TaskListModel newTaskList = widget.taskList.copyWith(
+      isDefaultImage: -1,
+    );
+    newTaskList.backgroundImage = null;
     taskListProvider.updateTaskList(
       taskListID: widget.taskList.id,
       newTaskList: newTaskList,
@@ -44,6 +72,7 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
     taskListProvider = Provider.of<TaskListProvider>(context, listen: false);
     _page = 0;
     _selectedColor = widget.taskList.themeColor;
+    _selectedImage = widget.taskList.isDefaultImage;
     super.initState();
   }
 
@@ -52,7 +81,7 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Container(
-        height: 132,
+        height: 146,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -93,29 +122,55 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
                         );
                       }).toList(),
                     )
-                  : TextButton(
-                      onPressed: () async {
-                        FilePickerResult? result =
-                            await FilePicker.platform.pickFiles(
-                          type: FileType.custom,
-                          allowedExtensions: [
-                            'jpg',
-                            'png',
-                          ],
-                        );
-                        if (result != null) {
-                          File file = File(result.files.single.path!);
-                          TaskListModel newTaskList =
-                              widget.taskList.copyWith(backgroundImage: file);
-                          taskListProvider.updateTaskList(
-                              taskListID: widget.taskList.id,
-                              newTaskList: newTaskList);
-                        }
-                      },
-                      child: const Text(
-                        'Choose from file',
-                        style: MyTheme.itemSmallTextStyle,
-                      ),
+                  : Row(
+                      children: [
+                        CustomOutlinedButton(
+                          isHighLighted: false,
+                          onTap: onClean,
+                          text: 'Clean',
+                        ),
+                        const SizedBox(width: 6),
+                        CustomOutlinedButton(
+                          isHighLighted: ((_selectedImage == -1) &&
+                              (widget.taskList.backgroundImage != null)),
+                          onTap: () async {
+                            FilePickerResult? result =
+                                await FilePicker.platform.pickFiles(
+                              type: FileType.custom,
+                              allowedExtensions: [
+                                'jpg',
+                                'png',
+                              ],
+                            );
+                            if (result != null) {
+                              String resultPath = result.files.single.path!;
+                              TaskListModel newTaskList =
+                                  widget.taskList.copyWith(
+                                backgroundImage: resultPath,
+                                isDefaultImage: -1,
+                              );
+                              taskListProvider.updateTaskList(
+                                taskListID: widget.taskList.id,
+                                newTaskList: newTaskList,
+                              );
+                              setState(() {
+                                _selectedImage = -1;
+                              });
+                            }
+                          },
+                          text: 'Custom',
+                        ),
+                        ...MyTheme.imageList.map((imgPath) {
+                          return SelectImageButton(
+                            imgPath: imgPath,
+                            onTap: () {
+                              onImageChange(MyTheme.imageList.indexOf(imgPath));
+                            },
+                            isHighLighted: (_selectedImage ==
+                                MyTheme.imageList.indexOf(imgPath)),
+                          );
+                        })
+                      ],
                     ),
             ),
           ],
@@ -152,6 +207,47 @@ class SelectColorButton extends StatelessWidget {
               size: 32,
             )
           : null,
+    );
+  }
+}
+
+class SelectImageButton extends StatelessWidget {
+  final String imgPath;
+  final Function() onTap;
+  final bool isHighLighted;
+  const SelectImageButton({
+    super.key,
+    required this.imgPath,
+    required this.onTap,
+    required this.isHighLighted,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialButton(
+      shape: const CircleBorder(),
+      height: 50,
+      minWidth: 50,
+      visualDensity: const VisualDensity(horizontal: -3),
+      onPressed: onTap,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          CircleAvatar(
+            backgroundImage: AssetImage(imgPath),
+            radius: 24,
+          ),
+          (isHighLighted)
+              ? const Center(
+                  child: Icon(
+                    Icons.check_circle_outline,
+                    color: MyTheme.whiteColor,
+                    size: 32,
+                  ),
+                )
+              : const SizedBox(),
+        ],
+      ),
     );
   }
 }

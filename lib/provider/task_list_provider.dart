@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:todo_app/service/background_service.dart';
@@ -65,13 +64,21 @@ class TaskListProvider extends ChangeNotifier {
         ),
       ],
     ),
-    TaskListModel(id: '2', listName: 'My Day', themeColor: MyTheme.whiteColor),
+    TaskListModel(
+      id: '2',
+      listName: 'My Day',
+      themeColor: MyTheme.whiteColor,
+      backgroundImage: 'assets/backgrounds/bg_my_day.jpg',
+      isDefaultImage: 0,
+    ),
     TaskListModel(
         id: '3', listName: 'Important', themeColor: MyTheme.pinkColor),
     TaskListModel(id: '4', listName: 'Planned', themeColor: MyTheme.redColor),
     TaskListModel(
       id: '222',
       listName: 'personal list 1',
+      backgroundImage: '/data/user/0/com.example.todo_app/cache/'
+          'file_picker/1723799643254/1000000837.jpg',
       tasks: [
         TaskModel(
           id: '3',
@@ -243,7 +250,8 @@ class TaskListProvider extends ChangeNotifier {
     required String taskListID,
     String? listName,
     String? groupID,
-    File? backgroundImage,
+    String? backgroundImage,
+    int? isDefaultImage,
     Map<String, dynamic>? sortByType,
     List<TaskModel>? tasks,
   }) {
@@ -251,6 +259,7 @@ class TaskListProvider extends ChangeNotifier {
     taskList.listName = listName ?? taskList.listName;
     taskList.groupID = groupID ?? taskList.groupID;
     taskList.backgroundImage = backgroundImage ?? taskList.backgroundImage;
+    taskList.isDefaultImage = isDefaultImage ?? taskList.isDefaultImage;
     taskList.sortByType = sortByType ?? taskList.sortByType;
     taskList.tasks = tasks ?? taskList.tasks;
   }

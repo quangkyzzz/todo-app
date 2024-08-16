@@ -96,7 +96,7 @@ class TaskModel {
   factory TaskModel.fromMap(Map<String, dynamic> map) {
     return TaskModel(
       id: map['id'] ?? DateTime.now().millisecondsSinceEpoch.toString(),
-      title: map['title'] ?? 'title',
+      title: map['title'] ?? 'Unknown title',
       isCompleted: map['isCompleted'] ?? false,
       isImportant: map['isImportant'] ?? false,
       isOnMyDay: map['isOnMyDay'] ?? false,

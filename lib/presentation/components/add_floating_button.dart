@@ -13,9 +13,9 @@ class AddFloatingButton extends StatelessWidget {
   const AddFloatingButton({
     super.key,
     required this.taskList,
+    required this.themeColor,
     this.isAddToMyDay = false,
     this.isAddToImportant = false,
-    required this.themeColor,
   });
 
   @override
@@ -50,22 +50,20 @@ class AddFloatingButton extends StatelessWidget {
   }
 }
 
-// ignore: must_be_immutable
 class AddTaskItem extends StatelessWidget {
-  bool isChecked;
   final bool isAddToMyDay;
   final bool isAddToImportant;
   final TextEditingController _controller = TextEditingController();
   final TaskListModel taskList;
   AddTaskItem(
       {super.key,
-      this.isChecked = false,
       required this.taskList,
       required this.isAddToMyDay,
       required this.isAddToImportant});
 
   @override
   Widget build(BuildContext context) {
+    bool isChecked = false;
     return StatefulBuilder(
       builder: (context, setState) {
         return Padding(
@@ -118,6 +116,9 @@ class AddTaskItem extends StatelessWidget {
                       isCompleted: isChecked,
                     );
                   }
+                  setState(() {
+                    isChecked = false;
+                  });
                   _controller.clear();
                 },
                 icon: const Icon(Icons.arrow_upward),

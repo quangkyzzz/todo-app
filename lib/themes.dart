@@ -48,6 +48,17 @@ class MyTheme {
     blackPinkColor,
   ];
 
+  //Tasklist default image
+  static List<String> imageList = [
+    'assets/backgrounds/bg_my_day.jpg',
+    'assets/backgrounds/bg_default_1.png',
+    'assets/backgrounds/bg_default_2.jpg',
+    'assets/backgrounds/bg_default_3.jpg',
+    'assets/backgrounds/bg_default_4.jpg',
+    'assets/backgrounds/bg_default_5.jpg',
+    'assets/backgrounds/bg_default_6.jpg',
+  ];
+
   //text style
   static const TextStyle titleTextStyle = TextStyle(
     fontSize: 24,

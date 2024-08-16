@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/models/task_list_model.dart';
@@ -81,12 +83,18 @@ class _PlannedPageState extends State<PlannedPage> {
     return Stack(
       fit: StackFit.expand,
       children: [
-        (plannedTaskList.backgroundImage != null)
-            ? Image.file(
-                plannedTaskList.backgroundImage!,
-                fit: BoxFit.fitHeight,
-              )
-            : const SizedBox(),
+        if (plannedTaskList.backgroundImage != null)
+          (plannedTaskList.isDefaultImage == -1)
+              ? Image.file(
+                  File(plannedTaskList.backgroundImage!),
+                  fit: BoxFit.fitHeight,
+                )
+              : Image.asset(
+                  plannedTaskList.backgroundImage!,
+                  fit: BoxFit.fitHeight,
+                )
+        else
+          const SizedBox(),
         Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(

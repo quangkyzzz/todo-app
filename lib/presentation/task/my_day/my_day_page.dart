@@ -1,9 +1,8 @@
 // ignore_for_file: unnecessary_string_interpolations, sized_box_for_whitespace
-
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/app_configs.dart';
 import 'package:todo_app/models/task_list_model.dart';
 import 'package:todo_app/models/task_model.dart';
 import 'package:todo_app/presentation/items/task_list_item.dart';
@@ -37,15 +36,18 @@ class _MyDayPageState extends State<MyDayPage> {
     return Stack(
       fit: StackFit.expand,
       children: [
-        (myDayTaskList.backgroundImage == null)
-            ? Image.asset(
-                AppConfigs.backGroundImage,
-                fit: BoxFit.fitHeight,
-              )
-            : Image.file(
-                myDayTaskList.backgroundImage!,
-                fit: BoxFit.fitHeight,
-              ),
+        if (myDayTaskList.backgroundImage != null)
+          (myDayTaskList.isDefaultImage == -1)
+              ? Image.file(
+                  File(myDayTaskList.backgroundImage!),
+                  fit: BoxFit.fitHeight,
+                )
+              : Image.asset(
+                  myDayTaskList.backgroundImage!,
+                  fit: BoxFit.fitHeight,
+                )
+        else
+          const SizedBox(),
         Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
