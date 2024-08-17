@@ -3,11 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/themes.dart';
 
-class PopupItem extends StatelessWidget {
+class CustomPopupItem extends StatelessWidget {
   final String text;
   final IconData icon;
 
-  const PopupItem({
+  const CustomPopupItem({
     super.key,
     required this.text,
     required this.icon,

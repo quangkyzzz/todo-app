@@ -146,7 +146,7 @@ class _TaskPageState extends State<TaskPage> {
             onTap: () {
               item['onTap'](context);
             },
-            child: PopupItem(
+            child: CustomPopupItem(
               text: item['text'],
               icon: item['icon'],
             ),

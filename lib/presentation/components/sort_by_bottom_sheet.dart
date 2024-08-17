@@ -41,7 +41,7 @@ class SortByBottomSheet extends StatelessWidget {
               );
               Navigator.pop(context);
             },
-            child: const PopupItem(
+            child: const CustomPopupItem(
               text: 'Important',
               icon: Icons.star_border_outlined,
             ),
@@ -62,7 +62,7 @@ class SortByBottomSheet extends StatelessWidget {
               );
               Navigator.pop(context);
             },
-            child: const PopupItem(
+            child: const CustomPopupItem(
               text: 'Due date',
               icon: Icons.calendar_today_outlined,
             ),
@@ -83,7 +83,7 @@ class SortByBottomSheet extends StatelessWidget {
               );
               Navigator.pop(context);
             },
-            child: const PopupItem(
+            child: const CustomPopupItem(
               text: 'Added to My Day',
               icon: Icons.wb_sunny_outlined,
             ),
@@ -104,7 +104,7 @@ class SortByBottomSheet extends StatelessWidget {
               );
               Navigator.pop(context);
             },
-            child: const PopupItem(
+            child: const CustomPopupItem(
               text: 'Alphabetically',
               icon: Icons.import_export_outlined,
             ),
@@ -125,7 +125,7 @@ class SortByBottomSheet extends StatelessWidget {
               );
               Navigator.pop(context);
             },
-            child: const PopupItem(
+            child: const CustomPopupItem(
               text: 'Creation date',
               icon: Icons.more_time_outlined,
             ),

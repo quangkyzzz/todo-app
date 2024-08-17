@@ -6,6 +6,7 @@ import 'package:todo_app/presentation/items/popup_item.dart';
 import 'package:todo_app/provider/task_list_provider.dart';
 import 'package:todo_app/themes.dart';
 
+//TODO: add shortcut function
 class StepItem extends StatefulWidget {
   final StepModel step;
   final TaskListModel taskList;
@@ -70,7 +71,7 @@ class _StepItemState extends State<StepItem> {
                   isCompleted: step.isCompleted,
                 );
               },
-              child: const PopupItem(
+              child: const CustomPopupItem(
                 text: 'Promote to task',
                 icon: Icons.add_outlined,
               ),
@@ -79,7 +80,7 @@ class _StepItemState extends State<StepItem> {
               onTap: () {
                 widget.callBack(step, isDelete: true);
               },
-              child: const PopupItem(
+              child: const CustomPopupItem(
                 text: 'Delete step',
                 icon: Icons.delete_outline,
               ),

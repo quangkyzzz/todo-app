@@ -95,10 +95,6 @@ class _SettingsPageState extends State<SettingsPage> {
               MyTheme.dividerWhiteStyle,
               const SizedBox(height: 8),
               //General settings
-              const Text(
-                'General',
-                style: MyTheme.itemGreyTextStyle,
-              ),
               const SettingsList()
             ],
           ),

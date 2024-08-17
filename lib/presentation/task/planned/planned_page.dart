@@ -135,7 +135,7 @@ class _PlannedPageState extends State<PlannedPage> {
                     return listPopupMennu.map((item) {
                       return PopupMenuItem(
                         onTap: item['onTap'],
-                        child: PopupItem(
+                        child: CustomPopupItem(
                           text: item['text'],
                           icon: item['icon'],
                         ),

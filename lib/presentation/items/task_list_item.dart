@@ -39,7 +39,7 @@ class _TaskListItemState extends State<TaskListItem> {
   late bool isChecked;
   late List<StepModel>? steps;
   late DateTime? dueDate;
-  late DateTime? notiTime;
+  late DateTime? remindTime;
   late String? repeatFrequency;
   late List<String>? filePath;
   late String? note;
@@ -54,7 +54,7 @@ class _TaskListItemState extends State<TaskListItem> {
     isChecked = widget.task.isCompleted;
     steps = widget.task.stepList;
     dueDate = widget.task.dueDate;
-    notiTime = widget.task.remindTime;
+    remindTime = widget.task.remindTime;
     repeatFrequency = widget.task.repeatFrequency;
     filePath = widget.task.filePath;
     note = widget.task.note;
@@ -77,7 +77,7 @@ class _TaskListItemState extends State<TaskListItem> {
     isChecked = widget.task.isCompleted;
     steps = widget.task.stepList;
     dueDate = widget.task.dueDate;
-    notiTime = widget.task.remindTime;
+    remindTime = widget.task.remindTime;
     repeatFrequency = widget.task.repeatFrequency;
     filePath = widget.task.filePath;
     note = widget.task.note;
@@ -97,7 +97,7 @@ class _TaskListItemState extends State<TaskListItem> {
     bool isAllBottomIconNull = ((!isOnMyDay) &&
         (steps == null) &&
         (dueDate == null) &&
-        (notiTime == null) &&
+        (remindTime == null) &&
         (repeatFrequency == null) &&
         (filePath == null) &&
         (note == null));
@@ -210,13 +210,13 @@ class _TaskListItemState extends State<TaskListItem> {
                             }
                           }),
                           Builder(builder: (context) {
-                            if (notiTime != null) {
+                            if (remindTime != null) {
                               bool tempFirstIcon = isFirstIcon;
                               isFirstIcon = false;
                               return ItemBottomIcon(
                                 textIcon: Icons.notifications_outlined,
                                 text: ((dueDate == null) && (!isOnMyDay))
-                                    ? '${DateFormat('E, MMM d').format(notiTime!)}'
+                                    ? '${DateFormat('E, MMM d').format(remindTime!)}'
                                     : '',
                                 isFirstIcon: tempFirstIcon,
                               );

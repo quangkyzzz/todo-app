@@ -128,7 +128,7 @@ class _HomeGroupState extends State<HomeGroup> {
                           item['onTap'](context, widget.group.id);
                         },
                         value: item['value'],
-                        child: PopupItem(
+                        child: CustomPopupItem(
                           text: item['text'],
                           icon: item['icon'],
                         ),

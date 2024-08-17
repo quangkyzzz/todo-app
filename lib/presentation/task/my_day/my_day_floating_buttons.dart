@@ -26,50 +26,7 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
     super.initState();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const Spacer(flex: 2),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
-          decoration: BoxDecoration(
-            shape: BoxShape.rectangle,
-            borderRadius: BorderRadius.circular(18),
-            color: widget.themeColor,
-          ),
-          child: InkWell(
-            splashColor: MyTheme.blackColor,
-            customBorder: const CircleBorder(),
-            onTap: () {
-              onSuggestionsTap(context, widget.themeColor);
-            },
-            child: Ink(
-              decoration: const BoxDecoration(shape: BoxShape.circle),
-              child: Text(
-                'Suggestions',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w400,
-                  color: (widget.themeColor == MyTheme.whiteColor)
-                      ? MyTheme.blackColor
-                      : MyTheme.whiteColor,
-                ),
-              ),
-            ),
-          ),
-        ),
-        const Spacer(flex: 1),
-        AddFloatingButton(
-          taskList: taskList,
-          isAddToMyDay: true,
-          themeColor: widget.themeColor,
-        ),
-      ],
-    );
-  }
-
-  onSuggestionsTap(BuildContext context, Color themeColor) {
+  void onSuggestionsTap(BuildContext context, Color themeColor) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -171,6 +128,49 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
           },
         );
       },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        const Spacer(flex: 2),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+          decoration: BoxDecoration(
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.circular(18),
+            color: widget.themeColor,
+          ),
+          child: InkWell(
+            splashColor: MyTheme.blackColor,
+            customBorder: const CircleBorder(),
+            onTap: () {
+              onSuggestionsTap(context, widget.themeColor);
+            },
+            child: Ink(
+              decoration: const BoxDecoration(shape: BoxShape.circle),
+              child: Text(
+                'Suggestions',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                  color: (widget.themeColor == MyTheme.whiteColor)
+                      ? MyTheme.blackColor
+                      : MyTheme.whiteColor,
+                ),
+              ),
+            ),
+          ),
+        ),
+        const Spacer(flex: 1),
+        AddFloatingButton(
+          taskList: taskList,
+          isAddToMyDay: true,
+          themeColor: widget.themeColor,
+        ),
+      ],
     );
   }
 }

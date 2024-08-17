@@ -291,7 +291,7 @@ class _PopupMenuState extends State<PopupMenu> {
             onTap: () {
               item['onTap'](context, widget.taskList.id);
             },
-            child: PopupItem(
+            child: CustomPopupItem(
               text: item['text'],
               icon: item['icon'],
             ),

@@ -53,29 +53,25 @@ class _MyDayPageState extends State<MyDayPage> {
           appBar: AppBar(
             iconTheme: IconThemeData(color: myDayTaskList.themeColor),
             backgroundColor: Colors.transparent,
-            title: Container(
-              height: 48,
-              width: 300,
-              child: RichText(
-                text: TextSpan(
-                    text: 'My Day',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w500,
-                      color: myDayTaskList.themeColor,
-                    ),
-                    children: [
-                      TextSpan(
-                        text:
-                            '\n${DateFormat('EEEE, MMMM d').format(DateTime.now())}',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: myDayTaskList.themeColor,
-                        ),
-                      )
-                    ]),
-              ),
+            title: RichText(
+              text: TextSpan(
+                  text: 'My Day',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w500,
+                    color: myDayTaskList.themeColor,
+                  ),
+                  children: [
+                    TextSpan(
+                      text:
+                          '\n${DateFormat('EEEE, MMMM d').format(DateTime.now())}',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: myDayTaskList.themeColor,
+                      ),
+                    )
+                  ]),
             ),
             actions: [
               PopupMenu(
