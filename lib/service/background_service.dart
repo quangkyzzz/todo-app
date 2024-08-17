@@ -70,22 +70,22 @@ class BackGroundService {
     late Duration frequencyDuration;
     switch (interval) {
       case 'Days':
-        frequencyDuration = Duration(minutes: 15 + period /*period*/);
+        frequencyDuration = Duration(days: period);
       case 'Weekdays':
         {
-          frequencyDuration = const Duration(minutes: 15);
+          frequencyDuration = const Duration(days: 15);
           isWeekDay = true;
         }
       case 'Weeks':
-        frequencyDuration = Duration(minutes: 15 + period /*period * 7*/);
+        frequencyDuration = Duration(days: period * 7);
       case 'Months':
         {
-          frequencyDuration = const Duration(minutes: 15);
+          frequencyDuration = const Duration(days: 1);
           isMonthly = true;
         }
       case 'Years':
         {
-          frequencyDuration = const Duration(minutes: 15);
+          frequencyDuration = const Duration(days: 1);
           isYearly = true;
         }
     }
