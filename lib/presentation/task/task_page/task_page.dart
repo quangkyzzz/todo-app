@@ -41,6 +41,7 @@ class _TaskPageState extends State<TaskPage> {
   late TaskListProvider taskListProvider;
   late GroupProvider groupProvider;
   late SettingsProvider settingsProvider;
+  late bool isLoading;
   GlobalKey key = GlobalKey();
   late String title;
   late bool isOnMyDay;
@@ -219,11 +220,15 @@ class _TaskPageState extends State<TaskPage> {
   }
 
   void onTapAddFile(BuildContext context) async {
+    setState(() {
+      isLoading = true;
+    });
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       allowMultiple: true,
     );
     if (result != null) {
       setState(() {
+        isLoading = false;
         if (filePaths == null) {
           filePaths = [];
           filePaths!.addAll(
@@ -285,6 +290,7 @@ class _TaskPageState extends State<TaskPage> {
   @override
   void initState() {
     initializeDateFormatting();
+    isLoading = false;
     taskListProvider = Provider.of<TaskListProvider>(context, listen: false);
     groupProvider = Provider.of<GroupProvider>(context, listen: false);
     settingsProvider = Provider.of<SettingsProvider>(context, listen: false);
@@ -524,6 +530,7 @@ class _TaskPageState extends State<TaskPage> {
                       }).toList(),
                     )
                   : const SizedBox(),
+              (isLoading) ? const LoadingWidget() : const SizedBox(),
               TaskPageItem(
                 isActive: false,
                 icon: Icons.attach_file_outlined,
@@ -535,6 +542,7 @@ class _TaskPageState extends State<TaskPage> {
                 task: widget.task,
                 activeText: 'active',
               ),
+
               //////////////////////////
               //Add and edit note button
               const SizedBox(height: 18),
@@ -553,6 +561,28 @@ class _TaskPageState extends State<TaskPage> {
       bottomNavigationBar: TaskPageBottomNavigation(
         task: widget.task,
         taskList: widget.taskList,
+      ),
+    );
+  }
+}
+
+class LoadingWidget extends StatelessWidget {
+  const LoadingWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 12.0, top: 8, bottom: 8),
+      child: Row(
+        children: [
+          const Text(
+            'Loading file',
+            style: MyTheme.itemSmallTextStyle,
+          ),
+          Transform.scale(scale: 0.5, child: const CircularProgressIndicator()),
+        ],
       ),
     );
   }
