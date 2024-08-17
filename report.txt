@@ -1,9 +1,10 @@
-Báo cáo 16/8
+Báo cáo 17/8
 Đã làm:
-    -   Hoàn thành test chức năng nhắc hẹn
+    -   Hoàn thành chức năng tìm kiếm bằng giọng nói
+    -   Hoàn thành chức năng gợi ý task trong trang My day
+    -   Thêm chức năng chọn ảnh nền từ ảnh mặc định và xóa ảnh nền
 Đang làm:
-    -   Thêm chức năng tìm kiếm bằng giọng nói
+    -   Sửa cấu trúc project
 Dự định làm:
-    -   Sửa cấu trúc project.
     -   Rà soát các lỗi còn lại
     
