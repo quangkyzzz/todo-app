@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/service/background_service.dart';
 import 'package:todo_app/models/step_model.dart';
 import 'package:todo_app/models/task_list_model.dart';
-import 'package:todo_app/service/notification_service.dart';
 import 'package:todo_app/presentation/components/show_custom_repeat_time_dialog.dart';
 import 'package:todo_app/presentation/task/task_page/file_item.dart';
 import 'package:todo_app/provider/group_provider.dart';
@@ -127,7 +126,6 @@ class _TaskPageState extends State<TaskPage> {
         }
       });
       BackGroundService.cancelTaskByID(id: widget.task.id);
-      NotificationService.cancelAllNotification();
     }
   }
 
@@ -159,6 +157,13 @@ class _TaskPageState extends State<TaskPage> {
       setState(() {
         repeatFrequency = null;
       });
+      BackGroundService.cancelTaskByID(id: widget.task.id);
+      BackGroundService.executeScheduleBackGroundTask(
+        task: widget.task,
+        taskList: widget.taskList,
+        isPlaySound: settingsProvider.settings.isPlaySoundOnComplete,
+        remindTime: remindTime!,
+      );
     }
   }
 

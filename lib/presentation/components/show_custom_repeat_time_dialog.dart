@@ -41,6 +41,37 @@ Future<String?> showCustomRepeatTimeDialog(BuildContext context) {
                     )),
                 keyboardType: TextInputType.number,
               ),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    visualDensity:
+                        const VisualDensity(horizontal: -4, vertical: -3),
+                    onPressed: () {
+                      int textNow = 0;
+                      if (controller.text.isNotEmpty) {
+                        textNow = int.parse(controller.text);
+                      }
+                      controller.text = (textNow + 1).toString();
+                    },
+                    icon: const Icon(Icons.arrow_drop_up, size: 32),
+                  ),
+                  IconButton(
+                    visualDensity:
+                        const VisualDensity(horizontal: -4, vertical: -3),
+                    onPressed: () {
+                      int textNow = 0;
+                      if (controller.text.isNotEmpty) {
+                        textNow = int.parse(controller.text);
+                      }
+                      if (textNow > 0) {
+                        controller.text = (textNow - 1).toString();
+                      }
+                    },
+                    icon: const Icon(Icons.arrow_drop_down, size: 32),
+                  ),
+                ],
+              ),
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
@@ -73,7 +104,7 @@ Future<String?> showCustomRepeatTimeDialog(BuildContext context) {
             ),
             TextButton(
               onPressed: () {
-                if (controller.text.isEmpty) {
+                if ((controller.text.isEmpty) || (controller.text == '0')) {
                   Navigator.pop(context);
                 } else {
                   int numberOfDay = int.parse(controller.text);
