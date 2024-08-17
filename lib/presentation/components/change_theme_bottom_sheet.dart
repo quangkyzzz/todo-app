@@ -45,8 +45,29 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
     );
   }
 
-  //TODO: move ontap  function to here
-  onPickFile() async {}
+  onPickFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: [
+        'jpg',
+        'png',
+      ],
+    );
+    if (result != null) {
+      String resultPath = result.files.single.path!;
+      TaskListModel newTaskList = widget.taskList.copyWith(
+        backgroundImage: resultPath,
+        isDefaultImage: -1,
+      );
+      taskListProvider.updateTaskList(
+        taskListID: widget.taskList.id,
+        newTaskList: newTaskList,
+      );
+      setState(() {
+        _selectedImage = -1;
+      });
+    }
+  }
 
   onClean() {
     setState(() {
@@ -134,31 +155,7 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
                         CustomOutlinedButton(
                           isHighLighted: ((_selectedImage == -1) &&
                               (widget.taskList.backgroundImage != null)),
-                          onTap: () async {
-                            FilePickerResult? result =
-                                await FilePicker.platform.pickFiles(
-                              type: FileType.custom,
-                              allowedExtensions: [
-                                'jpg',
-                                'png',
-                              ],
-                            );
-                            if (result != null) {
-                              String resultPath = result.files.single.path!;
-                              TaskListModel newTaskList =
-                                  widget.taskList.copyWith(
-                                backgroundImage: resultPath,
-                                isDefaultImage: -1,
-                              );
-                              taskListProvider.updateTaskList(
-                                taskListID: widget.taskList.id,
-                                newTaskList: newTaskList,
-                              );
-                              setState(() {
-                                _selectedImage = -1;
-                              });
-                            }
-                          },
+                          onTap: onPickFile,
                           text: 'Custom',
                         ),
                         ...MyTheme.imageList.map((imgPath) {

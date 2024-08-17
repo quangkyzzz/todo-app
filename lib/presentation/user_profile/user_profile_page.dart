@@ -55,7 +55,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 style: MyTheme.secondaryTitleGreyTextStyle,
               ),
               MyTheme.dividerGreyStyle,
-              MyTheme.dividerGreyStyle,
               UserProfileItem(
                 text: 'Manage account',
                 icon: Icons.person_outline,

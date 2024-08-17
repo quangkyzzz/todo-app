@@ -74,23 +74,31 @@ class _SearchPageState extends State<SearchPage> {
           IconButton(
             onPressed: () async {
               if (!isSpeechEnable) {
-                setState(() {
-                  isSpeechEnable = true;
-                });
-                await speechToText.listen(
-                  listenOptions: SpeechListenOptions(
-                    listenMode: ListenMode.search,
-                    cancelOnError: 1,
-                  ),
-                  onResult: onSpeechToTextResult,
-                  listenFor: const Duration(seconds: 5),
-                );
-                Future.delayed(const Duration(seconds: 5), () {
+                _controller.clear();
+                if (!isSpeechEnable) {
+                  setState(() {
+                    isSpeechEnable = true;
+                  });
+                  await speechToText.listen(
+                    listenOptions: SpeechListenOptions(
+                      listenMode: ListenMode.search,
+                      cancelOnError: 1,
+                    ),
+                    onResult: onSpeechToTextResult,
+                    listenFor: const Duration(seconds: 5),
+                  );
+                  Future.delayed(const Duration(seconds: 5), () {
+                    setState(() {
+                      isSpeechEnable = false;
+                    });
+                  });
+                } else {
                   setState(() {
                     isSpeechEnable = false;
                   });
-                });
+                }
               } else {
+                speechToText.cancel();
                 setState(() {
                   isSpeechEnable = false;
                 });

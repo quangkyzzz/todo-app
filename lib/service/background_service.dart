@@ -3,7 +3,6 @@ import 'package:todo_app/models/task_model.dart';
 import 'package:todo_app/service/notification_service.dart';
 import 'package:workmanager/workmanager.dart';
 
-//TODO: check logic and test this
 @pragma('vm:entry-point')
 void callbackDispatcher() {
   Workmanager().executeTask((taskName, inputData) {
