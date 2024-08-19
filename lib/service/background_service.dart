@@ -65,8 +65,11 @@ class BackGroundService {
     int period = int.parse(frequency.split(' ').first);
     String interval = frequency.split(' ')[1];
 
-    cancelTaskByID(id: task.id);
-
+    BackGroundService.cancelTaskByID(id: task.id);
+    if (delayTime.inSeconds < 0) {
+      int secondDelay = delayTime.inSeconds % const Duration(days: 1).inSeconds;
+      delayTime = Duration(seconds: secondDelay);
+    }
     late Duration frequencyDuration;
     switch (interval) {
       case 'Days':
