@@ -620,16 +620,20 @@ class AddAndEditNoteButton extends StatelessWidget {
                   maxHeight: 118,
                   maxWidth: double.infinity,
                 ),
-                child: SingleChildScrollView(
-                  child: Text(
-                    taskListProvider
-                        .getTask(
-                          taskListID: taskList.id,
-                          taskID: task.id,
-                        )
-                        .note!,
-                    maxLines: null,
-                    style: MyTheme.itemSmallTextStyle,
+                child: Scrollbar(
+                  thumbVisibility: true,
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: Text(
+                      taskListProvider
+                          .getTask(
+                            taskListID: taskList.id,
+                            taskID: task.id,
+                          )
+                          .note!,
+                      maxLines: null,
+                      style: MyTheme.itemSmallTextStyle,
+                    ),
                   ),
                 ),
               ),
