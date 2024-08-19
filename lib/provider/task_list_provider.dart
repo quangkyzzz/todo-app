@@ -277,19 +277,21 @@ class TaskListProvider extends ChangeNotifier {
           if (a.isImportant && !b.isImportant) {
             return 1 * asc;
           } else if (a.isImportant && b.isImportant) {
-            return 0;
+            return a.createDate.compareTo(b.createDate) * asc;
+          } else if ((!a.isImportant) && (!b.isImportant)) {
+            return a.createDate.compareTo(b.createDate) * asc;
           } else {
             return -1 * asc;
           }
         });
       case 'due date':
         taskList.tasks.sort((a, b) {
-          if ((a.dueDate == null) && (b.dueDate == null)) {
-            return 0;
+          if ((b.dueDate == null) && (a.dueDate == null)) {
+            return b.createDate.compareTo(a.createDate) * asc;
           } else if ((a.dueDate != null) && (b.dueDate == null)) {
-            return -1;
+            return -1 * asc;
           } else if ((a.dueDate == null) && (b.dueDate != null)) {
-            return 1;
+            return 1 * asc;
           } else {
             return a.dueDate!.compareTo(b.dueDate!) * asc;
           }
@@ -299,14 +301,16 @@ class TaskListProvider extends ChangeNotifier {
           if (a.isOnMyDay && !b.isOnMyDay) {
             return 1 * asc;
           } else if (a.isOnMyDay && b.isOnMyDay) {
-            return 0;
+            return a.createDate.compareTo(b.createDate) * asc;
+          } else if ((!a.isOnMyDay) && (!b.isOnMyDay)) {
+            return a.createDate.compareTo(b.createDate) * asc;
           } else {
             return -1 * asc;
           }
         });
       case 'alphabetically':
         taskList.tasks.sort((a, b) {
-          return a.title.compareTo(b.title) * asc;
+          return a.title.toLowerCase().compareTo(b.title.toLowerCase()) * asc;
         });
       case 'create date':
         taskList.tasks.sort((a, b) {
