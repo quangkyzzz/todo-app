@@ -1,5 +1,4 @@
 // ignore_for_file: unnecessary_string_interpolations
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/models/step_model.dart';
@@ -93,7 +92,7 @@ class _TaskListItemState extends State<TaskListItem> {
   @override
   Widget build(BuildContext context) {
     initializeDateFormatting('vi');
-
+    double screenWidth = MediaQuery.of(context).size.width;
     bool isAllBottomIconNull = ((!isOnMyDay) &&
         (steps == null) &&
         (dueDate == null) &&
@@ -151,9 +150,13 @@ class _TaskListItemState extends State<TaskListItem> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SizedBox(height: 8),
-                      Text(
-                        myTitle,
-                        style: MyTheme.itemTextStyle,
+                      SizedBox(
+                        width: screenWidth * 0.7,
+                        child: Text(
+                          myTitle,
+                          overflow: TextOverflow.ellipsis,
+                          style: MyTheme.itemTextStyle,
+                        ),
                       ),
                       const SizedBox(height: 4),
                       Row(
