@@ -1,9 +1,10 @@
-Báo cáo 19/8
+Báo cáo 21/8
 Đã làm:
-    -   Chỉnh sửa cấu trúc project
-    -   Chỉnh sửa lỗi chức năng nhỏ
+    -   Sửa lỗi chức năng xắp xếp task
+    -   Sửa lỗi chức năng nhắc hẹn
+    -   Sửa lỗi hiển thị thông tin task
 Đang làm:
-    -   Ra soát các lỗi còn lại
+    -   Sửa lỗi chức năng xóa step
 Dự định làm:
-    -   Tổng hợp từ review và tiếp túc chỉnh sửa 
+    -   Tổng hợp từ review và tiếp tục chỉnh sửa 
     
