@@ -151,7 +151,7 @@ class _TaskListItemState extends State<TaskListItem> {
                     children: [
                       const SizedBox(height: 8),
                       SizedBox(
-                        width: screenWidth * 0.7,
+                        width: screenWidth * 0.65,
                         child: Text(
                           myTitle,
                           overflow: TextOverflow.ellipsis,

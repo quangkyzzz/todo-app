@@ -97,7 +97,7 @@ class _TaskListPageState extends State<TaskListPage> {
                           ? ChangeSortTypeButton(taskList: taskList)
                           : const SizedBox(),
                       IncompleteList(taskList: taskList),
-                      ((widget.haveCompletedList))
+                      (widget.haveCompletedList)
                           ? CompletedList(taskList: taskList)
                           : const SizedBox()
                     ]);

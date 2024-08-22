@@ -140,41 +140,47 @@ class _HomeGroupState extends State<HomeGroup> {
           Icon(isExpanded ? Icons.expand_more : Icons.keyboard_arrow_left),
         ],
       ),
-      children: (widget.group.taskLists.isNotEmpty)
-          ? widget.group.taskLists.map((item) {
-              return Consumer<TaskListProvider>(
-                builder: (context, taskListProvider, child) {
-                  int endNumber = 0;
+      children: [
+        (widget.group.taskLists.isNotEmpty)
+            ? ListView.builder(
+                shrinkWrap: true,
+                physics: const ClampingScrollPhysics(),
+                itemCount: widget.group.taskLists.length,
+                itemBuilder: (BuildContext context, int index) {
+                  TaskListModel item = widget.group.taskLists[index];
+                  return Consumer<TaskListProvider>(
+                    builder: (context, taskListProvider, child) {
+                      int endNumber = 0;
 
-                  TaskListModel taskList =
-                      taskListProvider.getTaskList(taskListID: item.id);
-                  for (var element in taskList.tasks) {
-                    if (!element.isCompleted) endNumber++;
-                  }
-                  return HomeItem(
-                    text: taskList.listName,
-                    icon: Icons.list_outlined,
-                    iconColor: taskList.themeColor,
-                    endNumber: endNumber,
-                    onTap: () {
-                      Navigator.of(context).pushNamed(
-                        taskListRoute,
-                        arguments: {
-                          'haveCompletedList': true,
-                          'taskList': taskList,
+                      TaskListModel taskList =
+                          taskListProvider.getTaskList(taskListID: item.id);
+                      for (var element in taskList.tasks) {
+                        if (!element.isCompleted) endNumber++;
+                      }
+                      return HomeItem(
+                        text: taskList.listName,
+                        icon: Icons.list_outlined,
+                        iconColor: taskList.themeColor,
+                        endNumber: endNumber,
+                        onTap: () {
+                          Navigator.of(context).pushNamed(
+                            taskListRoute,
+                            arguments: {
+                              'haveCompletedList': true,
+                              'taskList': taskList,
+                            },
+                          );
                         },
                       );
                     },
                   );
                 },
-              );
-            }).toList()
-          : [
-              const Text(
+              )
+            : const Text(
                 'This group is empty',
                 style: MyTheme.itemSmallGreyTextStyle,
-              )
-            ],
+              ),
+      ],
     );
   }
 }
@@ -218,8 +224,12 @@ Future<List<TaskListModel>?> showAddListDialog({
                           (int.parse(element.id) > 10))),
                 );
                 return StatefulBuilder(builder: (context, setState) {
-                  return Column(
-                    children: allTaskList.map((item) {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
+                    itemCount: allTaskList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      TaskListModel item = allTaskList[index];
                       bool isChecked = checkedTaskList.contains(item);
                       return Row(
                         children: [
@@ -242,7 +252,7 @@ Future<List<TaskListModel>?> showAddListDialog({
                               })
                         ],
                       );
-                    }).toList(),
+                    },
                   );
                 });
               },

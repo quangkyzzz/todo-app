@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/models/group_model.dart';
 import 'package:todo_app/models/task_list_model.dart';
 import 'package:todo_app/presentation/home/home_appbar.dart';
 import 'package:todo_app/provider/group_provider.dart';
@@ -121,8 +122,12 @@ class _HomePageState extends State<HomePage> {
             //default list
             Consumer<TaskListProvider>(
                 builder: (context, taskListProvider, child) {
-              return Column(
-                children: listHomeItem.map((item) {
+              return ListView.builder(
+                shrinkWrap: true,
+                physics: const ClampingScrollPhysics(),
+                itemCount: listHomeItem.length,
+                itemBuilder: (BuildContext context, int index) {
+                  Map<String, dynamic> item = listHomeItem[index];
                   return HomeItem(
                     text: item['text'],
                     icon: item['icon'],
@@ -137,7 +142,7 @@ class _HomePageState extends State<HomePage> {
                       );
                     },
                   );
-                }).toList(),
+                },
               );
             }),
             MyTheme.dividerWhiteStyle,
@@ -145,13 +150,16 @@ class _HomePageState extends State<HomePage> {
             //personal task list
             Consumer<TaskListProvider>(
                 builder: (context, taskListProvider, child) {
-              return Column(
-                children: taskListProvider.taskLists.map((item) {
+              return ListView.builder(
+                shrinkWrap: true,
+                physics: const ClampingScrollPhysics(),
+                itemCount: taskListProvider.taskLists.length,
+                itemBuilder: (BuildContext context, int index) {
+                  TaskListModel item = taskListProvider.taskLists[index];
                   if ((item.groupID == null) && (int.parse(item.id) > 10)) {
                     int endNumber = taskListProvider.countIncompletedTaskByID(
                       taskListID: item.id,
                     );
-
                     return HomeItem(
                       text: item.listName,
                       icon: Icons.list_outlined,
@@ -168,18 +176,22 @@ class _HomePageState extends State<HomePage> {
                       },
                     );
                   } else {
-                    return SizedBox(height: 0);
+                    return SizedBox();
                   }
-                }).toList(),
+                },
               );
             }),
             /////////////////
             //personal group
             Consumer<GroupProvider>(builder: (context, groupProvider, child) {
-              return Column(
-                children: groupProvider.groups.map((item) {
+              return ListView.builder(
+                shrinkWrap: true,
+                physics: const ClampingScrollPhysics(),
+                itemCount: groupProvider.groups.length,
+                itemBuilder: (BuildContext context, int index) {
+                  GroupModel item = groupProvider.groups[index];
                   return HomeGroup(group: item);
-                }).toList(),
+                },
               );
             }),
           ],

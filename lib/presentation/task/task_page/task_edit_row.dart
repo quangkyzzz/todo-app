@@ -54,6 +54,7 @@ class _TaskEditRowState extends State<TaskEditRow> {
             controller: widget.taskNameController,
           ),
         ),
+        const SizedBox(width: 12),
         GestureDetector(
           onTap: () {
             setState(() {

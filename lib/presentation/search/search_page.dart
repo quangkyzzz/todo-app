@@ -165,13 +165,17 @@ class _SearchPageState extends State<SearchPage> {
                     ),
                   );
                 } else {
-                  return Column(
-                    children: searchTasks.map((e) {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
+                    itemCount: searchTasks.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      Map<TaskModel, TaskListModel> item = searchTasks[index];
                       if (isHideCompletedTask) {
-                        if (!e.keys.first.isCompleted) {
+                        if (!item.keys.first.isCompleted) {
                           return TaskListItem(
-                            task: e.keys.first,
-                            taskList: e.values.first,
+                            task: item.keys.first,
+                            taskList: item.values.first,
                             themeColor: MyTheme.blueColor,
                           );
                         } else {
@@ -179,12 +183,12 @@ class _SearchPageState extends State<SearchPage> {
                         }
                       } else {
                         return TaskListItem(
-                          task: e.keys.first,
-                          taskList: e.values.first,
+                          task: item.keys.first,
+                          taskList: item.values.first,
                           themeColor: MyTheme.blueColor,
                         );
                       }
-                    }).toList(),
+                    },
                   );
                 }
               }),

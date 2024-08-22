@@ -75,24 +75,32 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
                                         style: MyTheme.itemTextStyle,
                                       ),
                                 const SizedBox(height: 8),
-                                ...listRecentTask.map((pair) {
-                                  TaskModel task = pair.keys.first;
-                                  TaskListModel taskList = pair.values.first;
-                                  return TaskListItem(
-                                    task: task,
-                                    taskList: taskList,
-                                    themeColor: themeColor,
-                                    havePlusIcon: true,
-                                    onTapPlus: () {
-                                      taskListProvider.updateTaskWith(
-                                        taskListID: taskList.id,
-                                        taskID: task.id,
-                                        isOnMyDay: true,
-                                      );
-                                    },
-                                  );
-                                }),
-                                ////////////
+                                ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const ClampingScrollPhysics(),
+                                  itemCount: listRecentTask.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    Map<TaskModel, TaskListModel> pair =
+                                        listRecentTask[index];
+                                    TaskModel task = pair.keys.first;
+                                    TaskListModel taskList = pair.values.first;
+                                    return TaskListItem(
+                                      task: task,
+                                      taskList: taskList,
+                                      themeColor: themeColor,
+                                      havePlusIcon: true,
+                                      onTapPlus: () {
+                                        taskListProvider.updateTaskWith(
+                                          taskListID: taskList.id,
+                                          taskID: task.id,
+                                          isOnMyDay: true,
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
+                                /////////////
                                 //Older task
                                 (listOlderSuggetTask.isEmpty)
                                     ? const SizedBox()
@@ -101,23 +109,31 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
                                         style: MyTheme.itemTextStyle,
                                       ),
                                 const SizedBox(height: 8),
-                                ...listOlderSuggetTask.map((pair) {
-                                  TaskModel task = pair.keys.first;
-                                  TaskListModel taskList = pair.values.first;
-                                  return TaskListItem(
-                                    task: task,
-                                    taskList: taskList,
-                                    themeColor: themeColor,
-                                    havePlusIcon: true,
-                                    onTapPlus: () {
-                                      taskListProvider.updateTaskWith(
-                                        taskListID: taskList.id,
-                                        taskID: task.id,
-                                        isOnMyDay: true,
-                                      );
-                                    },
-                                  );
-                                }),
+                                ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const ClampingScrollPhysics(),
+                                  itemCount: listOlderSuggetTask.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    Map<TaskModel, TaskListModel> pair =
+                                        listOlderSuggetTask[index];
+                                    TaskModel task = pair.keys.first;
+                                    TaskListModel taskList = pair.values.first;
+                                    return TaskListItem(
+                                      task: task,
+                                      taskList: taskList,
+                                      themeColor: themeColor,
+                                      havePlusIcon: true,
+                                      onTapPlus: () {
+                                        taskListProvider.updateTaskWith(
+                                          taskListID: taskList.id,
+                                          taskID: task.id,
+                                          isOnMyDay: true,
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
                               ],
                             );
                     }),

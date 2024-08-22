@@ -6,7 +6,6 @@ import 'package:todo_app/presentation/items/popup_item.dart';
 import 'package:todo_app/provider/task_list_provider.dart';
 import 'package:todo_app/themes.dart';
 
-//TODO: add shortcut function
 class StepItem extends StatefulWidget {
   final StepModel step;
   final TaskListModel taskList;
@@ -34,6 +33,12 @@ class _StepItemState extends State<StepItem> {
     _controller = TextEditingController();
     _controller.text = widget.step.stepName;
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant StepItem oldWidget) {
+    step = widget.step;
+    super.didUpdateWidget(oldWidget);
   }
 
   @override

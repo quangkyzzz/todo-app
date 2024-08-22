@@ -381,8 +381,8 @@ class _TaskPageState extends State<TaskPage> {
         'isActive': (remindTime != null),
         'icon': Icons.notifications_outlined,
         'text': 'Remind me',
-        'activeText':
-            'Remind at ${DateFormat('h:mm a, MMM d').format(remindTime ?? DateTime(2000))}',
+        'activeText': 'Remind at'
+            ' ${DateFormat('h:mm a, MMM d').format(remindTime ?? DateTime(2000))}',
         'onTap': onTapRemindMe,
       },
       {
@@ -448,17 +448,20 @@ class _TaskPageState extends State<TaskPage> {
               const SizedBox(height: 8),
               ////////////////
               //Step edit row
+              //TODO: fix delete step bug
               (steps != null)
-                  ? Column(
-                      children: steps!.map(
-                      (item) {
+                  ? ListView.builder(
+                      physics: const ClampingScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: steps!.length,
+                      itemBuilder: (BuildContext context, int index) {
                         return StepItem(
-                          taskList: widget.taskList,
-                          step: item,
+                          step: steps![index],
                           callBack: callBackEditStepItem,
+                          taskList: widget.taskList,
                         );
                       },
-                    ).toList())
+                    )
                   : const SizedBox(),
               Row(
                 children: [
@@ -486,33 +489,40 @@ class _TaskPageState extends State<TaskPage> {
                   )
                 ],
               ),
-              const SizedBox(height: 12),
+
               //////////////////////////////
               //List uniform task page item
-              Column(
-                children: listTaskItem.map((item) {
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: TaskPageItem(
-                      task: widget.task,
-                      taskList: widget.taskList,
-                      key: item['key'],
-                      isActive: item['isActive'],
-                      icon: item['icon'],
-                      text: item['text'],
-                      activeText: item['activeText'],
-                      onTap: ({bool isDisable = false}) {
-                        item['onTap'](context, isDisable: isDisable);
-                      },
-                    ),
+              const SizedBox(height: 6),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const ClampingScrollPhysics(),
+                itemCount: listTaskItem.length,
+                itemBuilder: (BuildContext context, int index) {
+                  Map<String, dynamic> item = listTaskItem[index];
+                  return TaskPageItem(
+                    task: widget.task,
+                    taskList: widget.taskList,
+                    key: item['key'],
+                    isActive: item['isActive'],
+                    icon: item['icon'],
+                    text: item['text'],
+                    activeText: item['activeText'],
+                    onTap: ({bool isDisable = false}) {
+                      item['onTap'](context, isDisable: isDisable);
+                    },
                   );
-                }).toList(),
+                },
               ),
+              const SizedBox(height: 6),
               //////////////////////////
               //Add and edit file button
               (filePaths != null)
-                  ? Column(
-                      children: filePaths!.map((path) {
+                  ? ListView.builder(
+                      shrinkWrap: true,
+                      physics: const ClampingScrollPhysics(),
+                      itemCount: filePaths!.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        String path = filePaths![index];
                         return FileItem(
                           filePath: path,
                           onTap: () {
@@ -527,10 +537,15 @@ class _TaskPageState extends State<TaskPage> {
                             }
                           },
                         );
-                      }).toList(),
+                      },
                     )
                   : const SizedBox(),
-              (isLoading) ? const LoadingWidget() : const SizedBox(),
+              (isLoading)
+                  ? const Padding(
+                      padding: EdgeInsets.only(left: 8),
+                      child: LoadingWidget(),
+                    )
+                  : const SizedBox(),
               TaskPageItem(
                 isActive: false,
                 icon: Icons.attach_file_outlined,
@@ -545,7 +560,6 @@ class _TaskPageState extends State<TaskPage> {
 
               //////////////////////////
               //Add and edit note button
-              const SizedBox(height: 18),
               Consumer<TaskListProvider>(
                   builder: (context, taskListProvider, child) {
                 return AddAndEditNoteButton(
