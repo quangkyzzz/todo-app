@@ -1,4 +1,4 @@
-Báo cáo 21/8
+Báo cáo 22/8
 Đã làm:
     -   Sửa lỗi chức năng xắp xếp task
     -   Sửa lỗi chức năng nhắc hẹn
