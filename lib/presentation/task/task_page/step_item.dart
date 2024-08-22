@@ -37,6 +37,7 @@ class _StepItemState extends State<StepItem> {
 
   @override
   void didUpdateWidget(covariant StepItem oldWidget) {
+    _controller.text = widget.step.stepName;
     step = widget.step;
     super.didUpdateWidget(oldWidget);
   }
