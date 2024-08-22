@@ -167,7 +167,10 @@ class _TaskListItemState extends State<TaskListItem> {
                               isFirstIcon = false;
                               return ItemBottomIcon(
                                 textIcon: Icons.wb_sunny_outlined,
-                                text: 'My Day',
+                                text:
+                                    ((dueDate == null) || (remindTime == null))
+                                        ? 'My Day'
+                                        : '',
                                 isFirstIcon: tempFirstIcon,
                               );
                             } else {
