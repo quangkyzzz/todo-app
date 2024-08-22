@@ -50,26 +50,20 @@ class _LoginPageState extends State<LoginPage> {
                   hintText: 'Email',
                   hideText: false,
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
+                const SizedBox(height: 10),
                 AuthField(
                   controller: passwordController,
                   hintText: 'Password',
                   hideText: true,
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
+                const SizedBox(height: 10),
                 RoundedSmallButton(
                   onTap: onLogIn,
                   label: 'Login',
                   textColor: MyTheme.blackColor,
                   backGroundColor: MyTheme.whiteColor,
                 ),
-                const SizedBox(
-                  height: 40,
-                ),
+                const SizedBox(height: 40),
                 RichText(
                   text: TextSpan(
                     text: "Don't have an account?",

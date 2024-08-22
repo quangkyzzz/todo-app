@@ -58,26 +58,20 @@ class _SignUpPageState extends State<SignUpPage> {
                   hintText: 'Email',
                   hideText: false,
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
+                const SizedBox(height: 10),
                 AuthField(
                   controller: passwordController,
                   hintText: 'Password',
                   hideText: true,
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
+                const SizedBox(height: 10),
                 RoundedSmallButton(
                   onTap: () => onSignUp(),
                   label: 'Sign Up',
                   textColor: MyTheme.blackColor,
                   backGroundColor: MyTheme.whiteColor,
                 ),
-                const SizedBox(
-                  height: 40,
-                ),
+                const SizedBox(height: 40),
                 RichText(
                   text: TextSpan(
                     text: "Already have an account?",

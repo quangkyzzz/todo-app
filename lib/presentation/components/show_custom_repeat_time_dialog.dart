@@ -46,7 +46,7 @@ Future<String?> showCustomRepeatTimeDialog(BuildContext context) {
                 children: [
                   IconButton(
                     visualDensity:
-                        const VisualDensity(horizontal: -4, vertical: -3),
+                        const VisualDensity(horizontal: -4, vertical: -4),
                     onPressed: () {
                       int textNow = 0;
                       if (controller.text.isNotEmpty) {

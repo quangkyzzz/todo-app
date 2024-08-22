@@ -100,10 +100,11 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Container(
-        height: 146,
+        height: screenHeight * 0.15,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

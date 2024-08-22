@@ -1,5 +1,4 @@
 // ignore_for_file: sized_box_for_whitespace
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/models/task_list_model.dart';
@@ -112,8 +111,9 @@ class _PopupMenuState extends State<PopupMenu> {
   }
 
   void onTapSortBy(BuildContext context, String id) {
+    double screenHeight = MediaQuery.of(context).size.height;
     showModalBottomSheet(
-      constraints: const BoxConstraints(maxHeight: 350),
+      constraints: BoxConstraints(maxHeight: screenHeight * 0.35),
       isDismissible: true,
       enableDrag: true,
       context: context,
