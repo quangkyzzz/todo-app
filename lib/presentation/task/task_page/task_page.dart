@@ -227,7 +227,6 @@ class _TaskPageState extends State<TaskPage> {
     );
     if (result != null) {
       setState(() {
-        isLoading = false;
         if (filePaths == null) {
           filePaths = [];
           filePaths!.addAll(
@@ -240,6 +239,9 @@ class _TaskPageState extends State<TaskPage> {
         }
       });
     }
+    setState(() {
+      isLoading = false;
+    });
   }
 
   void callBackEditTask(bool setComplete, bool setImportant) {
