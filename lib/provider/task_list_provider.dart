@@ -173,7 +173,7 @@ class TaskListProvider extends ChangeNotifier {
   }) {
     TaskListModel taskList = getTaskList(taskListID: id);
     for (TaskModel task in taskList.tasks) {
-      deleteTask(taskListID: taskList.id, taskID: task.id);
+      BackGroundService.cancelTaskByID(id: task.id);
     }
 
     taskLists.remove(taskList);

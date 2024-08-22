@@ -1,5 +1,4 @@
 // ignore_for_file: sized_box_for_whitespace
-
 import 'dart:async';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -448,7 +447,6 @@ class _TaskPageState extends State<TaskPage> {
               const SizedBox(height: 8),
               ////////////////
               //Step edit row
-              //TODO: fix delete step bug
               (steps != null)
                   ? ListView.builder(
                       physics: const ClampingScrollPhysics(),
