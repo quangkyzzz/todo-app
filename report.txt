@@ -1,10 +1,9 @@
-Báo cáo 22/8
+Báo cáo 23/8
 Đã làm:
-    -   Sửa lỗi chức năng xắp xếp task
-    -   Sửa lỗi chức năng nhắc hẹn
-    -   Sửa lỗi hiển thị thông tin task
-Đang làm:
     -   Sửa lỗi chức năng xóa step
+    -   Sửa các list widget thành listView
+    -   Sửa vài lỗi giao diện nhỏ 
+
 Dự định làm:
     -   Tổng hợp từ review và tiếp tục chỉnh sửa 
     
