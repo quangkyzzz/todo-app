@@ -52,13 +52,15 @@ Future<String?> showCustomRepeatTimeDialog(BuildContext context) {
                       if (controller.text.isNotEmpty) {
                         textNow = int.parse(controller.text);
                       }
-                      controller.text = (textNow + 1).toString();
+                      if (textNow < 999) {
+                        controller.text = (textNow + 1).toString();
+                      }
                     },
                     icon: const Icon(Icons.arrow_drop_up, size: 32),
                   ),
                   IconButton(
                     visualDensity:
-                        const VisualDensity(horizontal: -4, vertical: -3),
+                        const VisualDensity(horizontal: -4, vertical: -4),
                     onPressed: () {
                       int textNow = 0;
                       if (controller.text.isNotEmpty) {

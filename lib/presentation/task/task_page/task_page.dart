@@ -616,6 +616,7 @@ class AddAndEditNoteButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ScrollController scrollController = ScrollController();
     return Padding(
       padding: const EdgeInsets.all(16),
       child: (task.note != null)
@@ -635,8 +636,10 @@ class AddAndEditNoteButton extends StatelessWidget {
                   maxWidth: double.infinity,
                 ),
                 child: Scrollbar(
+                  controller: scrollController,
                   thumbVisibility: true,
                   child: SingleChildScrollView(
+                    controller: scrollController,
                     padding: const EdgeInsets.only(right: 8),
                     child: Text(
                       taskListProvider

@@ -48,7 +48,7 @@ class TaskListProvider extends ChangeNotifier {
               isCompleted: true,
             ),
           ],
-          note: 'ntoe dd',
+          note: 'note',
         ),
         TaskModel(
           id: '66',
@@ -79,13 +79,14 @@ class TaskListProvider extends ChangeNotifier {
           'file_picker/1723799643254/1000000837.jpg',
       tasks: [
         TaskModel(
-          id: '3',
-          title: 'few hour',
-          isCompleted: false,
-          isImportant: false,
-          isOnMyDay: true,
-          createDate: DateTime(2024, 7, 2, 7),
-        ),
+            id: '3',
+            title: 'few hour',
+            isCompleted: false,
+            isImportant: false,
+            isOnMyDay: true,
+            createDate: DateTime(2024, 7, 2, 7),
+            note: 'Really long note, long long long'
+                'long long long long long long'),
         TaskModel(
           id: '4',
           title: 'recent',

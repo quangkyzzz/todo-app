@@ -3,12 +3,12 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:todo_app/themes.dart';
-import 'package:path/path.dart' as p;
+import 'package:path/path.dart' as path;
 
 class FileItem extends StatelessWidget {
   final String filePath;
-  final Function onClose;
-  final Function onTap;
+  final Function() onClose;
+  final Function() onTap;
   const FileItem({
     super.key,
     required this.filePath,
@@ -38,34 +38,33 @@ class FileItem extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
-            decoration: BoxDecoration(
-              color: MyTheme.blueColor,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            width: screenWidth * 0.12,
-            height: screenWidth * 0.12,
-            child: Center(
-              child: Text(
-                p.extension(filePath).substring(1),
-                style: MyTheme.itemSmallTextStyle,
+          InkWell(
+            onTap: onTap,
+            child: Container(
+              decoration: BoxDecoration(
+                color: MyTheme.blueColor,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              width: screenWidth * 0.12,
+              height: screenWidth * 0.12,
+              child: Center(
+                child: Text(
+                  path.extension(filePath).substring(1),
+                  style: MyTheme.itemSmallTextStyle,
+                ),
               ),
             ),
           ),
-          const SizedBox(
-            width: 8,
-          ),
+          const SizedBox(width: 8),
           InkWell(
-            onTap: () {
-              onTap();
-            },
+            onTap: onTap,
             child: Container(
               width: screenWidth * 0.7,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    p.basename(filePath),
+                    path.basename(filePath),
                     style: MyTheme.itemSmallTextStyle,
                   ),
                   Text(
@@ -83,9 +82,7 @@ class FileItem extends StatelessWidget {
             ),
             iconSize: 16,
             color: MyTheme.greyColor,
-            onPressed: () {
-              onClose();
-            },
+            onPressed: onClose,
           )
         ],
       ),
