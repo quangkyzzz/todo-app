@@ -1,10 +1,15 @@
-Báo cáo 26/8
+Báo cáo 26/9
 Đã làm:
-    -   Sửa một vài lỗi giao diện nhỏ
-    -   Đọc lại về future, async, await
+    -   Sửa chức năng nút thêm task mới.
+    -   Sửa cấu trúc code của bottom sheet thêm task và background service.
+    -   Thay đổi nhỏ giao diện.
 Đang làm:
-    -   Tìm hiểu về isolate
+    -   Sửa taskMapViewModel
 Dự định làm:
-    -   Tìm hiểu về effective dart
-    -   Tổng hợp review code để tiếp tục chỉnh sửa.
-    
+    -   Hoàn thành sửa các màn liên quan đến taskMapViewModel
+     và xóa bỏ taskMapViewModel.
+
+//about: getMyDay,planned,... function
+//about: move to taskListViewModel
+
+test check
