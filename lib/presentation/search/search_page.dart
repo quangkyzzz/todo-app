@@ -41,6 +41,7 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   void initState() {
+    // ignore: discarded_futures
     speechToText.initialize();
     taskListProvider = Provider.of<TaskListProvider>(context, listen: false);
     searchTasks = taskListProvider.getAllTaskWithTaskList();
@@ -98,7 +99,7 @@ class _SearchPageState extends State<SearchPage> {
                   });
                 }
               } else {
-                speechToText.cancel();
+                await speechToText.cancel();
                 setState(() {
                   isSpeechEnable = false;
                 });

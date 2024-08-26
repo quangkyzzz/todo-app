@@ -26,8 +26,8 @@ class AddFloatingButton extends StatelessWidget {
         shape: const CircleBorder(),
         padding: const EdgeInsets.all(8),
       ),
-      onPressed: () {
-        showModalBottomSheet(
+      onPressed: () async {
+        await showModalBottomSheet(
           isScrollControlled: true,
           context: context,
           builder: (BuildContext context) {

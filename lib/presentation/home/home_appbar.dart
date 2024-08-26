@@ -19,8 +19,8 @@ class HomeAppBar {
       leading: Container(
         padding: const EdgeInsets.only(left: 6),
         child: InkWell(
-          onTap: () {
-            Navigator.of(context).pushNamed(userProfileRoute);
+          onTap: () async {
+            await Navigator.of(context).pushNamed(userProfileRoute);
           },
           child: const CircleAvatar(
             backgroundImage: AssetImage(AppConfigs.avatarImage),
@@ -31,8 +31,8 @@ class HomeAppBar {
       title: Container(
         width: double.infinity,
         child: InkWell(
-          onTap: () {
-            Navigator.of(context).pushNamed(userProfileRoute);
+          onTap: () async {
+            await Navigator.of(context).pushNamed(userProfileRoute);
           },
           child:
               Consumer<UserProvider>(builder: (context, userProvider, child) {
@@ -53,8 +53,8 @@ class HomeAppBar {
       ),
       actions: [
         IconButton(
-          onPressed: () {
-            Navigator.of(context).pushNamed(searchRoute);
+          onPressed: () async {
+            await Navigator.of(context).pushNamed(searchRoute);
           },
           icon: const Icon(
             Icons.search,

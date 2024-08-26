@@ -64,8 +64,8 @@ class _UserProfilePageState extends State<UserProfilePage> {
               UserProfileItem(
                 text: 'Settings',
                 icon: Icons.settings_outlined,
-                onTap: () {
-                  Navigator.of(context).pushNamed(settingsRoute);
+                onTap: () async {
+                  await Navigator.of(context).pushNamed(settingsRoute);
                 },
               )
             ],

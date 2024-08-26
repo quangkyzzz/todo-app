@@ -67,10 +67,13 @@ class TaskPageBottomNavigation extends StatelessWidget {
                 );
                 if (!context.mounted) return;
                 if (isDelete) {
-                  NotificationService.cancelNotification(int.parse(task.id));
+                  await NotificationService.cancelNotification(
+                      int.parse(task.id));
                   taskListProvider.deleteTask(
                       taskListID: taskList.id, taskID: task.id);
-                  Navigator.pop(context);
+                  if (context.mounted) {
+                    Navigator.pop(context);
+                  }
                 }
               } else {
                 taskListProvider.deleteTask(

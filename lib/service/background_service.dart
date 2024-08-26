@@ -1,3 +1,5 @@
+// ignore_for_file: discarded_futures
+
 import 'package:todo_app/models/task_list_model.dart';
 import 'package:todo_app/models/task_model.dart';
 import 'package:todo_app/service/notification_service.dart';
@@ -5,7 +7,7 @@ import 'package:workmanager/workmanager.dart';
 
 @pragma('vm:entry-point')
 void callbackDispatcher() {
-  Workmanager().executeTask((taskName, inputData) {
+  Workmanager().executeTask((taskName, inputData) async {
     String title = inputData!['listName'];
     String body = inputData['taskTitle'];
     int id = int.parse(inputData['id']);
@@ -35,7 +37,7 @@ void callbackDispatcher() {
     }
 
     if (isExecute) {
-      NotificationService.showLocalNotification(
+      await NotificationService.showLocalNotification(
         id: id,
         title: title,
         body: body,
@@ -53,7 +55,7 @@ class BackGroundService {
     required DateTime remindTime,
     required String frequency,
     required bool isPlaySound,
-  }) {
+  }) async {
     bool isWeekDay = false;
     bool isMonthly = false;
     bool isYearly = false;
@@ -92,13 +94,13 @@ class BackGroundService {
           isYearly = true;
         }
     }
-    Workmanager().registerPeriodicTask(
+    await Workmanager().registerPeriodicTask(
       task.id,
       task.title,
       initialDelay: delayTime,
       frequency: frequencyDuration,
       inputData: {
-        'id': task.id,
+        'id': task.id.substring(4),
         'taskTitle': task.title,
         'listName': taskList.listName,
         'remindYear': remindYear,
@@ -118,15 +120,15 @@ class BackGroundService {
     required TaskListModel taskList,
     required bool isPlaySound,
     required DateTime remindTime,
-  }) {
+  }) async {
     Duration delayTime = remindTime.difference(DateTime.now());
     if (delayTime.inSeconds > 0) {
-      Workmanager().registerOneOffTask(
+      await Workmanager().registerOneOffTask(
         task.id,
         task.title,
         initialDelay: delayTime,
         inputData: {
-          'id': task.id,
+          'id': task.id.substring(4),
           'taskTitle': task.title,
           'listName': taskList.listName,
           'isPlaySound': isPlaySound,
@@ -152,12 +154,12 @@ class BackGroundService {
   // }
 
   static void cancelTaskByID({required String id}) {
-    NotificationService.cancelNotification(int.parse(id));
+    NotificationService.cancelNotification(int.parse(id.substring(4)));
     Workmanager().cancelByUniqueName(id);
   }
 
-  static void cancelAllTask() {
-    NotificationService.cancelAllNotification();
-    Workmanager().cancelAll();
+  static Future<void> cancelAllTask() async {
+    await NotificationService.cancelAllNotification();
+    await Workmanager().cancelAll();
   }
 }

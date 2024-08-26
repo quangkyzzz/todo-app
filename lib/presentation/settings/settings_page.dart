@@ -72,10 +72,10 @@ class _SettingsPageState extends State<SettingsPage> {
                           ),
                         ),
                         InkWell(
-                          onTap: () {
+                          onTap: () async {
                             Provider.of<UserProvider>(context, listen: false)
                                 .logout();
-                            Navigator.pushNamedAndRemoveUntil(
+                            await Navigator.pushNamedAndRemoveUntil(
                                 context, initialRoute, (route) => false);
                           },
                           child: Container(

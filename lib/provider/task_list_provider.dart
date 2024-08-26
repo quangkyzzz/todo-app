@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:todo_app/service/background_service.dart';
@@ -233,11 +234,12 @@ class TaskListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteTaskList({
+  Future<void> deleteTaskList({
     required String id,
-  }) {
+  }) async {
     TaskListModel taskList = getTaskList(taskListID: id);
     for (TaskModel task in taskList.tasks) {
+      // ignore: unawaited_futures
       BackGroundService.cancelTaskByID(id: task.id);
     }
 
@@ -431,6 +433,7 @@ class TaskListProvider extends ChangeNotifier {
     if (taskList != null) {
       taskList.tasks.removeWhere((element) {
         if ((element.id == taskID) && (element.remindTime != null)) {
+          // ignore: discarded_futures
           BackGroundService.cancelTaskByID(id: taskID);
         }
         return (element.id == taskID);
@@ -440,11 +443,11 @@ class TaskListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateTask({
+  Future<void> updateTask({
     required String taskListID,
     required String taskID,
     required TaskModel newTask,
-  }) {
+  }) async {
     TaskListModel taskList = getTaskList(taskListID: taskListID);
     TaskModel task = getTask(taskListID: taskListID, taskID: taskID);
     if (task.title != newTask.title) {

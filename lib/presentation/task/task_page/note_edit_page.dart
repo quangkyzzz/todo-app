@@ -46,23 +46,25 @@ class _NoteEditPageState extends State<NoteEditPage> {
         ),
         actions: [
           IconButton(
-            onPressed: () {
+            onPressed: () async {
               TaskModel newTask = widget.task.copyWith(note: _controller.text);
-              taskListProvider.updateTask(
+              await taskListProvider.updateTask(
                 taskListID: widget.taskList.id,
                 taskID: widget.task.id,
                 newTask: newTask,
               );
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  backgroundColor: MyTheme.backgroundGreyColor,
-                  content: Text(
-                    'Note saved!',
-                    style: MyTheme.itemSmallTextStyle,
+              if (mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    backgroundColor: MyTheme.backgroundGreyColor,
+                    content: Text(
+                      'Note saved!',
+                      style: MyTheme.itemSmallTextStyle,
+                    ),
+                    duration: Duration(seconds: 1),
                   ),
-                  duration: Duration(seconds: 1),
-                ),
-              );
+                );
+              }
             },
             icon: Transform.scale(
               scale: 1.3,

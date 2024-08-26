@@ -162,8 +162,8 @@ class _HomeGroupState extends State<HomeGroup> {
                         icon: Icons.list_outlined,
                         iconColor: taskList.themeColor,
                         endNumber: endNumber,
-                        onTap: () {
-                          Navigator.of(context).pushNamed(
+                        onTap: () async {
+                          await Navigator.of(context).pushNamed(
                             taskListRoute,
                             arguments: {
                               'haveCompletedList': true,

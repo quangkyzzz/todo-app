@@ -129,11 +129,12 @@ class _TaskPageState extends State<TaskPage> {
     }
   }
 
-  void onTapRepeat(BuildContext context, {bool isDisable = false}) {
+  Future<void> onTapRepeat(BuildContext context,
+      {bool isDisable = false}) async {
     RenderBox box = key.currentContext!.findRenderObject() as RenderBox;
     Offset possition = box.localToGlobal(Offset.zero);
     if (!isDisable) {
-      showMenu(
+      await showMenu(
         context: context,
         position: RelativeRect.fromLTRB(
           possition.dx,
@@ -167,7 +168,7 @@ class _TaskPageState extends State<TaskPage> {
     }
   }
 
-  void onCompleteSetRepeat(String frequency) {
+  Future<void> onCompleteSetRepeat(String frequency) async {
     setState(() {
       repeatFrequency = frequency;
       remindTime ??= DateTime(
@@ -290,7 +291,7 @@ class _TaskPageState extends State<TaskPage> {
 
   @override
   void initState() {
-    initializeDateFormatting();
+    unawaited(initializeDateFormatting());
     isLoading = false;
     taskListProvider = Provider.of<TaskListProvider>(context, listen: false);
     groupProvider = Provider.of<GroupProvider>(context, listen: false);
@@ -310,36 +311,36 @@ class _TaskPageState extends State<TaskPage> {
       {
         'text': 'Daily',
         'icon': Icons.calendar_today_outlined,
-        'onTap': (BuildContext context) {
-          onCompleteSetRepeat('1 Days');
+        'onTap': (BuildContext context) async {
+          await onCompleteSetRepeat('1 Days');
         },
       },
       {
         'text': 'Weekdays',
         'icon': Icons.calendar_today_outlined,
-        'onTap': (BuildContext context) {
-          onCompleteSetRepeat('1 Weekdays');
+        'onTap': (BuildContext context) async {
+          await onCompleteSetRepeat('1 Weekdays');
         },
       },
       {
         'text': 'Weekly',
         'icon': Icons.calendar_today_outlined,
-        'onTap': (BuildContext context) {
-          onCompleteSetRepeat('1 Weeks');
+        'onTap': (BuildContext context) async {
+          await onCompleteSetRepeat('1 Weeks');
         },
       },
       {
         'text': 'Monthly',
         'icon': Icons.calendar_today_outlined,
-        'onTap': (BuildContext context) {
-          onCompleteSetRepeat('1 Months');
+        'onTap': (BuildContext context) async {
+          await onCompleteSetRepeat('1 Months');
         }
       },
       {
         'text': 'Yearly',
         'icon': Icons.calendar_today_outlined,
-        'onTap': (BuildContext context) {
-          onCompleteSetRepeat('1 Years');
+        'onTap': (BuildContext context) async {
+          await onCompleteSetRepeat('1 Years');
         },
       },
       {
@@ -348,7 +349,7 @@ class _TaskPageState extends State<TaskPage> {
         'onTap': (BuildContext context) async {
           String? result = await showCustomRepeatTimeDialog(context);
           if (result != null) {
-            onCompleteSetRepeat(result);
+            await onCompleteSetRepeat(result);
           }
         },
       },
@@ -427,7 +428,7 @@ class _TaskPageState extends State<TaskPage> {
             filePath: filePaths,
             note: widget.task.note,
           );
-          taskListProvider.updateTask(
+          await taskListProvider.updateTask(
             taskListID: widget.taskList.id,
             taskID: widget.task.id,
             newTask: newTask,
@@ -525,8 +526,8 @@ class _TaskPageState extends State<TaskPage> {
                         String path = filePaths![index];
                         return FileItem(
                           filePath: path,
-                          onTap: () {
-                            OpenFilex.open(path);
+                          onTap: () async {
+                            await OpenFilex.open(path);
                           },
                           onClose: () {
                             setState(() {
@@ -621,8 +622,8 @@ class AddAndEditNoteButton extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       child: (task.note != null)
           ? InkWell(
-              onTap: () {
-                Navigator.of(context).pushNamed(
+              onTap: () async {
+                await Navigator.of(context).pushNamed(
                   noteEditRoute,
                   arguments: {
                     'task': task,
@@ -656,8 +657,8 @@ class AddAndEditNoteButton extends StatelessWidget {
               ),
             )
           : TextButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed(
+              onPressed: () async {
+                await Navigator.of(context).pushNamed(
                   noteEditRoute,
                   arguments: {
                     'task': task,

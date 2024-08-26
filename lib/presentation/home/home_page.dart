@@ -22,31 +22,31 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool isExpanded = false;
-  onTapMyDay(BuildContext context, TaskListModel taskList) {
-    Navigator.of(context).pushNamed(myDayRoute);
+  onTapMyDay(BuildContext context, TaskListModel taskList) async {
+    await Navigator.of(context).pushNamed(myDayRoute);
   }
 
-  onTapImportant(BuildContext context, TaskListModel taskList) {
-    Navigator.of(context).pushNamed(importantRoute);
+  onTapImportant(BuildContext context, TaskListModel taskList) async {
+    await Navigator.of(context).pushNamed(importantRoute);
   }
 
-  onTapPlanned(BuildContext context, TaskListModel taskList) {
-    Navigator.of(context).pushNamed(plannedRoute);
+  onTapPlanned(BuildContext context, TaskListModel taskList) async {
+    await Navigator.of(context).pushNamed(plannedRoute);
   }
 
-  onTapAssignToMe(BuildContext context, TaskListModel taskList) {
-    Navigator.of(context).pushNamed(taskListRoute, arguments: {
+  onTapAssignToMe(BuildContext context, TaskListModel taskList) async {
+    await Navigator.of(context).pushNamed(taskListRoute, arguments: {
       'haveCompletedList': true,
       'taskList': taskList,
     });
   }
 
-  onTapFlaggedEmail(BuildContext context, TaskListModel taskList) {
-    Navigator.of(context).pushNamed(flaggedRoute);
+  onTapFlaggedEmail(BuildContext context, TaskListModel taskList) async {
+    await Navigator.of(context).pushNamed(flaggedRoute);
   }
 
-  onTapTask(BuildContext context, TaskListModel taskList) {
-    Navigator.of(context).pushNamed(
+  onTapTask(BuildContext context, TaskListModel taskList) async {
+    await Navigator.of(context).pushNamed(
       taskListRoute,
       arguments: {
         'haveCompletedList': true,
@@ -165,8 +165,8 @@ class _HomePageState extends State<HomePage> {
                       icon: Icons.list_outlined,
                       iconColor: item.themeColor,
                       endNumber: endNumber,
-                      onTap: () {
-                        Navigator.of(context).pushNamed(
+                      onTap: () async {
+                        await Navigator.of(context).pushNamed(
                           taskListRoute,
                           arguments: {
                             'haveCompletedList': true,

@@ -26,8 +26,8 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
     super.initState();
   }
 
-  void onSuggestionsTap(BuildContext context, Color themeColor) {
-    showModalBottomSheet(
+  Future<void> onSuggestionsTap(BuildContext context, Color themeColor) async {
+    await showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
         return DraggableScrollableSheet(
@@ -162,8 +162,8 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
           child: InkWell(
             splashColor: MyTheme.blackColor,
             customBorder: const CircleBorder(),
-            onTap: () {
-              onSuggestionsTap(context, widget.themeColor);
+            onTap: () async {
+              await onSuggestionsTap(context, widget.themeColor);
             },
             child: Ink(
               decoration: const BoxDecoration(shape: BoxShape.circle),

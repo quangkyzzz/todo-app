@@ -89,9 +89,13 @@ class _TaskListItemState extends State<TaskListItem> {
     super.didUpdateWidget(oldWidget);
   }
 
+  void initDateTimeFormat() async {
+    await initializeDateFormatting('vi');
+  }
+
   @override
   Widget build(BuildContext context) {
-    initializeDateFormatting('vi');
+    initDateTimeFormat();
     double screenWidth = MediaQuery.of(context).size.width;
     bool isAllBottomIconNull = ((!isOnMyDay) &&
         (steps == null) &&
@@ -109,8 +113,8 @@ class _TaskListItemState extends State<TaskListItem> {
       margin: const EdgeInsets.only(bottom: 3),
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: InkWell(
-        onTap: () {
-          Navigator.of(context).pushNamed(
+        onTap: () async {
+          await Navigator.of(context).pushNamed(
             taskRoute,
             arguments: {
               'task': widget.task,
@@ -128,8 +132,8 @@ class _TaskListItemState extends State<TaskListItem> {
               tristate: false,
               shape: const CircleBorder(),
               value: isChecked,
-              onChanged: (bool? value) {
-                taskListProvider.updateTask(
+              onChanged: (bool? value) async {
+                await taskListProvider.updateTask(
                   taskListID: widget.taskList.id,
                   taskID: widget.task.id,
                   newTask: widget.task.copyWith(isCompleted: value),
@@ -277,8 +281,8 @@ class _TaskListItemState extends State<TaskListItem> {
               shape: const CircleBorder(),
               child: (!widget.havePlusIcon)
                   ? IconButton(
-                      onPressed: () {
-                        taskListProvider.updateTask(
+                      onPressed: () async {
+                        await taskListProvider.updateTask(
                           taskListID: widget.taskList.id,
                           taskID: widget.task.id,
                           newTask:

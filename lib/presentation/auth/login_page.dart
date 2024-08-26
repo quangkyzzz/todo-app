@@ -78,8 +78,8 @@ class _LoginPageState extends State<LoginPage> {
                           fontSize: 16,
                         ),
                         recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                            Navigator.of(context).pushNamed(signupRoute);
+                          ..onTap = () async {
+                            await Navigator.of(context).pushNamed(signupRoute);
                           },
                       ),
                     ],

@@ -110,9 +110,9 @@ class _PopupMenuState extends State<PopupMenu> {
     }
   }
 
-  void onTapSortBy(BuildContext context, String id) {
+  Future<void> onTapSortBy(BuildContext context, String id) async {
     double screenHeight = MediaQuery.of(context).size.height;
-    showModalBottomSheet(
+    await showModalBottomSheet(
       constraints: BoxConstraints(maxHeight: screenHeight * 0.35),
       isDismissible: true,
       enableDrag: true,
@@ -126,15 +126,15 @@ class _PopupMenuState extends State<PopupMenu> {
     );
   }
 
-  void onTapReorder(BuildContext context, String id) {
-    Navigator.of(context).pushNamed(
+  Future<void> onTapReorder(BuildContext context, String id) async {
+    await Navigator.of(context).pushNamed(
       reorderRoute,
       arguments: widget.taskList,
     );
   }
 
-  void onTapAddShortcut(BuildContext context, String id) {
-    showModalBottomSheet(
+  Future<void> onTapAddShortcut(BuildContext context, String id) async {
+    await showModalBottomSheet(
       isDismissible: true,
       enableDrag: true,
       context: context,
@@ -149,8 +149,8 @@ class _PopupMenuState extends State<PopupMenu> {
     );
   }
 
-  void onTapChangeTheme(BuildContext context, String id) {
-    showModalBottomSheet(
+  Future<void> onTapChangeTheme(BuildContext context, String id) async {
+    await showModalBottomSheet(
       isDismissible: true,
       enableDrag: true,
       context: context,
@@ -161,8 +161,8 @@ class _PopupMenuState extends State<PopupMenu> {
     );
   }
 
-  void onTapHideCompletedTasks(BuildContext context, String id) {
-    showModalBottomSheet(
+  Future<void> onTapHideCompletedTasks(BuildContext context, String id) async {
+    await showModalBottomSheet(
       isDismissible: true,
       enableDrag: true,
       context: context,
@@ -177,8 +177,8 @@ class _PopupMenuState extends State<PopupMenu> {
     );
   }
 
-  void onTapSendCopy(BuildContext context, String id) {
-    showModalBottomSheet(
+  Future<void> onTapSendCopy(BuildContext context, String id) async {
+    await showModalBottomSheet(
       isDismissible: true,
       enableDrag: true,
       context: context,
@@ -193,8 +193,8 @@ class _PopupMenuState extends State<PopupMenu> {
     );
   }
 
-  void onTapDuplicateList(BuildContext context, String id) {
-    showModalBottomSheet(
+  Future<void> onTapDuplicateList(BuildContext context, String id) async {
+    await showModalBottomSheet(
       isDismissible: true,
       enableDrag: true,
       context: context,
@@ -221,8 +221,8 @@ class _PopupMenuState extends State<PopupMenu> {
     );
   }
 
-  void onTapPrintList(BuildContext context, String id) {
-    showModalBottomSheet(
+  Future<void> onTapPrintList(BuildContext context, String id) async {
+    await showModalBottomSheet(
       isDismissible: true,
       enableDrag: true,
       context: context,
@@ -253,7 +253,7 @@ class _PopupMenuState extends State<PopupMenu> {
             taskListID: widget.taskList.id,
           );
         }
-        taskListProvider.deleteTaskList(id: id);
+        await taskListProvider.deleteTaskList(id: id);
       }
     } else {
       Navigator.pop(context);
@@ -263,7 +263,7 @@ class _PopupMenuState extends State<PopupMenu> {
           taskListID: widget.taskList.id,
         );
       }
-      taskListProvider.deleteTaskList(id: id);
+      await taskListProvider.deleteTaskList(id: id);
     }
   }
 
