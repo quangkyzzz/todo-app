@@ -1,9 +1,10 @@
-Báo cáo 23/8
+Báo cáo 26/8
 Đã làm:
-    -   Sửa lỗi chức năng xóa step
-    -   Sửa các list widget thành listView
-    -   Sửa vài lỗi giao diện nhỏ 
-
+    -   Sửa một vài lỗi giao diện nhỏ
+    -   Đọc lại về future, async, await
+Đang làm:
+    -   Tìm hiểu về isolate
 Dự định làm:
-    -   Tổng hợp từ review và tiếp tục chỉnh sửa 
+    -   Tìm hiểu về effective dart
+    -   Tổng hợp review code để tiếp tục chỉnh sửa.
     
