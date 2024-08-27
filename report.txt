@@ -1,10 +1,9 @@
-Báo cáo 26/8
+Báo cáo 27/8
 Đã làm:
-    -   Sửa một vài lỗi giao diện nhỏ
-    -   Đọc lại về future, async, await
-Đang làm:
+    -   Sửa lỗi liên quan đến thư viện notification
     -   Tìm hiểu về isolate
-Dự định làm:
+Đang làm:
     -   Tìm hiểu về effective dart
+Dự định làm:
     -   Tổng hợp review code để tiếp tục chỉnh sửa.
     
