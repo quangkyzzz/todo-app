@@ -2,8 +2,9 @@ Báo cáo 27/8
 Đã làm:
     -   Sửa lỗi liên quan đến thư viện notification
     -   Tìm hiểu về isolate
-Đang làm:
     -   Tìm hiểu về effective dart
+Đang làm:
+    -   Áp dụng ví dụ về isolate 
 Dự định làm:
     -   Tổng hợp review code để tiếp tục chỉnh sửa.
     
