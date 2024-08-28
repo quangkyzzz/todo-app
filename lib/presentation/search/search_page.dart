@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
-import 'package:todo_app/models/task_list_model.dart';
-import 'package:todo_app/models/task_model.dart';
-import 'package:todo_app/presentation/items/task_list_item.dart';
-import 'package:todo_app/provider/task_list_provider.dart';
-import 'package:todo_app/themes.dart';
+import '../../models/task_list_model.dart';
+import '../../models/task_model.dart';
+import '../items/task_list_item.dart';
+import '../../provider/task_list_provider.dart';
+import '../../themes.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});

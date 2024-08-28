@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/provider/group_provider.dart';
-import 'package:todo_app/provider/task_list_provider.dart';
-import 'package:todo_app/themes.dart';
+import '../../provider/group_provider.dart';
+import '../../provider/task_list_provider.dart';
+import '../../themes.dart';
 import '../components/show_text_edit_dialog.dart';
 
 class HomePageBottomNavigationBar extends StatelessWidget {

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/app_configs.dart';
-import 'package:todo_app/provider/user_provider.dart';
-import 'package:todo_app/routes.dart';
-import 'package:todo_app/themes.dart';
-import 'package:todo_app/presentation/settings/settings_list.dart';
+import '../../app_configs.dart';
+import '../../provider/user_provider.dart';
+import '../../routes.dart';
+import '../../themes.dart';
+import 'settings_list.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});

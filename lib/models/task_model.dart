@@ -1,6 +1,6 @@
 import 'dart:core';
 
-import 'package:todo_app/models/step_model.dart';
+import 'step_model.dart';
 
 class TaskModel {
   final String id;

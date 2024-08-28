@@ -2,12 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/models/task_list_model.dart';
-import 'package:todo_app/presentation/components/add_floating_button.dart';
-import 'package:todo_app/presentation/lists/completed_list.dart';
-import 'package:todo_app/presentation/lists/incomplete_list.dart';
-import 'package:todo_app/presentation/components/popup_menu.dart';
-import 'package:todo_app/provider/task_list_provider.dart';
+import '../../../models/task_list_model.dart';
+import '../../components/add_floating_button.dart';
+import '../../lists/completed_list.dart';
+import '../../lists/incomplete_list.dart';
+import '../../components/popup_menu.dart';
+import '../../../provider/task_list_provider.dart';
 
 import 'change_sort_type_button.dart';
 

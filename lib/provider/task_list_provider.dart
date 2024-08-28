@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:todo_app/service/background_service.dart';
-import 'package:todo_app/models/step_model.dart';
-import 'package:todo_app/models/task_list_model.dart';
-import 'package:todo_app/models/task_model.dart';
+import '../service/background_service.dart';
+import '../models/step_model.dart';
+import '../models/task_list_model.dart';
+import '../models/task_model.dart';
 import 'package:collection/collection.dart';
-import 'package:todo_app/provider/settings_provider.dart';
-import 'package:todo_app/themes.dart';
+import 'settings_provider.dart';
+import '../themes.dart';
 
 typedef ListTaskMap = List<Map<TaskModel, TaskListModel>>;
 
@@ -208,6 +208,9 @@ class TaskListProvider extends ChangeNotifier {
         (diffTime.inDays > 0));
   }
 
+//you ---e -o we -e-y -o-- o- -e- -e-y -e-y
+//you ---- -o -- ---y -o-- o- --- ---y ---y
+//gjy utib cj rb ibzg ojdl jo ebd ibzg ibzg
   /////////////////////
   //Task List function
   TaskListModel getTaskList({
@@ -234,9 +237,9 @@ class TaskListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> deleteTaskList({
+  void deleteTaskList({
     required String id,
-  }) async {
+  }) {
     TaskListModel taskList = getTaskList(taskListID: id);
     for (TaskModel task in taskList.tasks) {
       // ignore: unawaited_futures

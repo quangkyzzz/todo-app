@@ -1,9 +1,9 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls
 
 import 'package:flutter/material.dart';
-import 'package:todo_app/models/group_model.dart';
-import 'package:todo_app/models/task_list_model.dart';
-import 'package:todo_app/provider/task_list_provider.dart';
+import '../models/group_model.dart';
+import '../models/task_list_model.dart';
+import 'task_list_provider.dart';
 
 class GroupProvider extends ChangeNotifier {
   TaskListProvider taskListProvider;

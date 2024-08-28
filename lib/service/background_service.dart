@@ -1,8 +1,8 @@
 // ignore_for_file: discarded_futures
 
-import 'package:todo_app/models/task_list_model.dart';
-import 'package:todo_app/models/task_model.dart';
-import 'package:todo_app/service/notification_service.dart';
+import '../models/task_list_model.dart';
+import '../models/task_model.dart';
+import 'notification_service.dart';
 import 'package:workmanager/workmanager.dart';
 
 @pragma('vm:entry-point')

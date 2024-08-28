@@ -1,12 +1,12 @@
 // ignore_for_file: unnecessary_string_interpolations
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/models/step_model.dart';
-import 'package:todo_app/models/task_list_model.dart';
-import 'package:todo_app/provider/task_list_provider.dart';
-import 'package:todo_app/themes.dart';
-import 'package:todo_app/routes.dart';
-import 'package:todo_app/models/task_model.dart';
+import '../../models/step_model.dart';
+import '../../models/task_list_model.dart';
+import '../../provider/task_list_provider.dart';
+import '../../themes.dart';
+import '../../routes.dart';
+import '../../models/task_model.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 

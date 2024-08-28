@@ -1,8 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:todo_app/presentation/widgets/auth_field.dart';
-import 'package:todo_app/presentation/widgets/rounded_small_button.dart';
-import 'package:todo_app/themes.dart';
+import '../widgets/auth_field.dart';
+import '../widgets/rounded_small_button.dart';
+import '../../themes.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});

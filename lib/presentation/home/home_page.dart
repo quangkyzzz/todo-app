@@ -2,15 +2,15 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/models/group_model.dart';
-import 'package:todo_app/models/task_list_model.dart';
-import 'package:todo_app/presentation/home/home_appbar.dart';
-import 'package:todo_app/provider/group_provider.dart';
-import 'package:todo_app/provider/task_list_provider.dart';
-import 'package:todo_app/themes.dart';
-import 'package:todo_app/routes.dart';
-import 'package:todo_app/presentation/home/home_group.dart';
-import 'package:todo_app/presentation/home/home_item.dart';
+import '../../models/group_model.dart';
+import '../../models/task_list_model.dart';
+import 'home_appbar.dart';
+import '../../provider/group_provider.dart';
+import '../../provider/task_list_provider.dart';
+import '../../themes.dart';
+import '../../routes.dart';
+import 'home_group.dart';
+import 'home_item.dart';
 import 'home_bottom_navigation_bar.dart';
 
 class HomePage extends StatefulWidget {

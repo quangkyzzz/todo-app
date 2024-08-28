@@ -1,7 +1,7 @@
 import 'dart:core';
 import 'package:flutter/material.dart';
-import 'package:todo_app/models/task_model.dart';
-import 'package:todo_app/themes.dart';
+import 'task_model.dart';
+import '../themes.dart';
 
 class TaskListModel {
   final String id;

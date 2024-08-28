@@ -1,15 +1,18 @@
 // ignore_for_file: sized_box_for_whitespace
+import 'dart:async';
+import 'dart:isolate';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/models/task_list_model.dart';
-import 'package:todo_app/presentation/components/show_alert_dialog.dart';
-import 'package:todo_app/presentation/components/show_text_edit_dialog.dart';
-import 'package:todo_app/provider/group_provider.dart';
-import 'package:todo_app/provider/settings_provider.dart';
-import 'package:todo_app/provider/task_list_provider.dart';
-import 'package:todo_app/routes.dart';
-import 'package:todo_app/themes.dart';
-import 'package:todo_app/presentation/items/popup_item.dart';
+import '../../models/task_list_model.dart';
+import 'show_alert_dialog.dart';
+import 'show_text_edit_dialog.dart';
+import '../../provider/group_provider.dart';
+import '../../provider/settings_provider.dart';
+import '../../provider/task_list_provider.dart';
+import '../../routes.dart';
+import '../../themes.dart';
+import '../items/popup_item.dart';
 import 'change_theme_bottom_sheet.dart';
 import 'sort_by_bottom_sheet.dart';
 
@@ -27,6 +30,10 @@ class PopupMenu extends StatefulWidget {
 
   @override
   State<PopupMenu> createState() => _PopupMenuState();
+}
+
+Future<String> longTask() async {
+  return await Future.delayed(const Duration(seconds: 3), () => 'result!');
 }
 
 class _PopupMenuState extends State<PopupMenu> {
@@ -231,7 +238,10 @@ class _PopupMenuState extends State<PopupMenu> {
         return NormalBottomSheet(
           title: 'Print list?',
           acceptText: 'Print',
-          onAccept: () {},
+          onAccept: () async {
+            final result = await Isolate.run(longTask);
+            print(result);
+          },
         );
       },
     );
@@ -253,7 +263,7 @@ class _PopupMenuState extends State<PopupMenu> {
             taskListID: widget.taskList.id,
           );
         }
-        await taskListProvider.deleteTaskList(id: id);
+        taskListProvider.deleteTaskList(id: id);
       }
     } else {
       Navigator.pop(context);
@@ -263,7 +273,7 @@ class _PopupMenuState extends State<PopupMenu> {
           taskListID: widget.taskList.id,
         );
       }
-      await taskListProvider.deleteTaskList(id: id);
+      taskListProvider.deleteTaskList(id: id);
     }
   }
 

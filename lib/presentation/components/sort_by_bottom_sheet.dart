@@ -2,10 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/models/task_list_model.dart';
-import 'package:todo_app/presentation/items/popup_item.dart';
-import 'package:todo_app/provider/task_list_provider.dart';
-import 'package:todo_app/themes.dart';
+import '../../models/task_list_model.dart';
+import '../items/popup_item.dart';
+import '../../provider/task_list_provider.dart';
+import '../../themes.dart';
 
 class SortByBottomSheet extends StatelessWidget {
   final TaskListModel taskList;

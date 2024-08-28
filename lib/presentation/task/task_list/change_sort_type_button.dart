@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/models/task_list_model.dart';
-import 'package:todo_app/provider/settings_provider.dart';
-import 'package:todo_app/provider/task_list_provider.dart';
+import '../../../models/task_list_model.dart';
+import '../../../provider/settings_provider.dart';
+import '../../../provider/task_list_provider.dart';
 
 class ChangeSortTypeButton extends StatefulWidget {
   final TaskListModel taskList;
