@@ -6,7 +6,7 @@ class HomeItem extends StatelessWidget {
   final IconData icon;
   final Color iconColor;
   final int endNumber;
-  final Function onTap;
+  final Function() onTap;
   const HomeItem({
     super.key,
     required this.text,
@@ -22,9 +22,7 @@ class HomeItem extends StatelessWidget {
       height: 48,
       margin: const EdgeInsets.symmetric(horizontal: 6),
       child: InkWell(
-        onTap: () {
-          onTap();
-        },
+        onTap: onTap,
         child: Row(
           children: [
             Icon(

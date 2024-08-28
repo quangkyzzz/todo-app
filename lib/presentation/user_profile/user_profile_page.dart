@@ -77,7 +77,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
 }
 
 class UserProfileItem extends StatelessWidget {
-  final Function onTap;
+  final Function() onTap;
   final String text;
   final IconData icon;
   const UserProfileItem({
@@ -92,9 +92,7 @@ class UserProfileItem extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: InkWell(
-        onTap: () {
-          onTap();
-        },
+        onTap: onTap,
         child: Row(
           children: [
             Icon(

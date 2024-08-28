@@ -66,7 +66,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 const SizedBox(height: 10),
                 RoundedSmallButton(
-                  onTap: () => onSignUp(),
+                  onTap: onSignUp,
                   label: 'Sign Up',
                   textColor: MyTheme.blackColor,
                   backGroundColor: MyTheme.whiteColor,

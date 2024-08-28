@@ -1,7 +1,5 @@
 // ignore_for_file: sized_box_for_whitespace
 import 'dart:async';
-import 'dart:isolate';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/task_list_model.dart';
@@ -238,10 +236,7 @@ class _PopupMenuState extends State<PopupMenu> {
         return NormalBottomSheet(
           title: 'Print list?',
           acceptText: 'Print',
-          onAccept: () async {
-            final result = await Isolate.run(longTask);
-            print(result);
-          },
+          onAccept: () {},
         );
       },
     );
