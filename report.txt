@@ -1,8 +1,8 @@
-Báo cáo 28/8
+Báo cáo 29/8
 Đã làm:
-    -   Áp dụng ví dụ về isolate
-Đang làm:
-    -   Rà soát các lỗi còn lại
+    -   Sửa lỗi cú pháp.
+    -   Đọc lại về kiến trúc MVVM.
 Dự định làm:
-    -   Tổng hợp review code để tiếp tục chỉnh sửa.
+    -   Sửa cấu trúc project.
+    -   Sửa cách sử dụng provider trong project.
     
