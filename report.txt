@@ -1,9 +1,10 @@
-Báo cáo 3/9
+Báo cáo 5/9
 Đã làm:
-    -   Sửa lại route của homepage
-    -   Sửa cách truyền provider vào homepage. 
+    -   Sửa lại route của taskList page
+    -   Thêm taskList view model
 Đang làm:
-    -   Sửa cách truyền provider vào taskList page.
+    -   Hoàn thiện taskList view model.
 Dự định làm:
-    -   Dựa vào review để tiếp tục chỉnh sửa.
+    -   Sau khi hoàn thành taskList view model
+        dựa vào review để tiếp tục chỉnh sửa.
     
