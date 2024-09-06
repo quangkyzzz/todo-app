@@ -50,11 +50,6 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   @override
-  void didUpdateWidget(covariant SearchPage oldWidget) {
-    super.didUpdateWidget(oldWidget);
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

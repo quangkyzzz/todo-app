@@ -3,12 +3,17 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/task_list_model.dart';
-import '../../provider/task_list_provider.dart';
 import '../../themes.dart';
+import '../../view_models/task_list_view_model.dart';
 
 class ChangeThemeBottomSheet extends StatefulWidget {
   final TaskListModel taskList;
-  const ChangeThemeBottomSheet({super.key, required this.taskList});
+  final BuildContext mContext;
+  const ChangeThemeBottomSheet({
+    super.key,
+    required this.taskList,
+    required this.mContext,
+  });
 
   @override
   State<ChangeThemeBottomSheet> createState() => _ChangeThemeBottomSheetState();
@@ -18,14 +23,14 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
   late int _page;
   late Color _selectedColor;
   late int _selectedImage;
-  late TaskListProvider taskListProvider;
+  late TaskListViewModel taskListViewModel;
 
   onColorChange(Color value) {
     setState(() {
       _selectedColor = value;
     });
     TaskListModel newTaskList = widget.taskList.copyWith(themeColor: value);
-    taskListProvider.updateTaskList(
+    taskListViewModel.updateTaskList(
       taskListID: widget.taskList.id,
       newTaskList: newTaskList,
     );
@@ -39,7 +44,7 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
       backgroundImage: MyTheme.imageList[value],
       isDefaultImage: value,
     );
-    taskListProvider.updateTaskList(
+    taskListViewModel.updateTaskList(
       taskListID: widget.taskList.id,
       newTaskList: newTaskList,
     );
@@ -59,7 +64,7 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
         backgroundImage: resultPath,
         isDefaultImage: -1,
       );
-      taskListProvider.updateTaskList(
+      taskListViewModel.updateTaskList(
         taskListID: widget.taskList.id,
         newTaskList: newTaskList,
       );
@@ -77,7 +82,7 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
       isDefaultImage: -1,
     );
     newTaskList.backgroundImage = null;
-    taskListProvider.updateTaskList(
+    taskListViewModel.updateTaskList(
       taskListID: widget.taskList.id,
       newTaskList: newTaskList,
     );
@@ -91,7 +96,6 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
 
   @override
   void initState() {
-    taskListProvider = Provider.of<TaskListProvider>(context, listen: false);
     _page = 0;
     _selectedColor = widget.taskList.themeColor;
     _selectedImage = widget.taskList.isDefaultImage;
@@ -100,6 +104,8 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
+    taskListViewModel =
+        Provider.of<TaskListViewModel>(widget.mContext, listen: false);
     double screenHeight = MediaQuery.of(context).size.height;
     return Padding(
       padding: const EdgeInsets.all(16),

@@ -4,24 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/group_model.dart';
 import '../../models/task_list_model.dart';
+import '../../view_models/home_page_view_model.dart';
 import 'home_appbar.dart';
-import '../../provider/group_provider.dart';
-import '../../provider/task_list_provider.dart';
+//import '../../provider/group_provider.dart';
+//import '../../provider/task_list_provider.dart';
 import '../../themes.dart';
 import '../../routes.dart';
 import 'home_group.dart';
 import 'home_item.dart';
 import 'home_bottom_navigation_bar.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  bool isExpanded = false;
   onTapMyDay(BuildContext context, TaskListModel taskList) async {
     await Navigator.of(context).pushNamed(myDayRoute);
   }
@@ -65,7 +60,7 @@ class _HomePageState extends State<HomePage> {
         'icon': Icons.wb_sunny_outlined,
         'iconColor': MyTheme.greyColor,
         'endNumber':
-            context.watch<TaskListProvider>().countIncompletedMyDayTask(),
+            context.watch<HomePageViewModel>().countIncompletedMyDayTask(),
       },
       {
         'ID': '3',
@@ -74,7 +69,7 @@ class _HomePageState extends State<HomePage> {
         'icon': Icons.star_border,
         'iconColor': MyTheme.pinkColor,
         'endNumber':
-            context.watch<TaskListProvider>().countIncompletedImportantTask(),
+            context.watch<HomePageViewModel>().countIncompletedImportantTask(),
       },
       {
         'ID': '4',
@@ -83,7 +78,7 @@ class _HomePageState extends State<HomePage> {
         'icon': Icons.list_alt_outlined,
         'iconColor': MyTheme.redColor,
         'endNumber':
-            context.watch<TaskListProvider>().countIncompletedPlannedTask(),
+            context.watch<HomePageViewModel>().countIncompletedPlannedTask(),
       },
       {
         'ID': '1',
@@ -108,7 +103,7 @@ class _HomePageState extends State<HomePage> {
         'icon': Icons.task_outlined,
         'iconColor': MyTheme.blueColor,
         'endNumber': context
-            .watch<TaskListProvider>()
+            .watch<HomePageViewModel>()
             .countIncompletedTaskByID(taskListID: '1'),
       },
     ];
@@ -120,8 +115,8 @@ class _HomePageState extends State<HomePage> {
           children: [
             //////////////
             //default list
-            Consumer<TaskListProvider>(
-                builder: (context, taskListProvider, child) {
+            Consumer<HomePageViewModel>(
+                builder: (context, homePageViewModel, child) {
               return ListView.builder(
                 shrinkWrap: true,
                 physics: const ClampingScrollPhysics(),
@@ -131,14 +126,14 @@ class _HomePageState extends State<HomePage> {
                   return HomeItem(
                     text: item['text'],
                     icon: item['icon'],
-                    iconColor: taskListProvider
+                    iconColor: homePageViewModel
                         .getTaskList(taskListID: item['ID'])
                         .themeColor,
                     endNumber: item['endNumber'],
                     onTap: () {
                       item['ontap'](
                         context,
-                        taskListProvider.taskLists[0],
+                        homePageViewModel.taskLists[0],
                       );
                     },
                   );
@@ -148,16 +143,16 @@ class _HomePageState extends State<HomePage> {
             MyTheme.dividerWhiteStyle,
             /////////////////////
             //personal task list
-            Consumer<TaskListProvider>(
-                builder: (context, taskListProvider, child) {
+            Consumer<HomePageViewModel>(
+                builder: (context, homePageViewModel, child) {
               return ListView.builder(
                 shrinkWrap: true,
                 physics: const ClampingScrollPhysics(),
-                itemCount: taskListProvider.taskLists.length,
+                itemCount: homePageViewModel.taskLists.length,
                 itemBuilder: (BuildContext context, int index) {
-                  TaskListModel item = taskListProvider.taskLists[index];
-                  if ((item.groupID == null) && (int.parse(item.id) > 10)) {
-                    int endNumber = taskListProvider.countIncompletedTaskByID(
+                  TaskListModel item = homePageViewModel.taskLists[index];
+                  if (int.parse(item.id) > 10) {
+                    int endNumber = homePageViewModel.countIncompletedTaskByID(
                       taskListID: item.id,
                     );
                     return HomeItem(
@@ -183,13 +178,14 @@ class _HomePageState extends State<HomePage> {
             }),
             /////////////////
             //personal group
-            Consumer<GroupProvider>(builder: (context, groupProvider, child) {
+            Consumer<HomePageViewModel>(
+                builder: (context, homePageViewModel, child) {
               return ListView.builder(
                 shrinkWrap: true,
                 physics: const ClampingScrollPhysics(),
-                itemCount: groupProvider.groups.length,
+                itemCount: homePageViewModel.groups.length,
                 itemBuilder: (BuildContext context, int index) {
-                  GroupModel item = groupProvider.groups[index];
+                  GroupModel item = homePageViewModel.groups[index];
                   return HomeGroup(group: item);
                 },
               );

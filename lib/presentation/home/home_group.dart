@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/group_model.dart';
 import '../../models/task_list_model.dart';
+import '../../view_models/home_page_view_model.dart';
 import '../components/show_text_edit_dialog.dart';
-import '../../provider/group_provider.dart';
-import '../../provider/task_list_provider.dart';
+//import '../../provider/group_provider.dart';
+//import '../../provider/task_list_provider.dart';
 import '../../themes.dart';
 import '../../routes.dart';
 import 'home_item.dart';
@@ -23,8 +24,6 @@ class HomeGroup extends StatefulWidget {
 }
 
 class _HomeGroupState extends State<HomeGroup> {
-  late GroupProvider groupProvider;
-  late TaskListProvider taskListProvider;
   late List<Map<String, dynamic>> listPopupMenuItem = [
     {
       'value': 'add_or_remove_lists',
@@ -48,14 +47,12 @@ class _HomeGroupState extends State<HomeGroup> {
 
   @override
   void initState() {
-    groupProvider = Provider.of<GroupProvider>(context, listen: false);
-    taskListProvider = Provider.of<TaskListProvider>(context, listen: false);
     super.initState();
   }
 
   void onTapAddRemoveList(BuildContext context, String groupID) async {
     List<TaskListModel> oldTaskLists =
-        groupProvider.getGroup(groupID).taskLists;
+        context.read<HomePageViewModel>().getGroup(groupID).taskLists;
     List<TaskListModel>? newTaskLists = await showAddListDialog(
       context: context,
       groupID: groupID,
@@ -70,15 +67,15 @@ class _HomeGroupState extends State<HomeGroup> {
           .where((element) => !newTaskLists.contains(element))
           .toList();
 
-      Provider.of<GroupProvider>(context, listen: false).addTaskList(
-        groupID,
-        addedTaskList,
-      );
+      context.read<HomePageViewModel>().addMultipleTaskListToGroup(
+            groupID: groupID,
+            movedTaskLists: addedTaskList,
+          );
 
-      Provider.of<GroupProvider>(context, listen: false).deleteMultipleTaskList(
-        groupID,
-        removeTaskList,
-      );
+      context.read<HomePageViewModel>().deleteMultipleTaskListFromGroup(
+            groupID,
+            removeTaskList,
+          );
     }
   }
 
@@ -92,12 +89,12 @@ class _HomeGroupState extends State<HomeGroup> {
     );
     if (!mounted) return;
     if (title != null) {
-      groupProvider.renameGroup(groupID, title);
+      context.read<HomePageViewModel>().renameGroup(groupID, title);
     }
   }
 
   void onTapUngroupList(BuildContext context, String groupID) {
-    groupProvider.deleteGroup(groupID);
+    context.read<HomePageViewModel>().deleteGroup(groupID);
   }
 
   bool isExpanded = false;
@@ -121,7 +118,7 @@ class _HomeGroupState extends State<HomeGroup> {
           (isExpanded)
               ? PopupMenuButton(
                   offset: const Offset(0, 40),
-                  itemBuilder: (context) {
+                  itemBuilder: (_) {
                     return listPopupMenuItem.map((item) {
                       return PopupMenuItem(
                         onTap: () {
@@ -148,26 +145,23 @@ class _HomeGroupState extends State<HomeGroup> {
                 itemCount: widget.group.taskLists.length,
                 itemBuilder: (BuildContext context, int index) {
                   TaskListModel item = widget.group.taskLists[index];
-                  return Consumer<TaskListProvider>(
-                    builder: (context, taskListProvider, child) {
+                  return Consumer<HomePageViewModel>(
+                    builder: (context, homePageViewModel, child) {
                       int endNumber = 0;
-
-                      TaskListModel taskList =
-                          taskListProvider.getTaskList(taskListID: item.id);
-                      for (var element in taskList.tasks) {
+                      for (var element in item.tasks) {
                         if (!element.isCompleted) endNumber++;
                       }
                       return HomeItem(
-                        text: taskList.listName,
+                        text: item.listName,
                         icon: Icons.list_outlined,
-                        iconColor: taskList.themeColor,
+                        iconColor: item.themeColor,
                         endNumber: endNumber,
                         onTap: () async {
                           await Navigator.of(context).pushNamed(
                             taskListRoute,
                             arguments: {
                               'haveCompletedList': true,
-                              'taskList': taskList,
+                              'taskList': item,
                             },
                           );
                         },
@@ -191,7 +185,7 @@ Future<List<TaskListModel>?> showAddListDialog({
 }) {
   return showDialog(
     context: context,
-    builder: (context) {
+    builder: (_) {
       List<TaskListModel> checkedTaskList = [];
       List<TaskListModel> allTaskList = [];
 
@@ -206,20 +200,20 @@ Future<List<TaskListModel>?> showAddListDialog({
           height: 235,
           width: 300,
           child: SingleChildScrollView(
-            child: Consumer2<GroupProvider, TaskListProvider>(
+            child: Consumer<HomePageViewModel>(
               builder: (
-                context,
-                groupProvider,
-                taskListProvider,
+                _,
+                homePageViewModel,
                 child,
               ) {
-                GroupModel group = groupProvider.getGroup(groupID);
+                //TODO: fix this
+                GroupModel group = homePageViewModel.getGroup(groupID);
 
                 checkedTaskList.addAll(group.taskLists);
                 allTaskList.addAll(checkedTaskList);
 
                 allTaskList.addAll(
-                  taskListProvider.taskLists.where((element) =>
+                  homePageViewModel.taskLists.where((element) =>
                       ((element.groupID == null) &&
                           (int.parse(element.id) > 10))),
                 );

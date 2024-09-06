@@ -16,7 +16,8 @@ import 'presentation/task/task_list/task_list_page.dart';
 import 'presentation/task/task_page/task_page.dart';
 import 'presentation/settings/settings_page.dart';
 import 'presentation/user_profile/user_profile_page.dart';
-import 'provider/user_provider.dart';
+import 'view_models/home_page_view_model.dart';
+import 'view_models/task_list_view_model.dart';
 
 const initialRoute = '/home';
 const loginRoute = '/login';
@@ -35,27 +36,33 @@ const noteEditRoute = '/task/note_edit';
 
 var allRoute = {
   initialRoute: (context) {
-    bool isLogin =
-        Provider.of<UserProvider>(context, listen: true).getIsLoginStatus();
-    if (isLogin) {
-      return const HomePage();
-    } else {
-      return const LoginPage();
-    }
+    return ChangeNotifierProvider(
+      create: (context) => HomePageViewModel(),
+      builder: (context, child) {
+        bool isLogin = context.watch<HomePageViewModel>().isLogin;
+        return (isLogin) ? const HomePage() : const LoginPage();
+      },
+    );
   },
-  loginRoute: (context) => const LoginPage(),
-  signupRoute: (context) => const SignUpPage(),
-  userProfileRoute: (context) => const UserProfilePage(),
   taskListRoute: (context) {
     Map<dynamic, dynamic> arg =
         ModalRoute.of(context)?.settings.arguments as Map;
     bool havecompletedList = arg['haveCompletedList'] ?? true;
     TaskListModel taskList = arg['taskList'];
-    return TaskListPage(
-      haveCompletedList: havecompletedList,
-      taskList: taskList,
+    return ChangeNotifierProvider<TaskListViewModel>(
+      create: (context) => TaskListViewModel(
+        taskList: taskList,
+      ),
+      builder: (context, child) {
+        return TaskListPage(
+          haveCompletedList: havecompletedList,
+        );
+      },
     );
   },
+  loginRoute: (context) => const LoginPage(),
+  signupRoute: (context) => const SignUpPage(),
+  userProfileRoute: (context) => const UserProfilePage(),
   importantRoute: (context) => const ImportantPage(),
   searchRoute: (context) => const SearchPage(),
   flaggedRoute: (context) => const FlaggedEmailPage(),

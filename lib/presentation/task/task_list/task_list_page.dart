@@ -3,21 +3,19 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../models/task_list_model.dart';
+import '../../../view_models/task_list_view_model.dart';
 import '../../components/add_floating_button.dart';
 import '../../lists/completed_list.dart';
 import '../../lists/incomplete_list.dart';
 import '../../components/popup_menu.dart';
-import '../../../provider/task_list_provider.dart';
 
 import 'change_sort_type_button.dart';
 
 class TaskListPage extends StatefulWidget {
   final bool haveCompletedList;
-  final TaskListModel taskList;
   const TaskListPage({
     super.key,
     this.haveCompletedList = true,
-    required this.taskList,
   });
 
   @override
@@ -25,71 +23,59 @@ class TaskListPage extends StatefulWidget {
 }
 
 class _TaskListPageState extends State<TaskListPage> {
-  bool isExpanded = true;
-  late final String id;
-
   @override
   void initState() {
-    id = widget.taskList.id;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    TaskListViewModel taskListViewModel = context.watch<TaskListViewModel>();
     return Stack(
       fit: StackFit.expand,
       children: [
-        Consumer<TaskListProvider>(builder: (context, taskListProvider, child) {
-          TaskListModel tasklist =
-              taskListProvider.getTaskList(taskListID: widget.taskList.id);
-          if ((tasklist.backgroundImage != null)) {
-            return (tasklist.isDefaultImage == -1)
-                ? Image.file(
-                    File(tasklist.backgroundImage!),
-                    fit: BoxFit.fitHeight,
-                  )
-                : Image.asset(
-                    tasklist.backgroundImage!,
-                    fit: BoxFit.fitHeight,
-                  );
-          } else {
-            return const SizedBox();
-          }
-        }),
+        if ((taskListViewModel.taskList.backgroundImage != null))
+          if (taskListViewModel.taskList.isDefaultImage == -1)
+            Image.file(
+              File(taskListViewModel.taskList.backgroundImage!),
+              fit: BoxFit.fitHeight,
+            )
+          else
+            Image.asset(
+              taskListViewModel.taskList.backgroundImage!,
+              fit: BoxFit.fitHeight,
+            )
+        else
+          const SizedBox(),
         Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             iconTheme: IconThemeData(
-                color: context
-                    .watch<TaskListProvider>()
-                    .getTaskList(taskListID: id)
-                    .themeColor),
-            title: Consumer<TaskListProvider>(
-                builder: (context, taskListProvider, child) {
+                color: context.watch<TaskListViewModel>().taskList.themeColor),
+            title: Consumer<TaskListViewModel>(
+                builder: (context, taskListViewModel, child) {
               return Text(
-                taskListProvider.getTaskList(taskListID: id).listName,
+                taskListViewModel.taskList.listName,
                 style: TextStyle(
                   fontSize: 24,
-                  color: widget.taskList.themeColor,
+                  color: taskListViewModel.taskList.themeColor,
                 ),
               );
             }),
             actions: [
               PopupMenu(
-                taskList: widget.taskList,
-                toRemove: (id == '1')
+                taskList: taskListViewModel.taskList,
+                toRemove: (taskListViewModel.taskList.id == '1')
                     ? (['rename_list', 'hide_completed_tasks', 'delete_list'])
                     : (['hide_completed_tasks']),
               )
             ],
           ),
           body: SingleChildScrollView(
-            child: Consumer<TaskListProvider>(
-              builder: (context, taskListProvider, child) {
-                TaskListModel taskList =
-                    taskListProvider.getTaskList(taskListID: id);
-
+            child: Consumer<TaskListViewModel>(
+              builder: (context, taskListViewModel, child) {
+                TaskListModel taskList = taskListViewModel.taskList;
                 return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -105,8 +91,8 @@ class _TaskListPageState extends State<TaskListPage> {
             ),
           ),
           floatingActionButton: AddFloatingButton(
-            taskList: widget.taskList,
-            themeColor: widget.taskList.themeColor,
+            taskList: taskListViewModel.taskList,
+            themeColor: taskListViewModel.taskList.themeColor,
           ),
         ),
       ],

@@ -3,22 +3,19 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/task_list_model.dart';
+import '../../view_models/task_list_view_model.dart';
 import 'show_alert_dialog.dart';
 import 'show_text_edit_dialog.dart';
-import '../../provider/group_provider.dart';
-import '../../provider/settings_provider.dart';
-import '../../provider/task_list_provider.dart';
 import '../../routes.dart';
 import '../../themes.dart';
 import '../items/popup_item.dart';
 import 'change_theme_bottom_sheet.dart';
 import 'sort_by_bottom_sheet.dart';
 
-class PopupMenu extends StatefulWidget {
+class PopupMenu extends StatelessWidget {
   final TaskListModel taskList;
   final List<Map<String, dynamic>>? customListPopupMenuItem;
   final List<String> toRemove;
-
   const PopupMenu({
     super.key,
     required this.taskList,
@@ -26,92 +23,20 @@ class PopupMenu extends StatefulWidget {
     this.customListPopupMenuItem,
   });
 
-  @override
-  State<PopupMenu> createState() => _PopupMenuState();
-}
-
-Future<String> longTask() async {
-  return await Future.delayed(const Duration(seconds: 3), () => 'result!');
-}
-
-class _PopupMenuState extends State<PopupMenu> {
-  late GroupProvider groupProvider;
-  late TaskListProvider taskListProvider;
-  late SettingsProvider settingsProvider;
-  late List<Map<String, dynamic>> listPopupMenuItem = [
-    {
-      'value': 'rename_list',
-      'text': 'Rename list',
-      'icon': Icons.edit_outlined,
-      'onTap': onTapRenameList,
-    },
-    {
-      'value': 'sort_by',
-      'text': 'Sort by',
-      'icon': Icons.sort_outlined,
-      'onTap': onTapSortBy,
-    },
-    {
-      'value': 'reorder',
-      'text': 'Reorder',
-      'icon': Icons.swap_vert,
-      'onTap': onTapReorder,
-    },
-    {
-      'value': 'add_shortcut',
-      'text': 'Add shortcut',
-      'icon': Icons.add_to_home_screen_outlined,
-      'onTap': onTapAddShortcut,
-    },
-    {
-      'value': 'change_theme',
-      'text': 'Change theme',
-      'icon': Icons.palette_outlined,
-      'onTap': onTapChangeTheme,
-    },
-    {
-      'value': 'hide_completed_tasks',
-      'text': 'Hide completed tasks',
-      'icon': Icons.check_circle_outline,
-      'onTap': onTapHideCompletedTasks,
-    },
-    {
-      'value': 'send_a_copy',
-      'text': 'Send a copy',
-      'icon': Icons.share_outlined,
-      'onTap': onTapSendCopy,
-    },
-    {
-      'value': 'duplicate_list',
-      'text': 'Duplicate list',
-      'icon': Icons.copy,
-      'onTap': onTapDuplicateList,
-    },
-    {
-      'value': 'print_list',
-      'text': 'Print list',
-      'icon': Icons.print_outlined,
-      'onTap': onTapPrintList,
-    },
-    {
-      'value': 'delete_list',
-      'text': 'Delete list',
-      'icon': Icons.delete_outline,
-      'onTap': onTapDeleteList,
-    },
-  ];
-
   void onTapRenameList(BuildContext context, String id) async {
     String? newName = await showTextEditDialog(
       context: context,
       title: 'Rename your list',
       hintText: '',
-      initText: widget.taskList.listName,
+      initText: taskList.listName,
       positiveButton: 'Save',
     );
-    if (!mounted) return;
+    if (!context.mounted) return;
     if (newName != null) {
-      taskListProvider.renameList(taskListID: id, newName: newName);
+      context.read<TaskListViewModel>().renameList(
+            taskListID: id,
+            newName: newName,
+          );
     }
   }
 
@@ -123,9 +48,10 @@ class _PopupMenuState extends State<PopupMenu> {
       enableDrag: true,
       context: context,
       showDragHandle: true,
-      builder: (BuildContext context) {
+      builder: (BuildContext _) {
         return SortByBottomSheet(
-          taskList: widget.taskList,
+          mContext: context,
+          taskList: taskList,
         );
       },
     );
@@ -134,7 +60,7 @@ class _PopupMenuState extends State<PopupMenu> {
   Future<void> onTapReorder(BuildContext context, String id) async {
     await Navigator.of(context).pushNamed(
       reorderRoute,
-      arguments: widget.taskList,
+      arguments: taskList,
     );
   }
 
@@ -160,8 +86,11 @@ class _PopupMenuState extends State<PopupMenu> {
       enableDrag: true,
       context: context,
       showDragHandle: true,
-      builder: (BuildContext context) {
-        return ChangeThemeBottomSheet(taskList: widget.taskList);
+      builder: (BuildContext _) {
+        return ChangeThemeBottomSheet(
+          mContext: context,
+          taskList: taskList,
+        );
       },
     );
   }
@@ -204,12 +133,14 @@ class _PopupMenuState extends State<PopupMenu> {
       enableDrag: true,
       context: context,
       showDragHandle: true,
-      builder: (BuildContext context) {
+      builder: (BuildContext _) {
         return NormalBottomSheet(
           title: 'Duplicate list?',
           acceptText: 'Yes',
           onAccept: () {
-            taskListProvider.duplicateTaskList(taskListID: widget.taskList.id);
+            context
+                .read<TaskListViewModel>()
+                .duplicateTaskList(taskListID: taskList.id);
             Navigator.of(context).pop();
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
@@ -243,58 +174,100 @@ class _PopupMenuState extends State<PopupMenu> {
   }
 
   void onTapDeleteList(BuildContext context, String id) async {
-    if (settingsProvider.settings.isConfirmBeforeDelete) {
+    if (context.read<TaskListViewModel>().settings.isConfirmBeforeDelete) {
       bool isDelete = await showAlertDialog(
         context,
         'Are you sure?',
         'This list will be delete',
       );
-      if (!mounted) return;
+      if (!context.mounted) return;
       if (isDelete) {
         Navigator.pop(context);
-        if (widget.taskList.groupID != null) {
-          groupProvider.deleteTaskListByID(
-            groupID: widget.taskList.groupID!,
-            taskListID: widget.taskList.id,
-          );
-        }
-        taskListProvider.deleteTaskList(id: id);
+        context.read<TaskListViewModel>().deleteTaskList(id: id);
       }
     } else {
       Navigator.pop(context);
-      if (widget.taskList.groupID != null) {
-        groupProvider.deleteTaskListByID(
-          groupID: widget.taskList.groupID!,
-          taskListID: widget.taskList.id,
-        );
-      }
-      taskListProvider.deleteTaskList(id: id);
+      context.read<TaskListViewModel>().deleteTaskList(id: id);
     }
   }
 
   @override
-  void initState() {
-    taskListProvider = Provider.of<TaskListProvider>(context, listen: false);
-    groupProvider = Provider.of<GroupProvider>(context, listen: false);
-    settingsProvider = Provider.of<SettingsProvider>(context, listen: false);
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    (widget.customListPopupMenuItem != null)
-        ? listPopupMenuItem = widget.customListPopupMenuItem!
+    List<Map<String, dynamic>> listPopupMenuItem = [
+      {
+        'value': 'rename_list',
+        'text': 'Rename list',
+        'icon': Icons.edit_outlined,
+        'onTap': onTapRenameList,
+      },
+      {
+        'value': 'sort_by',
+        'text': 'Sort by',
+        'icon': Icons.sort_outlined,
+        'onTap': onTapSortBy,
+      },
+      {
+        'value': 'reorder',
+        'text': 'Reorder',
+        'icon': Icons.swap_vert,
+        'onTap': onTapReorder,
+      },
+      {
+        'value': 'add_shortcut',
+        'text': 'Add shortcut',
+        'icon': Icons.add_to_home_screen_outlined,
+        'onTap': onTapAddShortcut,
+      },
+      {
+        'value': 'change_theme',
+        'text': 'Change theme',
+        'icon': Icons.palette_outlined,
+        'onTap': onTapChangeTheme,
+      },
+      {
+        'value': 'hide_completed_tasks',
+        'text': 'Hide completed tasks',
+        'icon': Icons.check_circle_outline,
+        'onTap': onTapHideCompletedTasks,
+      },
+      {
+        'value': 'send_a_copy',
+        'text': 'Send a copy',
+        'icon': Icons.share_outlined,
+        'onTap': onTapSendCopy,
+      },
+      {
+        'value': 'duplicate_list',
+        'text': 'Duplicate list',
+        'icon': Icons.copy,
+        'onTap': onTapDuplicateList,
+      },
+      {
+        'value': 'print_list',
+        'text': 'Print list',
+        'icon': Icons.print_outlined,
+        'onTap': onTapPrintList,
+      },
+      {
+        'value': 'delete_list',
+        'text': 'Delete list',
+        'icon': Icons.delete_outline,
+        'onTap': onTapDeleteList,
+      },
+    ];
+    (customListPopupMenuItem != null)
+        ? listPopupMenuItem = customListPopupMenuItem!
         : true;
     return PopupMenuButton(
       itemBuilder: (context) {
         listPopupMenuItem.removeWhere((element) {
-          return widget.toRemove.contains(element['value']);
+          return toRemove.contains(element['value']);
         });
         return listPopupMenuItem.map((item) {
           return PopupMenuItem(
             value: item['value'],
             onTap: () {
-              item['onTap'](context, widget.taskList.id);
+              item['onTap'](context, taskList.id);
             },
             child: CustomPopupItem(
               text: item['text'],
@@ -305,6 +278,10 @@ class _PopupMenuState extends State<PopupMenu> {
       },
     );
   }
+}
+
+Future<String> longTask() async {
+  return await Future.delayed(const Duration(seconds: 3), () => 'result!');
 }
 
 class NormalBottomSheet extends StatelessWidget {

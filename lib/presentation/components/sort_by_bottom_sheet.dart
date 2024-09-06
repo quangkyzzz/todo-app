@@ -3,18 +3,21 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/task_list_model.dart';
+import '../../view_models/task_list_view_model.dart';
 import '../items/popup_item.dart';
-import '../../provider/task_list_provider.dart';
 import '../../themes.dart';
 
 class SortByBottomSheet extends StatelessWidget {
   final TaskListModel taskList;
-  const SortByBottomSheet({super.key, required this.taskList});
+  final BuildContext mContext;
+  const SortByBottomSheet({
+    super.key,
+    required this.taskList,
+    required this.mContext,
+  });
 
   @override
   Widget build(BuildContext context) {
-    TaskListProvider taskListProvider =
-        Provider.of<TaskListProvider>(context, listen: false);
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -27,12 +30,12 @@ class SortByBottomSheet extends StatelessWidget {
           const SizedBox(height: 8),
           InkWell(
             onTap: () {
-              taskListProvider.sortTaskListBy(
-                taskListID: taskList.id,
-                sortType: 'important',
-                isAscending: false,
-              );
-              taskListProvider.updateTaskListWith(
+              mContext.read<TaskListViewModel>().sortTaskListBy(
+                    taskListID: taskList.id,
+                    sortType: 'important',
+                    isAscending: false,
+                  );
+              mContext.read<TaskListViewModel>().updateTaskListWith(
                 taskListID: taskList.id,
                 sortByType: {
                   'sortType': 'important',
@@ -48,12 +51,12 @@ class SortByBottomSheet extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              taskListProvider.sortTaskListBy(
-                taskListID: taskList.id,
-                sortType: 'due date',
-                isAscending: true,
-              );
-              taskListProvider.updateTaskListWith(
+              mContext.read<TaskListViewModel>().sortTaskListBy(
+                    taskListID: taskList.id,
+                    sortType: 'due date',
+                    isAscending: true,
+                  );
+              mContext.read<TaskListViewModel>().updateTaskListWith(
                 taskListID: taskList.id,
                 sortByType: {
                   'sortType': 'due date',
@@ -69,12 +72,12 @@ class SortByBottomSheet extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              taskListProvider.sortTaskListBy(
-                taskListID: taskList.id,
-                sortType: 'my day',
-                isAscending: false,
-              );
-              taskListProvider.updateTaskListWith(
+              mContext.read<TaskListViewModel>().sortTaskListBy(
+                    taskListID: taskList.id,
+                    sortType: 'my day',
+                    isAscending: false,
+                  );
+              mContext.read<TaskListViewModel>().updateTaskListWith(
                 taskListID: taskList.id,
                 sortByType: {
                   'sortType': 'my day',
@@ -90,12 +93,12 @@ class SortByBottomSheet extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              taskListProvider.sortTaskListBy(
-                taskListID: taskList.id,
-                sortType: 'alphabetically',
-                isAscending: true,
-              );
-              taskListProvider.updateTaskListWith(
+              mContext.read<TaskListViewModel>().sortTaskListBy(
+                    taskListID: taskList.id,
+                    sortType: 'alphabetically',
+                    isAscending: true,
+                  );
+              mContext.read<TaskListViewModel>().updateTaskListWith(
                 taskListID: taskList.id,
                 sortByType: {
                   'sortType': 'alphabetically',
@@ -111,12 +114,12 @@ class SortByBottomSheet extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              taskListProvider.sortTaskListBy(
-                taskListID: taskList.id,
-                sortType: 'create date',
-                isAscending: true,
-              );
-              taskListProvider.updateTaskListWith(
+              mContext.read<TaskListViewModel>().sortTaskListBy(
+                    taskListID: taskList.id,
+                    sortType: 'create date',
+                    isAscending: true,
+                  );
+              mContext.read<TaskListViewModel>().updateTaskListWith(
                 taskListID: taskList.id,
                 sortByType: {
                   'sortType': 'create date',

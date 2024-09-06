@@ -168,7 +168,7 @@ class _TaskPageState extends State<TaskPage> {
     }
   }
 
-  Future<void> onCompleteSetRepeat(String frequency) async {
+  void onCompleteSetRepeat(String frequency) {
     setState(() {
       repeatFrequency = frequency;
       remindTime ??= DateTime(
@@ -311,36 +311,36 @@ class _TaskPageState extends State<TaskPage> {
       {
         'text': 'Daily',
         'icon': Icons.calendar_today_outlined,
-        'onTap': (BuildContext context) async {
-          await onCompleteSetRepeat('1 Days');
+        'onTap': (BuildContext context) {
+          onCompleteSetRepeat('1 Days');
         },
       },
       {
         'text': 'Weekdays',
         'icon': Icons.calendar_today_outlined,
-        'onTap': (BuildContext context) async {
-          await onCompleteSetRepeat('1 Weekdays');
+        'onTap': (BuildContext context) {
+          onCompleteSetRepeat('1 Weekdays');
         },
       },
       {
         'text': 'Weekly',
         'icon': Icons.calendar_today_outlined,
-        'onTap': (BuildContext context) async {
-          await onCompleteSetRepeat('1 Weeks');
+        'onTap': (BuildContext context) {
+          onCompleteSetRepeat('1 Weeks');
         },
       },
       {
         'text': 'Monthly',
         'icon': Icons.calendar_today_outlined,
-        'onTap': (BuildContext context) async {
-          await onCompleteSetRepeat('1 Months');
+        'onTap': (BuildContext context) {
+          onCompleteSetRepeat('1 Months');
         }
       },
       {
         'text': 'Yearly',
         'icon': Icons.calendar_today_outlined,
-        'onTap': (BuildContext context) async {
-          await onCompleteSetRepeat('1 Years');
+        'onTap': (BuildContext context) {
+          onCompleteSetRepeat('1 Years');
         },
       },
       {
@@ -349,7 +349,7 @@ class _TaskPageState extends State<TaskPage> {
         'onTap': (BuildContext context) async {
           String? result = await showCustomRepeatTimeDialog(context);
           if (result != null) {
-            await onCompleteSetRepeat(result);
+            onCompleteSetRepeat(result);
           }
         },
       },
@@ -490,7 +490,6 @@ class _TaskPageState extends State<TaskPage> {
                   )
                 ],
               ),
-
               //////////////////////////////
               //List uniform task page item
               const SizedBox(height: 6),

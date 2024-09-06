@@ -1,9 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../view_models/home_page_view_model.dart';
 import '../widgets/auth_field.dart';
 import '../widgets/rounded_small_button.dart';
-import '../../provider/user_provider.dart';
 import '../../routes.dart';
 import '../../themes.dart';
 
@@ -19,7 +19,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController passwordController = TextEditingController();
 
   void onLogIn() {
-    Provider.of<UserProvider>(context, listen: false).login();
+    Provider.of<HomePageViewModel>(context, listen: false).login();
   }
 
   @override

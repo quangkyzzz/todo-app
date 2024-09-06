@@ -2,9 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../provider/group_provider.dart';
-import '../../provider/task_list_provider.dart';
 import '../../themes.dart';
+import '../../view_models/home_page_view_model.dart';
 import '../components/show_text_edit_dialog.dart';
 
 class HomePageBottomNavigationBar extends StatelessWidget {
@@ -16,8 +15,6 @@ class HomePageBottomNavigationBar extends StatelessWidget {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-    GroupProvider groupProvider =
-        Provider.of<GroupProvider>(context, listen: false);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 18),
       child: Row(
@@ -35,7 +32,7 @@ class HomePageBottomNavigationBar extends StatelessWidget {
                 );
                 if (!context.mounted) return;
                 if (title != null) {
-                  Provider.of<TaskListProvider>(context, listen: false)
+                  Provider.of<HomePageViewModel>(context, listen: false)
                       .createTaskList(name: title);
                 }
               },
@@ -66,7 +63,7 @@ class HomePageBottomNavigationBar extends StatelessWidget {
               );
               if (!context.mounted) return;
               if (title != null) {
-                groupProvider.createGroup(title);
+                context.read<HomePageViewModel>().createGroup(title);
               }
             },
             icon: const Icon(

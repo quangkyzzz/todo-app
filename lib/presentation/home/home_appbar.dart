@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../app_configs.dart';
 import '../../routes.dart';
-import '../../provider/user_provider.dart';
 import '../../themes.dart';
+import '../../view_models/home_page_view_model.dart';
 
 class HomeAppBar {
   BuildContext context;
@@ -34,15 +34,15 @@ class HomeAppBar {
           onTap: () async {
             await Navigator.of(context).pushNamed(userProfileRoute);
           },
-          child:
-              Consumer<UserProvider>(builder: (context, userProvider, child) {
+          child: Consumer<HomePageViewModel>(
+              builder: (context, homePageViewModel, child) {
             return RichText(
               text: TextSpan(
-                text: userProvider.currentUser.userName,
+                text: homePageViewModel.currentUser.userName,
                 style: MyTheme.titleTextStyle,
                 children: [
                   TextSpan(
-                    text: '\n${userProvider.currentUser.userEmail}',
+                    text: '\n${homePageViewModel.currentUser.userEmail}',
                     style: MyTheme.secondaryTitleGreyTextStyle,
                   )
                 ],

@@ -208,9 +208,6 @@ class TaskListProvider extends ChangeNotifier {
         (diffTime.inDays > 0));
   }
 
-//you ---e -o we -e-y -o-- o- -e- -e-y -e-y
-//you ---- -o -- ---y -o-- o- --- ---y ---y
-//gjy utib cj rb ibzg ojdl jo ebd ibzg ibzg
   /////////////////////
   //Task List function
   TaskListModel getTaskList({

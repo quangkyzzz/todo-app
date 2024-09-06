@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/task_list_model.dart';
-import '../../provider/task_list_provider.dart';
 import '../../themes.dart';
+import '../../view_models/task_list_view_model.dart';
 
 class AddFloatingButton extends StatelessWidget {
   final Color themeColor;
@@ -30,8 +30,9 @@ class AddFloatingButton extends StatelessWidget {
         await showModalBottomSheet(
           isScrollControlled: true,
           context: context,
-          builder: (BuildContext context) {
+          builder: (BuildContext _) {
             return AddTaskItem(
+              mContext: context,
               taskList: taskList,
               isAddToMyDay: isAddToMyDay,
               isAddToImportant: isAddToImportant,
@@ -51,15 +52,18 @@ class AddFloatingButton extends StatelessWidget {
 }
 
 class AddTaskItem extends StatelessWidget {
+  final BuildContext mContext;
   final bool isAddToMyDay;
   final bool isAddToImportant;
   final TextEditingController _controller = TextEditingController();
   final TaskListModel taskList;
-  AddTaskItem(
-      {super.key,
-      required this.taskList,
-      required this.isAddToMyDay,
-      required this.isAddToImportant});
+  AddTaskItem({
+    super.key,
+    required this.taskList,
+    required this.isAddToMyDay,
+    required this.isAddToImportant,
+    required this.mContext,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +97,7 @@ class AddTaskItem extends StatelessWidget {
               IconButton(
                 onPressed: () {
                   if (isAddToMyDay) {
-                    Provider.of<TaskListProvider>(context, listen: false)
+                    Provider.of<TaskListViewModel>(mContext, listen: false)
                         .createTask(
                       taskListID: taskList.id,
                       taskName: _controller.text,
@@ -101,7 +105,7 @@ class AddTaskItem extends StatelessWidget {
                       isOnMyDay: true,
                     );
                   } else if (isAddToImportant) {
-                    Provider.of<TaskListProvider>(context, listen: false)
+                    Provider.of<TaskListViewModel>(mContext, listen: false)
                         .createTask(
                       taskListID: taskList.id,
                       taskName: _controller.text,
@@ -109,7 +113,7 @@ class AddTaskItem extends StatelessWidget {
                       isImportant: true,
                     );
                   } else {
-                    Provider.of<TaskListProvider>(context, listen: false)
+                    Provider.of<TaskListViewModel>(mContext, listen: false)
                         .createTask(
                       taskListID: taskList.id,
                       taskName: _controller.text,

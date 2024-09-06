@@ -3,19 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/step_model.dart';
 import '../../models/task_list_model.dart';
-import '../../provider/task_list_provider.dart';
 import '../../themes.dart';
 import '../../routes.dart';
 import '../../models/task_model.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
-class TaskListItem extends StatefulWidget {
+import '../../view_models/task_list_view_model.dart';
+
+class TaskListItem extends StatelessWidget {
   final TaskModel task;
   final TaskListModel taskList;
   final Color themeColor;
   final bool havePlusIcon;
   final Function()? onTapPlus;
+
   const TaskListItem({
     super.key,
     required this.task,
@@ -26,76 +28,26 @@ class TaskListItem extends StatefulWidget {
   });
 
   @override
-  State<TaskListItem> createState() => _TaskListItemState();
-}
-
-class _TaskListItemState extends State<TaskListItem> {
-  late bool isFirstIcon;
-  late TaskListProvider taskListProvider;
-  late String myTitle;
-  late bool isImportant;
-  late bool isOnMyDay;
-  late bool isChecked;
-  late List<StepModel>? steps;
-  late DateTime? dueDate;
-  late DateTime? remindTime;
-  late String? repeatFrequency;
-  late List<String>? filePath;
-  late String? note;
-  late int countCompletedStep;
-
-  @override
-  void initState() {
-    isFirstIcon = true;
-    myTitle = widget.task.title;
-    isImportant = widget.task.isImportant;
-    isOnMyDay = widget.task.isOnMyDay;
-    isChecked = widget.task.isCompleted;
-    steps = widget.task.stepList;
-    dueDate = widget.task.dueDate;
-    remindTime = widget.task.remindTime;
-    repeatFrequency = widget.task.repeatFrequency;
-    filePath = widget.task.filePath;
-    note = widget.task.note;
-    countCompletedStep = 0;
-    if (steps != null) {
-      for (var element in steps!) {
-        if (element.isCompleted) countCompletedStep++;
-      }
-    }
-    taskListProvider = Provider.of<TaskListProvider>(context, listen: false);
-    super.initState();
-  }
-
-  @override
-  void didUpdateWidget(covariant TaskListItem oldWidget) {
-    isFirstIcon = true;
-    myTitle = widget.task.title;
-    isImportant = widget.task.isImportant;
-    isOnMyDay = widget.task.isOnMyDay;
-    isChecked = widget.task.isCompleted;
-    steps = widget.task.stepList;
-    dueDate = widget.task.dueDate;
-    remindTime = widget.task.remindTime;
-    repeatFrequency = widget.task.repeatFrequency;
-    filePath = widget.task.filePath;
-    note = widget.task.note;
-    countCompletedStep = 0;
-    if (steps != null) {
-      for (var element in steps!) {
-        if (element.isCompleted) countCompletedStep++;
-      }
-    }
-    super.didUpdateWidget(oldWidget);
-  }
-
-  void initDateTimeFormat() async {
-    await initializeDateFormatting('vi');
-  }
-
-  @override
   Widget build(BuildContext context) {
-    initDateTimeFormat();
+    bool isFirstIcon = true;
+    String myTitle = task.title;
+    bool isImportant = task.isImportant;
+    bool isOnMyDay = task.isOnMyDay;
+    bool isChecked = task.isCompleted;
+    List<StepModel>? steps = task.stepList;
+    DateTime? dueDate = task.dueDate;
+    DateTime? remindTime = task.remindTime;
+    String? repeatFrequency = task.repeatFrequency;
+    List<String>? filePath = task.filePath;
+    String? note = task.note;
+    int countCompletedStep = 0;
+    if (steps != null) {
+      for (var step in steps) {
+        if (step.isCompleted) countCompletedStep++;
+      }
+    }
+    TaskListViewModel taskListViewModel = context.watch<TaskListViewModel>();
+    initializeDateFormatting('vi');
     double screenWidth = MediaQuery.of(context).size.width;
     bool isAllBottomIconNull = ((!isOnMyDay) &&
         (steps == null) &&
@@ -117,26 +69,26 @@ class _TaskListItemState extends State<TaskListItem> {
           await Navigator.of(context).pushNamed(
             taskRoute,
             arguments: {
-              'task': widget.task,
-              'taskList': widget.taskList,
+              'task': task,
+              'taskList': taskList,
             },
           );
         },
         child: Row(
           children: [
             Checkbox(
-              checkColor: (widget.themeColor == MyTheme.whiteColor)
+              checkColor: (themeColor == MyTheme.whiteColor)
                   ? MyTheme.blackColor
                   : null,
-              activeColor: widget.themeColor,
+              activeColor: themeColor,
               tristate: false,
               shape: const CircleBorder(),
               value: isChecked,
               onChanged: (bool? value) async {
-                await taskListProvider.updateTask(
-                  taskListID: widget.taskList.id,
-                  taskID: widget.task.id,
-                  newTask: widget.task.copyWith(isCompleted: value),
+                await taskListViewModel.updateTask(
+                  taskListID: taskList.id,
+                  taskID: task.id,
+                  newTask: task.copyWith(isCompleted: value),
                 );
               },
             ),
@@ -187,7 +139,7 @@ class _TaskListItemState extends State<TaskListItem> {
                               isFirstIcon = false;
                               return ItemBottomIcon(
                                 text:
-                                    '$countCompletedStep of ${steps!.length.toString()}',
+                                    '$countCompletedStep of ${steps.length.toString()}',
                                 isFirstIcon: tempFirstIcon,
                               );
                             } else {
@@ -203,7 +155,7 @@ class _TaskListItemState extends State<TaskListItem> {
                                 DateTime.now().month,
                                 DateTime.now().day,
                               );
-                              (dueDate!.isBefore(today))
+                              (dueDate.isBefore(today))
                                   ? isOverDue = true
                                   : isOverDue = false;
                               isFirstIcon = false;
@@ -211,7 +163,7 @@ class _TaskListItemState extends State<TaskListItem> {
                               return ItemBottomIcon(
                                 textIcon: Icons.calendar_today_outlined,
                                 text:
-                                    '${DateFormat('E, MMM d').format(dueDate!)}',
+                                    '${DateFormat('E, MMM d').format(dueDate)}',
                                 isFirstIcon: tempFirstIcon,
                                 isOverdue: isOverDue,
                               );
@@ -226,7 +178,7 @@ class _TaskListItemState extends State<TaskListItem> {
                               return ItemBottomIcon(
                                 textIcon: Icons.notifications_outlined,
                                 text: ((dueDate == null) && (!isOnMyDay))
-                                    ? '${DateFormat('E, MMM d').format(remindTime!)}'
+                                    ? '${DateFormat('E, MMM d').format(remindTime)}'
                                     : '',
                                 isFirstIcon: tempFirstIcon,
                               );
@@ -279,20 +231,19 @@ class _TaskListItemState extends State<TaskListItem> {
             Material(
               color: Colors.transparent,
               shape: const CircleBorder(),
-              child: (!widget.havePlusIcon)
+              child: (!havePlusIcon)
                   ? IconButton(
                       onPressed: () async {
-                        await taskListProvider.updateTask(
-                          taskListID: widget.taskList.id,
-                          taskID: widget.task.id,
-                          newTask:
-                              widget.task.copyWith(isImportant: !isImportant),
+                        await taskListViewModel.updateTask(
+                          taskListID: taskList.id,
+                          taskID: task.id,
+                          newTask: task.copyWith(isImportant: !isImportant),
                         );
                       },
                       icon: (isImportant)
                           ? Icon(
                               Icons.star,
-                              color: widget.themeColor,
+                              color: themeColor,
                             )
                           : const Icon(
                               Icons.star_border_outlined,
@@ -300,7 +251,7 @@ class _TaskListItemState extends State<TaskListItem> {
                             ),
                     )
                   : IconButton(
-                      onPressed: widget.onTapPlus,
+                      onPressed: onTapPlus,
                       icon: const Icon(Icons.add),
                     ),
             ),
