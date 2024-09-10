@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../themes.dart';
+import '../../view_models/group_view_model.dart';
+import '../../view_models/home_page_task_list_view_model.dart';
 
 class HomeItem extends StatelessWidget {
-  final String text;
+  final String taskListID;
   final IconData icon;
-  final Color iconColor;
+  final String? groupID;
   final int endNumber;
   final Function() onTap;
   const HomeItem({
     super.key,
-    required this.text,
     required this.icon,
-    required this.iconColor,
     required this.endNumber,
     required this.onTap,
+    required this.taskListID,
+    this.groupID,
   });
 
   @override
@@ -27,11 +30,31 @@ class HomeItem extends StatelessWidget {
           children: [
             Icon(
               icon,
-              color: iconColor,
+              color: (groupID != null)
+                  ? context
+                      .watch<GroupViewModel>()
+                      .getTaskListFromGroup(
+                        taskListID: taskListID,
+                        groupID: groupID!,
+                      )
+                      .themeColor
+                  : context
+                      .watch<HomePageTaskListViewModel>()
+                      .getTaskList(taskListID: taskListID)
+                      .themeColor,
             ),
             const SizedBox(width: 8),
             Text(
-              text,
+              (groupID != null)
+                  ? context
+                      .watch<GroupViewModel>()
+                      .getTaskListFromGroup(
+                          taskListID: taskListID, groupID: groupID!)
+                      .listName
+                  : context
+                      .read<HomePageTaskListViewModel>()
+                      .getTaskList(taskListID: taskListID)
+                      .listName,
               style: MyTheme.itemTextStyle,
             ),
             const Spacer(

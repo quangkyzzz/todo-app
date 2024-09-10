@@ -149,9 +149,9 @@ class _HomeGroupState extends State<HomeGroup> {
                         if (!element.isCompleted) endNumber++;
                       }
                       return HomeItem(
-                        text: item.listName,
+                        groupID: widget.group.id,
+                        taskListID: item.id,
                         icon: Icons.list_outlined,
-                        iconColor: item.themeColor,
                         endNumber: endNumber,
                         onTap: () async {
                           await Navigator.of(context).pushNamed(
