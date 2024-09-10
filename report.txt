@@ -1,6 +1,6 @@
 Báo cáo 10/9
 Đang làm:
-    -   Chỉnh sửa các chức năng trong HomePage sau khi thêm viewmodel.
+    -   Chỉnh sửa các chức năng trong HomePage sau khi thay đổi cấu trúc viewmodel.
 Dự định làm:
     -   Dựa vào review để tiếp tục chỉnh sửa.
     
