@@ -16,7 +16,10 @@ import 'presentation/task/task_list/task_list_page.dart';
 import 'presentation/task/task_page/task_page.dart';
 import 'presentation/settings/settings_page.dart';
 import 'presentation/user_profile/user_profile_page.dart';
-import 'view_models/home_page_view_model.dart';
+import 'view_models/auth_view_model.dart';
+import 'view_models/group_view_model.dart';
+import 'view_models/home_page_task_list_view_model.dart';
+import 'view_models/settings_view_model.dart';
 import 'view_models/task_list_view_model.dart';
 
 const initialRoute = '/home';
@@ -37,10 +40,27 @@ const noteEditRoute = '/task/note_edit';
 var allRoute = {
   initialRoute: (context) {
     return ChangeNotifierProvider(
-      create: (context) => HomePageViewModel(),
+      create: (context) => AuthViewModel(),
       builder: (context, child) {
-        bool isLogin = context.watch<HomePageViewModel>().isLogin;
-        return (isLogin) ? const HomePage() : const LoginPage();
+        bool isLogin = context.watch<AuthViewModel>().isLogin;
+        return (isLogin)
+            ? MultiProvider(
+                providers: [
+                  ChangeNotifierProvider(
+                    create: (context) => HomePageTaskListViewModel(),
+                  ),
+                  ChangeNotifierProvider(
+                    create: GroupViewModel.new,
+                  ),
+                  ChangeNotifierProvider(
+                    create: (context) => SettingsViewModel(),
+                  ),
+                ],
+                builder: (context, child) {
+                  return const HomePage();
+                },
+              )
+            : const LoginPage();
       },
     );
   },

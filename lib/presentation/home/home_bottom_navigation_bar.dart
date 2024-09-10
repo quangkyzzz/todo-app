@@ -3,7 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../themes.dart';
-import '../../view_models/home_page_view_model.dart';
+import '../../view_models/group_view_model.dart';
+import '../../view_models/home_page_task_list_view_model.dart';
 import '../components/show_text_edit_dialog.dart';
 
 class HomePageBottomNavigationBar extends StatelessWidget {
@@ -32,7 +33,7 @@ class HomePageBottomNavigationBar extends StatelessWidget {
                 );
                 if (!context.mounted) return;
                 if (title != null) {
-                  Provider.of<HomePageViewModel>(context, listen: false)
+                  Provider.of<HomePageTaskListViewModel>(context, listen: false)
                       .createTaskList(name: title);
                 }
               },
@@ -63,7 +64,7 @@ class HomePageBottomNavigationBar extends StatelessWidget {
               );
               if (!context.mounted) return;
               if (title != null) {
-                context.read<HomePageViewModel>().createGroup(title);
+                context.read<GroupViewModel>().createGroup(title);
               }
             },
             icon: const Icon(

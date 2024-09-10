@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/group_model.dart';
 import '../../models/task_list_model.dart';
-import '../../view_models/home_page_view_model.dart';
+import '../../view_models/group_view_model.dart';
+import '../../view_models/home_page_task_list_view_model.dart';
 import 'home_appbar.dart';
 //import '../../provider/group_provider.dart';
 //import '../../provider/task_list_provider.dart';
@@ -59,8 +60,9 @@ class HomePage extends StatelessWidget {
         'ontap': onTapMyDay,
         'icon': Icons.wb_sunny_outlined,
         'iconColor': MyTheme.greyColor,
-        'endNumber':
-            context.watch<HomePageViewModel>().countIncompletedMyDayTask(),
+        'endNumber': context
+            .watch<HomePageTaskListViewModel>()
+            .countIncompletedMyDayTask(),
       },
       {
         'ID': '3',
@@ -68,8 +70,9 @@ class HomePage extends StatelessWidget {
         'ontap': onTapImportant,
         'icon': Icons.star_border,
         'iconColor': MyTheme.pinkColor,
-        'endNumber':
-            context.watch<HomePageViewModel>().countIncompletedImportantTask(),
+        'endNumber': context
+            .watch<HomePageTaskListViewModel>()
+            .countIncompletedImportantTask(),
       },
       {
         'ID': '4',
@@ -77,8 +80,9 @@ class HomePage extends StatelessWidget {
         'ontap': onTapPlanned,
         'icon': Icons.list_alt_outlined,
         'iconColor': MyTheme.redColor,
-        'endNumber':
-            context.watch<HomePageViewModel>().countIncompletedPlannedTask(),
+        'endNumber': context
+            .watch<HomePageTaskListViewModel>()
+            .countIncompletedPlannedTask(),
       },
       {
         'ID': '1',
@@ -103,7 +107,7 @@ class HomePage extends StatelessWidget {
         'icon': Icons.task_outlined,
         'iconColor': MyTheme.blueColor,
         'endNumber': context
-            .watch<HomePageViewModel>()
+            .watch<HomePageTaskListViewModel>()
             .countIncompletedTaskByID(taskListID: '1'),
       },
     ];
@@ -115,7 +119,7 @@ class HomePage extends StatelessWidget {
           children: [
             //////////////
             //default list
-            Consumer<HomePageViewModel>(
+            Consumer<HomePageTaskListViewModel>(
                 builder: (context, homePageViewModel, child) {
               return ListView.builder(
                 shrinkWrap: true,
@@ -143,16 +147,18 @@ class HomePage extends StatelessWidget {
             MyTheme.dividerWhiteStyle,
             /////////////////////
             //personal task list
-            Consumer<HomePageViewModel>(
-                builder: (context, homePageViewModel, child) {
+            Consumer<HomePageTaskListViewModel>(
+                builder: (context, homePageTaskListViewModel, child) {
               return ListView.builder(
                 shrinkWrap: true,
                 physics: const ClampingScrollPhysics(),
-                itemCount: homePageViewModel.taskLists.length,
+                itemCount: homePageTaskListViewModel.taskLists.length,
                 itemBuilder: (BuildContext context, int index) {
-                  TaskListModel item = homePageViewModel.taskLists[index];
+                  TaskListModel item =
+                      homePageTaskListViewModel.taskLists[index];
                   if (int.parse(item.id) > 10) {
-                    int endNumber = homePageViewModel.countIncompletedTaskByID(
+                    int endNumber =
+                        homePageTaskListViewModel.countIncompletedTaskByID(
                       taskListID: item.id,
                     );
                     return HomeItem(
@@ -178,14 +184,13 @@ class HomePage extends StatelessWidget {
             }),
             /////////////////
             //personal group
-            Consumer<HomePageViewModel>(
-                builder: (context, homePageViewModel, child) {
+            Consumer<GroupViewModel>(builder: (context, groupViewModel, child) {
               return ListView.builder(
                 shrinkWrap: true,
                 physics: const ClampingScrollPhysics(),
-                itemCount: homePageViewModel.groups.length,
+                itemCount: groupViewModel.groups.length,
                 itemBuilder: (BuildContext context, int index) {
-                  GroupModel item = homePageViewModel.groups[index];
+                  GroupModel item = groupViewModel.groups[index];
                   return HomeGroup(group: item);
                 },
               );

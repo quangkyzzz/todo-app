@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/group_model.dart';
 import '../../models/task_list_model.dart';
-import '../../view_models/home_page_view_model.dart';
+import '../../view_models/group_view_model.dart';
+import '../../view_models/home_page_task_list_view_model.dart';
 import '../components/show_text_edit_dialog.dart';
-//import '../../provider/group_provider.dart';
-//import '../../provider/task_list_provider.dart';
 import '../../themes.dart';
 import '../../routes.dart';
 import 'home_item.dart';
@@ -52,7 +51,7 @@ class _HomeGroupState extends State<HomeGroup> {
 
   void onTapAddRemoveList(BuildContext context, String groupID) async {
     List<TaskListModel> oldTaskLists =
-        context.read<HomePageViewModel>().getGroup(groupID).taskLists;
+        context.read<GroupViewModel>().getGroup(groupID).taskLists;
     List<TaskListModel>? newTaskLists = await showAddListDialog(
       context: context,
       groupID: groupID,
@@ -62,17 +61,15 @@ class _HomeGroupState extends State<HomeGroup> {
       List<TaskListModel> addedTaskList = newTaskLists
           .where((element) => !oldTaskLists.contains(element))
           .toList();
-
       List<TaskListModel> removeTaskList = oldTaskLists
           .where((element) => !newTaskLists.contains(element))
           .toList();
 
-      context.read<HomePageViewModel>().addMultipleTaskListToGroup(
+      context.read<GroupViewModel>().addMultipleTaskListToGroup(
             groupID: groupID,
             movedTaskLists: addedTaskList,
           );
-
-      context.read<HomePageViewModel>().deleteMultipleTaskListFromGroup(
+      context.read<GroupViewModel>().deleteMultipleTaskListFromGroup(
             groupID,
             removeTaskList,
           );
@@ -89,12 +86,12 @@ class _HomeGroupState extends State<HomeGroup> {
     );
     if (!mounted) return;
     if (title != null) {
-      context.read<HomePageViewModel>().renameGroup(groupID, title);
+      context.read<GroupViewModel>().renameGroup(groupID, title);
     }
   }
 
   void onTapUngroupList(BuildContext context, String groupID) {
-    context.read<HomePageViewModel>().deleteGroup(groupID);
+    context.read<GroupViewModel>().deleteGroup(groupID);
   }
 
   bool isExpanded = false;
@@ -145,7 +142,7 @@ class _HomeGroupState extends State<HomeGroup> {
                 itemCount: widget.group.taskLists.length,
                 itemBuilder: (BuildContext context, int index) {
                   TaskListModel item = widget.group.taskLists[index];
-                  return Consumer<HomePageViewModel>(
+                  return Consumer<HomePageTaskListViewModel>(
                     builder: (context, homePageViewModel, child) {
                       int endNumber = 0;
                       for (var element in item.tasks) {
@@ -188,7 +185,17 @@ Future<List<TaskListModel>?> showAddListDialog({
     builder: (_) {
       List<TaskListModel> checkedTaskList = [];
       List<TaskListModel> allTaskList = [];
+      GroupModel group = context.read<GroupViewModel>().getGroup(groupID);
 
+      checkedTaskList.addAll(group.taskLists);
+      allTaskList.addAll(checkedTaskList);
+
+      allTaskList.addAll(
+        context
+            .watch<HomePageTaskListViewModel>()
+            .taskLists
+            .where((element) => (int.parse(element.id) > 10)),
+      );
       return AlertDialog(
         scrollable: true,
         title: const Text(
@@ -200,57 +207,37 @@ Future<List<TaskListModel>?> showAddListDialog({
           height: 235,
           width: 300,
           child: SingleChildScrollView(
-            child: Consumer<HomePageViewModel>(
-              builder: (
-                _,
-                homePageViewModel,
-                child,
-              ) {
-                //TODO: fix this
-                GroupModel group = homePageViewModel.getGroup(groupID);
-
-                checkedTaskList.addAll(group.taskLists);
-                allTaskList.addAll(checkedTaskList);
-
-                allTaskList.addAll(
-                  homePageViewModel.taskLists.where((element) =>
-                      ((element.groupID == null) &&
-                          (int.parse(element.id) > 10))),
-                );
-                return StatefulBuilder(builder: (context, setState) {
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    physics: const ClampingScrollPhysics(),
-                    itemCount: allTaskList.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      TaskListModel item = allTaskList[index];
-                      bool isChecked = checkedTaskList.contains(item);
-                      return Row(
-                        children: [
-                          Text(item.listName),
-                          const Spacer(),
-                          IconButton(
-                              icon: Icon((isChecked)
-                                  ? Icons.check
-                                  : Icons.add_outlined),
-                              onPressed: () {
-                                setState(() {
-                                  if (checkedTaskList.contains(item)) {
-                                    checkedTaskList.remove(item);
-                                    isChecked = !isChecked;
-                                  } else {
-                                    checkedTaskList.add(item);
-                                    isChecked = !isChecked;
-                                  }
-                                });
-                              })
-                        ],
-                      );
-                    },
+            child: StatefulBuilder(builder: (_, setState) {
+              return ListView.builder(
+                shrinkWrap: true,
+                physics: const ClampingScrollPhysics(),
+                itemCount: allTaskList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  TaskListModel item = allTaskList[index];
+                  bool isChecked = checkedTaskList.contains(item);
+                  return Row(
+                    children: [
+                      Text(item.listName),
+                      const Spacer(),
+                      IconButton(
+                          icon: Icon(
+                              (isChecked) ? Icons.check : Icons.add_outlined),
+                          onPressed: () {
+                            setState(() {
+                              if (checkedTaskList.contains(item)) {
+                                checkedTaskList.remove(item);
+                                isChecked = !isChecked;
+                              } else {
+                                checkedTaskList.add(item);
+                                isChecked = !isChecked;
+                              }
+                            });
+                          })
+                    ],
                   );
-                });
-              },
-            ),
+                },
+              );
+            }),
           ),
         ),
         actions: [

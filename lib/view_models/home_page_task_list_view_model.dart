@@ -1,132 +1,13 @@
 import 'package:flutter/material.dart';
-import '../models/group_model.dart';
-import '../models/settings_model.dart';
 import '../models/step_model.dart';
 import '../models/task_list_model.dart';
 import '../models/task_model.dart';
-import '../models/user_model.dart';
 import '../service/background_service.dart';
 import '../themes.dart';
 
 typedef ListTaskMap = List<Map<TaskModel, TaskListModel>>;
 
-class HomePageViewModel extends ChangeNotifier {
-  bool isLogin = false;
-  SettingsModel settings = SettingsModel(
-    isAddNewTaskOnTop: true,
-    isMoveStarTaskToTop: true,
-    isPlaySoundOnComplete: true,
-    isConfirmBeforeDelete: true,
-    isShowDueToday: true,
-  );
-  UserModel currentUser = UserModel(
-    id: '1',
-    userName: 'Nguyễn Quang',
-    userEmail: 'quang.ndt@outlook.com',
-  );
-  List<GroupModel> groups = [
-    GroupModel(
-      id: '111',
-      groupName: 'my group 1',
-      taskLists: [
-        TaskListModel(
-          id: '333',
-          listName: 'group 1 list 1',
-          groupID: '111',
-          tasks: [
-            TaskModel(
-              id: '6',
-              title: 'due today',
-              isCompleted: false,
-              isImportant: false,
-              isOnMyDay: false,
-              createDate: DateTime.now(),
-              dueDate: DateTime.now(),
-            ),
-            TaskModel(
-              id: '7',
-              title: 'due tomorrow',
-              isCompleted: false,
-              isImportant: false,
-              isOnMyDay: false,
-              createDate: DateTime.now(),
-              dueDate: DateTime.now().add(const Duration(days: 1)),
-            ),
-            TaskModel(
-              id: '8',
-              title: 'due next week',
-              isCompleted: false,
-              isImportant: false,
-              isOnMyDay: false,
-              createDate: DateTime.now(),
-              dueDate: DateTime.now().add(const Duration(days: 7)),
-            ),
-          ],
-        ),
-        TaskListModel(
-          id: '444',
-          listName: 'group 1 list 2',
-          groupID: '111',
-          tasks: [
-            TaskModel(
-              id: '9',
-              title: 'due next month',
-              isCompleted: false,
-              isImportant: false,
-              isOnMyDay: false,
-              createDate: DateTime.now(),
-              dueDate: DateTime.now().add(const Duration(days: 31)),
-            ),
-            TaskModel(
-              id: '10',
-              title: 'due next 2 day',
-              isCompleted: false,
-              isImportant: false,
-              isOnMyDay: false,
-              createDate: DateTime.now(),
-              dueDate: DateTime.now().add(const Duration(days: 2)),
-            ),
-            TaskModel(
-              id: '11',
-              title: 'due next 3 day',
-              isCompleted: false,
-              isImportant: false,
-              isOnMyDay: false,
-              createDate: DateTime.now(),
-              dueDate: DateTime.now().add(const Duration(days: 3)),
-            ),
-          ],
-        ),
-      ],
-    ),
-    GroupModel(
-      id: '222',
-      groupName: 'my group 2',
-      taskLists: [
-        TaskListModel(
-          id: '555',
-          listName: 'group 2 list 1',
-          groupID: '222',
-          tasks: [
-            TaskModel(
-              id: '12',
-              title: 'due next 4 day',
-              isCompleted: false,
-              isImportant: false,
-              isOnMyDay: false,
-              createDate: DateTime.now(),
-              dueDate: DateTime.now().add(const Duration(days: 4)),
-            ),
-          ],
-        ),
-        TaskListModel(
-          id: '666',
-          listName: 'group 2 list 2',
-          groupID: '222',
-        ),
-      ],
-    ),
-  ];
+class HomePageTaskListViewModel extends ChangeNotifier {
   List<TaskListModel> taskLists = [
     TaskListModel(
       id: '1',
@@ -219,32 +100,6 @@ class HomePageViewModel extends ChangeNotifier {
     ),
   ];
 
-  /////////////
-  //Auth method
-  bool getIsLoginStatus() {
-    return isLogin;
-  }
-
-  void updateUserName(String newName) {
-    currentUser = currentUser.copyWith(userName: newName);
-    notifyListeners();
-  }
-
-  void updateUserEmail(String newEmail) {
-    currentUser = currentUser.copyWith(userEmail: newEmail);
-    notifyListeners();
-  }
-
-  void login() {
-    isLogin = true;
-    notifyListeners();
-  }
-
-  void logout() {
-    isLogin = false;
-    notifyListeners();
-  }
-
   /////////////////
   //TaskList method
   TaskListModel getTaskList({
@@ -272,9 +127,9 @@ class HomePageViewModel extends ChangeNotifier {
   }
 
   void deleteTaskList({
-    required String id,
+    required String taskListID,
   }) {
-    TaskListModel taskList = getTaskList(taskListID: id);
+    TaskListModel taskList = getTaskList(taskListID: taskListID);
     for (TaskModel task in taskList.tasks) {
       // ignore: unawaited_futures
       BackGroundService.cancelTaskByID(id: task.id);
@@ -288,6 +143,11 @@ class HomePageViewModel extends ChangeNotifier {
     required List<TaskListModel> deleteTaskLists,
   }) {
     taskLists.removeWhere((element) => (deleteTaskLists.contains(element)));
+    notifyListeners();
+  }
+
+  void cutTaskList({required String taskListID}) {
+    taskLists.removeWhere((element) => (element.id == taskListID));
     notifyListeners();
   }
 
@@ -372,62 +232,4 @@ class HomePageViewModel extends ChangeNotifier {
 
   //////////////
   //Group method
-  GroupModel getGroup(String groupID) {
-    return groups.firstWhere((element) => (element.id == groupID));
-  }
-
-  TaskListModel getTaskListFromGroup(
-      {required String taskListID, required String groupID}) {
-    GroupModel group = getGroup(groupID);
-    return group.taskLists.firstWhere((element) => (element.id == taskListID));
-  }
-
-  void createGroup(String name) {
-    groups.add(GroupModel(
-      id: DateTime.now().millisecondsSinceEpoch.toString(),
-      groupName: name,
-    ));
-    notifyListeners();
-  }
-
-  void deleteGroup(String groupID) {
-    GroupModel group = getGroup(groupID);
-    for (TaskListModel taskList in group.taskLists) {
-      taskLists.add(taskList);
-    }
-    groups.remove(group);
-    notifyListeners();
-  }
-
-  void renameGroup(String groupID, String newName) {
-    groups.firstWhere((element) => (element.id == groupID)).groupName = newName;
-    notifyListeners();
-  }
-
-  void addMultipleTaskListToGroup({
-    required String groupID,
-    required List<TaskListModel> movedTaskLists,
-  }) {
-    GroupModel group = getGroup(groupID);
-
-    for (var e in movedTaskLists) {
-      taskLists.remove(e);
-      group.taskLists.add(e);
-    }
-
-    notifyListeners();
-  }
-
-  void deleteMultipleTaskListFromGroup(
-    String groupID,
-    List<TaskListModel> removedTaskLists,
-  ) {
-    GroupModel group = getGroup(groupID);
-    for (var element in removedTaskLists) {
-      group.taskLists.remove(element);
-      taskLists.add(element);
-    }
-
-    notifyListeners();
-  }
 }
