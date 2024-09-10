@@ -1,8 +1,6 @@
-Báo cáo 6/9
-Đã làm:
-    -   Hoàn thiện taskListPage view model
-    -   Thêm HomePage view model
-    -   Sửa HomePage route
+Báo cáo 10/9
+Đang làm:
+    -   Chỉnh sửa các chức năng trong HomePage sau khi thêm viewmodel.
 Dự định làm:
     -   Dựa vào review để tiếp tục chỉnh sửa.
     
