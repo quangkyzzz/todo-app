@@ -29,21 +29,21 @@ class HomePage extends StatelessWidget {
     await Navigator.of(context).pushNamed(plannedRoute);
   }
 
-  onTapAssignToMe(BuildContext context, TaskListModel taskList) async {
+  onTapAssignToMe(BuildContext context, TaskList taskList) async {
     await Navigator.of(context).pushNamed(taskListRoute, arguments: {
       'haveCompletedList': true,
       'taskList': taskList,
     });
   }
 
-  onTapFlaggedEmail(BuildContext context, TaskListModel taskList) async {
+  onTapFlaggedEmail(BuildContext context, TaskList taskList) async {
     await Navigator.of(context).pushNamed(taskListRoute, arguments: {
       'haveCompletedList': true,
       'taskList': taskList,
     });
   }
 
-  onTapTask(BuildContext context, TaskListModel taskList) async {
+  onTapTask(BuildContext context, TaskList taskList) async {
     await Navigator.of(context).pushNamed(
       taskListRoute,
       arguments: {
@@ -66,7 +66,9 @@ class HomePage extends StatelessWidget {
             //////////////
             //default list
             HomeItem(
-              taskListID: '2',
+              taskList: context
+                  .watch<TaskListViewModel>()
+                  .getTaskList(taskListID: '2'),
               icon: Icons.wb_sunny_outlined,
               onTap: () {
                 onTapMyDay(context);
@@ -74,7 +76,9 @@ class HomePage extends StatelessWidget {
               endNumber: taskListUltility.countIncompletedMyDayTask(),
             ),
             HomeItem(
-              taskListID: '3',
+              taskList: context
+                  .watch<TaskListViewModel>()
+                  .getTaskList(taskListID: '3'),
               icon: Icons.star_border,
               onTap: () {
                 onTapImportant(context);
@@ -82,7 +86,9 @@ class HomePage extends StatelessWidget {
               endNumber: taskListUltility.countIncompletedImportantTask(),
             ),
             HomeItem(
-              taskListID: '4',
+              taskList: context
+                  .watch<TaskListViewModel>()
+                  .getTaskList(taskListID: '4'),
               icon: Icons.list_alt_outlined,
               onTap: () {
                 onTapPlanned(context);
@@ -90,7 +96,9 @@ class HomePage extends StatelessWidget {
               endNumber: taskListUltility.countIncompletedPlannedTask(),
             ),
             HomeItem(
-              taskListID: '5',
+              taskList: context
+                  .watch<TaskListViewModel>()
+                  .getTaskList(taskListID: '5'),
               icon: Icons.person_outline,
               onTap: () {
                 onTapAssignToMe(
@@ -101,7 +109,9 @@ class HomePage extends StatelessWidget {
               endNumber: 0,
             ),
             HomeItem(
-              taskListID: '6',
+              taskList: context
+                  .watch<TaskListViewModel>()
+                  .getTaskList(taskListID: '6'),
               icon: Icons.flag_outlined,
               onTap: () {
                 onTapFlaggedEmail(
@@ -112,7 +122,9 @@ class HomePage extends StatelessWidget {
               endNumber: 0,
             ),
             HomeItem(
-              taskListID: '1',
+              taskList: context
+                  .watch<TaskListViewModel>()
+                  .getTaskList(taskListID: '1'),
               icon: Icons.task_outlined,
               onTap: () {
                 onTapTask(
@@ -133,13 +145,13 @@ class HomePage extends StatelessWidget {
                 physics: const ClampingScrollPhysics(),
                 itemCount: taskListViewModel.taskLists.length,
                 itemBuilder: (BuildContext context, int index) {
-                  TaskListModel item = taskListViewModel.taskLists[index];
+                  TaskList item = taskListViewModel.taskLists[index];
                   if (int.parse(item.id) > 10) {
                     int endNumber = taskListUltility.countIncompletedTaskByID(
                       taskListID: item.id,
                     );
                     return HomeItem(
-                      taskListID: item.id,
+                      taskList: item,
                       icon: Icons.list_outlined,
                       endNumber: endNumber,
                       onTap: () async {

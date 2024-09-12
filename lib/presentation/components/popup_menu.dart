@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/task_list.dart';
-import '../../view_models/temp_task_list_view_model.dart';
+import '../../view_models/temp_task_list_view_model_will_delete.dart';
 import 'show_alert_dialog.dart';
 import 'show_text_edit_dialog.dart';
 import '../../routes.dart';
@@ -13,7 +13,7 @@ import 'change_theme_bottom_sheet.dart';
 import 'sort_by_bottom_sheet.dart';
 
 class PopupMenu extends StatelessWidget {
-  final TaskListModel taskList;
+  final TaskList taskList;
   final List<Map<String, dynamic>>? customListPopupMenuItem;
   final List<String> toRemove;
   const PopupMenu({

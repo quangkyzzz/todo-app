@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/task_list.dart';
 import '../../themes.dart';
-import '../../view_models/temp_task_list_view_model.dart';
+import '../../view_models/temp_task_list_view_model_will_delete.dart';
 
 class AddFloatingButton extends StatelessWidget {
   final Color themeColor;
-  final TaskListModel taskList;
+  final TaskList taskList;
   final bool isAddToImportant;
   final bool isAddToMyDay;
 
@@ -56,7 +56,7 @@ class AddTaskItem extends StatelessWidget {
   final bool isAddToMyDay;
   final bool isAddToImportant;
   final TextEditingController _controller = TextEditingController();
-  final TaskListModel taskList;
+  final TaskList taskList;
   AddTaskItem({
     super.key,
     required this.taskList,

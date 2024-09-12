@@ -18,8 +18,8 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   bool isSpeechEnable = false;
   SpeechToText speechToText = SpeechToText();
-  List<Map<TaskModel, TaskListModel>> tasks = [];
-  List<Map<TaskModel, TaskListModel>> searchTasks = [];
+  List<Map<Task, TaskList>> tasks = [];
+  List<Map<Task, TaskList>> searchTasks = [];
   bool isHideCompletedTask = false;
   String searchName = '';
   late TaskListProvider taskListProvider;
@@ -166,7 +166,7 @@ class _SearchPageState extends State<SearchPage> {
                     physics: const ClampingScrollPhysics(),
                     itemCount: searchTasks.length,
                     itemBuilder: (BuildContext context, int index) {
-                      Map<TaskModel, TaskListModel> item = searchTasks[index];
+                      Map<Task, TaskList> item = searchTasks[index];
                       if (isHideCompletedTask) {
                         if (!item.keys.first.isCompleted) {
                           return TaskListItem(

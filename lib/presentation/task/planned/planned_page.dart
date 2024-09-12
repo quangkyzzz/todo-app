@@ -19,7 +19,7 @@ class PlannedPage extends StatefulWidget {
 class _PlannedPageState extends State<PlannedPage> {
   late List<Map<String, dynamic>> listPopupMennu;
   int plannedState = 5;
-  late TaskListModel plannedTaskList;
+  late TaskList plannedTaskList;
 
   void onPlannedStateChange(int value) {
     setState(() {
@@ -84,7 +84,7 @@ class _PlannedPageState extends State<PlannedPage> {
       fit: StackFit.expand,
       children: [
         if (plannedTaskList.backgroundImage != null)
-          (plannedTaskList.isDefaultImage == -1)
+          (plannedTaskList.defaultImage == -1)
               ? Image.file(
                   File(plannedTaskList.backgroundImage!),
                   fit: BoxFit.fitHeight,

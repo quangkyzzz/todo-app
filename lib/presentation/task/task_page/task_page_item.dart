@@ -4,8 +4,8 @@ import '../../../models/task.dart';
 import '../../../themes.dart';
 
 class TaskPageItem extends StatefulWidget {
-  final TaskListModel taskList;
-  final TaskModel task;
+  final TaskList taskList;
+  final Task task;
   final bool isActive;
   final IconData icon;
   final String text;

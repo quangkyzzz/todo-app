@@ -3,12 +3,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/task_list.dart';
-import '../../view_models/temp_task_list_view_model.dart';
+import '../../view_models/temp_task_list_view_model_will_delete.dart';
 import '../items/popup_item.dart';
 import '../../themes.dart';
 
 class SortByBottomSheet extends StatelessWidget {
-  final TaskListModel taskList;
+  final TaskList taskList;
   final BuildContext mContext;
   const SortByBottomSheet({
     super.key,

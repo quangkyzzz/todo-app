@@ -5,7 +5,7 @@ import '../models/task.dart';
 
 //TODO: impliment all function
 class TempTaskListViewModel extends ChangeNotifier {
-  TaskListModel taskList;
+  TaskList taskList;
   Settings settings = Settings(
     isAddNewTaskOnTop: true,
     isMoveStarTaskToTop: true,
@@ -30,7 +30,7 @@ class TempTaskListViewModel extends ChangeNotifier {
   }
 
   void deleteMultipleTaskList({
-    required List<TaskListModel> deleteTaskLists,
+    required List<TaskList> deleteTaskLists,
   }) {
     // taskLists.removeWhere((element) => (deleteTaskLists.contains(element)));
     // notifyListeners();
@@ -88,7 +88,7 @@ class TempTaskListViewModel extends ChangeNotifier {
 
   void updateTaskList({
     required String taskListID,
-    required TaskListModel newTaskList,
+    required TaskList newTaskList,
   }) {
     // getTaskList(taskListID: taskListID).copyFrom(copyTaskList: newTaskList);
 
@@ -102,7 +102,7 @@ class TempTaskListViewModel extends ChangeNotifier {
     String? backgroundImage,
     int? isDefaultImage,
     Map<String, dynamic>? sortByType,
-    List<TaskModel>? tasks,
+    List<Task>? tasks,
   }) {
     // TaskListModel taskList = getTaskList(taskListID: taskListID);
     // taskList.listName = listName ?? taskList.listName;
@@ -217,7 +217,7 @@ class TempTaskListViewModel extends ChangeNotifier {
   Future<void> updateTask({
     required String taskListID,
     required String taskID,
-    required TaskModel newTask,
+    required Task newTask,
   }) async {
     // TaskListModel taskList = getTaskList(taskListID: taskListID);
     // TaskModel task = getTask(taskListID: taskListID, taskID: taskID);

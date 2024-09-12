@@ -50,8 +50,8 @@ void callbackDispatcher() {
 
 class BackGroundService {
   static void executePeriodicBackGroundTask({
-    required TaskModel task,
-    required TaskListModel taskList,
+    required Task task,
+    required TaskList taskList,
     required DateTime remindTime,
     required String frequency,
     required bool isPlaySound,
@@ -116,8 +116,8 @@ class BackGroundService {
   }
 
   static void executeScheduleBackGroundTask({
-    required TaskModel task,
-    required TaskListModel taskList,
+    required Task task,
+    required TaskList taskList,
     required bool isPlaySound,
     required DateTime remindTime,
   }) async {

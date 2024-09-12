@@ -6,7 +6,7 @@ import '../../../themes.dart';
 import '../../items/task_list_item.dart';
 
 class ReorderPage extends StatefulWidget {
-  final TaskListModel taskList;
+  final TaskList taskList;
   const ReorderPage({
     super.key,
     required this.taskList,

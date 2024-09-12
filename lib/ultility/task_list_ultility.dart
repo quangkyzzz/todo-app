@@ -9,8 +9,7 @@ class TaskListUltility {
 
   int countIncompletedTaskByID({required String taskListID}) {
     int count = 0;
-    TaskListModel taskList =
-        taskListViewModel.getTaskList(taskListID: taskListID);
+    TaskList taskList = taskListViewModel.getTaskList(taskListID: taskListID);
     for (var task in taskList.tasks) {
       if (!task.isCompleted) count++;
     }

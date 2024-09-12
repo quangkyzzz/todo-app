@@ -8,7 +8,7 @@ import '../../../themes.dart';
 
 class StepItem extends StatefulWidget {
   final TaskStep step;
-  final TaskListModel taskList;
+  final TaskList taskList;
   final Function callBack;
   const StepItem({
     super.key,

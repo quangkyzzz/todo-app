@@ -10,8 +10,8 @@ import '../../components/show_alert_dialog.dart';
 import 'package:intl/intl.dart';
 
 class TaskPageBottomNavigation extends StatelessWidget {
-  final TaskListModel taskList;
-  final TaskModel task;
+  final TaskList taskList;
+  final Task task;
   const TaskPageBottomNavigation({
     super.key,
     required this.task,

@@ -9,19 +9,19 @@ import 'package:collection/collection.dart';
 import 'settings_provider.dart';
 import '../themes.dart';
 
-typedef ListTaskMap = List<Map<TaskModel, TaskListModel>>;
+typedef ListTaskMap = List<Map<Task, TaskList>>;
 
 class TaskListProvider extends ChangeNotifier {
   SettingsProvider settingsProvider;
 
   TaskListProvider({required this.settingsProvider});
 
-  List<TaskListModel> taskLists = [
-    TaskListModel(
+  List<TaskList> taskLists = [
+    TaskList(
       id: '1',
       listName: 'Tasks',
       tasks: [
-        TaskModel(
+        Task(
           id: '2',
           title: 'few day',
           isCompleted: false,
@@ -30,7 +30,7 @@ class TaskListProvider extends ChangeNotifier {
           createDate: DateTime(2024, 6, 2),
           dueDate: DateTime(2024, 6, 2),
         ),
-        TaskModel(
+        Task(
           id: '1',
           title: 'Tasks',
           isCompleted: false,
@@ -51,7 +51,7 @@ class TaskListProvider extends ChangeNotifier {
           ],
           note: 'note',
         ),
-        TaskModel(
+        Task(
           id: '66',
           title: 'No step',
           isCompleted: false,
@@ -63,23 +63,22 @@ class TaskListProvider extends ChangeNotifier {
         ),
       ],
     ),
-    TaskListModel(
+    TaskList(
       id: '2',
       listName: 'My Day',
       themeColor: MyTheme.whiteColor,
       backgroundImage: 'assets/backgrounds/bg_my_day.jpg',
-      isDefaultImage: 0,
+      defaultImage: 0,
     ),
-    TaskListModel(
-        id: '3', listName: 'Important', themeColor: MyTheme.pinkColor),
-    TaskListModel(id: '4', listName: 'Planned', themeColor: MyTheme.redColor),
-    TaskListModel(
+    TaskList(id: '3', listName: 'Important', themeColor: MyTheme.pinkColor),
+    TaskList(id: '4', listName: 'Planned', themeColor: MyTheme.redColor),
+    TaskList(
       id: '222',
       listName: 'personal list 1',
       backgroundImage: '/data/user/0/com.example.todo_app/cache/'
           'file_picker/1723799643254/1000000837.jpg',
       tasks: [
-        TaskModel(
+        Task(
             id: '3',
             title: 'few hour',
             isCompleted: false,
@@ -88,7 +87,7 @@ class TaskListProvider extends ChangeNotifier {
             createDate: DateTime(2024, 7, 2, 7),
             note: 'Really long note, long long long'
                 'long long long long long long'),
-        TaskModel(
+        Task(
           id: '4',
           title: 'recent',
           isCompleted: false,
@@ -96,7 +95,7 @@ class TaskListProvider extends ChangeNotifier {
           isOnMyDay: false,
           createDate: DateTime(2024, 7, 2, 9, 38),
         ),
-        TaskModel(
+        Task(
           id: '5',
           title: 'few minute',
           isCompleted: false,
@@ -106,88 +105,76 @@ class TaskListProvider extends ChangeNotifier {
         ),
       ],
     ),
-    TaskListModel(
-        id: '333',
-        listName: 'group 1 list 1',
-        groupID: '111',
-        tasks: [
-          TaskModel(
-            id: '6',
-            title: 'due today',
-            isCompleted: false,
-            isImportant: false,
-            isOnMyDay: false,
-            createDate: DateTime.now(),
-            dueDate: DateTime.now(),
-          ),
-          TaskModel(
-            id: '7',
-            title: 'due tomorrow',
-            isCompleted: false,
-            isImportant: false,
-            isOnMyDay: false,
-            createDate: DateTime.now(),
-            dueDate: DateTime.now().add(const Duration(days: 1)),
-          ),
-          TaskModel(
-            id: '8',
-            title: 'due next week',
-            isCompleted: false,
-            isImportant: false,
-            isOnMyDay: false,
-            createDate: DateTime.now(),
-            dueDate: DateTime.now().add(const Duration(days: 7)),
-          ),
-        ]),
-    TaskListModel(
-        id: '444',
-        listName: 'group 1 list 2',
-        groupID: '111',
-        tasks: [
-          TaskModel(
-            id: '9',
-            title: 'due next month',
-            isCompleted: false,
-            isImportant: false,
-            isOnMyDay: false,
-            createDate: DateTime.now(),
-            dueDate: DateTime.now().add(const Duration(days: 31)),
-          ),
-          TaskModel(
-            id: '10',
-            title: 'due next 2 day',
-            isCompleted: false,
-            isImportant: false,
-            isOnMyDay: false,
-            createDate: DateTime.now(),
-            dueDate: DateTime.now().add(const Duration(days: 2)),
-          ),
-          TaskModel(
-            id: '11',
-            title: 'due next 3 day',
-            isCompleted: false,
-            isImportant: false,
-            isOnMyDay: false,
-            createDate: DateTime.now(),
-            dueDate: DateTime.now().add(const Duration(days: 3)),
-          ),
-        ]),
-    TaskListModel(
-        id: '555',
-        listName: 'group 2 list 1',
-        groupID: '222',
-        tasks: [
-          TaskModel(
-            id: '12',
-            title: 'due next 4 day',
-            isCompleted: false,
-            isImportant: false,
-            isOnMyDay: false,
-            createDate: DateTime.now(),
-            dueDate: DateTime.now().add(const Duration(days: 4)),
-          ),
-        ]),
-    TaskListModel(
+    TaskList(id: '333', listName: 'group 1 list 1', groupID: '111', tasks: [
+      Task(
+        id: '6',
+        title: 'due today',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: false,
+        createDate: DateTime.now(),
+        dueDate: DateTime.now(),
+      ),
+      Task(
+        id: '7',
+        title: 'due tomorrow',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: false,
+        createDate: DateTime.now(),
+        dueDate: DateTime.now().add(const Duration(days: 1)),
+      ),
+      Task(
+        id: '8',
+        title: 'due next week',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: false,
+        createDate: DateTime.now(),
+        dueDate: DateTime.now().add(const Duration(days: 7)),
+      ),
+    ]),
+    TaskList(id: '444', listName: 'group 1 list 2', groupID: '111', tasks: [
+      Task(
+        id: '9',
+        title: 'due next month',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: false,
+        createDate: DateTime.now(),
+        dueDate: DateTime.now().add(const Duration(days: 31)),
+      ),
+      Task(
+        id: '10',
+        title: 'due next 2 day',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: false,
+        createDate: DateTime.now(),
+        dueDate: DateTime.now().add(const Duration(days: 2)),
+      ),
+      Task(
+        id: '11',
+        title: 'due next 3 day',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: false,
+        createDate: DateTime.now(),
+        dueDate: DateTime.now().add(const Duration(days: 3)),
+      ),
+    ]),
+    TaskList(id: '555', listName: 'group 2 list 1', groupID: '222', tasks: [
+      Task(
+        id: '12',
+        title: 'due next 4 day',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: false,
+        createDate: DateTime.now(),
+        dueDate: DateTime.now().add(const Duration(days: 4)),
+      ),
+    ]),
+    TaskList(
       id: '666',
       listName: 'group 2 list 2',
       groupID: '222',
@@ -210,7 +197,7 @@ class TaskListProvider extends ChangeNotifier {
 
   /////////////////////
   //Task List function
-  TaskListModel getTaskList({
+  TaskList getTaskList({
     required String taskListID,
   }) {
     return taskLists.firstWhere((element) => (element.id == taskListID));
@@ -219,7 +206,7 @@ class TaskListProvider extends ChangeNotifier {
   void createTaskList({
     required String name,
   }) {
-    TaskListModel newTaskList = TaskListModel(
+    TaskList newTaskList = TaskList(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       listName: name,
     );
@@ -228,7 +215,7 @@ class TaskListProvider extends ChangeNotifier {
   }
 
   void addTaskList({
-    required List<TaskListModel> addTaskLists,
+    required List<TaskList> addTaskLists,
   }) {
     taskLists.addAll(addTaskLists);
     notifyListeners();
@@ -237,8 +224,8 @@ class TaskListProvider extends ChangeNotifier {
   void deleteTaskList({
     required String id,
   }) {
-    TaskListModel taskList = getTaskList(taskListID: id);
-    for (TaskModel task in taskList.tasks) {
+    TaskList taskList = getTaskList(taskListID: id);
+    for (Task task in taskList.tasks) {
       // ignore: unawaited_futures
       BackGroundService.cancelTaskByID(id: task.id);
     }
@@ -248,7 +235,7 @@ class TaskListProvider extends ChangeNotifier {
   }
 
   void deleteMultipleTaskList({
-    required List<TaskListModel> deleteTaskLists,
+    required List<TaskList> deleteTaskLists,
   }) {
     taskLists.removeWhere((element) => (deleteTaskLists.contains(element)));
     notifyListeners();
@@ -272,9 +259,9 @@ class TaskListProvider extends ChangeNotifier {
   void duplicateTaskList({
     required String taskListID,
   }) {
-    TaskListModel originTaskList = getTaskList(taskListID: taskListID);
-    List<TaskModel> newTasks = originTaskList.tasks.map((task) {
-      TaskModel newTask = task.copyWith(
+    TaskList originTaskList = getTaskList(taskListID: taskListID);
+    List<Task> newTasks = originTaskList.tasks.map((task) {
+      Task newTask = task.copyWith(
         id: (DateTime.now().millisecondsSinceEpoch + Random().nextInt(500))
             .toString(),
         createDate: DateTime.now(),
@@ -283,7 +270,7 @@ class TaskListProvider extends ChangeNotifier {
       newTask.repeatFrequency = null;
       return newTask;
     }).toList();
-    TaskListModel newTaskList = originTaskList.copyWith(
+    TaskList newTaskList = originTaskList.copyWith(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       listName: '${originTaskList.listName} copy',
       tasks: newTasks,
@@ -299,14 +286,14 @@ class TaskListProvider extends ChangeNotifier {
     required String taskListID,
     required String newName,
   }) {
-    TaskListModel taskList = getTaskList(taskListID: taskListID);
+    TaskList taskList = getTaskList(taskListID: taskListID);
     taskList.listName = newName;
     notifyListeners();
   }
 
   void updateTaskList({
     required String taskListID,
-    required TaskListModel newTaskList,
+    required TaskList newTaskList,
   }) {
     getTaskList(taskListID: taskListID).copyFrom(copyTaskList: newTaskList);
 
@@ -320,13 +307,13 @@ class TaskListProvider extends ChangeNotifier {
     String? backgroundImage,
     int? isDefaultImage,
     Map<String, dynamic>? sortByType,
-    List<TaskModel>? tasks,
+    List<Task>? tasks,
   }) {
-    TaskListModel taskList = getTaskList(taskListID: taskListID);
+    TaskList taskList = getTaskList(taskListID: taskListID);
     taskList.listName = listName ?? taskList.listName;
     taskList.groupID = groupID ?? taskList.groupID;
     taskList.backgroundImage = backgroundImage ?? taskList.backgroundImage;
-    taskList.isDefaultImage = isDefaultImage ?? taskList.isDefaultImage;
+    taskList.defaultImage = isDefaultImage ?? taskList.defaultImage;
     taskList.sortByType = sortByType ?? taskList.sortByType;
     taskList.tasks = tasks ?? taskList.tasks;
   }
@@ -336,7 +323,7 @@ class TaskListProvider extends ChangeNotifier {
     required String sortType,
     required bool isAscending,
   }) {
-    TaskListModel taskList = getTaskList(taskListID: taskListID);
+    TaskList taskList = getTaskList(taskListID: taskListID);
     int asc = (isAscending) ? 1 : -1;
     switch (sortType) {
       case 'important':
@@ -389,7 +376,7 @@ class TaskListProvider extends ChangeNotifier {
 
   ////////////////
   //Task function
-  TaskModel getTask({
+  Task getTask({
     required String taskListID,
     required String taskID,
   }) {
@@ -405,7 +392,7 @@ class TaskListProvider extends ChangeNotifier {
     bool isOnMyDay = false,
     bool isImportant = false,
   }) {
-    TaskModel task = TaskModel(
+    Task task = Task(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       title: taskName,
       isCompleted: isCompleted,
@@ -413,7 +400,7 @@ class TaskListProvider extends ChangeNotifier {
       isOnMyDay: isOnMyDay,
       createDate: DateTime.now(),
     );
-    TaskListModel? taskList = getTaskList(taskListID: taskListID);
+    TaskList? taskList = getTaskList(taskListID: taskListID);
     if (settingsProvider.settings.isAddNewTaskOnTop) {
       taskList.tasks.insert(0, task);
     } else {
@@ -427,7 +414,7 @@ class TaskListProvider extends ChangeNotifier {
     required String taskListID,
     required String taskID,
   }) {
-    TaskListModel? taskList = taskLists.firstWhereOrNull(
+    TaskList? taskList = taskLists.firstWhereOrNull(
       (element) => (element.id == taskListID),
     );
     if (taskList != null) {
@@ -446,10 +433,10 @@ class TaskListProvider extends ChangeNotifier {
   Future<void> updateTask({
     required String taskListID,
     required String taskID,
-    required TaskModel newTask,
+    required Task newTask,
   }) async {
-    TaskListModel taskList = getTaskList(taskListID: taskListID);
-    TaskModel task = getTask(taskListID: taskListID, taskID: taskID);
+    TaskList taskList = getTaskList(taskListID: taskListID);
+    Task task = getTask(taskListID: taskListID, taskID: taskID);
     if (task.title != newTask.title) {
       BackGroundService.cancelTaskByID(id: taskID);
       if ((newTask.repeatFrequency == null) && (newTask.remindTime != null)) {
@@ -499,7 +486,7 @@ class TaskListProvider extends ChangeNotifier {
     List<String>? filePath,
     String? note,
   }) {
-    TaskModel task = getTask(taskListID: taskListID, taskID: taskID);
+    Task task = getTask(taskListID: taskListID, taskID: taskID);
     if (note == '') {
       note = null;
     }
@@ -520,8 +507,8 @@ class TaskListProvider extends ChangeNotifier {
 
   ListTaskMap getAllTaskWithTaskList() {
     ListTaskMap result = [];
-    for (TaskListModel taskList in taskLists) {
-      for (TaskModel task in taskList.tasks) {
+    for (TaskList taskList in taskLists) {
+      for (Task task in taskList.tasks) {
         result.add({task: taskList});
       }
     }
@@ -608,7 +595,7 @@ class TaskListProvider extends ChangeNotifier {
 
   int countIncompletedTaskByID({required String taskListID}) {
     int count = 0;
-    TaskListModel taskList = getTaskList(taskListID: taskListID);
+    TaskList taskList = getTaskList(taskListID: taskListID);
     for (var task in taskList.tasks) {
       if (!task.isCompleted) count++;
     }

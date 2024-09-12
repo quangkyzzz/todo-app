@@ -3,7 +3,7 @@ import '../models/user.dart';
 
 class AuthViewModel extends ChangeNotifier {
   bool isLogin = false;
-  UserModel currentUser = UserModel(
+  User currentUser = User(
     id: '1',
     userName: 'Nguyễn Quang',
     userEmail: 'quang.ndt@outlook.com',

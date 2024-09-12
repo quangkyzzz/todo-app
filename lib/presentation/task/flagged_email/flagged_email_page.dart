@@ -13,11 +13,11 @@ class FlaggedEmailPage extends StatefulWidget {
 }
 
 class _FlaggedEmailPageState extends State<FlaggedEmailPage> {
-  TaskListModel incompleteTask = TaskListModel(
+  TaskList incompleteTask = TaskList(
     id: '1',
     listName: 'list1',
     tasks: [
-      TaskModel(
+      Task(
         id: '1',
         title: 'task 1',
         isCompleted: false,
@@ -25,7 +25,7 @@ class _FlaggedEmailPageState extends State<FlaggedEmailPage> {
         isOnMyDay: false,
         createDate: DateTime.now(),
       ),
-      TaskModel(
+      Task(
         id: '2',
         title: 'task 2',
         isCompleted: false,

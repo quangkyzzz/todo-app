@@ -57,7 +57,7 @@ class _HomeGroupState extends State<HomeGroup> {
                 physics: const ClampingScrollPhysics(),
                 itemCount: widget.group.taskLists.length,
                 itemBuilder: (BuildContext context, int index) {
-                  TaskListModel item = widget.group.taskLists[index];
+                  TaskList item = widget.group.taskLists[index];
                   return Consumer<TaskListViewModel>(
                     builder: (context, homePageViewModel, child) {
                       int endNumber = 0;
@@ -65,8 +65,8 @@ class _HomeGroupState extends State<HomeGroup> {
                         if (!element.isCompleted) endNumber++;
                       }
                       return HomeItem(
-                        groupID: widget.group.id,
-                        taskListID: item.id,
+                        group: widget.group,
+                        taskList: item,
                         icon: Icons.list_outlined,
                         endNumber: endNumber,
                         onTap: () async {
@@ -117,22 +117,21 @@ class HomeGroupTrailing extends StatelessWidget {
                   return [
                     PopupMenuItem(
                       onTap: () async {
-                        List<TaskListModel> oldTaskLists = context
+                        List<TaskList> oldTaskLists = context
                             .read<GroupViewModel>()
                             .getGroup(groupID)
                             .taskLists;
-                        List<TaskListModel>? newTaskLists =
-                            await showAddListDialog(
+                        List<TaskList>? newTaskLists = await showAddListDialog(
                           context: context,
                           groupID: groupID,
                         );
                         if (!context.mounted) return;
                         if (newTaskLists != null) {
-                          List<TaskListModel> addedTaskList = newTaskLists
+                          List<TaskList> addedTaskList = newTaskLists
                               .where(
                                   (element) => !oldTaskLists.contains(element))
                               .toList();
-                          List<TaskListModel> removeTaskList = oldTaskLists
+                          List<TaskList> removeTaskList = oldTaskLists
                               .where(
                                   (element) => !newTaskLists.contains(element))
                               .toList();
@@ -199,15 +198,15 @@ class HomeGroupTrailing extends StatelessWidget {
   }
 }
 
-Future<List<TaskListModel>?> showAddListDialog({
+Future<List<TaskList>?> showAddListDialog({
   required BuildContext context,
   required String groupID,
 }) {
   return showDialog(
     context: context,
     builder: (_) {
-      List<TaskListModel> checkedTaskList = [];
-      List<TaskListModel> allTaskList = [];
+      List<TaskList> checkedTaskList = [];
+      List<TaskList> allTaskList = [];
       Group group = context.read<GroupViewModel>().getGroup(groupID);
 
       checkedTaskList.addAll(group.taskLists);
@@ -236,7 +235,7 @@ Future<List<TaskListModel>?> showAddListDialog({
                 physics: const ClampingScrollPhysics(),
                 itemCount: allTaskList.length,
                 itemBuilder: (BuildContext context, int index) {
-                  TaskListModel item = allTaskList[index];
+                  TaskList item = allTaskList[index];
                   bool isChecked = checkedTaskList.contains(item);
                   return Row(
                     children: [

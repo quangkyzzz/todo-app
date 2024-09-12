@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../models/task_list.dart';
-import '../../../view_models/temp_task_list_view_model.dart';
+import '../../../view_models/temp_task_list_view_model_will_delete.dart';
 import '../../components/add_floating_button.dart';
 import '../../lists/completed_list.dart';
 import '../../lists/incomplete_list.dart';
@@ -36,7 +36,7 @@ class _TaskListPageState extends State<TaskListPage> {
       fit: StackFit.expand,
       children: [
         if ((taskListViewModel.taskList.backgroundImage != null))
-          if (taskListViewModel.taskList.isDefaultImage == -1)
+          if (taskListViewModel.taskList.defaultImage == -1)
             Image.file(
               File(taskListViewModel.taskList.backgroundImage!),
               fit: BoxFit.fitHeight,
@@ -77,7 +77,7 @@ class _TaskListPageState extends State<TaskListPage> {
           body: SingleChildScrollView(
             child: Consumer<TempTaskListViewModel>(
               builder: (context, taskListViewModel, child) {
-                TaskListModel taskList = taskListViewModel.taskList;
+                TaskList taskList = taskListViewModel.taskList;
                 return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

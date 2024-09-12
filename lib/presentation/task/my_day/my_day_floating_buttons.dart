@@ -9,7 +9,7 @@ import '../../components/add_floating_button.dart';
 
 class MyDayFloatingButtons extends StatefulWidget {
   final Color themeColor;
-  final TaskListModel taskList;
+  final TaskList taskList;
   const MyDayFloatingButtons(
       {super.key, required this.taskList, required this.themeColor});
 
@@ -18,7 +18,7 @@ class MyDayFloatingButtons extends StatefulWidget {
 }
 
 class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
-  late TaskListModel taskList;
+  late TaskList taskList;
 
   @override
   void initState() {
@@ -81,10 +81,10 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
                                   itemCount: listRecentTask.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
-                                    Map<TaskModel, TaskListModel> pair =
+                                    Map<Task, TaskList> pair =
                                         listRecentTask[index];
-                                    TaskModel task = pair.keys.first;
-                                    TaskListModel taskList = pair.values.first;
+                                    Task task = pair.keys.first;
+                                    TaskList taskList = pair.values.first;
                                     return TaskListItem(
                                       task: task,
                                       taskList: taskList,
@@ -115,10 +115,10 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
                                   itemCount: listOlderSuggetTask.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
-                                    Map<TaskModel, TaskListModel> pair =
+                                    Map<Task, TaskList> pair =
                                         listOlderSuggetTask[index];
-                                    TaskModel task = pair.keys.first;
-                                    TaskListModel taskList = pair.values.first;
+                                    Task task = pair.keys.first;
+                                    TaskList taskList = pair.values.first;
                                     return TaskListItem(
                                       task: task,
                                       taskList: taskList,

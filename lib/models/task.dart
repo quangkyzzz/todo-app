@@ -2,7 +2,7 @@ import 'dart:core';
 
 import 'task_step.dart';
 
-class TaskModel {
+class Task {
   final String id;
   String title;
   bool isCompleted;
@@ -16,7 +16,7 @@ class TaskModel {
   List<String>? filePath;
   String? note;
 
-  TaskModel({
+  Task({
     required this.id,
     required this.title,
     required this.isCompleted,
@@ -31,7 +31,7 @@ class TaskModel {
     this.note,
   });
 
-  void copyFrom({required TaskModel copyTask}) {
+  void copyFrom({required Task copyTask}) {
     title = copyTask.title;
     isCompleted = copyTask.isCompleted;
     isImportant = copyTask.isImportant;
@@ -44,7 +44,7 @@ class TaskModel {
     note = copyTask.note;
   }
 
-  TaskModel copyWith({
+  Task copyWith({
     String? id,
     String? title,
     bool? isCompleted,
@@ -58,7 +58,7 @@ class TaskModel {
     List<String>? filePath,
     String? note,
   }) {
-    return TaskModel(
+    return Task(
       id: id ?? this.id,
       title: title ?? this.title,
       isCompleted: isCompleted ?? this.isCompleted,
@@ -93,8 +93,8 @@ class TaskModel {
     return result;
   }
 
-  factory TaskModel.fromMap(Map<String, dynamic> map) {
-    return TaskModel(
+  factory Task.fromMap(Map<String, dynamic> map) {
+    return Task(
       id: map['id'] ?? DateTime.now().millisecondsSinceEpoch.toString(),
       title: map['title'] ?? 'Unknown title',
       isCompleted: map['isCompleted'] ?? false,

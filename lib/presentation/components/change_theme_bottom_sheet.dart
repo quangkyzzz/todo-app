@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/task_list.dart';
 import '../../themes.dart';
-import '../../view_models/temp_task_list_view_model.dart';
+import '../../view_models/temp_task_list_view_model_will_delete.dart';
 
 class ChangeThemeBottomSheet extends StatefulWidget {
-  final TaskListModel taskList;
+  final TaskList taskList;
   final BuildContext mContext;
   const ChangeThemeBottomSheet({
     super.key,
@@ -29,7 +29,7 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
     setState(() {
       _selectedColor = value;
     });
-    TaskListModel newTaskList = widget.taskList.copyWith(themeColor: value);
+    TaskList newTaskList = widget.taskList.copyWith(themeColor: value);
     taskListViewModel.updateTaskList(
       taskListID: widget.taskList.id,
       newTaskList: newTaskList,
@@ -40,9 +40,9 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
     setState(() {
       _selectedImage = value;
     });
-    TaskListModel newTaskList = widget.taskList.copyWith(
+    TaskList newTaskList = widget.taskList.copyWith(
       backgroundImage: MyTheme.imageList[value],
-      isDefaultImage: value,
+      defaultImage: value,
     );
     taskListViewModel.updateTaskList(
       taskListID: widget.taskList.id,
@@ -60,9 +60,9 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
     );
     if (result != null) {
       String resultPath = result.files.single.path!;
-      TaskListModel newTaskList = widget.taskList.copyWith(
+      TaskList newTaskList = widget.taskList.copyWith(
         backgroundImage: resultPath,
-        isDefaultImage: -1,
+        defaultImage: -1,
       );
       taskListViewModel.updateTaskList(
         taskListID: widget.taskList.id,
@@ -78,8 +78,8 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
     setState(() {
       _selectedImage = -1;
     });
-    TaskListModel newTaskList = widget.taskList.copyWith(
-      isDefaultImage: -1,
+    TaskList newTaskList = widget.taskList.copyWith(
+      defaultImage: -1,
     );
     newTaskList.backgroundImage = null;
     taskListViewModel.updateTaskList(
@@ -98,7 +98,7 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
   void initState() {
     _page = 0;
     _selectedColor = widget.taskList.themeColor;
-    _selectedImage = widget.taskList.isDefaultImage;
+    _selectedImage = widget.taskList.defaultImage;
     super.initState();
   }
 

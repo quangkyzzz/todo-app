@@ -4,7 +4,7 @@ import '../../models/task.dart';
 import '../items/task_list_item.dart';
 
 class CompletedList extends StatefulWidget {
-  final TaskListModel taskList;
+  final TaskList taskList;
   const CompletedList({
     super.key,
     required this.taskList,
@@ -16,7 +16,7 @@ class CompletedList extends StatefulWidget {
 
 class _CompletedListState extends State<CompletedList> {
   bool isExpanded = true;
-  late List<TaskModel> completedList;
+  late List<Task> completedList;
 
   @override
   void initState() {
@@ -61,7 +61,7 @@ class _CompletedListState extends State<CompletedList> {
             physics: const ClampingScrollPhysics(),
             itemCount: completedList.length,
             itemBuilder: (BuildContext context, int index) {
-              TaskModel task = completedList[index];
+              Task task = completedList[index];
               return TaskListItem(
                 task: task,
                 taskList: widget.taskList,

@@ -6,8 +6,8 @@ import '../../../provider/task_list_provider.dart';
 import '../../../themes.dart';
 
 class NoteEditPage extends StatefulWidget {
-  final TaskModel task;
-  final TaskListModel taskList;
+  final Task task;
+  final TaskList taskList;
   const NoteEditPage({
     super.key,
     required this.task,
@@ -47,7 +47,7 @@ class _NoteEditPageState extends State<NoteEditPage> {
         actions: [
           IconButton(
             onPressed: () async {
-              TaskModel newTask = widget.task.copyWith(note: _controller.text);
+              Task newTask = widget.task.copyWith(note: _controller.text);
               await taskListProvider.updateTask(
                 taskListID: widget.taskList.id,
                 taskID: widget.task.id,

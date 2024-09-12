@@ -13,12 +13,12 @@ class GroupProvider extends ChangeNotifier {
       id: '111',
       groupName: 'my group 1',
       taskLists: [
-        TaskListModel(
+        TaskList(
           id: '333',
           listName: 'group 1 list 1',
           groupID: '111',
         ),
-        TaskListModel(
+        TaskList(
           id: '444',
           listName: 'group 1  list 2',
           groupID: '111',
@@ -29,8 +29,8 @@ class GroupProvider extends ChangeNotifier {
       id: '222',
       groupName: 'my group 2',
       taskLists: [
-        TaskListModel(id: '555', listName: 'group 2 list 1', groupID: '222'),
-        TaskListModel(id: '666', listName: 'group 2 list 2', groupID: '222'),
+        TaskList(id: '555', listName: 'group 2 list 1', groupID: '222'),
+        TaskList(id: '666', listName: 'group 2 list 2', groupID: '222'),
       ],
     ),
   ];
@@ -65,14 +65,14 @@ class GroupProvider extends ChangeNotifier {
 
   /////////////
   //Task method
-  TaskListModel getTaskList({
+  TaskList getTaskList({
     required String groupID,
     required String taskListID,
   }) {
     return taskListProvider.getTaskList(taskListID: taskListID);
   }
 
-  void addTaskList(String groupID, List<TaskListModel> taskLists) {
+  void addTaskList(String groupID, List<TaskList> taskLists) {
     Group group = getGroup(groupID);
 
     for (var e in taskLists) {
@@ -83,7 +83,7 @@ class GroupProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteMultipleTaskList(String groupID, List<TaskListModel> taskLists) {
+  void deleteMultipleTaskList(String groupID, List<TaskList> taskLists) {
     Group group = getGroup(groupID);
     taskLists.forEach((element) {
       group.taskLists.remove(element);
@@ -108,7 +108,7 @@ class GroupProvider extends ChangeNotifier {
     required taskListID,
     required newName,
   }) {
-    TaskListModel taskList = getTaskList(
+    TaskList taskList = getTaskList(
       groupID: groupID,
       taskListID: taskListID,
     );

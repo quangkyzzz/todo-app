@@ -4,18 +4,18 @@ import 'task_list.dart';
 class Group {
   final String id;
   String groupName;
-  List<TaskListModel> taskLists;
+  List<TaskList> taskLists;
 
   Group({
     required this.id,
     required this.groupName,
-    List<TaskListModel>? taskLists,
+    List<TaskList>? taskLists,
   }) : taskLists = taskLists ?? [];
 
   Group copyWith({
     String? id,
     String? groupName,
-    List<TaskListModel>? taskLists,
+    List<TaskList>? taskLists,
   }) {
     return Group(
       id: id ?? this.id,

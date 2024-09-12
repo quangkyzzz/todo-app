@@ -1,22 +1,22 @@
 import 'dart:core';
 
-class UserModel {
+class User {
   final String id;
   String userName;
   String userEmail;
 
-  UserModel({
+  User({
     required this.id,
     required this.userName,
     required this.userEmail,
   });
 
-  UserModel copyWith({
+  User copyWith({
     String? id,
     String? userName,
     String? userEmail,
   }) {
-    return UserModel(
+    return User(
       id: id ?? this.id,
       userName: userName ?? this.userName,
       userEmail: userEmail ?? this.userEmail,
@@ -33,8 +33,8 @@ class UserModel {
     return result;
   }
 
-  factory UserModel.fromMap(Map<String, dynamic> map) {
-    return UserModel(
+  factory User.fromMap(Map<String, dynamic> map) {
+    return User(
       id: map['id'] ?? '-1',
       userName: map['userName'] ?? 'Unknown name',
       userEmail: map['userEmail'] ?? 'Unknown email',

@@ -24,8 +24,8 @@ import 'package:intl/intl.dart';
 import 'package:open_filex/open_filex.dart';
 
 class TaskPage extends StatefulWidget {
-  final TaskModel task;
-  final TaskListModel taskList;
+  final Task task;
+  final TaskList taskList;
   const TaskPage({
     super.key,
     required this.task,
@@ -414,7 +414,7 @@ class _TaskPageState extends State<TaskPage> {
       ),
       body: WillPopScope(
         onWillPop: () async {
-          TaskModel newTask = TaskModel(
+          Task newTask = Task(
             id: widget.task.id,
             createDate: widget.task.createDate,
             title: _taskNameController.text,
@@ -610,8 +610,8 @@ class AddAndEditNoteButton extends StatelessWidget {
     required this.taskListProvider,
   });
 
-  final TaskModel task;
-  final TaskListModel taskList;
+  final Task task;
+  final TaskList taskList;
   final TaskListProvider taskListProvider;
 
   @override

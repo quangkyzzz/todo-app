@@ -3,54 +3,54 @@ import 'package:flutter/material.dart';
 import 'task.dart';
 import '../themes.dart';
 
-class TaskListModel {
+class TaskList {
   final String id;
   String listName;
   String? groupID;
   String? backgroundImage;
-  int isDefaultImage;
+  int defaultImage;
   Map<String, dynamic>? sortByType;
   Color themeColor;
-  List<TaskModel> tasks;
+  List<Task> tasks;
 
-  TaskListModel({
+  TaskList({
     required this.id,
     required this.listName,
     this.groupID,
     this.backgroundImage,
-    this.isDefaultImage = -1,
+    this.defaultImage = -1,
     this.themeColor = MyTheme.blueColor,
     this.sortByType,
-    List<TaskModel>? tasks,
+    List<Task>? tasks,
   }) : tasks = tasks ?? [];
 
-  TaskListModel copyWith({
+  TaskList copyWith({
     String? id,
     String? listName,
     String? groupID,
     String? backgroundImage,
-    int? isDefaultImage,
+    int? defaultImage,
     Map<String, String>? sortByType,
     Color? themeColor,
-    List<TaskModel>? tasks,
+    List<Task>? tasks,
   }) {
-    return TaskListModel(
+    return TaskList(
       id: id ?? this.id,
       listName: listName ?? this.listName,
       groupID: groupID ?? this.groupID,
       backgroundImage: backgroundImage ?? this.backgroundImage,
-      isDefaultImage: isDefaultImage ?? this.isDefaultImage,
+      defaultImage: defaultImage ?? this.defaultImage,
       sortByType: sortByType ?? this.sortByType,
       themeColor: themeColor ?? this.themeColor,
       tasks: tasks ?? this.tasks,
     );
   }
 
-  void copyFrom({required TaskListModel copyTaskList}) {
+  void copyFrom({required TaskList copyTaskList}) {
     listName = copyTaskList.listName;
     groupID = copyTaskList.groupID;
     backgroundImage = copyTaskList.backgroundImage;
-    isDefaultImage = copyTaskList.isDefaultImage;
+    defaultImage = copyTaskList.defaultImage;
     sortByType = copyTaskList.sortByType;
     themeColor = copyTaskList.themeColor;
     tasks = copyTaskList.tasks;
@@ -62,7 +62,7 @@ class TaskListModel {
     result.addAll({'id': id});
     result.addAll({'listName': listName});
     result.addAll({'backgroundImage': backgroundImage});
-    result.addAll({'isDefaultImage': isDefaultImage});
+    result.addAll({'defaultImage': defaultImage});
     result.addAll({'sortByType': sortByType});
     result.addAll({'themeColor': themeColor});
     result.addAll({'groupID': groupID});
@@ -71,12 +71,12 @@ class TaskListModel {
     return result;
   }
 
-  factory TaskListModel.fromMap(Map<String, dynamic> map) {
-    return TaskListModel(
+  factory TaskList.fromMap(Map<String, dynamic> map) {
+    return TaskList(
       id: map['id'] ?? '-1',
       listName: map['listName'] ?? 'Untitle list',
       backgroundImage: map['backgroundImage'],
-      isDefaultImage: map['isDefaultImage'],
+      defaultImage: map['defaultImage'],
       sortByType: map['sortByType'],
       themeColor: map['themeColor'],
       groupID: map['groupID'],

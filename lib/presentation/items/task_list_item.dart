@@ -9,11 +9,11 @@ import '../../models/task.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
-import '../../view_models/temp_task_list_view_model.dart';
+import '../../view_models/temp_task_list_view_model_will_delete.dart';
 
 class TaskListItem extends StatelessWidget {
-  final TaskModel task;
-  final TaskListModel taskList;
+  final Task task;
+  final TaskList taskList;
   final Color themeColor;
   final bool havePlusIcon;
   final Function()? onTapPlus;

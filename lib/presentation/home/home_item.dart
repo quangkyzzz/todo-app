@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import '../../models/group.dart';
+import '../../models/task_list.dart';
 import '../../themes.dart';
-import '../../view_models/group_view_model.dart';
-import '../../view_models/task_list_view_model.dart';
 
 class HomeItem extends StatelessWidget {
-  final String taskListID;
+  final TaskList taskList;
   final IconData icon;
-  final String? groupID;
+  final Group? group;
   final int endNumber;
   final Function() onTap;
   const HomeItem({
@@ -15,8 +14,8 @@ class HomeItem extends StatelessWidget {
     required this.icon,
     required this.endNumber,
     required this.onTap,
-    required this.taskListID,
-    this.groupID,
+    required this.taskList,
+    this.group,
   });
 
   @override
@@ -30,31 +29,11 @@ class HomeItem extends StatelessWidget {
           children: [
             Icon(
               icon,
-              color: (groupID != null)
-                  ? context
-                      .watch<GroupViewModel>()
-                      .getTaskListFromGroup(
-                        taskListID: taskListID,
-                        groupID: groupID!,
-                      )
-                      .themeColor
-                  : context
-                      .watch<TaskListViewModel>()
-                      .getTaskList(taskListID: taskListID)
-                      .themeColor,
+              color: taskList.themeColor,
             ),
             const SizedBox(width: 8),
             Text(
-              (groupID != null)
-                  ? context
-                      .watch<GroupViewModel>()
-                      .getTaskListFromGroup(
-                          taskListID: taskListID, groupID: groupID!)
-                      .listName
-                  : context
-                      .read<TaskListViewModel>()
-                      .getTaskList(taskListID: taskListID)
-                      .listName,
+              taskList.listName,
               style: MyTheme.itemTextStyle,
             ),
             const Spacer(

@@ -12,12 +12,12 @@ class GroupViewModel extends ChangeNotifier {
       id: '111',
       groupName: 'my group 1',
       taskLists: [
-        TaskListModel(
+        TaskList(
           id: '333',
           listName: 'group 1 list 1',
           groupID: '111',
           tasks: [
-            TaskModel(
+            Task(
               id: '6',
               title: 'due today',
               isCompleted: false,
@@ -26,7 +26,7 @@ class GroupViewModel extends ChangeNotifier {
               createDate: DateTime.now(),
               dueDate: DateTime.now(),
             ),
-            TaskModel(
+            Task(
               id: '7',
               title: 'due tomorrow',
               isCompleted: false,
@@ -35,7 +35,7 @@ class GroupViewModel extends ChangeNotifier {
               createDate: DateTime.now(),
               dueDate: DateTime.now().add(const Duration(days: 1)),
             ),
-            TaskModel(
+            Task(
               id: '8',
               title: 'due next week',
               isCompleted: false,
@@ -46,12 +46,12 @@ class GroupViewModel extends ChangeNotifier {
             ),
           ],
         ),
-        TaskListModel(
+        TaskList(
           id: '444',
           listName: 'group 1 list 2',
           groupID: '111',
           tasks: [
-            TaskModel(
+            Task(
               id: '9',
               title: 'due next month',
               isCompleted: false,
@@ -60,7 +60,7 @@ class GroupViewModel extends ChangeNotifier {
               createDate: DateTime.now(),
               dueDate: DateTime.now().add(const Duration(days: 31)),
             ),
-            TaskModel(
+            Task(
               id: '10',
               title: 'due next 2 day',
               isCompleted: false,
@@ -69,7 +69,7 @@ class GroupViewModel extends ChangeNotifier {
               createDate: DateTime.now(),
               dueDate: DateTime.now().add(const Duration(days: 2)),
             ),
-            TaskModel(
+            Task(
               id: '11',
               title: 'due next 3 day',
               isCompleted: false,
@@ -86,12 +86,12 @@ class GroupViewModel extends ChangeNotifier {
       id: '222',
       groupName: 'my group 2',
       taskLists: [
-        TaskListModel(
+        TaskList(
           id: '555',
           listName: 'group 2 list 1',
           groupID: '222',
           tasks: [
-            TaskModel(
+            Task(
               id: '12',
               title: 'due next 4 day',
               isCompleted: false,
@@ -102,7 +102,7 @@ class GroupViewModel extends ChangeNotifier {
             ),
           ],
         ),
-        TaskListModel(
+        TaskList(
           id: '666',
           listName: 'group 2 list 2',
           groupID: '222',
@@ -115,12 +115,6 @@ class GroupViewModel extends ChangeNotifier {
     return groups.firstWhere((element) => (element.id == groupID));
   }
 
-  TaskListModel getTaskListFromGroup(
-      {required String taskListID, required String groupID}) {
-    Group group = getGroup(groupID);
-    return group.taskLists.firstWhere((element) => (element.id == taskListID));
-  }
-
   void createGroup(String name) {
     groups.add(Group(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
@@ -131,7 +125,7 @@ class GroupViewModel extends ChangeNotifier {
 
   void deleteGroup(String groupID) {
     Group group = getGroup(groupID);
-    for (TaskListModel taskList in group.taskLists) {
+    for (TaskList taskList in group.taskLists) {
       taskListViewModel.addTaskList(addTaskLists: [taskList]);
     }
     groups.remove(group);
@@ -145,7 +139,7 @@ class GroupViewModel extends ChangeNotifier {
 
   void addMultipleTaskListToGroup({
     required String groupID,
-    required List<TaskListModel> movedTaskLists,
+    required List<TaskList> movedTaskLists,
   }) {
     Group group = getGroup(groupID);
 
@@ -159,7 +153,7 @@ class GroupViewModel extends ChangeNotifier {
 
   void deleteMultipleTaskListFromGroup(
     String groupID,
-    List<TaskListModel> removedTaskLists,
+    List<TaskList> removedTaskLists,
   ) {
     Group group = getGroup(groupID);
     for (var taskList in removedTaskLists) {

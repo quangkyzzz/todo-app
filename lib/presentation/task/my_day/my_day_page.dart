@@ -18,8 +18,8 @@ class MyDayPage extends StatefulWidget {
 }
 
 class _MyDayPageState extends State<MyDayPage> {
-  late TaskListModel defaultTaskList;
-  late TaskListModel myDayTaskList;
+  late TaskList defaultTaskList;
+  late TaskList myDayTaskList;
   bool isExpanded = true;
 
   @override
@@ -37,7 +37,7 @@ class _MyDayPageState extends State<MyDayPage> {
       fit: StackFit.expand,
       children: [
         if (myDayTaskList.backgroundImage != null)
-          (myDayTaskList.isDefaultImage == -1)
+          (myDayTaskList.defaultImage == -1)
               ? Image.file(
                   File(myDayTaskList.backgroundImage!),
                   fit: BoxFit.fitHeight,
@@ -91,13 +91,13 @@ class _MyDayPageState extends State<MyDayPage> {
           body: SingleChildScrollView(
             child: Consumer<TaskListProvider>(
               builder: (context, taskListProvider, child) {
-                List<Map<TaskModel, TaskListModel>> myDayList =
+                List<Map<Task, TaskList>> myDayList =
                     taskListProvider.getOnMyDayTask();
 
-                List<Map<TaskModel, TaskListModel>> inCompleteList = myDayList
+                List<Map<Task, TaskList>> inCompleteList = myDayList
                     .where((element) => (!element.keys.first.isCompleted))
                     .toList();
-                List<Map<TaskModel, TaskListModel>> completedlist = myDayList
+                List<Map<Task, TaskList>> completedlist = myDayList
                     .where((element) => (element.keys.first.isCompleted))
                     .toList();
                 return Column(children: [

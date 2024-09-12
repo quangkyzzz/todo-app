@@ -20,7 +20,7 @@ import 'view_models/auth_view_model.dart';
 import 'view_models/group_view_model.dart';
 import 'view_models/task_list_view_model.dart';
 import 'view_models/settings_view_model.dart';
-import 'view_models/temp_task_list_view_model.dart';
+import 'view_models/temp_task_list_view_model_will_delete.dart';
 
 const initialRoute = '/home';
 const loginRoute = '/login';
@@ -69,7 +69,7 @@ var allRoute = {
     Map<dynamic, dynamic> arg =
         ModalRoute.of(context)?.settings.arguments as Map;
     bool havecompletedList = arg['haveCompletedList'] ?? true;
-    TaskListModel taskList = arg['taskList'];
+    TaskList taskList = arg['taskList'];
     return ChangeNotifierProvider<TempTaskListViewModel>(
       create: (context) => TempTaskListViewModel(
         taskList: taskList,
@@ -91,13 +91,13 @@ var allRoute = {
   myDayRoute: (context) => const MyDayPage(),
   settingsRoute: (context) => const SettingsPage(),
   reorderRoute: (context) => ReorderPage(
-        taskList: ModalRoute.of(context)?.settings.arguments as TaskListModel,
+        taskList: ModalRoute.of(context)?.settings.arguments as TaskList,
       ),
   taskRoute: (context) {
     Map<dynamic, dynamic> arg =
         ModalRoute.of(context)?.settings.arguments as Map;
-    TaskModel task = arg['task'];
-    TaskListModel taskList = arg['taskList'];
+    Task task = arg['task'];
+    TaskList taskList = arg['taskList'];
     return TaskPage(
       task: task,
       taskList: taskList,
@@ -106,8 +106,8 @@ var allRoute = {
   noteEditRoute: (context) {
     Map<dynamic, dynamic> arg =
         ModalRoute.of(context)?.settings.arguments as Map;
-    TaskModel task = arg['task'];
-    TaskListModel taskList = arg['taskList'];
+    Task task = arg['task'];
+    TaskList taskList = arg['taskList'];
     return NoteEditPage(
       task: task,
       taskList: taskList,

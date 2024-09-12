@@ -22,8 +22,8 @@ class ImportantPage extends StatefulWidget {
 }
 
 class _TaskListPageState extends State<ImportantPage> {
-  late TaskListModel defaultTaskList;
-  late TaskListModel importantTaskList;
+  late TaskList defaultTaskList;
+  late TaskList importantTaskList;
   bool isExpanded = false;
 
   @override
@@ -41,7 +41,7 @@ class _TaskListPageState extends State<ImportantPage> {
       fit: StackFit.expand,
       children: [
         if (importantTaskList.backgroundImage != null)
-          (importantTaskList.isDefaultImage == -1)
+          (importantTaskList.defaultImage == -1)
               ? Image.file(
                   File(importantTaskList.backgroundImage!),
                   fit: BoxFit.fitHeight,
@@ -82,7 +82,7 @@ class _TaskListPageState extends State<ImportantPage> {
           body: SingleChildScrollView(
             child: Consumer<TaskListProvider>(
               builder: (context, taskListProvider, child) {
-                List<Map<TaskModel, TaskListModel>> importantTasks =
+                List<Map<Task, TaskList>> importantTasks =
                     taskListProvider.getImportantTask();
                 return ListView.builder(
                   shrinkWrap: true,

@@ -5,7 +5,7 @@ import '../../../provider/settings_provider.dart';
 import '../../../provider/task_list_provider.dart';
 
 class ChangeSortTypeButton extends StatefulWidget {
-  final TaskListModel taskList;
+  final TaskList taskList;
   const ChangeSortTypeButton({
     super.key,
     required this.taskList,
@@ -66,7 +66,7 @@ class _ChangeSortTypeButtonState extends State<ChangeSortTypeButton> {
               isAscending:
                   (settingsProvider.settings.isAddNewTaskOnTop) ? false : true,
             );
-            TaskListModel newTaskList = widget.taskList.copyWith();
+            TaskList newTaskList = widget.taskList.copyWith();
             newTaskList.sortByType = null;
             taskListProvider.updateTaskList(
               taskListID: widget.taskList.id,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../models/group.dart';
 import '../models/task_step.dart';
 import '../models/task_list.dart';
 import '../models/task.dart';
@@ -7,12 +8,12 @@ import '../themes.dart';
 import '../ultility/type_def.dart';
 
 class TaskListViewModel extends ChangeNotifier {
-  List<TaskListModel> taskLists = [
-    TaskListModel(
+  List<TaskList> taskLists = [
+    TaskList(
       id: '1',
       listName: 'Tasks',
       tasks: [
-        TaskModel(
+        Task(
           id: '2',
           title: 'few day',
           isCompleted: false,
@@ -21,7 +22,7 @@ class TaskListViewModel extends ChangeNotifier {
           createDate: DateTime(2024, 6, 2),
           dueDate: DateTime(2024, 6, 2),
         ),
-        TaskModel(
+        Task(
           id: '1',
           title: 'Tasks',
           isCompleted: false,
@@ -42,7 +43,7 @@ class TaskListViewModel extends ChangeNotifier {
           ],
           note: 'note',
         ),
-        TaskModel(
+        Task(
           id: '66',
           title: 'No step',
           isCompleted: false,
@@ -54,27 +55,26 @@ class TaskListViewModel extends ChangeNotifier {
         ),
       ],
     ),
-    TaskListModel(
+    TaskList(
       id: '2',
       listName: 'My Day',
       themeColor: MyTheme.whiteColor,
       backgroundImage: 'assets/backgrounds/bg_my_day.jpg',
-      isDefaultImage: 0,
+      defaultImage: 0,
     ),
-    TaskListModel(
-        id: '3', listName: 'Important', themeColor: MyTheme.pinkColor),
-    TaskListModel(id: '4', listName: 'Planned', themeColor: MyTheme.redColor),
-    TaskListModel(
-        id: '5', listName: 'Assigned to me', themeColor: MyTheme.yellowColor),
-    TaskListModel(
+    TaskList(id: '3', listName: 'Important', themeColor: MyTheme.pinkColor),
+    TaskList(id: '4', listName: 'Planned', themeColor: MyTheme.redColor),
+    TaskList(
+        id: '5', listName: 'Assigned to me', themeColor: MyTheme.greenColor),
+    TaskList(
         id: '6', listName: 'Flagged email', themeColor: MyTheme.orangeColor),
-    TaskListModel(
+    TaskList(
       id: '222',
       listName: 'personal list 1',
       backgroundImage: '/data/user/0/com.example.todo_app/cache/'
           'file_picker/1723799643254/1000000837.jpg',
       tasks: [
-        TaskModel(
+        Task(
             id: '3',
             title: 'few hour',
             isCompleted: false,
@@ -83,7 +83,7 @@ class TaskListViewModel extends ChangeNotifier {
             createDate: DateTime(2024, 7, 2, 7),
             note: 'Really long note, long long long'
                 'long long long long long long'),
-        TaskModel(
+        Task(
           id: '4',
           title: 'recent',
           isCompleted: false,
@@ -91,7 +91,7 @@ class TaskListViewModel extends ChangeNotifier {
           isOnMyDay: false,
           createDate: DateTime(2024, 7, 2, 9, 38),
         ),
-        TaskModel(
+        Task(
           id: '5',
           title: 'few minute',
           isCompleted: false,
@@ -103,16 +103,23 @@ class TaskListViewModel extends ChangeNotifier {
     ),
   ];
 
-  TaskListModel getTaskList({
+  TaskList getTaskList({
     required String taskListID,
   }) {
     return taskLists.firstWhere((element) => (element.id == taskListID));
   }
 
+  TaskList getTaskListFromGroup({
+    required String taskListID,
+    required Group group,
+  }) {
+    return group.taskLists.firstWhere((element) => (element.id == taskListID));
+  }
+
   void createTaskList({
     required String name,
   }) {
-    TaskListModel newTaskList = TaskListModel(
+    TaskList newTaskList = TaskList(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       listName: name,
     );
@@ -121,7 +128,7 @@ class TaskListViewModel extends ChangeNotifier {
   }
 
   void addTaskList({
-    required List<TaskListModel> addTaskLists,
+    required List<TaskList> addTaskLists,
   }) {
     taskLists.addAll(addTaskLists);
     notifyListeners();
@@ -130,8 +137,8 @@ class TaskListViewModel extends ChangeNotifier {
   void deleteTaskList({
     required String taskListID,
   }) {
-    TaskListModel taskList = getTaskList(taskListID: taskListID);
-    for (TaskModel task in taskList.tasks) {
+    TaskList taskList = getTaskList(taskListID: taskListID);
+    for (Task task in taskList.tasks) {
       // ignore: unawaited_futures
       BackGroundService.cancelTaskByID(id: task.id);
     }
@@ -141,7 +148,7 @@ class TaskListViewModel extends ChangeNotifier {
   }
 
   void deleteMultipleTaskList({
-    required List<TaskListModel> deleteTaskLists,
+    required List<TaskList> deleteTaskLists,
   }) {
     taskLists.removeWhere((element) => (deleteTaskLists.contains(element)));
     notifyListeners();
@@ -154,8 +161,8 @@ class TaskListViewModel extends ChangeNotifier {
 
   TaskMapList getAllTaskWithTaskList() {
     TaskMapList result = [];
-    for (TaskListModel taskList in taskLists) {
-      for (TaskModel task in taskList.tasks) {
+    for (TaskList taskList in taskLists) {
+      for (Task task in taskList.tasks) {
         result.add({task: taskList});
       }
     }
