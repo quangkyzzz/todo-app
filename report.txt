@@ -1,6 +1,7 @@
-Báo cáo 10/9
-Đang làm:
-    -   Chỉnh sửa các chức năng trong HomePage sau khi thay đổi cấu trúc viewmodel.
+Báo cáo 12/9
+Đã làm:
+    -   Hoàn thành tách HomePageViewModel thành nhiều view model tương ứng với từng model
+    -   Thay thế list item trong HomePage thành các item riêng lẻ. 
 Dự định làm:
-    -   Dựa vào review để tiếp tục chỉnh sửa.
+    -   Dựa vào review để tiếp tục chỉnh sửa các màn còn lại.
     
