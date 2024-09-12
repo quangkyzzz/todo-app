@@ -4,8 +4,7 @@ import '../models/task_list.dart';
 import '../models/task.dart';
 import '../service/background_service.dart';
 import '../themes.dart';
-
-typedef TaskMapList = List<Map<TaskModel, TaskListModel>>;
+import '../ultility/type_def.dart';
 
 class TaskListViewModel extends ChangeNotifier {
   List<TaskListModel> taskLists = [
@@ -104,8 +103,6 @@ class TaskListViewModel extends ChangeNotifier {
     ),
   ];
 
-  /////////////////
-  //TaskList method
   TaskListModel getTaskList({
     required String taskListID,
   }) {
@@ -196,41 +193,5 @@ class TaskListViewModel extends ChangeNotifier {
       }
     }
     return result;
-  }
-
-  int countIncompletedTaskByID({required String taskListID}) {
-    int count = 0;
-    TaskListModel taskList = getTaskList(taskListID: taskListID);
-    for (var task in taskList.tasks) {
-      if (!task.isCompleted) count++;
-    }
-    return count;
-  }
-
-  int countIncompletedMyDayTask() {
-    int count = 0;
-    TaskMapList taskList = getOnMyDayTask();
-    for (var task in taskList) {
-      if (!task.keys.first.isCompleted) count++;
-    }
-    return count;
-  }
-
-  int countIncompletedImportantTask() {
-    int count = 0;
-    TaskMapList taskList = getImportantTask();
-    for (var task in taskList) {
-      if (!task.keys.first.isCompleted) count++;
-    }
-    return count;
-  }
-
-  int countIncompletedPlannedTask() {
-    int count = 0;
-    TaskMapList taskList = getPlannedTask();
-    for (var task in taskList) {
-      if (!task.keys.first.isCompleted) count++;
-    }
-    return count;
   }
 }

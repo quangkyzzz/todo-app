@@ -4,11 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/group.dart';
 import '../../models/task_list.dart';
+import '../../ultility/task_list_ultility.dart';
 import '../../view_models/group_view_model.dart';
 import '../../view_models/task_list_view_model.dart';
 import 'home_appbar.dart';
-//import '../../provider/group_provider.dart';
-//import '../../provider/task_list_provider.dart';
 import '../../themes.dart';
 import '../../routes.dart';
 import 'home_group.dart';
@@ -56,6 +55,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TaskListUltility taskListUltility =
+        TaskListUltility(taskListViewModel: context.read<TaskListViewModel>());
     return Scaffold(
       appBar: HomeAppBar(context: context).appBar(),
       body: SingleChildScrollView(
@@ -70,9 +71,7 @@ class HomePage extends StatelessWidget {
               onTap: () {
                 onTapMyDay(context);
               },
-              endNumber: context
-                  .watch<TaskListViewModel>()
-                  .countIncompletedMyDayTask(),
+              endNumber: taskListUltility.countIncompletedMyDayTask(),
             ),
             HomeItem(
               taskListID: '3',
@@ -80,9 +79,7 @@ class HomePage extends StatelessWidget {
               onTap: () {
                 onTapImportant(context);
               },
-              endNumber: context
-                  .watch<TaskListViewModel>()
-                  .countIncompletedImportantTask(),
+              endNumber: taskListUltility.countIncompletedImportantTask(),
             ),
             HomeItem(
               taskListID: '4',
@@ -90,9 +87,7 @@ class HomePage extends StatelessWidget {
               onTap: () {
                 onTapPlanned(context);
               },
-              endNumber: context
-                  .watch<TaskListViewModel>()
-                  .countIncompletedPlannedTask(),
+              endNumber: taskListUltility.countIncompletedPlannedTask(),
             ),
             HomeItem(
               taskListID: '5',
@@ -125,25 +120,22 @@ class HomePage extends StatelessWidget {
                   context.read<TaskListViewModel>().taskLists[0],
                 );
               },
-              endNumber: context
-                  .watch<TaskListViewModel>()
-                  .countIncompletedTaskByID(taskListID: '1'),
+              endNumber:
+                  taskListUltility.countIncompletedTaskByID(taskListID: '1'),
             ),
             MyTheme.dividerWhiteStyle,
             /////////////////////
             //personal task list
             Consumer<TaskListViewModel>(
-                builder: (context, homePageTaskListViewModel, child) {
+                builder: (context, taskListViewModel, child) {
               return ListView.builder(
                 shrinkWrap: true,
                 physics: const ClampingScrollPhysics(),
-                itemCount: homePageTaskListViewModel.taskLists.length,
+                itemCount: taskListViewModel.taskLists.length,
                 itemBuilder: (BuildContext context, int index) {
-                  TaskListModel item =
-                      homePageTaskListViewModel.taskLists[index];
+                  TaskListModel item = taskListViewModel.taskLists[index];
                   if (int.parse(item.id) > 10) {
-                    int endNumber =
-                        homePageTaskListViewModel.countIncompletedTaskByID(
+                    int endNumber = taskListUltility.countIncompletedTaskByID(
                       taskListID: item.id,
                     );
                     return HomeItem(
