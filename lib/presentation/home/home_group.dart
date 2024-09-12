@@ -30,51 +30,6 @@ class _HomeGroupState extends State<HomeGroup> {
     super.initState();
   }
 
-  void onTapAddRemoveList(BuildContext context, String groupID) async {
-    List<TaskListModel> oldTaskLists =
-        context.read<HomePageGroupViewModel>().getGroup(groupID).taskLists;
-    List<TaskListModel>? newTaskLists = await showAddListDialog(
-      context: context,
-      groupID: groupID,
-    );
-    if (!mounted) return;
-    if (newTaskLists != null) {
-      List<TaskListModel> addedTaskList = newTaskLists
-          .where((element) => !oldTaskLists.contains(element))
-          .toList();
-      List<TaskListModel> removeTaskList = oldTaskLists
-          .where((element) => !newTaskLists.contains(element))
-          .toList();
-
-      context.read<HomePageGroupViewModel>().addMultipleTaskListToGroup(
-            groupID: groupID,
-            movedTaskLists: addedTaskList,
-          );
-      context.read<HomePageGroupViewModel>().deleteMultipleTaskListFromGroup(
-            groupID,
-            removeTaskList,
-          );
-    }
-  }
-
-  void onTapRenameGroup(BuildContext context, String groupID) async {
-    String? title = await showTextEditDialog(
-      context: context,
-      title: 'Rename group ',
-      hintText: '',
-      initText: widget.group.groupName,
-      positiveButton: 'Rename',
-    );
-    if (!mounted) return;
-    if (title != null) {
-      context.read<HomePageGroupViewModel>().renameGroup(groupID, title);
-    }
-  }
-
-  void onTapUngroupList(BuildContext context, String groupID) {
-    context.read<HomePageGroupViewModel>().deleteGroup(groupID);
-  }
-
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
@@ -89,50 +44,11 @@ class _HomeGroupState extends State<HomeGroup> {
           isExpanded = expanded;
         });
       },
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          (isExpanded)
-              ? PopupMenuButton(
-                  offset: const Offset(0, 40),
-                  itemBuilder: (_) {
-                    return [
-                      PopupMenuItem(
-                        onTap: () {
-                          onTapAddRemoveList(context, widget.group.id);
-                        },
-                        value: 'add_or_remove_lists',
-                        child: const CustomPopupItem(
-                          text: 'Add/remove lists',
-                          icon: Icons.list_outlined,
-                        ),
-                      ),
-                      PopupMenuItem(
-                        onTap: () {
-                          onTapRenameGroup(context, widget.group.id);
-                        },
-                        value: 'rename',
-                        child: const CustomPopupItem(
-                          text: 'Rename group',
-                          icon: Icons.edit_note_outlined,
-                        ),
-                      ),
-                      PopupMenuItem(
-                        onTap: () {
-                          onTapUngroupList(context, widget.group.id);
-                        },
-                        value: 'ungroup',
-                        child: const CustomPopupItem(
-                          text: 'Ungroup list',
-                          icon: Icons.clear_all_outlined,
-                        ),
-                      ),
-                    ];
-                  },
-                )
-              : const SizedBox(),
-          Icon(isExpanded ? Icons.expand_more : Icons.keyboard_arrow_left),
-        ],
+      trailing: HomeGroupTrailing(
+        isExpanded: isExpanded,
+        context: context,
+        groupID: widget.group.id,
+        groupName: widget.group.groupName,
       ),
       children: [
         (widget.group.taskLists.isNotEmpty)
@@ -171,6 +87,115 @@ class _HomeGroupState extends State<HomeGroup> {
                 'This group is empty',
                 style: MyTheme.itemSmallGreyTextStyle,
               ),
+      ],
+    );
+  }
+}
+
+class HomeGroupTrailing extends StatelessWidget {
+  final BuildContext context;
+  final String groupID;
+  final String groupName;
+  final bool isExpanded;
+  const HomeGroupTrailing({
+    super.key,
+    required this.isExpanded,
+    required this.context,
+    required this.groupID,
+    required this.groupName,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        (isExpanded)
+            ? PopupMenuButton(
+                offset: const Offset(0, 40),
+                itemBuilder: (_) {
+                  return [
+                    PopupMenuItem(
+                      onTap: () async {
+                        List<TaskListModel> oldTaskLists = context
+                            .read<HomePageGroupViewModel>()
+                            .getGroup(groupID)
+                            .taskLists;
+                        List<TaskListModel>? newTaskLists =
+                            await showAddListDialog(
+                          context: context,
+                          groupID: groupID,
+                        );
+                        if (!context.mounted) return;
+                        if (newTaskLists != null) {
+                          List<TaskListModel> addedTaskList = newTaskLists
+                              .where(
+                                  (element) => !oldTaskLists.contains(element))
+                              .toList();
+                          List<TaskListModel> removeTaskList = oldTaskLists
+                              .where(
+                                  (element) => !newTaskLists.contains(element))
+                              .toList();
+
+                          context
+                              .read<HomePageGroupViewModel>()
+                              .addMultipleTaskListToGroup(
+                                groupID: groupID,
+                                movedTaskLists: addedTaskList,
+                              );
+                          context
+                              .read<HomePageGroupViewModel>()
+                              .deleteMultipleTaskListFromGroup(
+                                groupID,
+                                removeTaskList,
+                              );
+                        }
+                      },
+                      value: 'add_or_remove_lists',
+                      child: const CustomPopupItem(
+                        text: 'Add/remove lists',
+                        icon: Icons.list_outlined,
+                      ),
+                    ),
+                    PopupMenuItem(
+                      onTap: () async {
+                        String? title = await showTextEditDialog(
+                          context: context,
+                          title: 'Rename group ',
+                          hintText: '',
+                          initText: groupName,
+                          positiveButton: 'Rename',
+                        );
+                        if (!context.mounted) return;
+                        if (title != null) {
+                          context
+                              .read<HomePageGroupViewModel>()
+                              .renameGroup(groupID, title);
+                        }
+                      },
+                      value: 'rename',
+                      child: const CustomPopupItem(
+                        text: 'Rename group',
+                        icon: Icons.edit_note_outlined,
+                      ),
+                    ),
+                    PopupMenuItem(
+                      onTap: () {
+                        context
+                            .read<HomePageGroupViewModel>()
+                            .deleteGroup(groupID);
+                      },
+                      value: 'ungroup',
+                      child: const CustomPopupItem(
+                        text: 'Ungroup list',
+                        icon: Icons.clear_all_outlined,
+                      ),
+                    ),
+                  ];
+                },
+              )
+            : const SizedBox(),
+        Icon(isExpanded ? Icons.expand_more : Icons.keyboard_arrow_left),
       ],
     );
   }
