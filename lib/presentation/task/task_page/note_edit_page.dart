@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../models/task_list_model.dart';
-import '../../../models/task_model.dart';
+import '../../../models/task_list.dart';
+import '../../../models/task.dart';
 import '../../../provider/task_list_provider.dart';
 import '../../../themes.dart';
 

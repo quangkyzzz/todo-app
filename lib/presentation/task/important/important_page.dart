@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../models/task_list_model.dart';
-import '../../../models/task_model.dart';
+import '../../../models/task_list.dart';
+import '../../../models/task.dart';
 import '../../components/add_floating_button.dart';
 import '../../items/task_list_item.dart';
 import '../../components/popup_menu.dart';

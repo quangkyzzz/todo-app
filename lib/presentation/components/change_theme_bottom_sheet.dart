@@ -2,9 +2,9 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../models/task_list_model.dart';
+import '../../models/task_list.dart';
 import '../../themes.dart';
-import '../../view_models/task_list_view_model.dart';
+import '../../view_models/temp_task_list_view_model.dart';
 
 class ChangeThemeBottomSheet extends StatefulWidget {
   final TaskListModel taskList;
@@ -23,7 +23,7 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
   late int _page;
   late Color _selectedColor;
   late int _selectedImage;
-  late TaskListViewModel taskListViewModel;
+  late TempTaskListViewModel taskListViewModel;
 
   onColorChange(Color value) {
     setState(() {
@@ -105,7 +105,7 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
   @override
   Widget build(BuildContext context) {
     taskListViewModel =
-        Provider.of<TaskListViewModel>(widget.mContext, listen: false);
+        Provider.of<TempTaskListViewModel>(widget.mContext, listen: false);
     double screenHeight = MediaQuery.of(context).size.height;
     return Padding(
       padding: const EdgeInsets.all(16),

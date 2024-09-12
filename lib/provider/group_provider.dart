@@ -1,15 +1,15 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls
 
 import 'package:flutter/material.dart';
-import '../models/group_model.dart';
-import '../models/task_list_model.dart';
+import '../models/group.dart';
+import '../models/task_list.dart';
 import 'task_list_provider.dart';
 
 class GroupProvider extends ChangeNotifier {
   TaskListProvider taskListProvider;
   GroupProvider(this.taskListProvider);
-  List<GroupModel> groups = [
-    GroupModel(
+  List<Group> groups = [
+    Group(
       id: '111',
       groupName: 'my group 1',
       taskLists: [
@@ -25,7 +25,7 @@ class GroupProvider extends ChangeNotifier {
         ),
       ],
     ),
-    GroupModel(
+    Group(
       id: '222',
       groupName: 'my group 2',
       taskLists: [
@@ -37,12 +37,12 @@ class GroupProvider extends ChangeNotifier {
 
   //////////////
   //group method
-  GroupModel getGroup(String groupID) {
+  Group getGroup(String groupID) {
     return groups.firstWhere((element) => (element.id == groupID));
   }
 
   void createGroup(String name) {
-    groups.add(GroupModel(
+    groups.add(Group(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       groupName: name,
     ));
@@ -50,7 +50,7 @@ class GroupProvider extends ChangeNotifier {
   }
 
   void deleteGroup(String groupID) {
-    GroupModel group = getGroup(groupID);
+    Group group = getGroup(groupID);
     group.taskLists.forEach((element) {
       taskListProvider.moveFromGroup(id: element.id);
     });
@@ -73,7 +73,7 @@ class GroupProvider extends ChangeNotifier {
   }
 
   void addTaskList(String groupID, List<TaskListModel> taskLists) {
-    GroupModel group = getGroup(groupID);
+    Group group = getGroup(groupID);
 
     for (var e in taskLists) {
       taskListProvider.moveToGroup(id: e.id, groupID: groupID);
@@ -84,7 +84,7 @@ class GroupProvider extends ChangeNotifier {
   }
 
   void deleteMultipleTaskList(String groupID, List<TaskListModel> taskLists) {
-    GroupModel group = getGroup(groupID);
+    Group group = getGroup(groupID);
     taskLists.forEach((element) {
       group.taskLists.remove(element);
       taskListProvider.moveFromGroup(id: element.id);
@@ -97,7 +97,7 @@ class GroupProvider extends ChangeNotifier {
     required String groupID,
     required String taskListID,
   }) {
-    GroupModel group = getGroup(groupID);
+    Group group = getGroup(groupID);
     group.taskLists.removeWhere((element) => (element.id == taskListID));
 
     notifyListeners();

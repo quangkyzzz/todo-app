@@ -1,7 +1,7 @@
 // ignore_for_file: discarded_futures
 
-import '../models/task_list_model.dart';
-import '../models/task_model.dart';
+import '../models/task_list.dart';
+import '../models/task.dart';
 import 'notification_service.dart';
 import 'package:workmanager/workmanager.dart';
 

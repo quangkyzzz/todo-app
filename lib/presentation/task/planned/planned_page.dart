@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../models/task_list_model.dart';
+import '../../../models/task_list.dart';
 import '../../items/task_list_item.dart';
 import '../../../provider/task_list_provider.dart';
 import '../../../themes.dart';

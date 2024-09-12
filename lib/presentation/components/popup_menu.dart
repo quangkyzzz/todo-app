@@ -2,8 +2,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../models/task_list_model.dart';
-import '../../view_models/task_list_view_model.dart';
+import '../../models/task_list.dart';
+import '../../view_models/temp_task_list_view_model.dart';
 import 'show_alert_dialog.dart';
 import 'show_text_edit_dialog.dart';
 import '../../routes.dart';
@@ -33,7 +33,7 @@ class PopupMenu extends StatelessWidget {
     );
     if (!context.mounted) return;
     if (newName != null) {
-      context.read<TaskListViewModel>().renameList(
+      context.read<TempTaskListViewModel>().renameList(
             taskListID: id,
             newName: newName,
           );
@@ -139,7 +139,7 @@ class PopupMenu extends StatelessWidget {
           acceptText: 'Yes',
           onAccept: () {
             context
-                .read<TaskListViewModel>()
+                .read<TempTaskListViewModel>()
                 .duplicateTaskList(taskListID: taskList.id);
             Navigator.of(context).pop();
             ScaffoldMessenger.of(context).showSnackBar(
@@ -174,7 +174,7 @@ class PopupMenu extends StatelessWidget {
   }
 
   void onTapDeleteList(BuildContext context, String id) async {
-    if (context.read<TaskListViewModel>().settings.isConfirmBeforeDelete) {
+    if (context.read<TempTaskListViewModel>().settings.isConfirmBeforeDelete) {
       bool isDelete = await showAlertDialog(
         context,
         'Are you sure?',
@@ -183,11 +183,11 @@ class PopupMenu extends StatelessWidget {
       if (!context.mounted) return;
       if (isDelete) {
         Navigator.pop(context);
-        context.read<TaskListViewModel>().deleteTaskList(id: id);
+        context.read<TempTaskListViewModel>().deleteTaskList(id: id);
       }
     } else {
       Navigator.pop(context);
-      context.read<TaskListViewModel>().deleteTaskList(id: id);
+      context.read<TempTaskListViewModel>().deleteTaskList(id: id);
     }
   }
 
@@ -278,10 +278,6 @@ class PopupMenu extends StatelessWidget {
       },
     );
   }
-}
-
-Future<String> longTask() async {
-  return await Future.delayed(const Duration(seconds: 3), () => 'result!');
 }
 
 class NormalBottomSheet extends StatelessWidget {

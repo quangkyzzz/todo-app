@@ -1,15 +1,15 @@
 // ignore_for_file: unnecessary_string_interpolations
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Step;
 import 'package:provider/provider.dart';
-import '../../models/step_model.dart';
-import '../../models/task_list_model.dart';
+import '../../models/task_step.dart';
+import '../../models/task_list.dart';
 import '../../themes.dart';
 import '../../routes.dart';
-import '../../models/task_model.dart';
+import '../../models/task.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
-import '../../view_models/task_list_view_model.dart';
+import '../../view_models/temp_task_list_view_model.dart';
 
 class TaskListItem extends StatelessWidget {
   final TaskModel task;
@@ -34,7 +34,7 @@ class TaskListItem extends StatelessWidget {
     bool isImportant = task.isImportant;
     bool isOnMyDay = task.isOnMyDay;
     bool isChecked = task.isCompleted;
-    List<StepModel>? steps = task.stepList;
+    List<TaskStep>? steps = task.stepList;
     DateTime? dueDate = task.dueDate;
     DateTime? remindTime = task.remindTime;
     String? repeatFrequency = task.repeatFrequency;
@@ -46,7 +46,8 @@ class TaskListItem extends StatelessWidget {
         if (step.isCompleted) countCompletedStep++;
       }
     }
-    TaskListViewModel taskListViewModel = context.watch<TaskListViewModel>();
+    TempTaskListViewModel taskListViewModel =
+        context.watch<TempTaskListViewModel>();
     initializeDateFormatting('vi');
     double screenWidth = MediaQuery.of(context).size.width;
     bool isAllBottomIconNull = ((!isOnMyDay) &&

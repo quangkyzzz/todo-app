@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../models/settings_model.dart';
+import '../models/settings.dart';
 
 class SettingsProvider extends ChangeNotifier {
-  SettingsModel settings = SettingsModel(
+  Settings settings = Settings(
     isAddNewTaskOnTop: true,
     isMoveStarTaskToTop: true,
     isPlaySoundOnComplete: true,

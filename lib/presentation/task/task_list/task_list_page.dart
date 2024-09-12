@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../models/task_list_model.dart';
-import '../../../view_models/task_list_view_model.dart';
+import '../../../models/task_list.dart';
+import '../../../view_models/temp_task_list_view_model.dart';
 import '../../components/add_floating_button.dart';
 import '../../lists/completed_list.dart';
 import '../../lists/incomplete_list.dart';
@@ -30,7 +30,8 @@ class _TaskListPageState extends State<TaskListPage> {
 
   @override
   Widget build(BuildContext context) {
-    TaskListViewModel taskListViewModel = context.watch<TaskListViewModel>();
+    TempTaskListViewModel taskListViewModel =
+        context.watch<TempTaskListViewModel>();
     return Stack(
       fit: StackFit.expand,
       children: [
@@ -52,8 +53,9 @@ class _TaskListPageState extends State<TaskListPage> {
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             iconTheme: IconThemeData(
-                color: context.watch<TaskListViewModel>().taskList.themeColor),
-            title: Consumer<TaskListViewModel>(
+                color:
+                    context.watch<TempTaskListViewModel>().taskList.themeColor),
+            title: Consumer<TempTaskListViewModel>(
                 builder: (context, taskListViewModel, child) {
               return Text(
                 taskListViewModel.taskList.listName,
@@ -73,7 +75,7 @@ class _TaskListPageState extends State<TaskListPage> {
             ],
           ),
           body: SingleChildScrollView(
-            child: Consumer<TaskListViewModel>(
+            child: Consumer<TempTaskListViewModel>(
               builder: (context, taskListViewModel, child) {
                 TaskListModel taskList = taskListViewModel.taskList;
                 return Column(

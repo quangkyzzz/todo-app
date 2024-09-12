@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../models/group_model.dart';
-import '../../models/task_list_model.dart';
-import '../../view_models/home_page_group_view_model.dart';
-import '../../view_models/home_page_task_list_view_model.dart';
+import '../../models/group.dart';
+import '../../models/task_list.dart';
+import '../../view_models/group_view_model.dart';
+import '../../view_models/task_list_view_model.dart';
 import '../components/show_text_edit_dialog.dart';
 import '../../themes.dart';
 import '../../routes.dart';
@@ -12,7 +12,7 @@ import 'home_item.dart';
 import '../items/popup_item.dart';
 
 class HomeGroup extends StatefulWidget {
-  final GroupModel group;
+  final Group group;
   const HomeGroup({
     super.key,
     required this.group,
@@ -58,7 +58,7 @@ class _HomeGroupState extends State<HomeGroup> {
                 itemCount: widget.group.taskLists.length,
                 itemBuilder: (BuildContext context, int index) {
                   TaskListModel item = widget.group.taskLists[index];
-                  return Consumer<HomePageTaskListViewModel>(
+                  return Consumer<TaskListViewModel>(
                     builder: (context, homePageViewModel, child) {
                       int endNumber = 0;
                       for (var element in item.tasks) {
@@ -118,7 +118,7 @@ class HomeGroupTrailing extends StatelessWidget {
                     PopupMenuItem(
                       onTap: () async {
                         List<TaskListModel> oldTaskLists = context
-                            .read<HomePageGroupViewModel>()
+                            .read<GroupViewModel>()
                             .getGroup(groupID)
                             .taskLists;
                         List<TaskListModel>? newTaskLists =
@@ -138,13 +138,13 @@ class HomeGroupTrailing extends StatelessWidget {
                               .toList();
 
                           context
-                              .read<HomePageGroupViewModel>()
+                              .read<GroupViewModel>()
                               .addMultipleTaskListToGroup(
                                 groupID: groupID,
                                 movedTaskLists: addedTaskList,
                               );
                           context
-                              .read<HomePageGroupViewModel>()
+                              .read<GroupViewModel>()
                               .deleteMultipleTaskListFromGroup(
                                 groupID,
                                 removeTaskList,
@@ -169,7 +169,7 @@ class HomeGroupTrailing extends StatelessWidget {
                         if (!context.mounted) return;
                         if (title != null) {
                           context
-                              .read<HomePageGroupViewModel>()
+                              .read<GroupViewModel>()
                               .renameGroup(groupID, title);
                         }
                       },
@@ -181,9 +181,7 @@ class HomeGroupTrailing extends StatelessWidget {
                     ),
                     PopupMenuItem(
                       onTap: () {
-                        context
-                            .read<HomePageGroupViewModel>()
-                            .deleteGroup(groupID);
+                        context.read<GroupViewModel>().deleteGroup(groupID);
                       },
                       value: 'ungroup',
                       child: const CustomPopupItem(
@@ -210,15 +208,14 @@ Future<List<TaskListModel>?> showAddListDialog({
     builder: (_) {
       List<TaskListModel> checkedTaskList = [];
       List<TaskListModel> allTaskList = [];
-      GroupModel group =
-          context.read<HomePageGroupViewModel>().getGroup(groupID);
+      Group group = context.read<GroupViewModel>().getGroup(groupID);
 
       checkedTaskList.addAll(group.taskLists);
       allTaskList.addAll(checkedTaskList);
 
       allTaskList.addAll(
         context
-            .watch<HomePageTaskListViewModel>()
+            .watch<TaskListViewModel>()
             .taskLists
             .where((element) => (int.parse(element.id) > 10)),
       );

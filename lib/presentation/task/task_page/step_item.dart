@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../models/step_model.dart';
-import '../../../models/task_list_model.dart';
+import '../../../models/task_step.dart';
+import '../../../models/task_list.dart';
 import '../../items/popup_item.dart';
 import '../../../provider/task_list_provider.dart';
 import '../../../themes.dart';
 
 class StepItem extends StatefulWidget {
-  final StepModel step;
+  final TaskStep step;
   final TaskListModel taskList;
   final Function callBack;
   const StepItem({
@@ -23,7 +23,7 @@ class StepItem extends StatefulWidget {
 
 class _StepItemState extends State<StepItem> {
   late final TaskListProvider taskListProvider;
-  late StepModel step;
+  late TaskStep step;
   late TextEditingController _controller;
 
   @override

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'models/task_list_model.dart';
+import 'models/task_list.dart';
 import 'presentation/auth/signup_page.dart';
 import 'presentation/home/home_page.dart';
 import 'presentation/auth/login_page.dart';
 import 'presentation/task/flagged_email/flagged_email_page.dart';
-import 'models/task_model.dart';
+import 'models/task.dart';
 import 'presentation/task/important/important_page.dart';
 import 'presentation/task/my_day/my_day_page.dart';
 import 'presentation/task/planned/planned_page.dart';
@@ -17,10 +17,10 @@ import 'presentation/task/task_page/task_page.dart';
 import 'presentation/settings/settings_page.dart';
 import 'presentation/user_profile/user_profile_page.dart';
 import 'view_models/auth_view_model.dart';
-import 'view_models/home_page_group_view_model.dart';
-import 'view_models/home_page_task_list_view_model.dart';
-import 'view_models/settings_view_model.dart';
+import 'view_models/group_view_model.dart';
 import 'view_models/task_list_view_model.dart';
+import 'view_models/settings_view_model.dart';
+import 'view_models/temp_task_list_view_model.dart';
 
 const initialRoute = '/home';
 const loginRoute = '/login';
@@ -47,10 +47,11 @@ var allRoute = {
             ? MultiProvider(
                 providers: [
                   ChangeNotifierProvider(
-                    create: (context) => HomePageTaskListViewModel(),
+                    create: (context) => TaskListViewModel(),
                   ),
                   ChangeNotifierProvider(
-                    create: HomePageGroupViewModel.new,
+                    create: (context) => GroupViewModel(
+                        taskListViewModel: context.read<TaskListViewModel>()),
                   ),
                   ChangeNotifierProvider(
                     create: (context) => SettingsViewModel(),
@@ -69,8 +70,8 @@ var allRoute = {
         ModalRoute.of(context)?.settings.arguments as Map;
     bool havecompletedList = arg['haveCompletedList'] ?? true;
     TaskListModel taskList = arg['taskList'];
-    return ChangeNotifierProvider<TaskListViewModel>(
-      create: (context) => TaskListViewModel(
+    return ChangeNotifierProvider<TempTaskListViewModel>(
+      create: (context) => TempTaskListViewModel(
         taskList: taskList,
       ),
       builder: (context, child) {

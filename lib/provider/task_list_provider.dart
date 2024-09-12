@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import '../service/background_service.dart';
-import '../models/step_model.dart';
-import '../models/task_list_model.dart';
-import '../models/task_model.dart';
+import '../models/task_step.dart';
+import '../models/task_list.dart';
+import '../models/task.dart';
 import 'package:collection/collection.dart';
 import 'settings_provider.dart';
 import '../themes.dart';
@@ -38,12 +38,12 @@ class TaskListProvider extends ChangeNotifier {
           isOnMyDay: false,
           createDate: DateTime(2024, 6, 9),
           stepList: [
-            StepModel(
+            TaskStep(
               id: '1',
               stepName: 'step 1',
               isCompleted: false,
             ),
-            StepModel(
+            TaskStep(
               id: '2',
               stepName: 'step 2',
               isCompleted: true,
@@ -492,7 +492,7 @@ class TaskListProvider extends ChangeNotifier {
     bool? isImportant,
     bool? isOnMyDay,
     DateTime? createDate,
-    List<StepModel>? stepList,
+    List<TaskStep>? stepList,
     DateTime? dueDate,
     DateTime? remindTime,
     String? repeatFrequency,

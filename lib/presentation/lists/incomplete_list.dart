@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../models/task_list_model.dart';
-import '../../models/task_model.dart';
+import '../../models/task_list.dart';
+import '../../models/task.dart';
 import '../items/task_list_item.dart';
 
 class IncompleteList extends StatelessWidget {

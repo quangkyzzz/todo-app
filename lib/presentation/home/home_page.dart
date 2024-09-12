@@ -2,10 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../models/group_model.dart';
-import '../../models/task_list_model.dart';
-import '../../view_models/home_page_group_view_model.dart';
-import '../../view_models/home_page_task_list_view_model.dart';
+import '../../models/group.dart';
+import '../../models/task_list.dart';
+import '../../view_models/group_view_model.dart';
+import '../../view_models/task_list_view_model.dart';
 import 'home_appbar.dart';
 //import '../../provider/group_provider.dart';
 //import '../../provider/task_list_provider.dart';
@@ -71,7 +71,7 @@ class HomePage extends StatelessWidget {
                 onTapMyDay(context);
               },
               endNumber: context
-                  .watch<HomePageTaskListViewModel>()
+                  .watch<TaskListViewModel>()
                   .countIncompletedMyDayTask(),
             ),
             HomeItem(
@@ -81,7 +81,7 @@ class HomePage extends StatelessWidget {
                 onTapImportant(context);
               },
               endNumber: context
-                  .watch<HomePageTaskListViewModel>()
+                  .watch<TaskListViewModel>()
                   .countIncompletedImportantTask(),
             ),
             HomeItem(
@@ -91,7 +91,7 @@ class HomePage extends StatelessWidget {
                 onTapPlanned(context);
               },
               endNumber: context
-                  .watch<HomePageTaskListViewModel>()
+                  .watch<TaskListViewModel>()
                   .countIncompletedPlannedTask(),
             ),
             HomeItem(
@@ -100,7 +100,7 @@ class HomePage extends StatelessWidget {
               onTap: () {
                 onTapAssignToMe(
                   context,
-                  context.read<HomePageTaskListViewModel>().taskLists[0],
+                  context.read<TaskListViewModel>().taskLists[0],
                 );
               },
               endNumber: 0,
@@ -111,7 +111,7 @@ class HomePage extends StatelessWidget {
               onTap: () {
                 onTapFlaggedEmail(
                   context,
-                  context.read<HomePageTaskListViewModel>().taskLists[0],
+                  context.read<TaskListViewModel>().taskLists[0],
                 );
               },
               endNumber: 0,
@@ -122,17 +122,17 @@ class HomePage extends StatelessWidget {
               onTap: () {
                 onTapTask(
                   context,
-                  context.read<HomePageTaskListViewModel>().taskLists[0],
+                  context.read<TaskListViewModel>().taskLists[0],
                 );
               },
               endNumber: context
-                  .watch<HomePageTaskListViewModel>()
+                  .watch<TaskListViewModel>()
                   .countIncompletedTaskByID(taskListID: '1'),
             ),
             MyTheme.dividerWhiteStyle,
             /////////////////////
             //personal task list
-            Consumer<HomePageTaskListViewModel>(
+            Consumer<TaskListViewModel>(
                 builder: (context, homePageTaskListViewModel, child) {
               return ListView.builder(
                 shrinkWrap: true,
@@ -168,14 +168,14 @@ class HomePage extends StatelessWidget {
             }),
             /////////////////
             //personal group
-            Consumer<HomePageGroupViewModel>(
+            Consumer<GroupViewModel>(
                 builder: (context, homePageGroupViewModel, child) {
               return ListView.builder(
                 shrinkWrap: true,
                 physics: const ClampingScrollPhysics(),
                 itemCount: homePageGroupViewModel.groups.length,
                 itemBuilder: (BuildContext context, int index) {
-                  GroupModel item = homePageGroupViewModel.groups[index];
+                  Group item = homePageGroupViewModel.groups[index];
                   return HomeGroup(group: item);
                 },
               );

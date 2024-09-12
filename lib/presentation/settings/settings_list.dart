@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../models/settings_model.dart';
+import '../../models/settings.dart';
 import '../../provider/settings_provider.dart';
 import '../../themes.dart';
 
@@ -13,7 +13,7 @@ class SettingsList extends StatefulWidget {
 
 class _SettingsListState extends State<SettingsList> {
   late SettingsProvider settingsProvider;
-  late SettingsModel settings;
+  late Settings settings;
   late bool isAddNewTaskOnTop;
   late bool isMoveStarTaskToTop;
   late bool isPlaySoundOnComplete;

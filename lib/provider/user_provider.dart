@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/user_model.dart';
+import '../models/user.dart';
 
 class UserProvider extends ChangeNotifier {
   bool isLogin = false;

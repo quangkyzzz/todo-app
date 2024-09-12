@@ -4,8 +4,8 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../service/background_service.dart';
-import '../../../models/step_model.dart';
-import '../../../models/task_list_model.dart';
+import '../../../models/task_step.dart';
+import '../../../models/task_list.dart';
 import '../../components/show_custom_repeat_time_dialog.dart';
 import 'file_item.dart';
 import '../../../provider/group_provider.dart';
@@ -13,7 +13,7 @@ import '../../../provider/settings_provider.dart';
 import '../../../provider/task_list_provider.dart';
 import '../../../themes.dart';
 import '../../../routes.dart';
-import '../../../models/task_model.dart';
+import '../../../models/task.dart';
 import 'task_page_bottom_navigation.dart';
 import '../../items/popup_item.dart';
 import 'step_item.dart';
@@ -46,7 +46,7 @@ class _TaskPageState extends State<TaskPage> {
   late bool isOnMyDay;
   late bool isCompleted;
   late bool isImportant;
-  late List<StepModel>? steps;
+  late List<TaskStep>? steps;
   late DateTime? remindTime;
   late DateTime? dueDate;
   late String? repeatFrequency;
@@ -253,7 +253,7 @@ class _TaskPageState extends State<TaskPage> {
   }
 
   void callBackEditStepItem(
-    StepModel newStep, {
+    TaskStep newStep, {
     bool isDelete = false,
   }) {
     if (isDelete) {
@@ -263,7 +263,7 @@ class _TaskPageState extends State<TaskPage> {
       });
     } else {
       setState(() {
-        StepModel step =
+        TaskStep step =
             steps!.firstWhere((element) => (element.id == newStep.id));
         step.copyFrom(newStep: newStep);
       });
@@ -274,11 +274,11 @@ class _TaskPageState extends State<TaskPage> {
     if (value != '') {
       if (steps == null) {
         setState(() {
-          steps = List<StepModel>.empty(growable: true);
+          steps = List<TaskStep>.empty(growable: true);
         });
       }
       setState(() {
-        StepModel newStep = StepModel(
+        TaskStep newStep = TaskStep(
           id: DateTime.now().millisecondsSinceEpoch.toString(),
           stepName: value,
           isCompleted: false,

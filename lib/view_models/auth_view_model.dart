@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/user_model.dart';
+import '../models/user.dart';
 
 class AuthViewModel extends ChangeNotifier {
   bool isLogin = false;
