@@ -23,26 +23,7 @@ class HomeGroup extends StatefulWidget {
 }
 
 class _HomeGroupState extends State<HomeGroup> {
-  late List<Map<String, dynamic>> listPopupMenuItem = [
-    {
-      'value': 'add_or_remove_lists',
-      'text': 'Add/remove lists',
-      'icon': Icons.list_outlined,
-      'onTap': onTapAddRemoveList,
-    },
-    {
-      'value': 'rename',
-      'text': 'Rename group',
-      'icon': Icons.edit_note_outlined,
-      'onTap': onTapRenameGroup,
-    },
-    {
-      'value': 'ungroup',
-      'text': 'Ungroup list',
-      'icon': Icons.clear_all_outlined,
-      'onTap': onTapUngroupList,
-    },
-  ];
+  bool isExpanded = false;
 
   @override
   void initState() {
@@ -94,7 +75,6 @@ class _HomeGroupState extends State<HomeGroup> {
     context.read<HomePageGroupViewModel>().deleteGroup(groupID);
   }
 
-  bool isExpanded = false;
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
@@ -116,18 +96,38 @@ class _HomeGroupState extends State<HomeGroup> {
               ? PopupMenuButton(
                   offset: const Offset(0, 40),
                   itemBuilder: (_) {
-                    return listPopupMenuItem.map((item) {
-                      return PopupMenuItem(
+                    return [
+                      PopupMenuItem(
                         onTap: () {
-                          item['onTap'](context, widget.group.id);
+                          onTapAddRemoveList(context, widget.group.id);
                         },
-                        value: item['value'],
-                        child: CustomPopupItem(
-                          text: item['text'],
-                          icon: item['icon'],
+                        value: 'add_or_remove_lists',
+                        child: const CustomPopupItem(
+                          text: 'Add/remove lists',
+                          icon: Icons.list_outlined,
                         ),
-                      );
-                    }).toList();
+                      ),
+                      PopupMenuItem(
+                        onTap: () {
+                          onTapRenameGroup(context, widget.group.id);
+                        },
+                        value: 'rename',
+                        child: const CustomPopupItem(
+                          text: 'Rename group',
+                          icon: Icons.edit_note_outlined,
+                        ),
+                      ),
+                      PopupMenuItem(
+                        onTap: () {
+                          onTapUngroupList(context, widget.group.id);
+                        },
+                        value: 'ungroup',
+                        child: const CustomPopupItem(
+                          text: 'Ungroup list',
+                          icon: Icons.clear_all_outlined,
+                        ),
+                      ),
+                    ];
                   },
                 )
               : const SizedBox(),

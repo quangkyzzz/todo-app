@@ -233,7 +233,4 @@ class HomePageTaskListViewModel extends ChangeNotifier {
     }
     return count;
   }
-
-  //////////////
-  //Group method
 }
