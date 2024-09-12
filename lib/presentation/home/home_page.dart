@@ -37,8 +37,11 @@ class HomePage extends StatelessWidget {
     });
   }
 
-  onTapFlaggedEmail(BuildContext context) async {
-    await Navigator.of(context).pushNamed(flaggedRoute);
+  onTapFlaggedEmail(BuildContext context, TaskListModel taskList) async {
+    await Navigator.of(context).pushNamed(taskListRoute, arguments: {
+      'haveCompletedList': true,
+      'taskList': taskList,
+    });
   }
 
   onTapTask(BuildContext context, TaskListModel taskList) async {
@@ -92,7 +95,7 @@ class HomePage extends StatelessWidget {
                   .countIncompletedPlannedTask(),
             ),
             HomeItem(
-              taskListID: '1',
+              taskListID: '5',
               icon: Icons.person_outline,
               onTap: () {
                 onTapAssignToMe(
@@ -103,10 +106,13 @@ class HomePage extends StatelessWidget {
               endNumber: 0,
             ),
             HomeItem(
-              taskListID: '1',
+              taskListID: '6',
               icon: Icons.flag_outlined,
               onTap: () {
-                onTapFlaggedEmail(context);
+                onTapFlaggedEmail(
+                  context,
+                  context.read<HomePageTaskListViewModel>().taskLists[0],
+                );
               },
               endNumber: 0,
             ),

@@ -66,6 +66,10 @@ class HomePageTaskListViewModel extends ChangeNotifier {
         id: '3', listName: 'Important', themeColor: MyTheme.pinkColor),
     TaskListModel(id: '4', listName: 'Planned', themeColor: MyTheme.redColor),
     TaskListModel(
+        id: '5', listName: 'Assigned to me', themeColor: MyTheme.yellowColor),
+    TaskListModel(
+        id: '6', listName: 'Flagged email', themeColor: MyTheme.orangeColor),
+    TaskListModel(
       id: '222',
       listName: 'personal list 1',
       backgroundImage: '/data/user/0/com.example.todo_app/cache/'
