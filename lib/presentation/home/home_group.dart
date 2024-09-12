@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/group_model.dart';
 import '../../models/task_list_model.dart';
-import '../../view_models/group_view_model.dart';
+import '../../view_models/home_page_group_view_model.dart';
 import '../../view_models/home_page_task_list_view_model.dart';
 import '../components/show_text_edit_dialog.dart';
 import '../../themes.dart';
@@ -51,7 +51,7 @@ class _HomeGroupState extends State<HomeGroup> {
 
   void onTapAddRemoveList(BuildContext context, String groupID) async {
     List<TaskListModel> oldTaskLists =
-        context.read<GroupViewModel>().getGroup(groupID).taskLists;
+        context.read<HomePageGroupViewModel>().getGroup(groupID).taskLists;
     List<TaskListModel>? newTaskLists = await showAddListDialog(
       context: context,
       groupID: groupID,
@@ -65,11 +65,11 @@ class _HomeGroupState extends State<HomeGroup> {
           .where((element) => !newTaskLists.contains(element))
           .toList();
 
-      context.read<GroupViewModel>().addMultipleTaskListToGroup(
+      context.read<HomePageGroupViewModel>().addMultipleTaskListToGroup(
             groupID: groupID,
             movedTaskLists: addedTaskList,
           );
-      context.read<GroupViewModel>().deleteMultipleTaskListFromGroup(
+      context.read<HomePageGroupViewModel>().deleteMultipleTaskListFromGroup(
             groupID,
             removeTaskList,
           );
@@ -86,12 +86,12 @@ class _HomeGroupState extends State<HomeGroup> {
     );
     if (!mounted) return;
     if (title != null) {
-      context.read<GroupViewModel>().renameGroup(groupID, title);
+      context.read<HomePageGroupViewModel>().renameGroup(groupID, title);
     }
   }
 
   void onTapUngroupList(BuildContext context, String groupID) {
-    context.read<GroupViewModel>().deleteGroup(groupID);
+    context.read<HomePageGroupViewModel>().deleteGroup(groupID);
   }
 
   bool isExpanded = false;
@@ -185,7 +185,8 @@ Future<List<TaskListModel>?> showAddListDialog({
     builder: (_) {
       List<TaskListModel> checkedTaskList = [];
       List<TaskListModel> allTaskList = [];
-      GroupModel group = context.read<GroupViewModel>().getGroup(groupID);
+      GroupModel group =
+          context.read<HomePageGroupViewModel>().getGroup(groupID);
 
       checkedTaskList.addAll(group.taskLists);
       allTaskList.addAll(checkedTaskList);

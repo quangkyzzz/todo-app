@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../themes.dart';
-import '../../view_models/group_view_model.dart';
+import '../../view_models/home_page_group_view_model.dart';
 import '../../view_models/home_page_task_list_view_model.dart';
 import '../components/show_text_edit_dialog.dart';
 
@@ -64,7 +64,7 @@ class HomePageBottomNavigationBar extends StatelessWidget {
               );
               if (!context.mounted) return;
               if (title != null) {
-                context.read<GroupViewModel>().createGroup(title);
+                context.read<HomePageGroupViewModel>().createGroup(title);
               }
             },
             icon: const Icon(

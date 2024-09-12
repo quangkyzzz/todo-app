@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/group_model.dart';
 import '../../models/task_list_model.dart';
-import '../../view_models/group_view_model.dart';
+import '../../view_models/home_page_group_view_model.dart';
 import '../../view_models/home_page_task_list_view_model.dart';
 import 'home_appbar.dart';
 //import '../../provider/group_provider.dart';
@@ -168,13 +168,14 @@ class HomePage extends StatelessWidget {
             }),
             /////////////////
             //personal group
-            Consumer<GroupViewModel>(builder: (context, groupViewModel, child) {
+            Consumer<HomePageGroupViewModel>(
+                builder: (context, homePageGroupViewModel, child) {
               return ListView.builder(
                 shrinkWrap: true,
                 physics: const ClampingScrollPhysics(),
-                itemCount: groupViewModel.groups.length,
+                itemCount: homePageGroupViewModel.groups.length,
                 itemBuilder: (BuildContext context, int index) {
-                  GroupModel item = groupViewModel.groups[index];
+                  GroupModel item = homePageGroupViewModel.groups[index];
                   return HomeGroup(group: item);
                 },
               );

@@ -17,7 +17,7 @@ import 'presentation/task/task_page/task_page.dart';
 import 'presentation/settings/settings_page.dart';
 import 'presentation/user_profile/user_profile_page.dart';
 import 'view_models/auth_view_model.dart';
-import 'view_models/group_view_model.dart';
+import 'view_models/home_page_group_view_model.dart';
 import 'view_models/home_page_task_list_view_model.dart';
 import 'view_models/settings_view_model.dart';
 import 'view_models/task_list_view_model.dart';
@@ -50,7 +50,7 @@ var allRoute = {
                     create: (context) => HomePageTaskListViewModel(),
                   ),
                   ChangeNotifierProvider(
-                    create: GroupViewModel.new,
+                    create: HomePageGroupViewModel.new,
                   ),
                   ChangeNotifierProvider(
                     create: (context) => SettingsViewModel(),

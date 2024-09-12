@@ -5,9 +5,9 @@ import '../models/task_list_model.dart';
 import '../models/task_model.dart';
 import 'home_page_task_list_view_model.dart';
 
-class GroupViewModel extends ChangeNotifier {
+class HomePageGroupViewModel extends ChangeNotifier {
   BuildContext context;
-  GroupViewModel(this.context);
+  HomePageGroupViewModel(this.context);
   List<GroupModel> groups = [
     GroupModel(
       id: '111',
