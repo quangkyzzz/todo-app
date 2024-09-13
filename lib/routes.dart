@@ -20,8 +20,7 @@ import 'view_models/auth_view_model.dart';
 import 'view_models/group_view_model.dart';
 import 'view_models/task_list_view_model.dart';
 import 'view_models/settings_view_model.dart';
-import 'view_models/task_view_model_temporary.dart';
-import 'view_models/temp_task_list_view_model_will_delete.dart';
+import 'view_models/task_view_model.dart';
 
 const initialRoute = '/home';
 const loginRoute = '/login';
@@ -51,17 +50,13 @@ var allRoute = {
                     create: (context) => TaskListViewModel(),
                   ),
                   ChangeNotifierProvider(
-                    create: (context) => GroupViewModel(
-                        taskListViewModel: context.read<TaskListViewModel>()),
+                    create: (context) => GroupViewModel(),
                   ),
                   ChangeNotifierProvider(
                     create: (context) => SettingsViewModel(),
                   ),
                   ChangeNotifierProvider(
-                    create: (context) => TaskViewModel(
-                      groupViewModel: context.read<GroupViewModel>(),
-                      taskListViewModel: context.read<TaskListViewModel>(),
-                    ),
+                    create: (context) => TaskViewModel(),
                   )
                 ],
                 builder: (context, child) {
@@ -77,9 +72,9 @@ var allRoute = {
         ModalRoute.of(context)?.settings.arguments as Map;
     bool havecompletedList = arg['haveCompletedList'] ?? true;
     TaskList taskList = arg['taskList'];
-    return ChangeNotifierProvider<TempTaskListViewModel>(
-      create: (context) => TempTaskListViewModel(
-        taskList: taskList,
+    return ChangeNotifierProvider<TaskListViewModel>(
+      create: (context) => TaskListViewModel(
+        currentTaskList: taskList,
       ),
       builder: (context, child) {
         return TaskListPage(

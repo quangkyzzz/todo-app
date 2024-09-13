@@ -47,8 +47,7 @@ class _HomeGroupState extends State<HomeGroup> {
       trailing: HomeGroupTrailing(
         isExpanded: isExpanded,
         context: context,
-        groupID: widget.group.id,
-        groupName: widget.group.groupName,
+        group: widget.group,
       ),
       children: [
         (widget.group.taskLists.isNotEmpty)
@@ -58,25 +57,21 @@ class _HomeGroupState extends State<HomeGroup> {
                 itemCount: widget.group.taskLists.length,
                 itemBuilder: (BuildContext context, int index) {
                   TaskList item = widget.group.taskLists[index];
-                  return Consumer<TaskListViewModel>(
-                    builder: (context, homePageViewModel, child) {
-                      int endNumber = 0;
-                      for (var element in item.tasks) {
-                        if (!element.isCompleted) endNumber++;
-                      }
-                      return HomeItem(
-                        group: widget.group,
-                        taskList: item,
-                        icon: Icons.list_outlined,
-                        endNumber: endNumber,
-                        onTap: () async {
-                          await Navigator.of(context).pushNamed(
-                            taskListRoute,
-                            arguments: {
-                              'haveCompletedList': true,
-                              'taskList': item,
-                            },
-                          );
+                  int endNumber = 0;
+                  for (var element in item.tasks) {
+                    if (!element.isCompleted) endNumber++;
+                  }
+                  return HomeItem(
+                    group: widget.group,
+                    taskList: item,
+                    icon: Icons.list_outlined,
+                    endNumber: endNumber,
+                    onTap: () async {
+                      await Navigator.of(context).pushNamed(
+                        taskListRoute,
+                        arguments: {
+                          'haveCompletedList': true,
+                          'taskList': item,
                         },
                       );
                     },
@@ -94,15 +89,14 @@ class _HomeGroupState extends State<HomeGroup> {
 
 class HomeGroupTrailing extends StatelessWidget {
   final BuildContext context;
-  final String groupID;
-  final String groupName;
+  final Group group;
+
   final bool isExpanded;
   const HomeGroupTrailing({
     super.key,
     required this.isExpanded,
     required this.context,
-    required this.groupID,
-    required this.groupName,
+    required this.group,
   });
 
   @override
@@ -117,13 +111,10 @@ class HomeGroupTrailing extends StatelessWidget {
                   return [
                     PopupMenuItem(
                       onTap: () async {
-                        List<TaskList> oldTaskLists = context
-                            .read<GroupViewModel>()
-                            .readGroupByID(groupID)
-                            .taskLists;
+                        List<TaskList> oldTaskLists = group.taskLists;
                         List<TaskList>? newTaskLists = await showAddListDialog(
                           context: context,
-                          groupID: groupID,
+                          groupID: group.id,
                         );
                         if (!context.mounted) return;
                         if (newTaskLists != null) {
@@ -139,15 +130,21 @@ class HomeGroupTrailing extends StatelessWidget {
                           context
                               .read<GroupViewModel>()
                               .addMultipleTaskListToGroup(
-                                groupID: groupID,
+                                groupID: group.id,
                                 movedTaskLists: addedTaskList,
                               );
                           context
+                              .read<TaskListViewModel>()
+                              .cutMultipleTaskList(cutTaskLists: addedTaskList);
+
+                          context
                               .read<GroupViewModel>()
                               .deleteMultipleTaskListFromGroup(
-                                groupID,
+                                group.id,
                                 removeTaskList,
                               );
+                          context.read<TaskListViewModel>().addMultipleTaskList(
+                              addTaskLists: removeTaskList);
                         }
                       },
                       value: 'add_or_remove_lists',
@@ -162,14 +159,14 @@ class HomeGroupTrailing extends StatelessWidget {
                           context: context,
                           title: 'Rename group ',
                           hintText: '',
-                          initText: groupName,
+                          initText: group.groupName,
                           positiveButton: 'Rename',
                         );
                         if (!context.mounted) return;
                         if (title != null) {
                           context
                               .read<GroupViewModel>()
-                              .renameGroup(groupID, title);
+                              .renameGroup(group.id, title);
                         }
                       },
                       value: 'rename',
@@ -180,7 +177,10 @@ class HomeGroupTrailing extends StatelessWidget {
                     ),
                     PopupMenuItem(
                       onTap: () {
-                        context.read<GroupViewModel>().deleteGroup(groupID);
+                        context.read<GroupViewModel>().deleteGroup(group.id);
+                        context
+                            .read<TaskListViewModel>()
+                            .addMultipleTaskList(addTaskLists: group.taskLists);
                       },
                       value: 'ungroup',
                       child: const CustomPopupItem(

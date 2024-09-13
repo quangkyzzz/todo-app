@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/task_list.dart';
 import '../../themes.dart';
-import '../../view_models/temp_task_list_view_model_will_delete.dart';
+import '../../view_models/task_list_view_model.dart';
 
 class AddFloatingButton extends StatelessWidget {
   final Color themeColor;
@@ -97,7 +97,7 @@ class AddTaskItem extends StatelessWidget {
               IconButton(
                 onPressed: () {
                   if (isAddToMyDay) {
-                    Provider.of<TempTaskListViewModel>(mContext, listen: false)
+                    Provider.of<TaskListViewModel>(mContext, listen: false)
                         .createTask(
                       taskListID: taskList.id,
                       taskName: _controller.text,
@@ -105,7 +105,7 @@ class AddTaskItem extends StatelessWidget {
                       isOnMyDay: true,
                     );
                   } else if (isAddToImportant) {
-                    Provider.of<TempTaskListViewModel>(mContext, listen: false)
+                    Provider.of<TaskListViewModel>(mContext, listen: false)
                         .createTask(
                       taskListID: taskList.id,
                       taskName: _controller.text,
@@ -113,7 +113,7 @@ class AddTaskItem extends StatelessWidget {
                       isImportant: true,
                     );
                   } else {
-                    Provider.of<TempTaskListViewModel>(mContext, listen: false)
+                    Provider.of<TaskListViewModel>(mContext, listen: false)
                         .createTask(
                       taskListID: taskList.id,
                       taskName: _controller.text,

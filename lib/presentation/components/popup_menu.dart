@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/task_list.dart';
-import '../../view_models/temp_task_list_view_model_will_delete.dart';
+import '../../view_models/settings_view_model.dart';
+import '../../view_models/task_list_view_model.dart';
 import 'show_alert_dialog.dart';
 import 'show_text_edit_dialog.dart';
 import '../../routes.dart';
@@ -33,7 +34,7 @@ class PopupMenu extends StatelessWidget {
     );
     if (!context.mounted) return;
     if (newName != null) {
-      context.read<TempTaskListViewModel>().renameList(
+      context.read<TaskListViewModel>().renameList(
             taskListID: id,
             newName: newName,
           );
@@ -139,7 +140,7 @@ class PopupMenu extends StatelessWidget {
           acceptText: 'Yes',
           onAccept: () {
             context
-                .read<TempTaskListViewModel>()
+                .read<TaskListViewModel>()
                 .duplicateTaskList(taskListID: taskList.id);
             Navigator.of(context).pop();
             ScaffoldMessenger.of(context).showSnackBar(
@@ -174,7 +175,7 @@ class PopupMenu extends StatelessWidget {
   }
 
   void onTapDeleteList(BuildContext context, String id) async {
-    if (context.read<TempTaskListViewModel>().settings.isConfirmBeforeDelete) {
+    if (context.read<SettingsViewModel>().settings.isConfirmBeforeDelete) {
       bool isDelete = await showAlertDialog(
         context,
         'Are you sure?',
@@ -183,11 +184,11 @@ class PopupMenu extends StatelessWidget {
       if (!context.mounted) return;
       if (isDelete) {
         Navigator.pop(context);
-        context.read<TempTaskListViewModel>().deleteTaskList(id: id);
+        context.read<TaskListViewModel>().deleteTaskList(taskListID: id);
       }
     } else {
       Navigator.pop(context);
-      context.read<TempTaskListViewModel>().deleteTaskList(id: id);
+      context.read<TaskListViewModel>().deleteTaskList(taskListID: id);
     }
   }
 

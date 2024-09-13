@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../models/task_list.dart';
-import '../../../view_models/temp_task_list_view_model_will_delete.dart';
+import '../../../view_models/task_list_view_model.dart';
 import '../../components/add_floating_button.dart';
 import '../../lists/completed_list.dart';
 import '../../lists/incomplete_list.dart';
@@ -30,20 +30,19 @@ class _TaskListPageState extends State<TaskListPage> {
 
   @override
   Widget build(BuildContext context) {
-    TempTaskListViewModel taskListViewModel =
-        context.watch<TempTaskListViewModel>();
+    TaskListViewModel taskListViewModel = context.watch<TaskListViewModel>();
     return Stack(
       fit: StackFit.expand,
       children: [
-        if ((taskListViewModel.taskList.backgroundImage != null))
-          if (taskListViewModel.taskList.defaultImage == -1)
+        if ((taskListViewModel.currentTaskList!.backgroundImage != null))
+          if (taskListViewModel.currentTaskList!.defaultImage == -1)
             Image.file(
-              File(taskListViewModel.taskList.backgroundImage!),
+              File(taskListViewModel.currentTaskList!.backgroundImage!),
               fit: BoxFit.fitHeight,
             )
           else
             Image.asset(
-              taskListViewModel.taskList.backgroundImage!,
+              taskListViewModel.currentTaskList!.backgroundImage!,
               fit: BoxFit.fitHeight,
             )
         else
@@ -53,31 +52,33 @@ class _TaskListPageState extends State<TaskListPage> {
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             iconTheme: IconThemeData(
-                color:
-                    context.watch<TempTaskListViewModel>().taskList.themeColor),
-            title: Consumer<TempTaskListViewModel>(
+                color: context
+                    .watch<TaskListViewModel>()
+                    .currentTaskList!
+                    .themeColor),
+            title: Consumer<TaskListViewModel>(
                 builder: (context, taskListViewModel, child) {
               return Text(
-                taskListViewModel.taskList.listName,
+                taskListViewModel.currentTaskList!.listName,
                 style: TextStyle(
                   fontSize: 24,
-                  color: taskListViewModel.taskList.themeColor,
+                  color: taskListViewModel.currentTaskList!.themeColor,
                 ),
               );
             }),
             actions: [
               PopupMenu(
-                taskList: taskListViewModel.taskList,
-                toRemove: (taskListViewModel.taskList.id == '1')
+                taskList: taskListViewModel.currentTaskList!,
+                toRemove: (taskListViewModel.currentTaskList!.id == '1')
                     ? (['rename_list', 'hide_completed_tasks', 'delete_list'])
                     : (['hide_completed_tasks']),
               )
             ],
           ),
           body: SingleChildScrollView(
-            child: Consumer<TempTaskListViewModel>(
+            child: Consumer<TaskListViewModel>(
               builder: (context, taskListViewModel, child) {
-                TaskList taskList = taskListViewModel.taskList;
+                TaskList taskList = taskListViewModel.currentTaskList!;
                 return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -93,8 +94,8 @@ class _TaskListPageState extends State<TaskListPage> {
             ),
           ),
           floatingActionButton: AddFloatingButton(
-            taskList: taskListViewModel.taskList,
-            themeColor: taskListViewModel.taskList.themeColor,
+            taskList: taskListViewModel.currentTaskList!,
+            themeColor: taskListViewModel.currentTaskList!.themeColor,
           ),
         ),
       ],

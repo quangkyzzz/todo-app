@@ -9,7 +9,7 @@ import '../../models/task.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
-import '../../view_models/temp_task_list_view_model_will_delete.dart';
+import '../../view_models/task_list_view_model.dart';
 
 class TaskListItem extends StatelessWidget {
   final Task task;
@@ -46,8 +46,7 @@ class TaskListItem extends StatelessWidget {
         if (step.isCompleted) countCompletedStep++;
       }
     }
-    TempTaskListViewModel taskListViewModel =
-        context.watch<TempTaskListViewModel>();
+    TaskListViewModel taskListViewModel = context.watch<TaskListViewModel>();
     initializeDateFormatting('vi');
     double screenWidth = MediaQuery.of(context).size.width;
     bool isAllBottomIconNull = ((!isOnMyDay) &&

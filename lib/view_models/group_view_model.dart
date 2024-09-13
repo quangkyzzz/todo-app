@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import '../models/group.dart';
 import '../models/task_list.dart';
 import '../models/task.dart';
-import 'task_list_view_model.dart';
 
 class GroupViewModel extends ChangeNotifier {
-  TaskListViewModel taskListViewModel;
-  GroupViewModel({required this.taskListViewModel});
   List<Group> groups = [
     Group(
       id: '111',
@@ -125,9 +122,6 @@ class GroupViewModel extends ChangeNotifier {
 
   void deleteGroup(String groupID) {
     Group group = readGroupByID(groupID);
-    for (TaskList taskList in group.taskLists) {
-      taskListViewModel.addTaskList(addTaskLists: [taskList]);
-    }
     groups.remove(group);
     notifyListeners();
   }
@@ -144,7 +138,6 @@ class GroupViewModel extends ChangeNotifier {
     Group group = readGroupByID(groupID);
 
     for (var taskList in movedTaskLists) {
-      taskListViewModel.cutTaskList(taskListID: taskList.id);
       group.taskLists.add(taskList);
     }
 
@@ -158,7 +151,6 @@ class GroupViewModel extends ChangeNotifier {
     Group group = readGroupByID(groupID);
     for (var taskList in removedTaskLists) {
       group.taskLists.remove(taskList);
-      taskListViewModel.addTaskList(addTaskLists: [taskList]);
     }
 
     notifyListeners();

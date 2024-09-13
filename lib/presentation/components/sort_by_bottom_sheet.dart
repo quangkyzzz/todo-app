@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/task_list.dart';
-import '../../view_models/temp_task_list_view_model_will_delete.dart';
+import '../../view_models/task_list_view_model.dart';
 import '../items/popup_item.dart';
 import '../../themes.dart';
 
@@ -30,12 +30,12 @@ class SortByBottomSheet extends StatelessWidget {
           const SizedBox(height: 8),
           InkWell(
             onTap: () {
-              mContext.read<TempTaskListViewModel>().sortTaskListBy(
+              mContext.read<TaskListViewModel>().sortTaskListBy(
                     taskListID: taskList.id,
                     sortType: 'important',
                     isAscending: false,
                   );
-              mContext.read<TempTaskListViewModel>().updateTaskListWith(
+              mContext.read<TaskListViewModel>().updateTaskListWith(
                 taskListID: taskList.id,
                 sortByType: {
                   'sortType': 'important',
@@ -51,12 +51,12 @@ class SortByBottomSheet extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              mContext.read<TempTaskListViewModel>().sortTaskListBy(
+              mContext.read<TaskListViewModel>().sortTaskListBy(
                     taskListID: taskList.id,
                     sortType: 'due date',
                     isAscending: true,
                   );
-              mContext.read<TempTaskListViewModel>().updateTaskListWith(
+              mContext.read<TaskListViewModel>().updateTaskListWith(
                 taskListID: taskList.id,
                 sortByType: {
                   'sortType': 'due date',
@@ -72,12 +72,12 @@ class SortByBottomSheet extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              mContext.read<TempTaskListViewModel>().sortTaskListBy(
+              mContext.read<TaskListViewModel>().sortTaskListBy(
                     taskListID: taskList.id,
                     sortType: 'my day',
                     isAscending: false,
                   );
-              mContext.read<TempTaskListViewModel>().updateTaskListWith(
+              mContext.read<TaskListViewModel>().updateTaskListWith(
                 taskListID: taskList.id,
                 sortByType: {
                   'sortType': 'my day',
@@ -93,12 +93,12 @@ class SortByBottomSheet extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              mContext.read<TempTaskListViewModel>().sortTaskListBy(
+              mContext.read<TaskListViewModel>().sortTaskListBy(
                     taskListID: taskList.id,
                     sortType: 'alphabetically',
                     isAscending: true,
                   );
-              mContext.read<TempTaskListViewModel>().updateTaskListWith(
+              mContext.read<TaskListViewModel>().updateTaskListWith(
                 taskListID: taskList.id,
                 sortByType: {
                   'sortType': 'alphabetically',
@@ -114,12 +114,12 @@ class SortByBottomSheet extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              mContext.read<TempTaskListViewModel>().sortTaskListBy(
+              mContext.read<TaskListViewModel>().sortTaskListBy(
                     taskListID: taskList.id,
                     sortType: 'create date',
                     isAscending: true,
                   );
-              mContext.read<TempTaskListViewModel>().updateTaskListWith(
+              mContext.read<TaskListViewModel>().updateTaskListWith(
                 taskListID: taskList.id,
                 sortByType: {
                   'sortType': 'create date',

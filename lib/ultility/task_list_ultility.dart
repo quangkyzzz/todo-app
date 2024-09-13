@@ -1,5 +1,5 @@
 import '../models/task_list.dart';
-import '../view_models/task_view_model_temporary.dart';
+import '../view_models/task_view_model.dart';
 import 'type_def.dart';
 
 class TaskListUltility {

@@ -7,7 +7,7 @@ import '../../models/task_list.dart';
 import '../../ultility/task_list_ultility.dart';
 import '../../view_models/group_view_model.dart';
 import '../../view_models/task_list_view_model.dart';
-import '../../view_models/task_view_model_temporary.dart';
+import '../../view_models/task_view_model.dart';
 import 'home_appbar.dart';
 import '../../themes.dart';
 import '../../routes.dart';
@@ -176,14 +176,13 @@ class HomePage extends StatelessWidget {
             }),
             /////////////////
             //personal group
-            Consumer<GroupViewModel>(
-                builder: (context, homePageGroupViewModel, child) {
+            Consumer<GroupViewModel>(builder: (context, groupViewModel, child) {
               return ListView.builder(
                 shrinkWrap: true,
                 physics: const ClampingScrollPhysics(),
-                itemCount: homePageGroupViewModel.groups.length,
+                itemCount: groupViewModel.groups.length,
                 itemBuilder: (BuildContext context, int index) {
-                  Group item = homePageGroupViewModel.groups[index];
+                  Group item = groupViewModel.groups[index];
                   return HomeGroup(group: item);
                 },
               );
