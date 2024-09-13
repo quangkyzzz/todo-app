@@ -26,13 +26,13 @@ class _MyDayPageState extends State<MyDayPage> {
   void initState() {
     defaultTaskList = Provider.of<TaskListProvider>(context, listen: false)
         .getTaskList(taskListID: '1');
+    myDayTaskList = Provider.of<TaskListProvider>(context, listen: true)
+        .getTaskList(taskListID: '2');
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    myDayTaskList = Provider.of<TaskListProvider>(context, listen: true)
-        .getTaskList(taskListID: '2');
     return Stack(
       fit: StackFit.expand,
       children: [

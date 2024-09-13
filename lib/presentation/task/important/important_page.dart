@@ -30,13 +30,13 @@ class _TaskListPageState extends State<ImportantPage> {
   void initState() {
     defaultTaskList = Provider.of<TaskListProvider>(context, listen: false)
         .getTaskList(taskListID: '1');
+    importantTaskList = Provider.of<TaskListProvider>(context, listen: true)
+        .getTaskList(taskListID: '3');
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    importantTaskList = Provider.of<TaskListProvider>(context, listen: true)
-        .getTaskList(taskListID: '3');
     return Stack(
       fit: StackFit.expand,
       children: [

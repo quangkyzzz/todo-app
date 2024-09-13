@@ -73,13 +73,13 @@ class _PlannedPageState extends State<PlannedPage> {
         }
       },
     ];
+    plannedTaskList = Provider.of<TaskListProvider>(context, listen: true)
+        .getTaskList(taskListID: '4');
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    plannedTaskList = Provider.of<TaskListProvider>(context, listen: true)
-        .getTaskList(taskListID: '4');
     return Stack(
       fit: StackFit.expand,
       children: [
