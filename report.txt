@@ -1,7 +1,11 @@
-Báo cáo 12/9
+Báo cáo 13/9
 Đã làm:
-    -   Hoàn thành tách HomePageViewModel thành nhiều view model tương ứng với từng model
-    -   Thay thế list item trong HomePage thành các item riêng lẻ. 
+    -   Chuyển các hàm ultility ra khỏi view model.
+    -   Loại bỏ context ra khỏi view model.
+    -   Sửa cấu trúc và tên một vài thư mục.
+    -   Sửa tên một vài biến, lớp không phù hợp
+Đang làm:
+    -   Di chuyển các hàm chưa phù hợp ra khỏi groupViewModel
 Dự định làm:
     -   Dựa vào review để tiếp tục chỉnh sửa các màn còn lại.
     
