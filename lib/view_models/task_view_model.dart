@@ -110,7 +110,8 @@ class TaskViewModel extends ChangeNotifier {
       )
     },
   ];
-
+  Task? currentTask;
+  TaskViewModel({this.currentTask});
   Future<void> updateTask({
     required String taskListID,
     required String taskID,

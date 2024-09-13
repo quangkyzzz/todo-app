@@ -72,10 +72,15 @@ var allRoute = {
         ModalRoute.of(context)?.settings.arguments as Map;
     bool havecompletedList = arg['haveCompletedList'] ?? true;
     TaskList taskList = arg['taskList'];
-    return ChangeNotifierProvider<TaskListViewModel>(
-      create: (context) => TaskListViewModel(
-        currentTaskList: taskList,
-      ),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => TaskListViewModel(currentTaskList: taskList),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => TaskViewModel(),
+        ),
+      ],
       builder: (context, child) {
         return TaskListPage(
           haveCompletedList: havecompletedList,
