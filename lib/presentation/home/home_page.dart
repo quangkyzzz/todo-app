@@ -7,6 +7,7 @@ import '../../models/task_list.dart';
 import '../../ultility/task_list_ultility.dart';
 import '../../view_models/group_view_model.dart';
 import '../../view_models/task_list_view_model.dart';
+import '../../view_models/task_view_model_temporary.dart';
 import 'home_appbar.dart';
 import '../../themes.dart';
 import '../../routes.dart';
@@ -56,7 +57,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TaskListUltility taskListUltility =
-        TaskListUltility(taskListViewModel: context.read<TaskListViewModel>());
+        TaskListUltility(taskViewModel: context.read<TaskViewModel>());
     return Scaffold(
       appBar: HomeAppBar(context: context).appBar(),
       body: SingleChildScrollView(
@@ -132,8 +133,11 @@ class HomePage extends StatelessWidget {
                   context.read<TaskListViewModel>().taskLists[0],
                 );
               },
-              endNumber:
-                  taskListUltility.countIncompletedTaskByID(taskListID: '1'),
+              endNumber: taskListUltility.countIncompletedTaskByID(
+                taskList: context
+                    .read<TaskListViewModel>()
+                    .getTaskList(taskListID: '1'),
+              ),
             ),
             MyTheme.dividerWhiteStyle,
             /////////////////////
@@ -148,7 +152,7 @@ class HomePage extends StatelessWidget {
                   TaskList item = taskListViewModel.taskLists[index];
                   if (int.parse(item.id) > 10) {
                     int endNumber = taskListUltility.countIncompletedTaskByID(
-                      taskListID: item.id,
+                      taskList: item,
                     );
                     return HomeItem(
                       taskList: item,

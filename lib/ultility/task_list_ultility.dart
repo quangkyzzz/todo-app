@@ -1,15 +1,17 @@
 import '../models/task_list.dart';
-import '../view_models/task_list_view_model.dart';
+import '../view_models/task_view_model_temporary.dart';
 import 'type_def.dart';
 
 class TaskListUltility {
-  final TaskListViewModel taskListViewModel;
+  final TaskViewModel taskViewModel;
 
-  TaskListUltility({required this.taskListViewModel});
+  TaskListUltility({
+    required this.taskViewModel,
+  });
 
-  int countIncompletedTaskByID({required String taskListID}) {
+  int countIncompletedTaskByID({required TaskList taskList}) {
     int count = 0;
-    TaskList taskList = taskListViewModel.getTaskList(taskListID: taskListID);
+
     for (var task in taskList.tasks) {
       if (!task.isCompleted) count++;
     }
@@ -18,7 +20,7 @@ class TaskListUltility {
 
   int countIncompletedMyDayTask() {
     int count = 0;
-    TaskMapList taskList = taskListViewModel.getOnMyDayTask();
+    TaskMapList taskList = taskViewModel.getOnMyDayTask();
     for (var task in taskList) {
       if (!task.keys.first.isCompleted) count++;
     }
@@ -27,7 +29,7 @@ class TaskListUltility {
 
   int countIncompletedImportantTask() {
     int count = 0;
-    TaskMapList taskList = taskListViewModel.getImportantTask();
+    TaskMapList taskList = taskViewModel.getImportantTask();
     for (var task in taskList) {
       if (!task.keys.first.isCompleted) count++;
     }
@@ -36,7 +38,7 @@ class TaskListUltility {
 
   int countIncompletedPlannedTask() {
     int count = 0;
-    TaskMapList taskList = taskListViewModel.getPlannedTask();
+    TaskMapList taskList = taskViewModel.getPlannedTask();
     for (var task in taskList) {
       if (!task.keys.first.isCompleted) count++;
     }

@@ -20,6 +20,7 @@ import 'view_models/auth_view_model.dart';
 import 'view_models/group_view_model.dart';
 import 'view_models/task_list_view_model.dart';
 import 'view_models/settings_view_model.dart';
+import 'view_models/task_view_model_temporary.dart';
 import 'view_models/temp_task_list_view_model_will_delete.dart';
 
 const initialRoute = '/home';
@@ -56,6 +57,12 @@ var allRoute = {
                   ChangeNotifierProvider(
                     create: (context) => SettingsViewModel(),
                   ),
+                  ChangeNotifierProvider(
+                    create: (context) => TaskViewModel(
+                      groupViewModel: context.read<GroupViewModel>(),
+                      taskListViewModel: context.read<TaskListViewModel>(),
+                    ),
+                  )
                 ],
                 builder: (context, child) {
                   return const HomePage();

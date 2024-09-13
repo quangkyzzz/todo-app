@@ -5,7 +5,6 @@ import '../models/task_list.dart';
 import '../models/task.dart';
 import '../service/background_service.dart';
 import '../themes.dart';
-import '../ultility/type_def.dart';
 
 class TaskListViewModel extends ChangeNotifier {
   List<TaskList> taskLists = [
@@ -157,48 +156,5 @@ class TaskListViewModel extends ChangeNotifier {
   void cutTaskList({required String taskListID}) {
     taskLists.removeWhere((element) => (element.id == taskListID));
     notifyListeners();
-  }
-
-  TaskMapList getAllTaskWithTaskList() {
-    TaskMapList result = [];
-    for (TaskList taskList in taskLists) {
-      for (Task task in taskList.tasks) {
-        result.add({task: taskList});
-      }
-    }
-    return result;
-  }
-
-  TaskMapList getOnMyDayTask() {
-    TaskMapList result = [];
-    TaskMapList allTask = getAllTaskWithTaskList();
-    for (var pair in allTask) {
-      if (pair.keys.first.isOnMyDay) {
-        result.add(pair);
-      }
-    }
-    return result;
-  }
-
-  TaskMapList getImportantTask() {
-    TaskMapList result = [];
-    TaskMapList allTask = getAllTaskWithTaskList();
-    for (var pair in allTask) {
-      if (pair.keys.first.isImportant) {
-        result.add(pair);
-      }
-    }
-    return result;
-  }
-
-  TaskMapList getPlannedTask() {
-    TaskMapList result = [];
-    TaskMapList allTask = getAllTaskWithTaskList();
-    for (var pair in allTask) {
-      if (pair.keys.first.dueDate != null) {
-        result.add(pair);
-      }
-    }
-    return result;
   }
 }
