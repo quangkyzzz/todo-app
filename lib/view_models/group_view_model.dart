@@ -111,7 +111,7 @@ class GroupViewModel extends ChangeNotifier {
     ),
   ];
 
-  Group getGroup(String groupID) {
+  Group readGroupByID(String groupID) {
     return groups.firstWhere((element) => (element.id == groupID));
   }
 
@@ -124,7 +124,7 @@ class GroupViewModel extends ChangeNotifier {
   }
 
   void deleteGroup(String groupID) {
-    Group group = getGroup(groupID);
+    Group group = readGroupByID(groupID);
     for (TaskList taskList in group.taskLists) {
       taskListViewModel.addTaskList(addTaskLists: [taskList]);
     }
@@ -141,7 +141,7 @@ class GroupViewModel extends ChangeNotifier {
     required String groupID,
     required List<TaskList> movedTaskLists,
   }) {
-    Group group = getGroup(groupID);
+    Group group = readGroupByID(groupID);
 
     for (var taskList in movedTaskLists) {
       taskListViewModel.cutTaskList(taskListID: taskList.id);
@@ -155,7 +155,7 @@ class GroupViewModel extends ChangeNotifier {
     String groupID,
     List<TaskList> removedTaskLists,
   ) {
-    Group group = getGroup(groupID);
+    Group group = readGroupByID(groupID);
     for (var taskList in removedTaskLists) {
       group.taskLists.remove(taskList);
       taskListViewModel.addTaskList(addTaskLists: [taskList]);

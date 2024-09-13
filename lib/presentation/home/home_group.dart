@@ -119,7 +119,7 @@ class HomeGroupTrailing extends StatelessWidget {
                       onTap: () async {
                         List<TaskList> oldTaskLists = context
                             .read<GroupViewModel>()
-                            .getGroup(groupID)
+                            .readGroupByID(groupID)
                             .taskLists;
                         List<TaskList>? newTaskLists = await showAddListDialog(
                           context: context,
@@ -207,7 +207,7 @@ Future<List<TaskList>?> showAddListDialog({
     builder: (_) {
       List<TaskList> checkedTaskList = [];
       List<TaskList> allTaskList = [];
-      Group group = context.read<GroupViewModel>().getGroup(groupID);
+      Group group = context.read<GroupViewModel>().readGroupByID(groupID);
 
       checkedTaskList.addAll(group.taskLists);
       allTaskList.addAll(checkedTaskList);

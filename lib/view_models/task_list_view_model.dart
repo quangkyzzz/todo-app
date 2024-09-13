@@ -102,13 +102,13 @@ class TaskListViewModel extends ChangeNotifier {
     ),
   ];
 
-  TaskList getTaskList({
+  TaskList readTaskList({
     required String taskListID,
   }) {
     return taskLists.firstWhere((element) => (element.id == taskListID));
   }
 
-  TaskList getTaskListFromGroup({
+  TaskList readTaskListFromGroup({
     required String taskListID,
     required Group group,
   }) {
@@ -136,7 +136,7 @@ class TaskListViewModel extends ChangeNotifier {
   void deleteTaskList({
     required String taskListID,
   }) {
-    TaskList taskList = getTaskList(taskListID: taskListID);
+    TaskList taskList = readTaskList(taskListID: taskListID);
     for (Task task in taskList.tasks) {
       // ignore: unawaited_futures
       BackGroundService.cancelTaskByID(id: task.id);

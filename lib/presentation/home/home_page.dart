@@ -69,7 +69,7 @@ class HomePage extends StatelessWidget {
             HomeItem(
               taskList: context
                   .watch<TaskListViewModel>()
-                  .getTaskList(taskListID: '2'),
+                  .readTaskList(taskListID: '2'),
               icon: Icons.wb_sunny_outlined,
               onTap: () {
                 onTapMyDay(context);
@@ -79,7 +79,7 @@ class HomePage extends StatelessWidget {
             HomeItem(
               taskList: context
                   .watch<TaskListViewModel>()
-                  .getTaskList(taskListID: '3'),
+                  .readTaskList(taskListID: '3'),
               icon: Icons.star_border,
               onTap: () {
                 onTapImportant(context);
@@ -89,7 +89,7 @@ class HomePage extends StatelessWidget {
             HomeItem(
               taskList: context
                   .watch<TaskListViewModel>()
-                  .getTaskList(taskListID: '4'),
+                  .readTaskList(taskListID: '4'),
               icon: Icons.list_alt_outlined,
               onTap: () {
                 onTapPlanned(context);
@@ -99,7 +99,7 @@ class HomePage extends StatelessWidget {
             HomeItem(
               taskList: context
                   .watch<TaskListViewModel>()
-                  .getTaskList(taskListID: '5'),
+                  .readTaskList(taskListID: '5'),
               icon: Icons.person_outline,
               onTap: () {
                 onTapAssignToMe(
@@ -112,7 +112,7 @@ class HomePage extends StatelessWidget {
             HomeItem(
               taskList: context
                   .watch<TaskListViewModel>()
-                  .getTaskList(taskListID: '6'),
+                  .readTaskList(taskListID: '6'),
               icon: Icons.flag_outlined,
               onTap: () {
                 onTapFlaggedEmail(
@@ -125,7 +125,7 @@ class HomePage extends StatelessWidget {
             HomeItem(
               taskList: context
                   .watch<TaskListViewModel>()
-                  .getTaskList(taskListID: '1'),
+                  .readTaskList(taskListID: '1'),
               icon: Icons.task_outlined,
               onTap: () {
                 onTapTask(
@@ -136,7 +136,7 @@ class HomePage extends StatelessWidget {
               endNumber: taskListUltility.countIncompletedTaskByID(
                 taskList: context
                     .read<TaskListViewModel>()
-                    .getTaskList(taskListID: '1'),
+                    .readTaskList(taskListID: '1'),
               ),
             ),
             MyTheme.dividerWhiteStyle,
