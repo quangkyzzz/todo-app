@@ -8,8 +8,7 @@ import '../../routes.dart';
 import '../../models/task.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
-
-import '../../view_models/task_list_view_model.dart';
+import '../../view_models/task_view_model.dart';
 
 class TaskListItem extends StatelessWidget {
   final Task task;
@@ -46,7 +45,7 @@ class TaskListItem extends StatelessWidget {
         if (step.isCompleted) countCompletedStep++;
       }
     }
-    TaskListViewModel taskListViewModel = context.watch<TaskListViewModel>();
+    TaskViewModel taskViewModel = context.watch<TaskViewModel>();
     initializeDateFormatting('vi');
     double screenWidth = MediaQuery.of(context).size.width;
     bool isAllBottomIconNull = ((!isOnMyDay) &&
@@ -85,7 +84,7 @@ class TaskListItem extends StatelessWidget {
               shape: const CircleBorder(),
               value: isChecked,
               onChanged: (bool? value) async {
-                await taskListViewModel.updateTask(
+                await taskViewModel.updateTask(
                   taskListID: taskList.id,
                   taskID: task.id,
                   newTask: task.copyWith(isCompleted: value),
@@ -234,7 +233,7 @@ class TaskListItem extends StatelessWidget {
               child: (!havePlusIcon)
                   ? IconButton(
                       onPressed: () async {
-                        await taskListViewModel.updateTask(
+                        await taskViewModel.updateTask(
                           taskListID: taskList.id,
                           taskID: task.id,
                           newTask: task.copyWith(isImportant: !isImportant),
