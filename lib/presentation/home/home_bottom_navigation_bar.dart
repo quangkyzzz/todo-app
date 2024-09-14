@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../themes.dart';
 import '../../view_models/group_view_model.dart';
-import '../../view_models/task_list_view_model.dart';
+
 import '../components/show_text_edit_dialog.dart';
 
 class HomePageBottomNavigationBar extends StatelessWidget {
@@ -33,7 +33,7 @@ class HomePageBottomNavigationBar extends StatelessWidget {
                 );
                 if (!context.mounted) return;
                 if (title != null) {
-                  Provider.of<TaskListViewModel>(context, listen: false)
+                  Provider.of<GroupViewModel>(context, listen: false)
                       .createTaskList(name: title);
                 }
               },

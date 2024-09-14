@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import '../../models/group.dart';
 import '../../models/task_list.dart';
 import '../../view_models/group_view_model.dart';
-import '../../view_models/task_list_view_model.dart';
+
 import '../components/show_text_edit_dialog.dart';
 import '../../themes.dart';
 import '../../routes.dart';
@@ -108,12 +108,9 @@ class HomeGroupTrailing extends StatelessWidget {
         .where((element) => !oldTaskLists.contains(element))
         .toList();
     context.read<GroupViewModel>().addMultipleTaskListToGroup(
-          groupID: group.id,
+          group: group,
           movedTaskLists: addedTaskList,
         );
-    context
-        .read<TaskListViewModel>()
-        .removeMultipleTaskList(cutTaskLists: addedTaskList);
   }
 
   void removeFromGroup({
@@ -125,12 +122,9 @@ class HomeGroupTrailing extends StatelessWidget {
         .where((element) => !newTaskLists.contains(element))
         .toList();
     context.read<GroupViewModel>().deleteMultipleTaskListFromGroup(
-          group.id,
+          group,
           removeTaskList,
         );
-    context
-        .read<TaskListViewModel>()
-        .addMultipleTaskList(addTaskLists: removeTaskList);
   }
 
   @override
@@ -184,7 +178,7 @@ class HomeGroupTrailing extends StatelessWidget {
                         if (title != null) {
                           context
                               .read<GroupViewModel>()
-                              .renameGroup(group.id, title);
+                              .renameGroup(group, title);
                         }
                       },
                       value: 'rename',
@@ -195,10 +189,7 @@ class HomeGroupTrailing extends StatelessWidget {
                     ),
                     PopupMenuItem(
                       onTap: () {
-                        context.read<GroupViewModel>().deleteGroup(group.id);
-                        context
-                            .read<TaskListViewModel>()
-                            .addMultipleTaskList(addTaskLists: group.taskLists);
+                        context.read<GroupViewModel>().deleteGroup(group);
                       },
                       value: 'ungroup',
                       child: const CustomPopupItem(
@@ -231,10 +222,10 @@ Future<List<TaskList>?> showAddListDialog({
       allTaskList.addAll(checkedTaskList);
 
       allTaskList.addAll(
-        context
-            .watch<TaskListViewModel>()
-            .taskLists
-            .where((element) => (int.parse(element.id) > 10)),
+        context.read<GroupViewModel>().readGroupByID('1').taskLists,
+      );
+      allTaskList.removeWhere(
+        (element) => (int.parse(element.id) < int.parse('10')),
       );
       return AlertDialog(
         scrollable: true,
@@ -261,7 +252,8 @@ Future<List<TaskList>?> showAddListDialog({
                       const Spacer(),
                       IconButton(
                           icon: Icon(
-                              (isChecked) ? Icons.check : Icons.add_outlined),
+                            (isChecked) ? Icons.check : Icons.add_outlined,
+                          ),
                           onPressed: () {
                             setState(() {
                               if (checkedTaskList.contains(item)) {

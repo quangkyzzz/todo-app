@@ -2,9 +2,113 @@ import 'package:flutter/material.dart';
 import '../models/group.dart';
 import '../models/task_list.dart';
 import '../models/task.dart';
+import '../models/task_step.dart';
+import '../themes.dart';
 
 class GroupViewModel extends ChangeNotifier {
   List<Group> groups = [
+    Group(
+      id: '1',
+      groupName: 'default group',
+      taskLists: [
+        TaskList(
+          id: '1',
+          listName: 'Tasks',
+          tasks: [
+            Task(
+              id: '2',
+              title: 'few day',
+              isCompleted: false,
+              isImportant: true,
+              isOnMyDay: true,
+              createDate: DateTime(2024, 6, 2),
+              dueDate: DateTime(2024, 6, 2),
+            ),
+            Task(
+              id: '1',
+              title: 'Tasks',
+              isCompleted: false,
+              isImportant: false,
+              isOnMyDay: false,
+              createDate: DateTime(2024, 6, 9),
+              stepList: [
+                TaskStep(
+                  id: '1',
+                  stepName: 'step 1',
+                  isCompleted: false,
+                ),
+                TaskStep(
+                  id: '2',
+                  stepName: 'step 2',
+                  isCompleted: true,
+                ),
+              ],
+              note: 'note',
+            ),
+            Task(
+              id: '66',
+              title: 'No step',
+              isCompleted: false,
+              isImportant: false,
+              isOnMyDay: true,
+              remindTime: DateTime(2024, 9, 1),
+              createDate: DateTime(2024, 6, 2),
+              dueDate: DateTime(2024, 6, 2),
+            ),
+          ],
+        ),
+        TaskList(
+          id: '2',
+          listName: 'My Day',
+          themeColor: MyTheme.whiteColor,
+          backgroundImage: 'assets/backgrounds/bg_my_day.jpg',
+          defaultImage: 0,
+        ),
+        TaskList(id: '3', listName: 'Important', themeColor: MyTheme.pinkColor),
+        TaskList(id: '4', listName: 'Planned', themeColor: MyTheme.redColor),
+        TaskList(
+            id: '5',
+            listName: 'Assigned to me',
+            themeColor: MyTheme.greenColor),
+        TaskList(
+            id: '6',
+            listName: 'Flagged email',
+            themeColor: MyTheme.orangeColor),
+        TaskList(
+          id: '222',
+          listName: 'personal list 1',
+          backgroundImage: '/data/user/0/com.example.todo_app/cache/'
+              'file_picker/1723799643254/1000000837.jpg',
+          tasks: [
+            Task(
+                id: '3',
+                title: 'few hour',
+                isCompleted: false,
+                isImportant: false,
+                isOnMyDay: true,
+                createDate: DateTime(2024, 7, 2, 7),
+                note: 'Really long note, long long long'
+                    'long long long long long long'),
+            Task(
+              id: '4',
+              title: 'recent',
+              isCompleted: false,
+              isImportant: true,
+              isOnMyDay: false,
+              createDate: DateTime(2024, 7, 2, 9, 38),
+            ),
+            Task(
+              id: '5',
+              title: 'few minute',
+              isCompleted: false,
+              isImportant: true,
+              isOnMyDay: true,
+              createDate: DateTime(2024, 7, 2, 9, 30),
+            ),
+          ],
+        ),
+      ],
+    ),
     Group(
       id: '111',
       groupName: 'my group 1',
@@ -120,37 +224,48 @@ class GroupViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteGroup(String groupID) {
-    Group group = readGroupByID(groupID);
+  void createTaskList({
+    required String name,
+  }) {
+    TaskList newTaskList = TaskList(
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      listName: name,
+    );
+    groups[0].taskLists.add(newTaskList);
+    notifyListeners();
+  }
+
+  void deleteGroup(Group group) {
+    readGroupByID('1').taskLists.addAll(group.taskLists);
     groups.remove(group);
     notifyListeners();
   }
 
-  void renameGroup(String groupID, String newName) {
-    groups.firstWhere((element) => (element.id == groupID)).groupName = newName;
+  void renameGroup(Group group, String newName) {
+    groups.firstWhere((element) => (element.id == group.id)).groupName =
+        newName;
     notifyListeners();
   }
 
   void addMultipleTaskListToGroup({
-    required String groupID,
+    required Group group,
     required List<TaskList> movedTaskLists,
   }) {
-    Group group = readGroupByID(groupID);
-
     for (var taskList in movedTaskLists) {
-      group.taskLists.add(taskList);
+      readGroupByID(group.id).taskLists.add(taskList);
+      readGroupByID('1').taskLists.remove(taskList);
     }
 
     notifyListeners();
   }
 
   void deleteMultipleTaskListFromGroup(
-    String groupID,
+    Group group,
     List<TaskList> removedTaskLists,
   ) {
-    Group group = readGroupByID(groupID);
     for (var taskList in removedTaskLists) {
-      group.taskLists.remove(taskList);
+      readGroupByID(group.id).taskLists.remove(taskList);
+      readGroupByID('1').taskLists.add(taskList);
     }
 
     notifyListeners();

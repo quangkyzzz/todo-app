@@ -6,7 +6,6 @@ import '../../models/group.dart';
 import '../../models/task_list.dart';
 import '../../ultility/task_list_ultility.dart';
 import '../../view_models/group_view_model.dart';
-import '../../view_models/task_list_view_model.dart';
 import '../../view_models/task_view_model.dart';
 import 'home_appbar.dart';
 import '../../themes.dart';
@@ -67,9 +66,7 @@ class HomePage extends StatelessWidget {
             //////////////
             //default list
             HomeItem(
-              taskList: context
-                  .watch<TaskListViewModel>()
-                  .readTaskList(taskListID: '2'),
+              taskList: context.watch<GroupViewModel>().groups[0].taskLists[1],
               icon: Icons.wb_sunny_outlined,
               onTap: () {
                 onTapMyDay(context);
@@ -77,9 +74,7 @@ class HomePage extends StatelessWidget {
               endNumber: taskListUltility.countIncompletedMyDayTask(),
             ),
             HomeItem(
-              taskList: context
-                  .watch<TaskListViewModel>()
-                  .readTaskList(taskListID: '3'),
+              taskList: context.watch<GroupViewModel>().groups[0].taskLists[2],
               icon: Icons.star_border,
               onTap: () {
                 onTapImportant(context);
@@ -87,9 +82,7 @@ class HomePage extends StatelessWidget {
               endNumber: taskListUltility.countIncompletedImportantTask(),
             ),
             HomeItem(
-              taskList: context
-                  .watch<TaskListViewModel>()
-                  .readTaskList(taskListID: '4'),
+              taskList: context.watch<GroupViewModel>().groups[0].taskLists[3],
               icon: Icons.list_alt_outlined,
               onTap: () {
                 onTapPlanned(context);
@@ -97,59 +90,51 @@ class HomePage extends StatelessWidget {
               endNumber: taskListUltility.countIncompletedPlannedTask(),
             ),
             HomeItem(
-              taskList: context
-                  .watch<TaskListViewModel>()
-                  .readTaskList(taskListID: '5'),
+              taskList: context.watch<GroupViewModel>().groups[0].taskLists[4],
               icon: Icons.person_outline,
               onTap: () {
                 onTapAssignToMe(
                   context,
-                  context.read<TaskListViewModel>().taskLists[0],
+                  context.read<GroupViewModel>().groups[0].taskLists[0],
                 );
               },
               endNumber: 0,
             ),
             HomeItem(
-              taskList: context
-                  .watch<TaskListViewModel>()
-                  .readTaskList(taskListID: '6'),
+              taskList: context.watch<GroupViewModel>().groups[0].taskLists[5],
               icon: Icons.flag_outlined,
               onTap: () {
                 onTapFlaggedEmail(
                   context,
-                  context.read<TaskListViewModel>().taskLists[0],
+                  context.read<GroupViewModel>().groups[0].taskLists[0],
                 );
               },
               endNumber: 0,
             ),
             HomeItem(
-              taskList: context
-                  .watch<TaskListViewModel>()
-                  .readTaskList(taskListID: '1'),
+              taskList: context.watch<GroupViewModel>().groups[0].taskLists[0],
               icon: Icons.task_outlined,
               onTap: () {
                 onTapTask(
                   context,
-                  context.read<TaskListViewModel>().taskLists[0],
+                  context.read<GroupViewModel>().groups[0].taskLists[0],
                 );
               },
               endNumber: taskListUltility.countIncompletedTaskByID(
-                taskList: context
-                    .read<TaskListViewModel>()
-                    .readTaskList(taskListID: '1'),
+                taskList:
+                    context.watch<GroupViewModel>().groups[0].taskLists[0],
               ),
             ),
             MyTheme.dividerWhiteStyle,
             /////////////////////
-            //personal task list
-            Consumer<TaskListViewModel>(
-                builder: (context, taskListViewModel, child) {
+            //Default group
+            Consumer<GroupViewModel>(builder: (context, groupViewModel, child) {
               return ListView.builder(
                 shrinkWrap: true,
                 physics: const ClampingScrollPhysics(),
-                itemCount: taskListViewModel.taskLists.length,
+                itemCount: groupViewModel.groups[0].taskLists.length,
                 itemBuilder: (BuildContext context, int index) {
-                  TaskList item = taskListViewModel.taskLists[index];
+                  TaskList item = groupViewModel.groups[0].taskLists[index];
                   if (int.parse(item.id) > 10) {
                     int endNumber = taskListUltility.countIncompletedTaskByID(
                       taskList: item,
@@ -183,7 +168,11 @@ class HomePage extends StatelessWidget {
                 itemCount: groupViewModel.groups.length,
                 itemBuilder: (BuildContext context, int index) {
                   Group item = groupViewModel.groups[index];
-                  return HomeGroup(group: item);
+                  if (index != 0) {
+                    return HomeGroup(group: item);
+                  } else {
+                    return SizedBox();
+                  }
                 },
               );
             }),

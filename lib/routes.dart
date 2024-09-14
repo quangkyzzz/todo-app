@@ -47,9 +47,6 @@ var allRoute = {
             ? MultiProvider(
                 providers: [
                   ChangeNotifierProvider(
-                    create: (context) => TaskListViewModel(),
-                  ),
-                  ChangeNotifierProvider(
                     create: (context) => GroupViewModel(),
                   ),
                   ChangeNotifierProvider(

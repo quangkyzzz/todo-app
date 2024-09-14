@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import '../models/group.dart';
 import '../models/task_step.dart';
 import '../models/task_list.dart';
 import '../models/task.dart';
 import '../service/background_service.dart';
 import '../themes.dart';
 
+//TODO: split to another view model
 class TaskListViewModel extends ChangeNotifier {
   List<TaskList> taskLists = [
     TaskList(
@@ -109,24 +109,6 @@ class TaskListViewModel extends ChangeNotifier {
     return taskLists.firstWhere((element) => (element.id == taskListID));
   }
 
-  TaskList readTaskListFromGroup({
-    required String taskListID,
-    required Group group,
-  }) {
-    return group.taskLists.firstWhere((element) => (element.id == taskListID));
-  }
-
-  void createTaskList({
-    required String name,
-  }) {
-    TaskList newTaskList = TaskList(
-      id: DateTime.now().millisecondsSinceEpoch.toString(),
-      listName: name,
-    );
-    taskLists.add(newTaskList);
-    notifyListeners();
-  }
-
   void addMultipleTaskList({
     required List<TaskList> addTaskLists,
   }) {
@@ -135,10 +117,10 @@ class TaskListViewModel extends ChangeNotifier {
   }
 
   void deleteTaskList({
-    required String taskListID,
+    required TaskList taskList,
   }) {
-    TaskList taskList = readTaskList(taskListID: taskListID);
-    for (Task task in taskList.tasks) {
+    TaskList tempTaskList = readTaskList(taskListID: taskList.id);
+    for (Task task in tempTaskList.tasks) {
       // ignore: unawaited_futures
       BackGroundService.cancelTaskByID(id: task.id);
     }
@@ -151,13 +133,13 @@ class TaskListViewModel extends ChangeNotifier {
     required List<TaskList> deleteTaskLists,
   }) {
     for (var taskList in deleteTaskLists) {
-      deleteTaskList(taskListID: taskList.id);
+      deleteTaskList(taskList: taskList);
     }
     notifyListeners();
   }
 
-  void removeTaskList({required String taskListID}) {
-    taskLists.removeWhere((element) => (element.id == taskListID));
+  void removeTaskList({required TaskList taskList}) {
+    taskLists.removeWhere((element) => (element.id == taskList.id));
     notifyListeners();
   }
 

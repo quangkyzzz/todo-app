@@ -24,7 +24,7 @@ class PopupMenu extends StatelessWidget {
     this.customListPopupMenuItem,
   });
 
-  void onTapRenameList(BuildContext context, String id) async {
+  void onTapRenameList(BuildContext context, TaskList taskList) async {
     String? newName = await showTextEditDialog(
       context: context,
       title: 'Rename your list',
@@ -35,13 +35,13 @@ class PopupMenu extends StatelessWidget {
     if (!context.mounted) return;
     if (newName != null) {
       context.read<TaskListViewModel>().renameList(
-            taskListID: id,
+            taskListID: taskList.id,
             newName: newName,
           );
     }
   }
 
-  Future<void> onTapSortBy(BuildContext context, String id) async {
+  Future<void> onTapSortBy(BuildContext context, TaskList taskList) async {
     double screenHeight = MediaQuery.of(context).size.height;
     await showModalBottomSheet(
       constraints: BoxConstraints(maxHeight: screenHeight * 0.35),
@@ -58,14 +58,14 @@ class PopupMenu extends StatelessWidget {
     );
   }
 
-  Future<void> onTapReorder(BuildContext context, String id) async {
+  Future<void> onTapReorder(BuildContext context, TaskList taskList) async {
     await Navigator.of(context).pushNamed(
       reorderRoute,
       arguments: taskList,
     );
   }
 
-  Future<void> onTapAddShortcut(BuildContext context, String id) async {
+  Future<void> onTapAddShortcut(BuildContext context, TaskList taskList) async {
     await showModalBottomSheet(
       isDismissible: true,
       enableDrag: true,
@@ -81,7 +81,7 @@ class PopupMenu extends StatelessWidget {
     );
   }
 
-  Future<void> onTapChangeTheme(BuildContext context, String id) async {
+  Future<void> onTapChangeTheme(BuildContext context, TaskList taskList) async {
     await showModalBottomSheet(
       isDismissible: true,
       enableDrag: true,
@@ -96,7 +96,8 @@ class PopupMenu extends StatelessWidget {
     );
   }
 
-  Future<void> onTapHideCompletedTasks(BuildContext context, String id) async {
+  Future<void> onTapHideCompletedTasks(
+      BuildContext context, TaskList taskList) async {
     await showModalBottomSheet(
       isDismissible: true,
       enableDrag: true,
@@ -112,7 +113,7 @@ class PopupMenu extends StatelessWidget {
     );
   }
 
-  Future<void> onTapSendCopy(BuildContext context, String id) async {
+  Future<void> onTapSendCopy(BuildContext context, TaskList taskList) async {
     await showModalBottomSheet(
       isDismissible: true,
       enableDrag: true,
@@ -128,7 +129,8 @@ class PopupMenu extends StatelessWidget {
     );
   }
 
-  Future<void> onTapDuplicateList(BuildContext context, String id) async {
+  Future<void> onTapDuplicateList(
+      BuildContext context, TaskList taskList) async {
     await showModalBottomSheet(
       isDismissible: true,
       enableDrag: true,
@@ -158,7 +160,7 @@ class PopupMenu extends StatelessWidget {
     );
   }
 
-  Future<void> onTapPrintList(BuildContext context, String id) async {
+  Future<void> onTapPrintList(BuildContext context, TaskList taskList) async {
     await showModalBottomSheet(
       isDismissible: true,
       enableDrag: true,
@@ -174,7 +176,7 @@ class PopupMenu extends StatelessWidget {
     );
   }
 
-  void onTapDeleteList(BuildContext context, String id) async {
+  void onTapDeleteList(BuildContext context, TaskList taskList) async {
     if (context.read<SettingsViewModel>().settings.isConfirmBeforeDelete) {
       bool isDelete = await showAlertDialog(
         context,
@@ -184,11 +186,11 @@ class PopupMenu extends StatelessWidget {
       if (!context.mounted) return;
       if (isDelete) {
         Navigator.pop(context);
-        context.read<TaskListViewModel>().deleteTaskList(taskListID: id);
+        context.read<TaskListViewModel>().deleteTaskList(taskList: taskList);
       }
     } else {
       Navigator.pop(context);
-      context.read<TaskListViewModel>().deleteTaskList(taskListID: id);
+      context.read<TaskListViewModel>().deleteTaskList(taskList: taskList);
     }
   }
 
@@ -268,7 +270,7 @@ class PopupMenu extends StatelessWidget {
           return PopupMenuItem(
             value: item['value'],
             onTap: () {
-              item['onTap'](context, taskList.id);
+              item['onTap'](context, taskList);
             },
             child: CustomPopupItem(
               text: item['text'],
