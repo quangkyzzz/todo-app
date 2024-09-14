@@ -1,11 +1,9 @@
-Báo cáo 13/9
+Báo cáo 14/9
 Đã làm:
-    -   Chuyển các hàm ultility ra khỏi view model.
-    -   Loại bỏ context ra khỏi view model.
-    -   Sửa cấu trúc và tên một vài thư mục.
-    -   Sửa tên một vài biến, lớp không phù hợp
-Đang làm:
-    -   Di chuyển các hàm chưa phù hợp ra khỏi groupViewModel
+    -   Sửa lỗi các view model truy cập vào các view model khác
+    -   Xóa bỏ các view model tạm thời
+    -   Sửa một vài hàm trong groupViewModel và taskListViewModel
+
 Dự định làm:
     -   Dựa vào review để tiếp tục chỉnh sửa các màn còn lại.
     
