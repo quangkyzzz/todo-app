@@ -105,10 +105,17 @@ var allRoute = {
         ModalRoute.of(context)?.settings.arguments as Map;
     Task task = arg['task'];
     TaskList taskList = arg['taskList'];
-    return TaskPage(
-      task: task,
-      taskList: taskList,
-    );
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => TaskViewModel()),
+          ChangeNotifierProvider(create: (context) => TaskListViewModel()),
+        ],
+        builder: (context, child) {
+          return TaskPage(
+            task: task,
+            taskList: taskList,
+          );
+        });
   },
   noteEditRoute: (context) {
     Map<dynamic, dynamic> arg =

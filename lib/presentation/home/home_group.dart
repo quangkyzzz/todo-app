@@ -99,6 +99,40 @@ class HomeGroupTrailing extends StatelessWidget {
     required this.group,
   });
 
+  void addTaskListToGroup({
+    required List<TaskList> newTaskLists,
+    required List<TaskList> oldTaskLists,
+    required BuildContext context,
+  }) {
+    List<TaskList> addedTaskList = newTaskLists
+        .where((element) => !oldTaskLists.contains(element))
+        .toList();
+    context.read<GroupViewModel>().addMultipleTaskListToGroup(
+          groupID: group.id,
+          movedTaskLists: addedTaskList,
+        );
+    context
+        .read<TaskListViewModel>()
+        .removeMultipleTaskList(cutTaskLists: addedTaskList);
+  }
+
+  void removeFromGroup({
+    required List<TaskList> newTaskLists,
+    required List<TaskList> oldTaskLists,
+    required BuildContext context,
+  }) {
+    List<TaskList> removeTaskList = oldTaskLists
+        .where((element) => !newTaskLists.contains(element))
+        .toList();
+    context.read<GroupViewModel>().deleteMultipleTaskListFromGroup(
+          group.id,
+          removeTaskList,
+        );
+    context
+        .read<TaskListViewModel>()
+        .addMultipleTaskList(addTaskLists: removeTaskList);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -118,33 +152,17 @@ class HomeGroupTrailing extends StatelessWidget {
                         );
                         if (!context.mounted) return;
                         if (newTaskLists != null) {
-                          List<TaskList> addedTaskList = newTaskLists
-                              .where(
-                                  (element) => !oldTaskLists.contains(element))
-                              .toList();
-                          List<TaskList> removeTaskList = oldTaskLists
-                              .where(
-                                  (element) => !newTaskLists.contains(element))
-                              .toList();
+                          addTaskListToGroup(
+                            newTaskLists: newTaskLists,
+                            oldTaskLists: oldTaskLists,
+                            context: context,
+                          );
 
-                          context
-                              .read<GroupViewModel>()
-                              .addMultipleTaskListToGroup(
-                                groupID: group.id,
-                                movedTaskLists: addedTaskList,
-                              );
-                          context
-                              .read<TaskListViewModel>()
-                              .cutMultipleTaskList(cutTaskLists: addedTaskList);
-
-                          context
-                              .read<GroupViewModel>()
-                              .deleteMultipleTaskListFromGroup(
-                                group.id,
-                                removeTaskList,
-                              );
-                          context.read<TaskListViewModel>().addMultipleTaskList(
-                              addTaskLists: removeTaskList);
+                          removeFromGroup(
+                            newTaskLists: newTaskLists,
+                            oldTaskLists: oldTaskLists,
+                            context: context,
+                          );
                         }
                       },
                       value: 'add_or_remove_lists',

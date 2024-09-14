@@ -156,12 +156,12 @@ class TaskListViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void cutTaskList({required String taskListID}) {
+  void removeTaskList({required String taskListID}) {
     taskLists.removeWhere((element) => (element.id == taskListID));
     notifyListeners();
   }
 
-  void cutMultipleTaskList({required List<TaskList> cutTaskLists}) {
+  void removeMultipleTaskList({required List<TaskList> cutTaskLists}) {
     taskLists.removeWhere((element) => (cutTaskLists.contains(element)));
     notifyListeners();
   }
