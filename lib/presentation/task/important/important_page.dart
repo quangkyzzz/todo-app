@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../models/task_list.dart';
 import '../../../models/task.dart';
+import '../../../view_models/group_view_model.dart';
+import '../../../view_models/task_map_view_model.dart';
 import '../../components/add_floating_button.dart';
 import '../../items/task_list_item.dart';
 import '../../components/popup_menu.dart';
-import '../../../provider/task_list_provider.dart';
 
 class ImportantPage extends StatefulWidget {
   final bool haveCompletedList;
@@ -22,17 +23,17 @@ class ImportantPage extends StatefulWidget {
 }
 
 class _TaskListPageState extends State<ImportantPage> {
-  late TaskList defaultTaskList;
+  late TaskList newTaskDestinationTaskList;
   late TaskList importantTaskList;
   bool isExpanded = false;
 
   @override
-  void initState() {
-    defaultTaskList = Provider.of<TaskListProvider>(context, listen: false)
-        .getTaskList(taskListID: '1');
-    importantTaskList = Provider.of<TaskListProvider>(context, listen: true)
-        .getTaskList(taskListID: '3');
-    super.initState();
+  void didChangeDependencies() {
+    newTaskDestinationTaskList =
+        context.read<GroupViewModel>().readGroupByID('1').taskLists[0];
+    importantTaskList =
+        context.watch<GroupViewModel>().readGroupByID('1').taskLists[2];
+    super.didChangeDependencies();
   }
 
   @override
@@ -80,10 +81,10 @@ class _TaskListPageState extends State<ImportantPage> {
             ],
           ),
           body: SingleChildScrollView(
-            child: Consumer<TaskListProvider>(
-              builder: (context, taskListProvider, child) {
+            child: Consumer<TaskMapViewModel>(
+              builder: (context, taskViewModel, child) {
                 List<Map<Task, TaskList>> importantTasks =
-                    taskListProvider.getImportantTask();
+                    taskViewModel.getImportantTask();
                 return ListView.builder(
                   shrinkWrap: true,
                   physics: const ClampingScrollPhysics(),
@@ -101,7 +102,7 @@ class _TaskListPageState extends State<ImportantPage> {
             ),
           ),
           floatingActionButton: AddFloatingButton(
-            taskList: defaultTaskList,
+            taskList: newTaskDestinationTaskList,
             isAddToImportant: true,
             themeColor: importantTaskList.themeColor,
           ),

@@ -4,7 +4,6 @@ import 'models/task_list.dart';
 import 'presentation/auth/signup_page.dart';
 import 'presentation/home/home_page.dart';
 import 'presentation/auth/login_page.dart';
-import 'presentation/task/flagged_email/flagged_email_page.dart';
 import 'models/task.dart';
 import 'presentation/task/important/important_page.dart';
 import 'presentation/task/my_day/my_day_page.dart';
@@ -19,7 +18,7 @@ import 'presentation/user_profile/user_profile_page.dart';
 import 'view_models/auth_view_model.dart';
 import 'view_models/group_view_model.dart';
 import 'view_models/task_list_view_model.dart';
-import 'view_models/task_view_model.dart';
+import 'view_models/task_map_view_model.dart';
 
 const initialRoute = '/home';
 const loginRoute = '/login';
@@ -49,7 +48,7 @@ var allRoute = {
                     create: (context) => GroupViewModel(),
                   ),
                   ChangeNotifierProvider(
-                    create: (context) => TaskViewModel(),
+                    create: (context) => TaskMapViewModel(),
                   )
                 ],
                 builder: (context, child) {
@@ -71,7 +70,7 @@ var allRoute = {
           create: (context) => TaskListViewModel(currentTaskList: taskList),
         ),
         ChangeNotifierProvider(
-          create: (context) => TaskViewModel(),
+          create: (context) => TaskMapViewModel(),
         ),
       ],
       builder: (context, child) {
@@ -84,14 +83,24 @@ var allRoute = {
   loginRoute: (context) => const LoginPage(),
   signupRoute: (context) => const SignUpPage(),
   userProfileRoute: (context) => const UserProfilePage(),
-  importantRoute: (context) => const ImportantPage(),
+  importantRoute: (context) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => GroupViewModel()),
+        ChangeNotifierProvider(create: (context) => TaskMapViewModel()),
+        ChangeNotifierProvider(create: (context) => TaskListViewModel()),
+      ],
+      builder: (context, child) {
+        return const ImportantPage();
+      },
+    );
+  },
   searchRoute: (context) => const SearchPage(),
-  flaggedRoute: (context) => const FlaggedEmailPage(),
   plannedRoute: (context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => GroupViewModel()),
-        ChangeNotifierProvider(create: (context) => TaskViewModel()),
+        ChangeNotifierProvider(create: (context) => TaskMapViewModel()),
         ChangeNotifierProvider(create: (context) => TaskListViewModel()),
       ],
       builder: (context, child) {
@@ -103,7 +112,7 @@ var allRoute = {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => TaskListViewModel()),
-          ChangeNotifierProvider(create: (context) => TaskViewModel()),
+          ChangeNotifierProvider(create: (context) => TaskMapViewModel()),
           ChangeNotifierProvider(create: (context) => GroupViewModel()),
         ],
         builder: (context, child) {
@@ -121,7 +130,7 @@ var allRoute = {
     TaskList taskList = arg['taskList'];
     return MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (context) => TaskViewModel()),
+          ChangeNotifierProvider(create: (context) => TaskMapViewModel()),
           ChangeNotifierProvider(create: (context) => TaskListViewModel()),
         ],
         builder: (context, child) {
