@@ -6,7 +6,7 @@ import '../../models/group.dart';
 import '../../models/task_list.dart';
 import '../../ultility/task_list_ultility.dart';
 import '../../view_models/group_view_model.dart';
-import '../../view_models/task_view_model.dart';
+import '../../view_models/task_map_view_model.dart';
 import 'home_appbar.dart';
 import '../../themes.dart';
 import '../../routes.dart';
@@ -56,7 +56,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TaskListUltility taskListUltility =
-        TaskListUltility(taskViewModel: context.read<TaskViewModel>());
+        TaskListUltility(taskViewModel: context.read<TaskMapViewModel>());
     return Scaffold(
       appBar: HomeAppBar(context: context).appBar(),
       body: SingleChildScrollView(

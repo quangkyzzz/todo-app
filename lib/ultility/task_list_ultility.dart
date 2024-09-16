@@ -1,9 +1,9 @@
 import '../models/task_list.dart';
-import '../view_models/task_view_model.dart';
+import '../view_models/task_map_view_model.dart';
 import 'type_def.dart';
 
 class TaskListUltility {
-  final TaskViewModel taskViewModel;
+  final TaskMapViewModel taskViewModel;
 
   TaskListUltility({
     required this.taskViewModel,

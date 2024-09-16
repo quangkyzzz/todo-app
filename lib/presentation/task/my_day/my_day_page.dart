@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../../../models/task_list.dart';
-import '../../../models/task.dart';
+import '../../../ultility/type_def.dart';
 import '../../../view_models/group_view_model.dart';
-import '../../../view_models/task_view_model.dart';
+import '../../../view_models/task_map_view_model.dart';
 import '../../items/task_list_item.dart';
 import 'my_day_floating_buttons.dart';
 import '../../components/popup_menu.dart';
@@ -19,15 +19,16 @@ class MyDayPage extends StatefulWidget {
 }
 
 class _MyDayPageState extends State<MyDayPage> {
-  late TaskList defaultTaskList;
+  late TaskList newTaskDestinationTaskList;
   late TaskList myDayTaskList;
   bool isExpanded = true;
 
   @override
   void didChangeDependencies() {
-    defaultTaskList = Provider.of<GroupViewModel>(context, listen: false)
-        .readGroupByID('1')
-        .taskLists[0];
+    newTaskDestinationTaskList =
+        Provider.of<GroupViewModel>(context, listen: false)
+            .readGroupByID('1')
+            .taskLists[0];
     myDayTaskList = Provider.of<GroupViewModel>(context, listen: true)
         .readGroupByID('1')
         .taskLists[1];
@@ -92,15 +93,13 @@ class _MyDayPageState extends State<MyDayPage> {
             ],
           ),
           body: SingleChildScrollView(
-            child: Consumer<TaskViewModel>(
+            child: Consumer<TaskMapViewModel>(
               builder: (context, taskListProvider, child) {
-                List<Map<Task, TaskList>> myDayList =
-                    taskListProvider.getOnMyDayTask();
-
-                List<Map<Task, TaskList>> inCompleteList = myDayList
+                TaskMapList myDayList = taskListProvider.getOnMyDayTask();
+                TaskMapList inCompleteList = myDayList
                     .where((element) => (!element.keys.first.isCompleted))
                     .toList();
-                List<Map<Task, TaskList>> completedlist = myDayList
+                TaskMapList completedlist = myDayList
                     .where((element) => (element.keys.first.isCompleted))
                     .toList();
                 return Column(children: [
@@ -157,7 +156,7 @@ class _MyDayPageState extends State<MyDayPage> {
             ),
           ),
           floatingActionButton: MyDayFloatingButtons(
-            taskList: defaultTaskList,
+            taskList: newTaskDestinationTaskList,
             themeColor: myDayTaskList.themeColor,
           ),
         ),

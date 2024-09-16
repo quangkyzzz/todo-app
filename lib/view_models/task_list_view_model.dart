@@ -138,7 +138,7 @@ class TaskListViewModel extends ChangeNotifier {
     // notifyListeners();
   }
 
-  void createTask({
+  void addNewTask({
     required String taskListID,
     required String taskName,
     required bool isCompleted,

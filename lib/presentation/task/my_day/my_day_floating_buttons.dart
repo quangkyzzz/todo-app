@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import '../../../models/task_list.dart';
 import '../../../models/task.dart';
 import '../../../ultility/type_def.dart';
-import '../../../view_models/task_view_model.dart';
+import '../../../view_models/task_map_view_model.dart';
 import '../../items/task_list_item.dart';
 
 import '../../../themes.dart';
@@ -56,10 +56,10 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
                       BuildContext ___,
                     ) {
                       TaskMapList listRecentTask = context
-                          .read<TaskViewModel>()
+                          .read<TaskMapViewModel>()
                           .getRecentNotInMyDayTask();
                       TaskMapList listOlderSuggetTask = context
-                          .read<TaskViewModel>()
+                          .read<TaskMapViewModel>()
                           .getOlderNotInMyDayTask();
                       return ((listRecentTask.isEmpty) &&
                               (listOlderSuggetTask.isEmpty))
@@ -97,7 +97,7 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
                                       havePlusIcon: true,
                                       onTapPlus: () {
                                         context
-                                            .read<TaskViewModel>()
+                                            .read<TaskMapViewModel>()
                                             .updateTaskWith(
                                               taskListID: taskList.id,
                                               taskID: task.id,
@@ -133,7 +133,7 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
                                       havePlusIcon: true,
                                       onTapPlus: () {
                                         context
-                                            .read<TaskViewModel>()
+                                            .read<TaskMapViewModel>()
                                             .updateTaskWith(
                                               taskListID: taskList.id,
                                               taskID: task.id,

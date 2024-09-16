@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import '../../../models/task_list.dart';
 import '../../../ultility/type_def.dart';
 import '../../../view_models/group_view_model.dart';
-import '../../../view_models/task_view_model.dart';
+import '../../../view_models/task_map_view_model.dart';
 import '../../items/task_list_item.dart';
 import '../../../themes.dart';
 import '../../components/popup_menu.dart';
@@ -178,7 +178,7 @@ class _PlannedPageState extends State<PlannedPage> {
                 const SizedBox(height: 18),
 
                 //task list
-                Consumer<TaskViewModel>(
+                Consumer<TaskMapViewModel>(
                   builder: (context, taskViewModel, child) {
                     TaskMapList plannedTasks = [];
                     switch (plannedState) {

@@ -98,7 +98,7 @@ class AddTaskItem extends StatelessWidget {
                 onPressed: () {
                   if (isAddToMyDay) {
                     Provider.of<TaskListViewModel>(mContext, listen: false)
-                        .createTask(
+                        .addNewTask(
                       taskListID: taskList.id,
                       taskName: _controller.text,
                       isCompleted: isChecked,
@@ -106,7 +106,7 @@ class AddTaskItem extends StatelessWidget {
                     );
                   } else if (isAddToImportant) {
                     Provider.of<TaskListViewModel>(mContext, listen: false)
-                        .createTask(
+                        .addNewTask(
                       taskListID: taskList.id,
                       taskName: _controller.text,
                       isCompleted: isChecked,
@@ -114,7 +114,7 @@ class AddTaskItem extends StatelessWidget {
                     );
                   } else {
                     Provider.of<TaskListViewModel>(mContext, listen: false)
-                        .createTask(
+                        .addNewTask(
                       taskListID: taskList.id,
                       taskName: _controller.text,
                       isCompleted: isChecked,
