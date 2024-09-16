@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../models/task_list.dart';
-import '../../../provider/settings_provider.dart';
-import '../../../provider/task_list_provider.dart';
+import '../../../view_models/settings_view_model.dart';
+import '../../../view_models/task_list_view_model.dart';
 
 class ChangeSortTypeButton extends StatefulWidget {
   final TaskList taskList;
@@ -16,12 +16,12 @@ class ChangeSortTypeButton extends StatefulWidget {
 }
 
 class _ChangeSortTypeButtonState extends State<ChangeSortTypeButton> {
-  late TaskListProvider taskListProvider;
-  late SettingsProvider settingsProvider;
+  late TaskListViewModel taskListViewModel;
+  late SettingsViewModel settingsViewModel;
   @override
   void initState() {
-    taskListProvider = Provider.of<TaskListProvider>(context, listen: false);
-    settingsProvider = Provider.of<SettingsProvider>(context, listen: false);
+    taskListViewModel = context.read<TaskListViewModel>();
+    settingsViewModel = context.read<SettingsViewModel>();
     super.initState();
   }
 
@@ -31,12 +31,12 @@ class _ChangeSortTypeButtonState extends State<ChangeSortTypeButton> {
       children: [
         TextButton(
           onPressed: () {
-            taskListProvider.sortTaskListBy(
+            taskListViewModel.sortTaskListBy(
               taskListID: widget.taskList.id,
               sortType: widget.taskList.sortByType!['sortType'],
               isAscending: !widget.taskList.sortByType!['asc'],
             );
-            taskListProvider.updateTaskListWith(
+            taskListViewModel.updateTaskListWith(
               taskListID: widget.taskList.id,
               sortByType: {
                 'sortType': widget.taskList.sortByType!['sortType'],
@@ -60,15 +60,15 @@ class _ChangeSortTypeButtonState extends State<ChangeSortTypeButton> {
         const Spacer(),
         IconButton(
           onPressed: () {
-            taskListProvider.sortTaskListBy(
+            taskListViewModel.sortTaskListBy(
               taskListID: widget.taskList.id,
               sortType: 'create date',
               isAscending:
-                  (settingsProvider.settings.isAddNewTaskOnTop) ? false : true,
+                  (settingsViewModel.settings.isAddNewTaskOnTop) ? false : true,
             );
             TaskList newTaskList = widget.taskList.copyWith();
             newTaskList.sortByType = null;
-            taskListProvider.updateTaskList(
+            taskListViewModel.updateTaskList(
               taskListID: widget.taskList.id,
               newTaskList: newTaskList,
             );

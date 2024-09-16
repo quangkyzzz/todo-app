@@ -262,7 +262,7 @@ class PopupMenu extends StatelessWidget {
         ? listPopupMenuItem = customListPopupMenuItem!
         : true;
     return PopupMenuButton(
-      itemBuilder: (context) {
+      itemBuilder: (_) {
         listPopupMenuItem.removeWhere((element) {
           return toRemove.contains(element['value']);
         });

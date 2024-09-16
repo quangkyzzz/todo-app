@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/task_list.dart';
 import '../models/task.dart';
+import '../service/background_service.dart';
 
 class TaskListViewModel extends ChangeNotifier {
   TaskList currentTaskList;
@@ -50,9 +51,8 @@ class TaskListViewModel extends ChangeNotifier {
     required String taskListID,
     required String newName,
   }) {
-    // TaskListModel taskList = getTaskList(taskListID: taskListID);
-    // taskList.listName = newName;
-    // notifyListeners();
+    currentTaskList.listName = newName;
+    notifyListeners();
   }
 
   void updateTaskList({
@@ -69,17 +69,19 @@ class TaskListViewModel extends ChangeNotifier {
     String? listName,
     String? groupID,
     String? backgroundImage,
-    int? isDefaultImage,
+    int? defaultImage,
     Map<String, dynamic>? sortByType,
     List<Task>? tasks,
   }) {
-    // TaskListModel taskList = getTaskList(taskListID: taskListID);
-    // taskList.listName = listName ?? taskList.listName;
-    // taskList.groupID = groupID ?? taskList.groupID;
-    // taskList.backgroundImage = backgroundImage ?? taskList.backgroundImage;
-    // taskList.isDefaultImage = isDefaultImage ?? taskList.isDefaultImage;
-    // taskList.sortByType = sortByType ?? taskList.sortByType;
-    // taskList.tasks = tasks ?? taskList.tasks;
+    currentTaskList.listName = listName ?? currentTaskList.listName;
+    currentTaskList.groupID = groupID ?? currentTaskList.groupID;
+    currentTaskList.backgroundImage =
+        backgroundImage ?? currentTaskList.backgroundImage;
+    currentTaskList.defaultImage = defaultImage ?? currentTaskList.defaultImage;
+    currentTaskList.sortByType = sortByType ?? currentTaskList.sortByType;
+    currentTaskList.tasks = tasks ?? currentTaskList.tasks;
+
+    notifyListeners();
   }
 
   void sortTaskListBy({
@@ -87,55 +89,54 @@ class TaskListViewModel extends ChangeNotifier {
     required String sortType,
     required bool isAscending,
   }) {
-    // TaskListModel taskList = getTaskList(taskListID: taskListID);
-    // int asc = (isAscending) ? 1 : -1;
-    // switch (sortType) {
-    //   case 'important':
-    //     taskList.tasks.sort((a, b) {
-    //       if (a.isImportant && !b.isImportant) {
-    //         return 1 * asc;
-    //       } else if (a.isImportant && b.isImportant) {
-    //         return a.createDate.compareTo(b.createDate) * asc;
-    //       } else if ((!a.isImportant) && (!b.isImportant)) {
-    //         return a.createDate.compareTo(b.createDate) * asc;
-    //       } else {
-    //         return -1 * asc;
-    //       }
-    //     });
-    //   case 'due date':
-    //     taskList.tasks.sort((a, b) {
-    //       if ((b.dueDate == null) && (a.dueDate == null)) {
-    //         return b.createDate.compareTo(a.createDate) * asc;
-    //       } else if ((a.dueDate != null) && (b.dueDate == null)) {
-    //         return -1 * asc;
-    //       } else if ((a.dueDate == null) && (b.dueDate != null)) {
-    //         return 1 * asc;
-    //       } else {
-    //         return a.dueDate!.compareTo(b.dueDate!) * asc;
-    //       }
-    //     });
-    //   case 'my day':
-    //     taskList.tasks.sort((a, b) {
-    //       if (a.isOnMyDay && !b.isOnMyDay) {
-    //         return 1 * asc;
-    //       } else if (a.isOnMyDay && b.isOnMyDay) {
-    //         return a.createDate.compareTo(b.createDate) * asc;
-    //       } else if ((!a.isOnMyDay) && (!b.isOnMyDay)) {
-    //         return a.createDate.compareTo(b.createDate) * asc;
-    //       } else {
-    //         return -1 * asc;
-    //       }
-    //     });
-    //   case 'alphabetically':
-    //     taskList.tasks.sort((a, b) {
-    //       return a.title.toLowerCase().compareTo(b.title.toLowerCase()) * asc;
-    //     });
-    //   case 'create date':
-    //     taskList.tasks.sort((a, b) {
-    //       return a.createDate.compareTo(b.createDate) * asc;
-    //     });
-    // }
-    // notifyListeners();
+    int asc = (isAscending) ? 1 : -1;
+    switch (sortType) {
+      case 'important':
+        currentTaskList.tasks.sort((a, b) {
+          if (a.isImportant && !b.isImportant) {
+            return 1 * asc;
+          } else if (a.isImportant && b.isImportant) {
+            return a.createDate.compareTo(b.createDate) * asc;
+          } else if ((!a.isImportant) && (!b.isImportant)) {
+            return a.createDate.compareTo(b.createDate) * asc;
+          } else {
+            return -1 * asc;
+          }
+        });
+      case 'due date':
+        currentTaskList.tasks.sort((a, b) {
+          if ((b.dueDate == null) && (a.dueDate == null)) {
+            return b.createDate.compareTo(a.createDate) * asc;
+          } else if ((a.dueDate != null) && (b.dueDate == null)) {
+            return -1 * asc;
+          } else if ((a.dueDate == null) && (b.dueDate != null)) {
+            return 1 * asc;
+          } else {
+            return a.dueDate!.compareTo(b.dueDate!) * asc;
+          }
+        });
+      case 'my day':
+        currentTaskList.tasks.sort((a, b) {
+          if (a.isOnMyDay && !b.isOnMyDay) {
+            return 1 * asc;
+          } else if (a.isOnMyDay && b.isOnMyDay) {
+            return a.createDate.compareTo(b.createDate) * asc;
+          } else if ((!a.isOnMyDay) && (!b.isOnMyDay)) {
+            return a.createDate.compareTo(b.createDate) * asc;
+          } else {
+            return -1 * asc;
+          }
+        });
+      case 'alphabetically':
+        currentTaskList.tasks.sort((a, b) {
+          return a.title.toLowerCase().compareTo(b.title.toLowerCase()) * asc;
+        });
+      case 'create date':
+        currentTaskList.tasks.sort((a, b) {
+          return a.createDate.compareTo(b.createDate) * asc;
+        });
+    }
+    notifyListeners();
   }
 
   void addNewTask({
@@ -145,41 +146,35 @@ class TaskListViewModel extends ChangeNotifier {
     bool isOnMyDay = false,
     bool isImportant = false,
   }) {
-    // TaskModel task = TaskModel(
-    //   id: DateTime.now().millisecondsSinceEpoch.toString(),
-    //   title: taskName,
-    //   isCompleted: isCompleted,
-    //   isImportant: isImportant,
-    //   isOnMyDay: isOnMyDay,
-    //   createDate: DateTime.now(),
-    // );
-    // TaskListModel? taskList = getTaskList(taskListID: taskListID);
-    // if (settingsProvider.settings.isAddNewTaskOnTop) {
-    //   taskList.tasks.insert(0, task);
-    // } else {
-    //   taskList.tasks.add(task);
-    // }
+    Task task = Task(
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      title: taskName,
+      isCompleted: isCompleted,
+      isImportant: isImportant,
+      isOnMyDay: isOnMyDay,
+      createDate: DateTime.now(),
+    );
+    if (true /*settingsProvider.settings.isAddNewTaskOnTop*/) {
+      currentTaskList.tasks.insert(0, task);
+    } else {
+      currentTaskList.tasks.add(task);
+    }
 
-    // notifyListeners();
+    notifyListeners();
   }
 
   void deleteTask({
     required String taskListID,
     required String taskID,
   }) {
-    // TaskListModel? taskList = taskLists.firstWhereOrNull(
-    //   (element) => (element.id == taskListID),
-    // );
-    // if (taskList != null) {
-    //   taskList.tasks.removeWhere((element) {
-    //     if ((element.id == taskID) && (element.remindTime != null)) {
-    //       // ignore: discarded_futures
-    //       BackGroundService.cancelTaskByID(id: taskID);
-    //     }
-    //     return (element.id == taskID);
-    //   });
-    // }
+    currentTaskList.tasks.removeWhere((element) {
+      if ((element.id == taskID) && (element.remindTime != null)) {
+        // ignore: discarded_futures
+        BackGroundService.cancelTaskByID(id: taskID);
+      }
+      return (element.id == taskID);
+    });
 
-    // notifyListeners();
+    notifyListeners();
   }
 }
