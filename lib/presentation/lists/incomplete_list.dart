@@ -15,9 +15,10 @@ class IncompleteList extends StatelessWidget {
       shrinkWrap: true,
       physics: const ClampingScrollPhysics(),
       itemCount: incompleteList.length,
-      itemBuilder: (BuildContext context, int index) {
+      itemBuilder: (BuildContext _, int index) {
         Task task = incompleteList[index];
         return TaskListItem(
+          mContext: context,
           task: task,
           taskList: taskList,
           themeColor: taskList.themeColor,

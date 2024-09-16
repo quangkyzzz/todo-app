@@ -19,7 +19,6 @@ import 'presentation/user_profile/user_profile_page.dart';
 import 'view_models/auth_view_model.dart';
 import 'view_models/group_view_model.dart';
 import 'view_models/task_list_view_model.dart';
-import 'view_models/settings_view_model.dart';
 import 'view_models/task_view_model.dart';
 
 const initialRoute = '/home';
@@ -48,9 +47,6 @@ var allRoute = {
                 providers: [
                   ChangeNotifierProvider(
                     create: (context) => GroupViewModel(),
-                  ),
-                  ChangeNotifierProvider(
-                    create: (context) => SettingsViewModel(),
                   ),
                   ChangeNotifierProvider(
                     create: (context) => TaskViewModel(),
@@ -92,7 +88,16 @@ var allRoute = {
   searchRoute: (context) => const SearchPage(),
   flaggedRoute: (context) => const FlaggedEmailPage(),
   plannedRoute: (context) => const PlannedPage(),
-  myDayRoute: (context) => const MyDayPage(),
+  myDayRoute: (context) {
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => TaskViewModel()),
+          ChangeNotifierProvider(create: (context) => GroupViewModel()),
+        ],
+        builder: (context, child) {
+          return const MyDayPage();
+        });
+  },
   settingsRoute: (context) => const SettingsPage(),
   reorderRoute: (context) => ReorderPage(
         taskList: ModalRoute.of(context)?.settings.arguments as TaskList,

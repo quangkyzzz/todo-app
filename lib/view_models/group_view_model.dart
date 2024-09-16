@@ -224,7 +224,7 @@ class GroupViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void createTaskList({
+  void createTaskListToGroup({
     required String name,
   }) {
     TaskList newTaskList = TaskList(

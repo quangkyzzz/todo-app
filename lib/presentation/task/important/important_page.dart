@@ -88,8 +88,9 @@ class _TaskListPageState extends State<ImportantPage> {
                   shrinkWrap: true,
                   physics: const ClampingScrollPhysics(),
                   itemCount: importantTasks.length,
-                  itemBuilder: (BuildContext context, int index) {
+                  itemBuilder: (BuildContext _, int index) {
                     return TaskListItem(
+                      mContext: context,
                       task: importantTasks[index].keys.first,
                       taskList: importantTasks[index].values.first,
                       themeColor: importantTaskList.themeColor,

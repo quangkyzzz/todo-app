@@ -7,4 +7,3 @@ Báo cáo 16/9
     -   Sửa my day page theo đúng cấu trúc mvvm
 Dự định làm:
     -   Sửa các màn còn lại theo đúng cấu trúc mvvm.
-    

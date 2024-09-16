@@ -195,6 +195,7 @@ class _PlannedPageState extends State<PlannedPage> {
                       itemCount: plannedTasks.length,
                       itemBuilder: (BuildContext context, int index) {
                         return TaskListItem(
+                          mContext: context,
                           task: plannedTasks[index].keys.first,
                           taskList: plannedTasks[index].values.first,
                           themeColor: plannedTaskList.themeColor,

@@ -112,6 +112,14 @@ class TaskViewModel extends ChangeNotifier {
   ];
   Task? currentTask;
   TaskViewModel({this.currentTask});
+
+  Task readTask({required String taskID}) {
+    return allTask
+        .firstWhere((element) => (element.keys.first.id == taskID))
+        .keys
+        .first;
+  }
+
   Future<void> updateTask({
     required String taskListID,
     required String taskID,
@@ -153,6 +161,40 @@ class TaskViewModel extends ChangeNotifier {
     // notifyListeners();
   }
 
+  void updateTaskWith({
+    required String taskListID,
+    required String taskID,
+    String? title,
+    bool? isCompleted,
+    bool? isImportant,
+    bool? isOnMyDay,
+    DateTime? createDate,
+    List<TaskStep>? stepList,
+    DateTime? dueDate,
+    DateTime? remindTime,
+    String? repeatFrequency,
+    List<String>? filePath,
+    String? note,
+  }) {
+    Task task = readTask(taskID: taskID);
+    if (note == '') {
+      note = null;
+    }
+
+    task.title = title ?? task.title;
+    task.isCompleted = isCompleted ?? task.isCompleted;
+    task.isImportant = isImportant ?? task.isImportant;
+    task.isOnMyDay = isOnMyDay ?? task.isOnMyDay;
+    task.stepList = stepList ?? task.stepList;
+    task.dueDate = dueDate ?? task.dueDate;
+    task.remindTime = remindTime ?? task.remindTime;
+    task.repeatFrequency = repeatFrequency ?? task.repeatFrequency;
+    task.filePath = filePath ?? task.filePath;
+    task.note = note ?? task.note;
+
+    notifyListeners();
+  }
+
   TaskMapList getOnMyDayTask() {
     TaskMapList result = [];
     for (var pair in allTask) {
@@ -177,6 +219,46 @@ class TaskViewModel extends ChangeNotifier {
     TaskMapList result = [];
     for (var pair in allTask) {
       if (pair.keys.first.dueDate != null) {
+        result.add(pair);
+      }
+    }
+    return result;
+  }
+
+  TaskMapList getRecentNotInMyDayTask() {
+    TaskMapList result = [];
+    for (var pair in allTask) {
+      DateTime createDate = DateTime(
+        pair.keys.first.createDate.year,
+        pair.keys.first.createDate.month,
+        pair.keys.first.createDate.day,
+      );
+      DateTime today = DateTime(
+        DateTime.now().year,
+        DateTime.now().month,
+        DateTime.now().day,
+      );
+      if ((createDate == today) && (!pair.keys.first.isOnMyDay)) {
+        result.add(pair);
+      }
+    }
+    return result;
+  }
+
+  TaskMapList getOlderNotInMyDayTask() {
+    TaskMapList result = [];
+    for (var pair in allTask) {
+      DateTime createDate = DateTime(
+        pair.keys.first.createDate.year,
+        pair.keys.first.createDate.month,
+        pair.keys.first.createDate.day,
+      );
+      DateTime today = DateTime(
+        DateTime.now().year,
+        DateTime.now().month,
+        DateTime.now().day,
+      );
+      if ((!pair.keys.first.isOnMyDay) && (createDate.isBefore(today))) {
         result.add(pair);
       }
     }

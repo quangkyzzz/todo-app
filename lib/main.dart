@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'service/background_service.dart';
 import 'service/notification_service.dart';
 import 'themes.dart';
 import 'routes.dart';
 import 'package:workmanager/workmanager.dart';
+
+import 'view_models/settings_view_model.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,11 +21,16 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: MyTheme.theme,
-      initialRoute: initialRoute,
-      routes: allRoute,
+    return ChangeNotifierProvider(
+      create: (context) => SettingsViewModel(),
+      builder: (context, child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: MyTheme.theme,
+          initialRoute: initialRoute,
+          routes: allRoute,
+        );
+      },
     );
   }
 }

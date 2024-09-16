@@ -52,6 +52,7 @@ class _ReorderPageState extends State<ReorderPage> {
             ),
             children: widget.taskList.tasks.map((item) {
               return TaskListItem(
+                mContext: context,
                 key: Key(item.id),
                 task: item,
                 taskList: widget.taskList,

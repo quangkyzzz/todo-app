@@ -60,9 +60,10 @@ class _CompletedListState extends State<CompletedList> {
             shrinkWrap: true,
             physics: const ClampingScrollPhysics(),
             itemCount: completedList.length,
-            itemBuilder: (BuildContext context, int index) {
+            itemBuilder: (BuildContext _, int index) {
               Task task = completedList[index];
               return TaskListItem(
+                mContext: context,
                 task: task,
                 taskList: widget.taskList,
                 themeColor: widget.taskList.themeColor,

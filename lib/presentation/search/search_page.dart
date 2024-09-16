@@ -165,11 +165,12 @@ class _SearchPageState extends State<SearchPage> {
                     shrinkWrap: true,
                     physics: const ClampingScrollPhysics(),
                     itemCount: searchTasks.length,
-                    itemBuilder: (BuildContext context, int index) {
+                    itemBuilder: (BuildContext _, int index) {
                       Map<Task, TaskList> item = searchTasks[index];
                       if (isHideCompletedTask) {
                         if (!item.keys.first.isCompleted) {
                           return TaskListItem(
+                            mContext: context,
                             task: item.keys.first,
                             taskList: item.values.first,
                             themeColor: MyTheme.blueColor,
@@ -179,6 +180,7 @@ class _SearchPageState extends State<SearchPage> {
                         }
                       } else {
                         return TaskListItem(
+                          mContext: context,
                           task: item.keys.first,
                           taskList: item.values.first,
                           themeColor: MyTheme.blueColor,

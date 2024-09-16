@@ -5,8 +5,9 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../../../models/task_list.dart';
 import '../../../models/task.dart';
+import '../../../view_models/group_view_model.dart';
+import '../../../view_models/task_view_model.dart';
 import '../../items/task_list_item.dart';
-import '../../../provider/task_list_provider.dart';
 import 'my_day_floating_buttons.dart';
 import '../../components/popup_menu.dart';
 
@@ -23,12 +24,14 @@ class _MyDayPageState extends State<MyDayPage> {
   bool isExpanded = true;
 
   @override
-  void initState() {
-    defaultTaskList = Provider.of<TaskListProvider>(context, listen: false)
-        .getTaskList(taskListID: '1');
-    myDayTaskList = Provider.of<TaskListProvider>(context, listen: true)
-        .getTaskList(taskListID: '2');
-    super.initState();
+  void didChangeDependencies() {
+    defaultTaskList = Provider.of<GroupViewModel>(context, listen: false)
+        .readGroupByID('1')
+        .taskLists[0];
+    myDayTaskList = Provider.of<GroupViewModel>(context, listen: true)
+        .readGroupByID('1')
+        .taskLists[1];
+    super.didChangeDependencies();
   }
 
   @override
@@ -89,7 +92,7 @@ class _MyDayPageState extends State<MyDayPage> {
             ],
           ),
           body: SingleChildScrollView(
-            child: Consumer<TaskListProvider>(
+            child: Consumer<TaskViewModel>(
               builder: (context, taskListProvider, child) {
                 List<Map<Task, TaskList>> myDayList =
                     taskListProvider.getOnMyDayTask();
@@ -105,8 +108,9 @@ class _MyDayPageState extends State<MyDayPage> {
                     shrinkWrap: true,
                     physics: const ClampingScrollPhysics(),
                     itemCount: inCompleteList.length,
-                    itemBuilder: (BuildContext context, int index) {
+                    itemBuilder: (BuildContext _, int index) {
                       return TaskListItem(
+                        mContext: context,
                         task: inCompleteList[index].keys.first,
                         taskList: inCompleteList[index].values.first,
                         themeColor: myDayTaskList.themeColor,
@@ -136,8 +140,9 @@ class _MyDayPageState extends State<MyDayPage> {
                               shrinkWrap: true,
                               physics: const ClampingScrollPhysics(),
                               itemCount: completedlist.length,
-                              itemBuilder: (BuildContext context, int index) {
+                              itemBuilder: (BuildContext _, int index) {
                                 return TaskListItem(
+                                  mContext: context,
                                   task: completedlist[index].keys.first,
                                   taskList: completedlist[index].values.first,
                                   themeColor: myDayTaskList.themeColor,

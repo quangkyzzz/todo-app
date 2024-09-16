@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../models/task_list.dart';
 import '../../../models/task.dart';
+import '../../../ultility/type_def.dart';
+import '../../../view_models/task_view_model.dart';
 import '../../items/task_list_item.dart';
-import '../../../provider/task_list_provider.dart';
+
 import '../../../themes.dart';
 import '../../components/add_floating_button.dart';
 
@@ -29,14 +31,14 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
   Future<void> onSuggestionsTap(BuildContext context, Color themeColor) async {
     await showModalBottomSheet(
       context: context,
-      builder: (BuildContext context) {
+      builder: (BuildContext _) {
         return DraggableScrollableSheet(
           snap: true,
           minChildSize: 0.2,
           snapSizes: const [0.3, 0.7, 0.8],
           expand: false,
           initialChildSize: 0.3,
-          builder: (context, scrollController) {
+          builder: (__, scrollController) {
             return SingleChildScrollView(
               controller: scrollController,
               child: Padding(
@@ -50,12 +52,15 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
                         size: 48,
                       ),
                     ),
-                    Consumer<TaskListProvider>(builder:
-                        (BuildContext context, taskListProvider, child) {
-                      ListTaskMap listRecentTask =
-                          taskListProvider.getRecentNotInMyDayTask();
-                      ListTaskMap listOlderSuggetTask =
-                          taskListProvider.getOlderNotInMyDayTask();
+                    Builder(builder: (
+                      BuildContext ___,
+                    ) {
+                      TaskMapList listRecentTask = context
+                          .read<TaskViewModel>()
+                          .getRecentNotInMyDayTask();
+                      TaskMapList listOlderSuggetTask = context
+                          .read<TaskViewModel>()
+                          .getOlderNotInMyDayTask();
                       return ((listRecentTask.isEmpty) &&
                               (listOlderSuggetTask.isEmpty))
                           ? const Center(
@@ -79,23 +84,25 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
                                   shrinkWrap: true,
                                   physics: const ClampingScrollPhysics(),
                                   itemCount: listRecentTask.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
+                                  itemBuilder: (BuildContext ____, int index) {
                                     Map<Task, TaskList> pair =
                                         listRecentTask[index];
                                     Task task = pair.keys.first;
                                     TaskList taskList = pair.values.first;
                                     return TaskListItem(
+                                      mContext: context,
                                       task: task,
                                       taskList: taskList,
                                       themeColor: themeColor,
                                       havePlusIcon: true,
                                       onTapPlus: () {
-                                        taskListProvider.updateTaskWith(
-                                          taskListID: taskList.id,
-                                          taskID: task.id,
-                                          isOnMyDay: true,
-                                        );
+                                        context
+                                            .read<TaskViewModel>()
+                                            .updateTaskWith(
+                                              taskListID: taskList.id,
+                                              taskID: task.id,
+                                              isOnMyDay: true,
+                                            );
                                       },
                                     );
                                   },
@@ -113,23 +120,25 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
                                   shrinkWrap: true,
                                   physics: const ClampingScrollPhysics(),
                                   itemCount: listOlderSuggetTask.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
+                                  itemBuilder: (BuildContext ____, int index) {
                                     Map<Task, TaskList> pair =
                                         listOlderSuggetTask[index];
                                     Task task = pair.keys.first;
                                     TaskList taskList = pair.values.first;
                                     return TaskListItem(
+                                      mContext: context,
                                       task: task,
                                       taskList: taskList,
                                       themeColor: themeColor,
                                       havePlusIcon: true,
                                       onTapPlus: () {
-                                        taskListProvider.updateTaskWith(
-                                          taskListID: taskList.id,
-                                          taskID: task.id,
-                                          isOnMyDay: true,
-                                        );
+                                        context
+                                            .read<TaskViewModel>()
+                                            .updateTaskWith(
+                                              taskListID: taskList.id,
+                                              taskID: task.id,
+                                              isOnMyDay: true,
+                                            );
                                       },
                                     );
                                   },

@@ -11,6 +11,7 @@ import 'package:intl/intl.dart';
 import '../../view_models/task_view_model.dart';
 
 class TaskListItem extends StatelessWidget {
+  final BuildContext mContext;
   final Task task;
   final TaskList taskList;
   final Color themeColor;
@@ -24,6 +25,7 @@ class TaskListItem extends StatelessWidget {
     required this.themeColor,
     this.havePlusIcon = false,
     this.onTapPlus,
+    required this.mContext,
   });
 
   @override
@@ -45,7 +47,7 @@ class TaskListItem extends StatelessWidget {
         if (step.isCompleted) countCompletedStep++;
       }
     }
-    TaskViewModel taskViewModel = context.watch<TaskViewModel>();
+    TaskViewModel taskViewModel = mContext.watch<TaskViewModel>();
     initializeDateFormatting('vi');
     double screenWidth = MediaQuery.of(context).size.width;
     bool isAllBottomIconNull = ((!isOnMyDay) &&
