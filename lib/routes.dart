@@ -87,10 +87,22 @@ var allRoute = {
   importantRoute: (context) => const ImportantPage(),
   searchRoute: (context) => const SearchPage(),
   flaggedRoute: (context) => const FlaggedEmailPage(),
-  plannedRoute: (context) => const PlannedPage(),
+  plannedRoute: (context) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => GroupViewModel()),
+        ChangeNotifierProvider(create: (context) => TaskViewModel()),
+        ChangeNotifierProvider(create: (context) => TaskListViewModel()),
+      ],
+      builder: (context, child) {
+        return const PlannedPage();
+      },
+    );
+  },
   myDayRoute: (context) {
     return MultiProvider(
         providers: [
+          ChangeNotifierProvider(create: (context) => TaskListViewModel()),
           ChangeNotifierProvider(create: (context) => TaskViewModel()),
           ChangeNotifierProvider(create: (context) => GroupViewModel()),
         ],

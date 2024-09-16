@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../models/task_list.dart';
+import '../../../ultility/type_def.dart';
+import '../../../view_models/group_view_model.dart';
+import '../../../view_models/task_view_model.dart';
 import '../../items/task_list_item.dart';
-import '../../../provider/task_list_provider.dart';
 import '../../../themes.dart';
 import '../../components/popup_menu.dart';
 import '../../items/popup_item.dart';
@@ -73,9 +75,16 @@ class _PlannedPageState extends State<PlannedPage> {
         }
       },
     ];
-    plannedTaskList = Provider.of<TaskListProvider>(context, listen: true)
-        .getTaskList(taskListID: '4');
+
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    plannedTaskList = Provider.of<GroupViewModel>(context, listen: true)
+        .readGroupByID('1')
+        .taskLists[3];
+    super.didChangeDependencies();
   }
 
   @override
@@ -169,24 +178,22 @@ class _PlannedPageState extends State<PlannedPage> {
                 const SizedBox(height: 18),
 
                 //task list
-                Consumer<TaskListProvider>(
-                  builder: (context, taskListProvider, child) {
-                    ListTaskMap plannedTasks = [];
+                Consumer<TaskViewModel>(
+                  builder: (context, taskViewModel, child) {
+                    TaskMapList plannedTasks = [];
                     switch (plannedState) {
                       case 0:
-                        plannedTasks = taskListProvider.getPlannedOverdueTask();
+                        plannedTasks = taskViewModel.getPlannedOverdueTask();
                       case 1:
-                        plannedTasks = taskListProvider.getPlannedTodayTask();
+                        plannedTasks = taskViewModel.getPlannedTodayTask();
                       case 2:
-                        plannedTasks =
-                            taskListProvider.getPlannedTomorrowTask();
+                        plannedTasks = taskViewModel.getPlannedTomorrowTask();
                       case 3:
-                        plannedTasks =
-                            taskListProvider.getPlannedThisWeekTask();
+                        plannedTasks = taskViewModel.getPlannedThisWeekTask();
                       case 4:
-                        plannedTasks = taskListProvider.getPlannedLaterTask();
+                        plannedTasks = taskViewModel.getPlannedLaterTask();
                       case 5:
-                        plannedTasks = taskListProvider.getPlannedTask();
+                        plannedTasks = taskViewModel.getPlannedTask();
                     }
 
                     return ListView.builder(

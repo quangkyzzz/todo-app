@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/task.dart';
 import '../models/task_list.dart';
 import '../models/task_step.dart';
+import '../ultility/general_ultility.dart';
 import '../ultility/type_def.dart';
 
 //TODO: continue to fix this
@@ -107,6 +108,111 @@ class TaskViewModel extends ChangeNotifier {
         listName: 'personal list 1',
         backgroundImage: '/data/user/0/com.example.todo_app/cache/'
             'file_picker/1723799643254/1000000837.jpg',
+      )
+    },
+    {
+      Task(
+        id: '6',
+        title: 'due today',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: false,
+        createDate: DateTime.now(),
+        dueDate: DateTime.now(),
+      ): TaskList(
+        id: '333',
+        listName: 'group 1 list 1',
+        groupID: '111',
+      )
+    },
+    {
+      Task(
+        id: '7',
+        title: 'due tomorrow',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: false,
+        createDate: DateTime.now(),
+        dueDate: DateTime.now().add(const Duration(days: 1)),
+      ): TaskList(
+        id: '333',
+        listName: 'group 1 list 1',
+        groupID: '111',
+      )
+    },
+    {
+      Task(
+        id: '8',
+        title: 'due next week',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: false,
+        createDate: DateTime.now(),
+        dueDate: DateTime.now().add(const Duration(days: 7)),
+      ): TaskList(
+        id: '333',
+        listName: 'group 1 list 1',
+        groupID: '111',
+      )
+    },
+    {
+      Task(
+        id: '9',
+        title: 'due next month',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: false,
+        createDate: DateTime.now(),
+        dueDate: DateTime.now().add(const Duration(days: 31)),
+      ): TaskList(
+        id: '444',
+        listName: 'group 1 list 2',
+        groupID: '111',
+      )
+    },
+    {
+      Task(
+        id: '10',
+        title: 'due next 2 day',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: false,
+        createDate: DateTime.now(),
+        dueDate: DateTime.now().add(const Duration(days: 2)),
+      ): TaskList(
+        id: '444',
+        listName: 'group 1 list 2',
+        groupID: '111',
+      )
+    },
+    {
+      Task(
+        id: '11',
+        title: 'due next 3 day',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: false,
+        createDate: DateTime.now(),
+        dueDate: DateTime.now().add(const Duration(days: 3)),
+      ): TaskList(
+        id: '444',
+        listName: 'group 1 list 2',
+        groupID: '111',
+      )
+    },
+    {
+      Task(
+        id: '12',
+        title: 'due next 4 day',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: false,
+        createDate: DateTime.now(),
+        dueDate: DateTime.now().add(const Duration(days: 4)),
+      ): TaskList(
+        id: '555',
+        listName: 'group 2 list 1',
+        groupID: '222',
       )
     },
   ];
@@ -259,6 +365,91 @@ class TaskViewModel extends ChangeNotifier {
         DateTime.now().day,
       );
       if ((!pair.keys.first.isOnMyDay) && (createDate.isBefore(today))) {
+        result.add(pair);
+      }
+    }
+    return result;
+  }
+
+  TaskMapList getPlannedOverdueTask() {
+    TaskMapList result = [];
+    TaskMapList plannedTask = getPlannedTask();
+    DateTime today = DateTime(
+      DateTime.now().year,
+      DateTime.now().month,
+      DateTime.now().day,
+    );
+
+    for (var pair in plannedTask) {
+      Duration diffTime = pair.keys.first.dueDate!.difference(today);
+      if (diffTime.inDays < 0) {
+        result.add(pair);
+      }
+    }
+    return result;
+  }
+
+  TaskMapList getPlannedTodayTask() {
+    TaskMapList result = [];
+    TaskMapList plannedTask = getPlannedTask();
+    DateTime today = DateTime(
+      DateTime.now().year,
+      DateTime.now().month,
+      DateTime.now().day,
+    );
+
+    for (var pair in plannedTask) {
+      Duration diffTime = pair.keys.first.dueDate!.difference(today);
+      if (diffTime.inDays == 0) {
+        result.add(pair);
+      }
+    }
+    return result;
+  }
+
+  TaskMapList getPlannedTomorrowTask() {
+    TaskMapList result = [];
+    TaskMapList plannedTask = getPlannedTask();
+    DateTime today = DateTime(
+      DateTime.now().year,
+      DateTime.now().month,
+      DateTime.now().day,
+    );
+
+    for (var pair in plannedTask) {
+      Duration diffTime = pair.keys.first.dueDate!.difference(today);
+      if (diffTime.inDays == 1) {
+        result.add(pair);
+      }
+    }
+    return result;
+  }
+
+  TaskMapList getPlannedThisWeekTask() {
+    TaskMapList result = [];
+    TaskMapList plannedTask = getPlannedTask();
+
+    for (var pair in plannedTask) {
+      if (GeneralUltility.isTheSameWeekAsToday(pair.keys.first.dueDate!)) {
+        result.add(pair);
+      }
+    }
+    return result;
+  }
+
+  TaskMapList getPlannedLaterTask() {
+    TaskMapList result = [];
+    TaskMapList plannedTask = getPlannedTask();
+    DateTime today = DateTime(
+      DateTime.now().year,
+      DateTime.now().month,
+      DateTime.now().day,
+    );
+
+    for (var pair in plannedTask) {
+      Duration diffTime = pair.keys.first.dueDate!.difference(today);
+      if (!(GeneralUltility.isTheSameWeekAsToday(pair.keys.first.dueDate!)) &&
+          (diffTime.inDays > 0)) {
         result.add(pair);
       }
     }

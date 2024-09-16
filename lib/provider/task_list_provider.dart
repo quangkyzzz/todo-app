@@ -9,7 +9,7 @@ import 'package:collection/collection.dart';
 import 'settings_provider.dart';
 import '../themes.dart';
 
-typedef ListTaskMap = List<Map<Task, TaskList>>;
+typedef TaskMapList = List<Map<Task, TaskList>>;
 
 class TaskListProvider extends ChangeNotifier {
   SettingsProvider settingsProvider;
@@ -505,8 +505,8 @@ class TaskListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  ListTaskMap getAllTaskWithTaskList() {
-    ListTaskMap result = [];
+  TaskMapList getAllTaskWithTaskList() {
+    TaskMapList result = [];
     for (TaskList taskList in taskLists) {
       for (Task task in taskList.tasks) {
         result.add({task: taskList});
@@ -515,12 +515,12 @@ class TaskListProvider extends ChangeNotifier {
     return result;
   }
 
-  ListTaskMap searchTaskByName({
+  TaskMapList searchTaskByName({
     required String searchName,
   }) {
     searchName = searchName.toLowerCase();
-    ListTaskMap result = [];
-    ListTaskMap all = getAllTaskWithTaskList();
+    TaskMapList result = [];
+    TaskMapList all = getAllTaskWithTaskList();
     for (var pair in all) {
       if (pair.keys.first.title.toLowerCase().contains(searchName)) {
         result.add(pair);
@@ -529,9 +529,9 @@ class TaskListProvider extends ChangeNotifier {
     return result;
   }
 
-  ListTaskMap getOnMyDayTask() {
-    ListTaskMap result = [];
-    ListTaskMap allTask = getAllTaskWithTaskList();
+  TaskMapList getOnMyDayTask() {
+    TaskMapList result = [];
+    TaskMapList allTask = getAllTaskWithTaskList();
     for (var pair in allTask) {
       if (pair.keys.first.isOnMyDay) {
         result.add(pair);
@@ -540,9 +540,9 @@ class TaskListProvider extends ChangeNotifier {
     return result;
   }
 
-  ListTaskMap getRecentNotInMyDayTask() {
-    ListTaskMap result = [];
-    ListTaskMap allTask = getAllTaskWithTaskList();
+  TaskMapList getRecentNotInMyDayTask() {
+    TaskMapList result = [];
+    TaskMapList allTask = getAllTaskWithTaskList();
     for (var pair in allTask) {
       DateTime createDate = DateTime(
         pair.keys.first.createDate.year,
@@ -561,9 +561,9 @@ class TaskListProvider extends ChangeNotifier {
     return result;
   }
 
-  ListTaskMap getOlderNotInMyDayTask() {
-    ListTaskMap result = [];
-    ListTaskMap allTask = getAllTaskWithTaskList();
+  TaskMapList getOlderNotInMyDayTask() {
+    TaskMapList result = [];
+    TaskMapList allTask = getAllTaskWithTaskList();
     for (var pair in allTask) {
       DateTime createDate = DateTime(
         pair.keys.first.createDate.year,
@@ -582,9 +582,9 @@ class TaskListProvider extends ChangeNotifier {
     return result;
   }
 
-  ListTaskMap getImportantTask() {
-    ListTaskMap result = [];
-    ListTaskMap allTask = getAllTaskWithTaskList();
+  TaskMapList getImportantTask() {
+    TaskMapList result = [];
+    TaskMapList allTask = getAllTaskWithTaskList();
     for (var pair in allTask) {
       if (pair.keys.first.isImportant) {
         result.add(pair);
@@ -604,7 +604,7 @@ class TaskListProvider extends ChangeNotifier {
 
   int countIncompletedMyDayTask() {
     int count = 0;
-    ListTaskMap taskList = getOnMyDayTask();
+    TaskMapList taskList = getOnMyDayTask();
     for (var task in taskList) {
       if (!task.keys.first.isCompleted) count++;
     }
@@ -613,7 +613,7 @@ class TaskListProvider extends ChangeNotifier {
 
   int countIncompletedImportantTask() {
     int count = 0;
-    ListTaskMap taskList = getImportantTask();
+    TaskMapList taskList = getImportantTask();
     for (var task in taskList) {
       if (!task.keys.first.isCompleted) count++;
     }
@@ -622,7 +622,7 @@ class TaskListProvider extends ChangeNotifier {
 
   int countIncompletedPlannedTask() {
     int count = 0;
-    ListTaskMap taskList = getPlannedTask();
+    TaskMapList taskList = getPlannedTask();
     for (var task in taskList) {
       if (!task.keys.first.isCompleted) count++;
     }
@@ -631,9 +631,9 @@ class TaskListProvider extends ChangeNotifier {
 
   ////////////////////////
   //Planned Task Function
-  ListTaskMap getPlannedTask() {
-    ListTaskMap result = [];
-    ListTaskMap allTask = getAllTaskWithTaskList();
+  TaskMapList getPlannedTask() {
+    TaskMapList result = [];
+    TaskMapList allTask = getAllTaskWithTaskList();
     for (var pair in allTask) {
       if (pair.keys.first.dueDate != null) {
         result.add(pair);
@@ -642,9 +642,9 @@ class TaskListProvider extends ChangeNotifier {
     return result;
   }
 
-  ListTaskMap getPlannedOverdueTask() {
-    ListTaskMap result = [];
-    ListTaskMap plannedTask = getPlannedTask();
+  TaskMapList getPlannedOverdueTask() {
+    TaskMapList result = [];
+    TaskMapList plannedTask = getPlannedTask();
     DateTime today = DateTime(
       DateTime.now().year,
       DateTime.now().month,
@@ -660,9 +660,9 @@ class TaskListProvider extends ChangeNotifier {
     return result;
   }
 
-  ListTaskMap getPlannedTodayTask() {
-    ListTaskMap result = [];
-    ListTaskMap plannedTask = getPlannedTask();
+  TaskMapList getPlannedTodayTask() {
+    TaskMapList result = [];
+    TaskMapList plannedTask = getPlannedTask();
     DateTime today = DateTime(
       DateTime.now().year,
       DateTime.now().month,
@@ -678,9 +678,9 @@ class TaskListProvider extends ChangeNotifier {
     return result;
   }
 
-  ListTaskMap getPlannedTomorrowTask() {
-    ListTaskMap result = [];
-    ListTaskMap plannedTask = getPlannedTask();
+  TaskMapList getPlannedTomorrowTask() {
+    TaskMapList result = [];
+    TaskMapList plannedTask = getPlannedTask();
     DateTime today = DateTime(
       DateTime.now().year,
       DateTime.now().month,
@@ -696,9 +696,9 @@ class TaskListProvider extends ChangeNotifier {
     return result;
   }
 
-  ListTaskMap getPlannedThisWeekTask() {
-    ListTaskMap result = [];
-    ListTaskMap plannedTask = getPlannedTask();
+  TaskMapList getPlannedThisWeekTask() {
+    TaskMapList result = [];
+    TaskMapList plannedTask = getPlannedTask();
 
     for (var pair in plannedTask) {
       if (isTheSameWeekAsToday(pair.keys.first.dueDate!)) {
@@ -708,9 +708,9 @@ class TaskListProvider extends ChangeNotifier {
     return result;
   }
 
-  ListTaskMap getPlannedLaterTask() {
-    ListTaskMap result = [];
-    ListTaskMap plannedTask = getPlannedTask();
+  TaskMapList getPlannedLaterTask() {
+    TaskMapList result = [];
+    TaskMapList plannedTask = getPlannedTask();
     DateTime today = DateTime(
       DateTime.now().year,
       DateTime.now().month,

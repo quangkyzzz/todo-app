@@ -1,5 +1,5 @@
 class GeneralUltility {
-  bool isTheSameWeekAsToday(DateTime date) {
+  static bool isTheSameWeekAsToday(DateTime date) {
     DateTime today = DateTime(
       DateTime.now().year,
       DateTime.now().month,
