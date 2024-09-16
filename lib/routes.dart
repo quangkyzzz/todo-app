@@ -84,11 +84,14 @@ var allRoute = {
   signupRoute: (context) => const SignUpPage(),
   userProfileRoute: (context) => const UserProfilePage(),
   importantRoute: (context) {
+    TaskList taskList = ModalRoute.of(context)?.settings.arguments as TaskList;
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => GroupViewModel()),
         ChangeNotifierProvider(create: (context) => TaskMapViewModel()),
-        ChangeNotifierProvider(create: (context) => TaskListViewModel()),
+        ChangeNotifierProvider(
+          create: (context) => TaskListViewModel(currentTaskList: taskList),
+        ),
       ],
       builder: (context, child) {
         return const ImportantPage();
@@ -97,11 +100,14 @@ var allRoute = {
   },
   searchRoute: (context) => const SearchPage(),
   plannedRoute: (context) {
+    TaskList taskList = ModalRoute.of(context)?.settings.arguments as TaskList;
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => GroupViewModel()),
         ChangeNotifierProvider(create: (context) => TaskMapViewModel()),
-        ChangeNotifierProvider(create: (context) => TaskListViewModel()),
+        ChangeNotifierProvider(
+          create: (context) => TaskListViewModel(currentTaskList: taskList),
+        ),
       ],
       builder: (context, child) {
         return const PlannedPage();
@@ -109,9 +115,12 @@ var allRoute = {
     );
   },
   myDayRoute: (context) {
+    TaskList taskList = ModalRoute.of(context)?.settings.arguments as TaskList;
     return MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (context) => TaskListViewModel()),
+          ChangeNotifierProvider(
+            create: (context) => TaskListViewModel(currentTaskList: taskList),
+          ),
           ChangeNotifierProvider(create: (context) => TaskMapViewModel()),
           ChangeNotifierProvider(create: (context) => GroupViewModel()),
         ],
@@ -131,7 +140,9 @@ var allRoute = {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => TaskMapViewModel()),
-          ChangeNotifierProvider(create: (context) => TaskListViewModel()),
+          ChangeNotifierProvider(
+            create: (context) => TaskListViewModel(currentTaskList: taskList),
+          ),
         ],
         builder: (context, child) {
           return TaskPage(

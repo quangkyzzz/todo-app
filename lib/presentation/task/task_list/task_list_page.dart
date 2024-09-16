@@ -30,19 +30,20 @@ class _TaskListPageState extends State<TaskListPage> {
 
   @override
   Widget build(BuildContext context) {
-    TaskListViewModel taskListViewModel = context.watch<TaskListViewModel>();
+    TaskList currentTaskList =
+        context.watch<TaskListViewModel>().currentTaskList;
     return Stack(
       fit: StackFit.expand,
       children: [
-        if ((taskListViewModel.currentTaskList!.backgroundImage != null))
-          if (taskListViewModel.currentTaskList!.defaultImage == -1)
+        if ((currentTaskList.backgroundImage != null))
+          if (currentTaskList.defaultImage == -1)
             Image.file(
-              File(taskListViewModel.currentTaskList!.backgroundImage!),
+              File(currentTaskList.backgroundImage!),
               fit: BoxFit.fitHeight,
             )
           else
             Image.asset(
-              taskListViewModel.currentTaskList!.backgroundImage!,
+              currentTaskList.backgroundImage!,
               fit: BoxFit.fitHeight,
             )
         else
@@ -54,22 +55,22 @@ class _TaskListPageState extends State<TaskListPage> {
             iconTheme: IconThemeData(
                 color: context
                     .watch<TaskListViewModel>()
-                    .currentTaskList!
+                    .currentTaskList
                     .themeColor),
             title: Consumer<TaskListViewModel>(
                 builder: (context, taskListViewModel, child) {
               return Text(
-                taskListViewModel.currentTaskList!.listName,
+                taskListViewModel.currentTaskList.listName,
                 style: TextStyle(
                   fontSize: 24,
-                  color: taskListViewModel.currentTaskList!.themeColor,
+                  color: taskListViewModel.currentTaskList.themeColor,
                 ),
               );
             }),
             actions: [
               PopupMenu(
-                taskList: taskListViewModel.currentTaskList!,
-                toRemove: (taskListViewModel.currentTaskList!.id == '1')
+                taskList: currentTaskList,
+                toRemove: (currentTaskList.id == '1')
                     ? (['rename_list', 'hide_completed_tasks', 'delete_list'])
                     : (['hide_completed_tasks']),
               )
@@ -78,7 +79,7 @@ class _TaskListPageState extends State<TaskListPage> {
           body: SingleChildScrollView(
             child: Consumer<TaskListViewModel>(
               builder: (context, taskListViewModel, child) {
-                TaskList taskList = taskListViewModel.currentTaskList!;
+                TaskList taskList = taskListViewModel.currentTaskList;
                 return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -94,8 +95,8 @@ class _TaskListPageState extends State<TaskListPage> {
             ),
           ),
           floatingActionButton: AddFloatingButton(
-            taskList: taskListViewModel.currentTaskList!,
-            themeColor: taskListViewModel.currentTaskList!.themeColor,
+            taskList: currentTaskList,
+            themeColor: currentTaskList.themeColor,
           ),
         ),
       ],

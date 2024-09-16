@@ -17,16 +17,16 @@ import 'home_bottom_navigation_bar.dart';
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-  onTapMyDay(BuildContext context) async {
-    await Navigator.of(context).pushNamed(myDayRoute);
+  onTapMyDay(BuildContext context, TaskList taskList) async {
+    await Navigator.of(context).pushNamed(myDayRoute, arguments: taskList);
   }
 
-  onTapImportant(BuildContext context) async {
-    await Navigator.of(context).pushNamed(importantRoute);
+  onTapImportant(BuildContext context, TaskList taskList) async {
+    await Navigator.of(context).pushNamed(importantRoute, arguments: taskList);
   }
 
-  onTapPlanned(BuildContext context) async {
-    await Navigator.of(context).pushNamed(plannedRoute);
+  onTapPlanned(BuildContext context, TaskList taskList) async {
+    await Navigator.of(context).pushNamed(plannedRoute, arguments: taskList);
   }
 
   onTapAssignToMe(BuildContext context, TaskList taskList) async {
@@ -69,7 +69,10 @@ class HomePage extends StatelessWidget {
               taskList: context.watch<GroupViewModel>().groups[0].taskLists[1],
               icon: Icons.wb_sunny_outlined,
               onTap: () {
-                onTapMyDay(context);
+                onTapMyDay(
+                  context,
+                  context.read<GroupViewModel>().groups[0].taskLists[1],
+                );
               },
               endNumber: taskListUltility.countIncompletedMyDayTask(),
             ),
@@ -77,7 +80,10 @@ class HomePage extends StatelessWidget {
               taskList: context.watch<GroupViewModel>().groups[0].taskLists[2],
               icon: Icons.star_border,
               onTap: () {
-                onTapImportant(context);
+                onTapImportant(
+                  context,
+                  context.read<GroupViewModel>().groups[0].taskLists[2],
+                );
               },
               endNumber: taskListUltility.countIncompletedImportantTask(),
             ),
@@ -85,7 +91,10 @@ class HomePage extends StatelessWidget {
               taskList: context.watch<GroupViewModel>().groups[0].taskLists[3],
               icon: Icons.list_alt_outlined,
               onTap: () {
-                onTapPlanned(context);
+                onTapPlanned(
+                  context,
+                  context.read<GroupViewModel>().groups[0].taskLists[3],
+                );
               },
               endNumber: taskListUltility.countIncompletedPlannedTask(),
             ),

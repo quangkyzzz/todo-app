@@ -19,24 +19,16 @@ class MyDayPage extends StatefulWidget {
 }
 
 class _MyDayPageState extends State<MyDayPage> {
-  late TaskList newTaskDestinationTaskList;
+  late TaskList addTaskDestinationTaskList;
   late TaskList myDayTaskList;
   bool isExpanded = true;
 
   @override
-  void didChangeDependencies() {
-    newTaskDestinationTaskList =
-        Provider.of<GroupViewModel>(context, listen: false)
-            .readGroupByID('1')
-            .taskLists[0];
-    myDayTaskList = Provider.of<GroupViewModel>(context, listen: true)
-        .readGroupByID('1')
-        .taskLists[1];
-    super.didChangeDependencies();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    addTaskDestinationTaskList =
+        context.read<GroupViewModel>().readGroupByID('1').taskLists[0];
+    myDayTaskList =
+        context.watch<GroupViewModel>().readGroupByID('1').taskLists[1];
     return Stack(
       fit: StackFit.expand,
       children: [
@@ -156,7 +148,7 @@ class _MyDayPageState extends State<MyDayPage> {
             ),
           ),
           floatingActionButton: MyDayFloatingButtons(
-            taskList: newTaskDestinationTaskList,
+            taskList: addTaskDestinationTaskList,
             themeColor: myDayTaskList.themeColor,
           ),
         ),

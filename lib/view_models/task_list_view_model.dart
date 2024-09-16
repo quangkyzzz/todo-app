@@ -4,8 +4,8 @@ import '../models/task_list.dart';
 import '../models/task.dart';
 
 class TaskListViewModel extends ChangeNotifier {
-  TaskList? currentTaskList;
-  TaskListViewModel({this.currentTaskList});
+  TaskList currentTaskList;
+  TaskListViewModel({required this.currentTaskList});
 
   void deleteTaskList({
     required TaskList taskList,
@@ -59,9 +59,9 @@ class TaskListViewModel extends ChangeNotifier {
     required String taskListID,
     required TaskList newTaskList,
   }) {
-    // getTaskList(taskListID: taskListID).copyFrom(copyTaskList: newTaskList);
+    currentTaskList.copyFrom(copyTaskList: newTaskList);
 
-    // notifyListeners();
+    notifyListeners();
   }
 
   void updateTaskListWith({
