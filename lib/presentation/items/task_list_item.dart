@@ -1,14 +1,14 @@
 // ignore_for_file: unnecessary_string_interpolations
-import 'package:flutter/material.dart' hide Step;
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../models/task_step.dart';
 import '../../models/task_list.dart';
 import '../../themes.dart';
 import '../../routes.dart';
 import '../../models/task.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
-import '../../view_models/task_view_model.dart';
+
+import '../../view_models/task_map_view_model.dart';
 
 class TaskListItem extends StatelessWidget {
   final BuildContext mContext;
@@ -31,32 +31,22 @@ class TaskListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isFirstIcon = true;
-    String myTitle = task.title;
-    bool isImportant = task.isImportant;
-    bool isOnMyDay = task.isOnMyDay;
-    bool isChecked = task.isCompleted;
-    List<TaskStep>? steps = task.stepList;
-    DateTime? dueDate = task.dueDate;
-    DateTime? remindTime = task.remindTime;
-    String? repeatFrequency = task.repeatFrequency;
-    List<String>? filePath = task.filePath;
-    String? note = task.note;
     int countCompletedStep = 0;
-    if (steps != null) {
-      for (var step in steps) {
+    if (task.stepList != null) {
+      for (var step in task.stepList!) {
         if (step.isCompleted) countCompletedStep++;
       }
     }
-    TaskViewModel taskViewModel = mContext.watch<TaskViewModel>();
+    TaskMapViewModel taskViewModel = mContext.read<TaskMapViewModel>();
     initializeDateFormatting('vi');
     double screenWidth = MediaQuery.of(context).size.width;
-    bool isAllBottomIconNull = ((!isOnMyDay) &&
-        (steps == null) &&
-        (dueDate == null) &&
-        (remindTime == null) &&
-        (repeatFrequency == null) &&
-        (filePath == null) &&
-        (note == null));
+    bool isAllBottomIconNull = ((!task.isOnMyDay) &&
+        (task.stepList == null) &&
+        (task.dueDate == null) &&
+        (task.remindTime == null) &&
+        (task.repeatFrequency == null) &&
+        (task.filePath == null) &&
+        (task.note == null));
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
@@ -84,7 +74,7 @@ class TaskListItem extends StatelessWidget {
               activeColor: themeColor,
               tristate: false,
               shape: const CircleBorder(),
-              value: isChecked,
+              value: task.isCompleted,
               onChanged: (bool? value) async {
                 await taskViewModel.updateTask(
                   taskListID: taskList.id,
@@ -98,7 +88,7 @@ class TaskListItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        myTitle,
+                        task.title,
                         style: MyTheme.itemTextStyle,
                       )
                     ],
@@ -110,7 +100,7 @@ class TaskListItem extends StatelessWidget {
                       SizedBox(
                         width: screenWidth * 0.65,
                         child: Text(
-                          myTitle,
+                          task.title,
                           overflow: TextOverflow.ellipsis,
                           style: MyTheme.itemTextStyle,
                         ),
@@ -119,67 +109,14 @@ class TaskListItem extends StatelessWidget {
                       Row(
                         children: [
                           Builder(builder: (context) {
-                            if (isOnMyDay) {
+                            if (task.isOnMyDay) {
                               bool tempFirstIcon = isFirstIcon;
                               isFirstIcon = false;
                               return ItemBottomIcon(
                                 textIcon: Icons.wb_sunny_outlined,
-                                text:
-                                    ((dueDate == null) || (remindTime == null))
-                                        ? 'My Day'
-                                        : '',
-                                isFirstIcon: tempFirstIcon,
-                              );
-                            } else {
-                              return const SizedBox();
-                            }
-                          }),
-                          Builder(builder: (context) {
-                            if (steps != null) {
-                              bool tempFirstIcon = isFirstIcon;
-                              isFirstIcon = false;
-                              return ItemBottomIcon(
-                                text:
-                                    '$countCompletedStep of ${steps.length.toString()}',
-                                isFirstIcon: tempFirstIcon,
-                              );
-                            } else {
-                              return const SizedBox();
-                            }
-                          }),
-                          Builder(builder: (context) {
-                            if (dueDate != null) {
-                              bool tempFirstIcon = isFirstIcon;
-                              bool isOverDue = false;
-                              DateTime today = DateTime(
-                                DateTime.now().year,
-                                DateTime.now().month,
-                                DateTime.now().day,
-                              );
-                              (dueDate.isBefore(today))
-                                  ? isOverDue = true
-                                  : isOverDue = false;
-                              isFirstIcon = false;
-
-                              return ItemBottomIcon(
-                                textIcon: Icons.calendar_today_outlined,
-                                text:
-                                    '${DateFormat('E, MMM d').format(dueDate)}',
-                                isFirstIcon: tempFirstIcon,
-                                isOverdue: isOverDue,
-                              );
-                            } else {
-                              return const SizedBox();
-                            }
-                          }),
-                          Builder(builder: (context) {
-                            if (remindTime != null) {
-                              bool tempFirstIcon = isFirstIcon;
-                              isFirstIcon = false;
-                              return ItemBottomIcon(
-                                textIcon: Icons.notifications_outlined,
-                                text: ((dueDate == null) && (!isOnMyDay))
-                                    ? '${DateFormat('E, MMM d').format(remindTime)}'
+                                text: ((task.dueDate == null) ||
+                                        (task.remindTime == null))
+                                    ? 'My Day'
                                     : '',
                                 isFirstIcon: tempFirstIcon,
                               );
@@ -188,7 +125,61 @@ class TaskListItem extends StatelessWidget {
                             }
                           }),
                           Builder(builder: (context) {
-                            if (repeatFrequency != null) {
+                            if (task.stepList != null) {
+                              bool tempFirstIcon = isFirstIcon;
+                              isFirstIcon = false;
+                              return ItemBottomIcon(
+                                text:
+                                    '$countCompletedStep of ${task.stepList!.length.toString()}',
+                                isFirstIcon: tempFirstIcon,
+                              );
+                            } else {
+                              return const SizedBox();
+                            }
+                          }),
+                          Builder(builder: (context) {
+                            if (task.dueDate != null) {
+                              bool tempFirstIcon = isFirstIcon;
+                              bool isOverDue = false;
+                              DateTime today = DateTime(
+                                DateTime.now().year,
+                                DateTime.now().month,
+                                DateTime.now().day,
+                              );
+                              (task.dueDate!.isBefore(today))
+                                  ? isOverDue = true
+                                  : isOverDue = false;
+                              isFirstIcon = false;
+
+                              return ItemBottomIcon(
+                                textIcon: Icons.calendar_today_outlined,
+                                text:
+                                    '${DateFormat('E, MMM d').format(task.dueDate!)}',
+                                isFirstIcon: tempFirstIcon,
+                                isOverdue: isOverDue,
+                              );
+                            } else {
+                              return const SizedBox();
+                            }
+                          }),
+                          Builder(builder: (context) {
+                            if (task.remindTime != null) {
+                              bool tempFirstIcon = isFirstIcon;
+                              isFirstIcon = false;
+                              return ItemBottomIcon(
+                                textIcon: Icons.notifications_outlined,
+                                text: ((task.dueDate == null) &&
+                                        (!task.isOnMyDay))
+                                    ? '${DateFormat('E, MMM d').format(task.remindTime!)}'
+                                    : '',
+                                isFirstIcon: tempFirstIcon,
+                              );
+                            } else {
+                              return const SizedBox();
+                            }
+                          }),
+                          Builder(builder: (context) {
+                            if (task.repeatFrequency != null) {
                               bool tempFirstIcon = isFirstIcon;
                               isFirstIcon = false;
                               return ItemBottomIcon(
@@ -201,7 +192,7 @@ class TaskListItem extends StatelessWidget {
                             }
                           }),
                           Builder(builder: (context) {
-                            if (filePath != null) {
+                            if (task.filePath != null) {
                               bool tempFirstIcon = isFirstIcon;
                               isFirstIcon = false;
                               return ItemBottomIcon(
@@ -213,7 +204,7 @@ class TaskListItem extends StatelessWidget {
                             }
                           }),
                           Builder(builder: (context) {
-                            if (note != null) {
+                            if (task.note != null) {
                               bool tempFirstIcon = isFirstIcon;
                               isFirstIcon = false;
                               return ItemBottomIcon(
@@ -238,10 +229,11 @@ class TaskListItem extends StatelessWidget {
                         await taskViewModel.updateTask(
                           taskListID: taskList.id,
                           taskID: task.id,
-                          newTask: task.copyWith(isImportant: !isImportant),
+                          newTask:
+                              task.copyWith(isImportant: !task.isImportant),
                         );
                       },
-                      icon: (isImportant)
+                      icon: (task.isImportant)
                           ? Icon(
                               Icons.star,
                               color: themeColor,
