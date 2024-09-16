@@ -1,9 +1,10 @@
-Báo cáo 14/9
+Báo cáo 16/9
 Đã làm:
-    -   Sửa lỗi các view model truy cập vào các view model khác
-    -   Xóa bỏ các view model tạm thời
-    -   Sửa một vài hàm trong groupViewModel và taskListViewModel
-
+    -   Chuyển các taskList tự do vào group mặc định.
+    -   Thay đổi cấu trúc hàm thêm/xóa taskList vào group.
+    -   Tách biệt view model của taskList đối với taskListPage và HomePage.
+Đang làm:
+    -   Sửa my day page theo đúng cấu trúc mvvm
 Dự định làm:
-    -   Dựa vào review để tiếp tục chỉnh sửa các màn còn lại.
+    -   Sửa các màn còn lại theo đúng cấu trúc mvvm.
     
