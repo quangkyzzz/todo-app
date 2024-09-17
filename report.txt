@@ -1,9 +1,11 @@
-Báo cáo 16/9
+Báo cáo 17/9
 Đã làm:
-    -   Chuyển các taskList tự do vào group mặc định.
-    -   Thay đổi cấu trúc hàm thêm/xóa taskList vào group.
-    -   Tách biệt view model của taskList đối với taskListPage và HomePage.
+    -   Sửa My Day Page, Important Page, Planned Page theo đúng cấu trúc.
+    -   Tách taskViewModel và taskMapViewModel.
+    -   Sửa cấu trúc code của màn taskListPage.
+    -   Sửa hàm sortBy của màn taskListPage.
 Đang làm:
-    -   Sửa my day page theo đúng cấu trúc mvvm
+    -   Sửa hàm chức năng change theme của màn taskListPage.
 Dự định làm:
-    -   Sửa các màn còn lại theo đúng cấu trúc mvvm.
+    -   Sửa các hàm chức năng còn lại của màn taskListPage.
+    -   Sửa màn taskPage theo đúng cấu trúc mvvm.
