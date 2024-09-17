@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/task_list.dart';
-import '../../view_models/settings_view_model.dart';
+import '../../provider/settings_provider.dart';
 import '../../view_models/task_list_view_model.dart';
 import 'show_alert_dialog.dart';
 import 'show_text_edit_dialog.dart';
@@ -177,7 +177,7 @@ class PopupMenu extends StatelessWidget {
   }
 
   void onTapDeleteList(BuildContext context, TaskList taskList) async {
-    if (context.read<SettingsViewModel>().settings.isConfirmBeforeDelete) {
+    if (context.read<SettingsProvider>().settings.isConfirmBeforeDelete) {
       bool isDelete = await showAlertDialog(
         context,
         'Are you sure?',

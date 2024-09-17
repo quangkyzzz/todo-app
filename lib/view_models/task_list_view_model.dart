@@ -2,11 +2,16 @@ import 'package:flutter/material.dart';
 
 import '../models/task_list.dart';
 import '../models/task.dart';
+import '../provider/settings_provider.dart';
 import '../service/background_service.dart';
 
 class TaskListViewModel extends ChangeNotifier {
+  SettingsProvider settingsProvider;
   TaskList currentTaskList;
-  TaskListViewModel({required this.currentTaskList});
+  TaskListViewModel({
+    required this.currentTaskList,
+    required this.settingsProvider,
+  });
 
   void deleteTaskList({
     required TaskList taskList,
@@ -154,7 +159,7 @@ class TaskListViewModel extends ChangeNotifier {
       isOnMyDay: isOnMyDay,
       createDate: DateTime.now(),
     );
-    if (true /*settingsProvider.settings.isAddNewTaskOnTop*/) {
+    if (settingsProvider.settings.isAddNewTaskOnTop) {
       currentTaskList.tasks.insert(0, task);
     } else {
       currentTaskList.tasks.add(task);

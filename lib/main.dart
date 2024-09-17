@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'provider/settings_provider.dart';
 import 'service/background_service.dart';
 import 'service/notification_service.dart';
 import 'themes.dart';
 import 'routes.dart';
 import 'package:workmanager/workmanager.dart';
-
-import 'view_models/settings_view_model.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +21,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => SettingsViewModel(),
+      create: (context) => SettingsProvider(),
       builder: (context, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
