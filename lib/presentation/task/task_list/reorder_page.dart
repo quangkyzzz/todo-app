@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../../../models/task_list.dart';
-import '../../../provider/task_list_provider.dart';
 import '../../../themes.dart';
 import '../../items/task_list_item.dart';
 
@@ -17,22 +15,10 @@ class ReorderPage extends StatefulWidget {
 }
 
 class _ReorderPageState extends State<ReorderPage> {
-  late TaskListProvider taskListProvider;
-
-  @override
-  void initState() {
-    taskListProvider = Provider.of<TaskListProvider>(context, listen: false);
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        taskListProvider.updateTaskList(
-          taskListID: widget.taskList.id,
-          newTaskList: widget.taskList,
-        );
         return true;
       },
       child: Scaffold(

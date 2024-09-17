@@ -162,9 +162,28 @@ var allRoute = {
         });
   },
   settingsRoute: (context) => const SettingsPage(),
-  reorderRoute: (context) => ReorderPage(
-        taskList: ModalRoute.of(context)?.settings.arguments as TaskList,
+  reorderRoute: (context) {
+    TaskList taskList = ModalRoute.of(context)?.settings.arguments as TaskList;
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProxyProvider<SettingsProvider, TaskListViewModel>(
+          create: (context) => TaskListViewModel(
+            currentTaskList: taskList,
+            settingsProvider: context.read<SettingsProvider>(),
+          ),
+          update: (context, settingsProvider, taskListViewModel) =>
+              TaskListViewModel(
+            currentTaskList: taskList,
+            settingsProvider: settingsProvider,
+          ),
+        ),
+        ChangeNotifierProvider(create: (context) => TaskMapViewModel()),
+      ],
+      builder: (context, child) => ReorderPage(
+        taskList: taskList,
       ),
+    );
+  },
   taskRoute: (context) {
     Map<dynamic, dynamic> arg =
         ModalRoute.of(context)?.settings.arguments as Map;
