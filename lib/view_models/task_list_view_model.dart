@@ -77,6 +77,7 @@ class TaskListViewModel extends ChangeNotifier {
     int? defaultImage,
     Map<String, dynamic>? sortByType,
     List<Task>? tasks,
+    Task? newTask,
   }) {
     currentTaskList.listName = listName ?? currentTaskList.listName;
     currentTaskList.groupID = groupID ?? currentTaskList.groupID;
@@ -85,7 +86,11 @@ class TaskListViewModel extends ChangeNotifier {
     currentTaskList.defaultImage = defaultImage ?? currentTaskList.defaultImage;
     currentTaskList.sortByType = sortByType ?? currentTaskList.sortByType;
     currentTaskList.tasks = tasks ?? currentTaskList.tasks;
-
+    if (newTask != null) {
+      currentTaskList.tasks
+          .firstWhere((element) => (element.id == newTask.id))
+          .copyFrom(copyTask: newTask);
+    }
     notifyListeners();
   }
 

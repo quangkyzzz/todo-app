@@ -1,4 +1,6 @@
 // ignore_for_file: unnecessary_string_interpolations
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/task_list.dart';
@@ -7,7 +9,7 @@ import '../../routes.dart';
 import '../../models/task.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
-
+import '../../view_models/task_list_view_model.dart';
 import '../../view_models/task_map_view_model.dart';
 
 class TaskListItem extends StatelessWidget {
@@ -37,8 +39,9 @@ class TaskListItem extends StatelessWidget {
         if (step.isCompleted) countCompletedStep++;
       }
     }
-    TaskMapViewModel taskViewModel = mContext.read<TaskMapViewModel>();
-    initializeDateFormatting('vi');
+    TaskMapViewModel taskMapViewModel = mContext.read<TaskMapViewModel>();
+    TaskListViewModel taskListViewModel = mContext.read<TaskListViewModel>();
+    unawaited(initializeDateFormatting('vi'));
     double screenWidth = MediaQuery.of(context).size.width;
     bool isAllBottomIconNull = ((!task.isOnMyDay) &&
         (task.stepList == null) &&
@@ -76,9 +79,13 @@ class TaskListItem extends StatelessWidget {
               shape: const CircleBorder(),
               value: task.isCompleted,
               onChanged: (bool? value) async {
-                await taskViewModel.updateTask(
+                await taskMapViewModel.updateTask(
                   taskListID: taskList.id,
                   taskID: task.id,
+                  newTask: task.copyWith(isCompleted: value),
+                );
+                taskListViewModel.updateTaskListWith(
+                  taskListID: taskList.id,
                   newTask: task.copyWith(isCompleted: value),
                 );
               },
@@ -129,8 +136,9 @@ class TaskListItem extends StatelessWidget {
                               bool tempFirstIcon = isFirstIcon;
                               isFirstIcon = false;
                               return ItemBottomIcon(
-                                text:
-                                    '$countCompletedStep of ${task.stepList!.length.toString()}',
+                                text: '$countCompletedStep'
+                                    'of'
+                                    '${task.stepList!.length.toString()}',
                                 isFirstIcon: tempFirstIcon,
                               );
                             } else {
@@ -226,9 +234,14 @@ class TaskListItem extends StatelessWidget {
               child: (!havePlusIcon)
                   ? IconButton(
                       onPressed: () async {
-                        await taskViewModel.updateTask(
+                        await taskMapViewModel.updateTask(
                           taskListID: taskList.id,
                           taskID: task.id,
+                          newTask:
+                              task.copyWith(isImportant: !task.isImportant),
+                        );
+                        taskListViewModel.updateTaskListWith(
+                          taskListID: taskList.id,
                           newTask:
                               task.copyWith(isImportant: !task.isImportant),
                         );
