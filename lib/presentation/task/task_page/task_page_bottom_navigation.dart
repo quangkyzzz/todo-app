@@ -3,9 +3,9 @@ import 'package:provider/provider.dart';
 import '../../../models/task_list.dart';
 import '../../../service/notification_service.dart';
 import '../../../provider/settings_provider.dart';
-import '../../../provider/task_list_provider.dart';
 import '../../../themes.dart';
 import '../../../models/task.dart';
+import '../../../view_models/task_view_model.dart';
 import '../../components/show_alert_dialog.dart';
 import 'package:intl/intl.dart';
 
@@ -30,8 +30,8 @@ class TaskPageBottomNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TaskListProvider taskListProvider =
-        Provider.of<TaskListProvider>(context, listen: false);
+    TaskViewModel taskViewModel =
+        Provider.of<TaskViewModel>(context, listen: false);
     SettingsProvider settingsProvider =
         Provider.of<SettingsProvider>(context, listen: false);
     Duration diffTime = DateTime.now().difference(task.createDate);
@@ -69,14 +69,14 @@ class TaskPageBottomNavigation extends StatelessWidget {
                 if (isDelete) {
                   await NotificationService.cancelNotification(
                       int.parse(task.id));
-                  taskListProvider.deleteTask(
+                  taskViewModel.deleteTask(
                       taskListID: taskList.id, taskID: task.id);
                   if (context.mounted) {
                     Navigator.pop(context);
                   }
                 }
               } else {
-                taskListProvider.deleteTask(
+                taskViewModel.deleteTask(
                     taskListID: taskList.id, taskID: task.id);
                 Navigator.pop(context);
               }

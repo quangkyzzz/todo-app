@@ -20,6 +20,7 @@ import 'view_models/auth_view_model.dart';
 import 'view_models/group_view_model.dart';
 import 'view_models/task_list_view_model.dart';
 import 'view_models/task_map_view_model.dart';
+import 'view_models/task_view_model.dart';
 
 const initialRoute = '/home';
 const loginRoute = '/login';
@@ -191,7 +192,9 @@ var allRoute = {
     TaskList taskList = arg['taskList'];
     return MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (context) => TaskMapViewModel()),
+          ChangeNotifierProvider(
+            create: (context) => TaskViewModel(currentTask: task),
+          ),
           ChangeNotifierProxyProvider<SettingsProvider, TaskListViewModel>(
             create: (context) => TaskListViewModel(
               currentTaskList: taskList,
@@ -216,9 +219,16 @@ var allRoute = {
         ModalRoute.of(context)?.settings.arguments as Map;
     Task task = arg['task'];
     TaskList taskList = arg['taskList'];
-    return NoteEditPage(
-      task: task,
-      taskList: taskList,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => TaskViewModel(currentTask: task),
+        )
+      ],
+      builder: (context, child) => NoteEditPage(
+        task: task,
+        taskList: taskList,
+      ),
     );
   },
 };

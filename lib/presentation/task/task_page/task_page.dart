@@ -6,11 +6,10 @@ import 'package:provider/provider.dart';
 import '../../../service/background_service.dart';
 import '../../../models/task_step.dart';
 import '../../../models/task_list.dart';
+import '../../../view_models/task_view_model.dart';
 import '../../components/show_custom_repeat_time_dialog.dart';
 import 'file_item.dart';
-import '../../../provider/group_provider.dart';
 import '../../../provider/settings_provider.dart';
-import '../../../provider/task_list_provider.dart';
 import '../../../themes.dart';
 import '../../../routes.dart';
 import '../../../models/task.dart';
@@ -37,8 +36,7 @@ class TaskPage extends StatefulWidget {
 }
 
 class _TaskPageState extends State<TaskPage> {
-  late TaskListProvider taskListProvider;
-  late GroupProvider groupProvider;
+  late TaskViewModel taskViewModel;
   late SettingsProvider settingsProvider;
   late bool isLoading;
   GlobalKey key = GlobalKey();
@@ -293,8 +291,7 @@ class _TaskPageState extends State<TaskPage> {
   void initState() {
     unawaited(initializeDateFormatting());
     isLoading = false;
-    taskListProvider = Provider.of<TaskListProvider>(context, listen: false);
-    groupProvider = Provider.of<GroupProvider>(context, listen: false);
+    taskViewModel = Provider.of<TaskViewModel>(context, listen: false);
     settingsProvider = Provider.of<SettingsProvider>(context, listen: false);
     title = widget.task.title;
     isOnMyDay = widget.task.isOnMyDay;
@@ -371,39 +368,6 @@ class _TaskPageState extends State<TaskPage> {
       var temp = repeatActiveText.split(' ')[1];
       repeatActiveText = temp.substring(0, temp.length - 1);
     }
-    List<Map<String, dynamic>> listTaskItem = [
-      {
-        'isActive': isOnMyDay,
-        'icon': Icons.wb_sunny_outlined,
-        'text': 'Add to My Day',
-        'activeText': 'Added to My Day',
-        'onTap': onTapAddToMyDay,
-      },
-      {
-        'isActive': (remindTime != null),
-        'icon': Icons.notifications_outlined,
-        'text': 'Remind me',
-        'activeText': 'Remind at'
-            ' ${DateFormat('h:mm a, MMM d').format(remindTime ?? DateTime(2000))}',
-        'onTap': onTapRemindMe,
-      },
-      {
-        'isActive': (dueDate != null),
-        'icon': Icons.calendar_today_outlined,
-        'text': 'Add due date',
-        'activeText':
-            'Due ${DateFormat('E, MMM d').format(dueDate ?? DateTime(2000))}',
-        'onTap': onTapAddDueDate,
-      },
-      {
-        'isActive': (repeatFrequency != null),
-        'icon': Icons.repeat_outlined,
-        'key': key,
-        'text': 'Repeat',
-        'activeText': 'Repeat every $repeatActiveText',
-        'onTap': onTapRepeat,
-      },
-    ];
 
     return Scaffold(
       appBar: AppBar(
@@ -428,7 +392,7 @@ class _TaskPageState extends State<TaskPage> {
             filePath: filePaths,
             note: widget.task.note,
           );
-          await taskListProvider.updateTask(
+          await taskViewModel.updateTask(
             taskListID: widget.taskList.id,
             taskID: widget.task.id,
             newTask: newTask,
@@ -493,25 +457,48 @@ class _TaskPageState extends State<TaskPage> {
               //////////////////////////////
               //List uniform task page item
               const SizedBox(height: 6),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const ClampingScrollPhysics(),
-                itemCount: listTaskItem.length,
-                itemBuilder: (BuildContext context, int index) {
-                  Map<String, dynamic> item = listTaskItem[index];
-                  return TaskPageItem(
-                    task: widget.task,
-                    taskList: widget.taskList,
-                    key: item['key'],
-                    isActive: item['isActive'],
-                    icon: item['icon'],
-                    text: item['text'],
-                    activeText: item['activeText'],
-                    onTap: ({bool isDisable = false}) {
-                      item['onTap'](context, isDisable: isDisable);
-                    },
-                  );
+              TaskPageItem(
+                isActive: isOnMyDay,
+                icon: Icons.wb_sunny_outlined,
+                text: 'Add to My Day',
+                onTap: ({bool isDisable = false}) {
+                  onTapAddToMyDay(context, isDisable: isDisable);
                 },
+                task: widget.task,
+                activeText: 'Added to My Day',
+              ),
+              TaskPageItem(
+                isActive: (remindTime != null),
+                icon: Icons.notifications_outlined,
+                text: 'Remind me',
+                onTap: ({bool isDisable = false}) {
+                  onTapRemindMe(context, isDisable: isDisable);
+                },
+                task: widget.task,
+                activeText: 'Remind at'
+                    ' ${DateFormat('h:mm a, MMM d').format(remindTime ?? DateTime(2000))}',
+              ),
+              TaskPageItem(
+                isActive: (dueDate != null),
+                icon: Icons.calendar_today_outlined,
+                text: 'Add due date',
+                onTap: ({bool isDisable = false}) {
+                  onTapAddDueDate(context, isDisable: isDisable);
+                },
+                task: widget.task,
+                activeText: 'Due '
+                    '${DateFormat('E, MMM d').format(dueDate ?? DateTime(2000))}',
+              ),
+              TaskPageItem(
+                isActive: (repeatFrequency != null),
+                icon: Icons.repeat_outlined,
+                key: key,
+                text: 'Repeat',
+                onTap: ({bool isDisable = false}) async {
+                  onTapRepeat(context, isDisable: isDisable);
+                },
+                task: widget.task,
+                activeText: 'Repeat every $repeatActiveText',
               ),
               const SizedBox(height: 6),
               //////////////////////////
@@ -553,21 +540,16 @@ class _TaskPageState extends State<TaskPage> {
                 onTap: ({bool isDisable = false}) {
                   onTapAddFile(context);
                 },
-                taskList: widget.taskList,
                 task: widget.task,
                 activeText: 'active',
               ),
 
               //////////////////////////
               //Add and edit note button
-              Consumer<TaskListProvider>(
-                  builder: (context, taskListProvider, child) {
-                return AddAndEditNoteButton(
-                  task: widget.task,
-                  taskList: widget.taskList,
-                  taskListProvider: taskListProvider,
-                );
-              })
+              AddAndEditNoteButton(
+                task: widget.task,
+                taskList: widget.taskList,
+              )
             ],
           ),
         ),
@@ -607,12 +589,10 @@ class AddAndEditNoteButton extends StatelessWidget {
     super.key,
     required this.task,
     required this.taskList,
-    required this.taskListProvider,
   });
 
   final Task task;
   final TaskList taskList;
-  final TaskListProvider taskListProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -642,12 +622,7 @@ class AddAndEditNoteButton extends StatelessWidget {
                     controller: scrollController,
                     padding: const EdgeInsets.only(right: 8),
                     child: Text(
-                      taskListProvider
-                          .getTask(
-                            taskListID: taskList.id,
-                            taskID: task.id,
-                          )
-                          .note!,
+                      context.watch<TaskViewModel>().currentTask.note!,
                       maxLines: null,
                       style: MyTheme.itemSmallTextStyle,
                     ),

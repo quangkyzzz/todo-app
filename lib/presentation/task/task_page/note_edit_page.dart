@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../models/task_list.dart';
 import '../../../models/task.dart';
-import '../../../provider/task_list_provider.dart';
 import '../../../themes.dart';
+import '../../../view_models/task_view_model.dart';
 
 class NoteEditPage extends StatefulWidget {
   final Task task;
@@ -19,12 +19,12 @@ class NoteEditPage extends StatefulWidget {
 }
 
 class _NoteEditPageState extends State<NoteEditPage> {
-  late TaskListProvider taskListProvider;
+  late TaskViewModel taskViewModel;
   late TextEditingController _controller;
 
   @override
   void initState() {
-    taskListProvider = Provider.of<TaskListProvider>(context, listen: false);
+    taskViewModel = Provider.of<TaskViewModel>(context, listen: false);
     _controller = TextEditingController(text: widget.task.note);
 
     super.initState();
@@ -48,7 +48,7 @@ class _NoteEditPageState extends State<NoteEditPage> {
           IconButton(
             onPressed: () async {
               Task newTask = widget.task.copyWith(note: _controller.text);
-              await taskListProvider.updateTask(
+              await taskViewModel.updateTask(
                 taskListID: widget.taskList.id,
                 taskID: widget.task.id,
                 newTask: newTask,

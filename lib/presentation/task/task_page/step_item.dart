@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../models/task_step.dart';
 import '../../../models/task_list.dart';
+import '../../../view_models/task_view_model.dart';
 import '../../items/popup_item.dart';
-import '../../../provider/task_list_provider.dart';
 import '../../../themes.dart';
 
 class StepItem extends StatefulWidget {
@@ -22,13 +22,13 @@ class StepItem extends StatefulWidget {
 }
 
 class _StepItemState extends State<StepItem> {
-  late final TaskListProvider taskListProvider;
+  late final TaskViewModel taskViewModel;
   late TaskStep step;
   late TextEditingController _controller;
 
   @override
   void initState() {
-    taskListProvider = Provider.of<TaskListProvider>(context, listen: false);
+    taskViewModel = Provider.of<TaskViewModel>(context, listen: false);
     step = widget.step;
     _controller = TextEditingController();
     _controller.text = widget.step.stepName;
@@ -71,7 +71,7 @@ class _StepItemState extends State<StepItem> {
             PopupMenuItem(
               onTap: () {
                 widget.callBack(step, isDelete: true);
-                taskListProvider.createTask(
+                taskViewModel.createTask(
                   taskListID: widget.taskList.id,
                   taskName: step.stepName,
                   isCompleted: step.isCompleted,

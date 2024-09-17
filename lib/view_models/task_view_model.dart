@@ -6,6 +6,31 @@ class TaskViewModel extends ChangeNotifier {
   Task currentTask;
   TaskViewModel({required this.currentTask});
 
+  void createTask({
+    required String taskListID,
+    required String taskName,
+    required bool isCompleted,
+    bool isOnMyDay = false,
+    bool isImportant = false,
+  }) {
+    // Task task = Task(
+    //   id: DateTime.now().millisecondsSinceEpoch.toString(),
+    //   title: taskName,
+    //   isCompleted: isCompleted,
+    //   isImportant: isImportant,
+    //   isOnMyDay: isOnMyDay,
+    //   createDate: DateTime.now(),
+    // );
+    // TaskList? taskList = getTaskList(taskListID: taskListID);
+    // if (settingsProvider.settings.isAddNewTaskOnTop) {
+    //   taskList.tasks.insert(0, task);
+    // } else {
+    //   taskList.tasks.add(task);
+    // }
+
+    notifyListeners();
+  }
+
   Future<void> updateTask({
     required String taskListID,
     required String taskID,
@@ -44,6 +69,26 @@ class TaskViewModel extends ChangeNotifier {
     //   if (task.note == '') task.note = null;
     // }
 
-    // notifyListeners();
+    notifyListeners();
+  }
+
+  void deleteTask({
+    required String taskListID,
+    required String taskID,
+  }) {
+    // TaskList? taskList = taskLists.firstWhereOrNull(
+    //   (element) => (element.id == taskListID),
+    // );
+    // if (taskList != null) {
+    //   taskList.tasks.removeWhere((element) {
+    //     if ((element.id == taskID) && (element.remindTime != null)) {
+    //       // ignore: discarded_futures
+    //       BackGroundService.cancelTaskByID(id: taskID);
+    //     }
+    //     return (element.id == taskID);
+    //   });
+    // }
+
+    notifyListeners();
   }
 }

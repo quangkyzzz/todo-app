@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import '../../../themes.dart';
 import 'package:path/path.dart' as path;
 
+import '../../../ultility/general_ultility.dart';
+
 class FileItem extends StatelessWidget {
   final String filePath;
   final Function() onClose;
@@ -15,19 +17,6 @@ class FileItem extends StatelessWidget {
     required this.onClose,
     required this.onTap,
   });
-
-  String fileSizeConvert(int size) {
-    double convertedSize = size / 1024;
-    if (convertedSize < 1024) {
-      return '${convertedSize.toStringAsFixed(2)} KB';
-    } else if (convertedSize < 1024 * 1024) {
-      return '${(convertedSize / 1024).toStringAsFixed(2)} MB';
-    } else if (convertedSize < 1024 * 1024 * 1024) {
-      return '${(convertedSize / (1024 * 1024)).toStringAsFixed(2)} GB';
-    } else {
-      return '${(convertedSize / (1024 * 1024)).toStringAsFixed(2)} GB';
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +57,7 @@ class FileItem extends StatelessWidget {
                     style: MyTheme.itemSmallTextStyle,
                   ),
                   Text(
-                    fileSizeConvert(file.lengthSync()),
+                    GeneralUltility.fileSizeConvert(file.lengthSync()),
                     style: MyTheme.itemExtraSmallGreyTextStyle,
                   ),
                 ],

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../../models/task_list.dart';
 import '../../../models/task.dart';
 import '../../../themes.dart';
 
 class TaskPageItem extends StatefulWidget {
-  final TaskList taskList;
   final Task task;
   final bool isActive;
   final IconData icon;
@@ -18,7 +16,6 @@ class TaskPageItem extends StatefulWidget {
     required this.icon,
     required this.text,
     required this.onTap,
-    required this.taskList,
     required this.task,
     required this.activeText,
   });
