@@ -203,7 +203,6 @@ class _PlannedPageState extends State<PlannedPage> {
                       itemCount: plannedTasks.length,
                       itemBuilder: (BuildContext context, int index) {
                         Task task = plannedTasks[index].keys.first;
-                        TaskList taskList = plannedTasks[index].values.first;
                         return TaskListItem(
                           mContext: context,
                           task: plannedTasks[index].keys.first,
@@ -211,14 +210,12 @@ class _PlannedPageState extends State<PlannedPage> {
                           themeColor: plannedTaskList.themeColor,
                           onTapCheck: (bool? value) {
                             context.read<TaskMapViewModel>().updateTaskWith(
-                                  taskListID: taskList.id,
                                   taskID: task.id,
                                   isCompleted: value,
                                 );
                           },
                           onTapStar: () {
                             context.read<TaskMapViewModel>().updateTaskWith(
-                                  taskListID: taskList.id,
                                   taskID: task.id,
                                   isImportant: !task.isImportant,
                                 );

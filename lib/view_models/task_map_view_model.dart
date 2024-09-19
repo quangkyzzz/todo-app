@@ -263,7 +263,6 @@ class TaskMapViewModel extends ChangeNotifier {
   }
 
   void updateTaskWith({
-    required String taskListID,
     required String taskID,
     String? title,
     bool? isCompleted,

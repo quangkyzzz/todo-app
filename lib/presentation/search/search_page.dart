@@ -168,14 +168,12 @@ class _SearchPageState extends State<SearchPage> {
                               themeColor: MyTheme.blueColor,
                               onTapCheck: (bool? value) {
                                 context.read<TaskMapViewModel>().updateTaskWith(
-                                      taskListID: item.values.first.id,
                                       taskID: item.keys.first.id,
                                       isCompleted: value,
                                     );
                               },
                               onTapStar: () {
                                 context.read<TaskMapViewModel>().updateTaskWith(
-                                      taskListID: item.values.first.id,
                                       taskID: item.keys.first.id,
                                       isImportant: !item.keys.first.isImportant,
                                     );
@@ -192,14 +190,12 @@ class _SearchPageState extends State<SearchPage> {
                             themeColor: MyTheme.blueColor,
                             onTapCheck: (bool? value) {
                               context.read<TaskMapViewModel>().updateTaskWith(
-                                    taskListID: item.values.first.id,
                                     taskID: item.keys.first.id,
                                     isCompleted: value,
                                   );
                             },
                             onTapStar: () {
                               context.read<TaskMapViewModel>().updateTaskWith(
-                                    taskListID: item.values.first.id,
                                     taskID: item.keys.first.id,
                                     isImportant: !item.keys.first.isImportant,
                                   );

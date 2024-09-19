@@ -104,7 +104,6 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
                                           context
                                               .read<TaskMapViewModel>()
                                               .updateTaskWith(
-                                                taskListID: taskList.id,
                                                 taskID: task.id,
                                                 isOnMyDay: true,
                                               );
@@ -113,7 +112,6 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
                                           context
                                               .read<TaskMapViewModel>()
                                               .updateTaskWith(
-                                                taskListID: taskList.id,
                                                 taskID: task.id,
                                                 isCompleted: value,
                                               );
@@ -154,7 +152,6 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
                                           context
                                               .read<TaskMapViewModel>()
                                               .updateTaskWith(
-                                                taskListID: taskList.id,
                                                 taskID: task.id,
                                                 isOnMyDay: true,
                                               );
@@ -166,7 +163,6 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
                                           context
                                               .read<TaskMapViewModel>()
                                               .updateTaskWith(
-                                                taskListID: taskList.id,
                                                 taskID: task.id,
                                                 isCompleted: value,
                                               );
@@ -175,7 +171,6 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
                                           context
                                               .read<TaskMapViewModel>()
                                               .updateTaskWith(
-                                                taskListID: taskList.id,
                                                 taskID: task.id,
                                                 isImportant: !task.isImportant,
                                               );

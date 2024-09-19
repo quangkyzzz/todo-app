@@ -96,13 +96,11 @@ class _TaskListPageState extends State<ImportantPage> {
                       themeColor: importantTaskList.themeColor,
                       onTapCheck: (bool? value) {
                         context.read<TaskMapViewModel>().updateTaskWith(
-                            taskListID: importantTasks[index].values.first.id,
                             taskID: importantTasks[index].keys.first.id,
                             isCompleted: value);
                       },
                       onTapStar: () {
                         context.read<TaskMapViewModel>().updateTaskWith(
-                              taskListID: importantTasks[index].values.first.id,
                               taskID: importantTasks[index].keys.first.id,
                               isImportant:
                                   !importantTasks[index].keys.first.isImportant,

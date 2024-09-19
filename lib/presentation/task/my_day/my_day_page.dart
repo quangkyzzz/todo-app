@@ -108,14 +108,11 @@ class _MyDayPageState extends State<MyDayPage> {
                         themeColor: myDayTaskList.themeColor,
                         onTapCheck: (bool? value) {
                           context.read<TaskMapViewModel>().updateTaskWith(
-                              taskListID: inCompleteList[index].values.first.id,
                               taskID: inCompleteList[index].keys.first.id,
                               isCompleted: value);
                         },
                         onTapStar: () {
                           context.read<TaskMapViewModel>().updateTaskWith(
-                                taskListID:
-                                    inCompleteList[index].values.first.id,
                                 taskID: inCompleteList[index].keys.first.id,
                                 isImportant: !inCompleteList[index]
                                     .keys
@@ -151,8 +148,6 @@ class _MyDayPageState extends State<MyDayPage> {
                               itemCount: completedlist.length,
                               itemBuilder: (BuildContext _, int index) {
                                 Task task = completedlist[index].keys.first;
-                                TaskList taskList =
-                                    completedlist[index].values.first;
                                 return TaskListItem(
                                   mContext: context,
                                   task: completedlist[index].keys.first,
@@ -162,7 +157,6 @@ class _MyDayPageState extends State<MyDayPage> {
                                     context
                                         .read<TaskMapViewModel>()
                                         .updateTaskWith(
-                                            taskListID: taskList.id,
                                             taskID: task.id,
                                             isCompleted: value);
                                   },
@@ -170,7 +164,6 @@ class _MyDayPageState extends State<MyDayPage> {
                                     context
                                         .read<TaskMapViewModel>()
                                         .updateTaskWith(
-                                          taskListID: taskList.id,
                                           taskID: task.id,
                                           isImportant: !task.isImportant,
                                         );
