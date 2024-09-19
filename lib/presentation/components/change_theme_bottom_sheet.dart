@@ -131,6 +131,14 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
                   },
                   text: 'Image :',
                 ),
+                const SizedBox(width: 8),
+                CustomOutlinedButton(
+                  isHighLighted: (_page == 2),
+                  onTap: () {
+                    onPageChange(2);
+                  },
+                  text: 'Custom :',
+                ),
               ],
             ),
             SingleChildScrollView(
@@ -147,32 +155,41 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
                         );
                       }).toList(),
                     )
-                  : Row(
-                      children: [
-                        CustomOutlinedButton(
-                          isHighLighted: false,
-                          onTap: onClean,
-                          text: 'Clean',
+                  : (_page == 1)
+                      ? Row(
+                          children: [
+                            CustomOutlinedButton(
+                              isHighLighted: false,
+                              onTap: onClean,
+                              text: 'Clean',
+                            ),
+                            const SizedBox(width: 6),
+                            ...MyTheme.imageList.map((imgPath) {
+                              return SelectImageButton(
+                                imgPath: imgPath,
+                                onTap: () {
+                                  onImageChange(
+                                      MyTheme.imageList.indexOf(imgPath));
+                                },
+                                isHighLighted: (_selectedImage ==
+                                    MyTheme.imageList.indexOf(imgPath)),
+                              );
+                            })
+                          ],
+                        )
+                      : Row(
+                          children: [
+                            CustomOutlinedButton(
+                              isHighLighted: false,
+                              onTap: onClean,
+                              text: 'Clean',
+                            ),
+                            IconButton(
+                              onPressed: onPickFile,
+                              icon: const Icon(Icons.add_outlined),
+                            )
+                          ],
                         ),
-                        const SizedBox(width: 6),
-                        CustomOutlinedButton(
-                          isHighLighted: ((_selectedImage == -1) &&
-                              (widget.taskList.backgroundImage != null)),
-                          onTap: onPickFile,
-                          text: 'Custom',
-                        ),
-                        ...MyTheme.imageList.map((imgPath) {
-                          return SelectImageButton(
-                            imgPath: imgPath,
-                            onTap: () {
-                              onImageChange(MyTheme.imageList.indexOf(imgPath));
-                            },
-                            isHighLighted: (_selectedImage ==
-                                MyTheme.imageList.indexOf(imgPath)),
-                          );
-                        })
-                      ],
-                    ),
             ),
           ],
         ),
