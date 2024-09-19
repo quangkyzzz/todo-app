@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../models/task_list.dart';
 import '../../../models/task.dart';
+import '../../../provider/settings_provider.dart';
 import '../../../ultility/type_def.dart';
 import '../../../view_models/task_map_view_model.dart';
 import '../../items/task_list_item.dart';
@@ -104,6 +105,9 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
                                           context
                                               .read<TaskMapViewModel>()
                                               .updateTaskWith(
+                                                settings: context
+                                                    .read<SettingsProvider>()
+                                                    .settings,
                                                 taskID: task.id,
                                                 isOnMyDay: true,
                                               );
@@ -112,6 +116,9 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
                                           context
                                               .read<TaskMapViewModel>()
                                               .updateTaskWith(
+                                                settings: context
+                                                    .read<SettingsProvider>()
+                                                    .settings,
                                                 taskID: task.id,
                                                 isCompleted: value,
                                               );
@@ -152,6 +159,9 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
                                           context
                                               .read<TaskMapViewModel>()
                                               .updateTaskWith(
+                                                settings: context
+                                                    .read<SettingsProvider>()
+                                                    .settings,
                                                 taskID: task.id,
                                                 isOnMyDay: true,
                                               );
@@ -163,6 +173,9 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
                                           context
                                               .read<TaskMapViewModel>()
                                               .updateTaskWith(
+                                                settings: context
+                                                    .read<SettingsProvider>()
+                                                    .settings,
                                                 taskID: task.id,
                                                 isCompleted: value,
                                               );
@@ -171,6 +184,9 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
                                           context
                                               .read<TaskMapViewModel>()
                                               .updateTaskWith(
+                                                settings: context
+                                                    .read<SettingsProvider>()
+                                                    .settings,
                                                 taskID: task.id,
                                                 isImportant: !task.isImportant,
                                               );

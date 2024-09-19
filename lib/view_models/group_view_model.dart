@@ -77,8 +77,6 @@ class GroupViewModel extends ChangeNotifier {
         TaskList(
           id: '222',
           listName: 'personal list 1',
-          backgroundImage: '/data/user/0/com.example.todo_app/cache/'
-              'file_picker/1723799643254/1000000837.jpg',
           tasks: [
             Task(
                 id: '3',
@@ -224,7 +222,7 @@ class GroupViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void createTaskListToGroup({
+  void addTaskListToDefaultGroup({
     required String name,
   }) {
     TaskList newTaskList = TaskList(

@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 
+import '../models/settings.dart';
 import '../models/task_list.dart';
 import '../models/task.dart';
-import '../provider/settings_provider.dart';
+
 import '../service/background_service.dart';
 
 class TaskListViewModel extends ChangeNotifier {
-  SettingsProvider settingsProvider;
   TaskList currentTaskList;
   TaskListViewModel({
     required this.currentTaskList,
-    required this.settingsProvider,
   });
 
   void deleteTaskList({
@@ -68,6 +67,7 @@ class TaskListViewModel extends ChangeNotifier {
   }
 
   void updateTaskListWith({
+    required Settings settings,
     String? listName,
     String? groupID,
     String? backgroundImage,
@@ -84,9 +84,16 @@ class TaskListViewModel extends ChangeNotifier {
     currentTaskList.sortByType = sortByType ?? currentTaskList.sortByType;
     currentTaskList.tasks = tasks ?? currentTaskList.tasks;
     if (newTask != null) {
-      currentTaskList.tasks
-          .firstWhere((element) => (element.id == newTask.id))
-          .copyFrom(copyTask: newTask);
+      Task oldTask = currentTaskList.tasks
+          .firstWhere((element) => (element.id == newTask.id));
+      if ((settings.isMoveStarTaskToTop) &&
+          (newTask.isImportant) &&
+          (!oldTask.isImportant)) {
+        currentTaskList.tasks.remove(oldTask);
+        currentTaskList.tasks.insert(0, newTask);
+      } else {
+        oldTask.copyFrom(copyTask: newTask);
+      }
     }
     notifyListeners();
   }
@@ -148,6 +155,7 @@ class TaskListViewModel extends ChangeNotifier {
   void addNewTask({
     required String taskName,
     required bool isCompleted,
+    required Settings settings,
     bool isOnMyDay = false,
     bool isImportant = false,
   }) {
@@ -159,7 +167,7 @@ class TaskListViewModel extends ChangeNotifier {
       isOnMyDay: isOnMyDay,
       createDate: DateTime.now(),
     );
-    if (settingsProvider.settings.isAddNewTaskOnTop) {
+    if (settings.isAddNewTaskOnTop) {
       currentTaskList.tasks.insert(0, task);
     } else {
       currentTaskList.tasks.add(task);

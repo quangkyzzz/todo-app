@@ -4,6 +4,7 @@ import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import '../../models/task_list.dart';
 import '../../models/task.dart';
+import '../../provider/settings_provider.dart';
 import '../../ultility/type_def.dart';
 import '../../view_models/task_map_view_model.dart';
 import '../items/task_list_item.dart';
@@ -168,12 +169,18 @@ class _SearchPageState extends State<SearchPage> {
                               themeColor: MyTheme.blueColor,
                               onTapCheck: (bool? value) {
                                 context.read<TaskMapViewModel>().updateTaskWith(
+                                      settings: context
+                                          .read<SettingsProvider>()
+                                          .settings,
                                       taskID: item.keys.first.id,
                                       isCompleted: value,
                                     );
                               },
                               onTapStar: () {
                                 context.read<TaskMapViewModel>().updateTaskWith(
+                                      settings: context
+                                          .read<SettingsProvider>()
+                                          .settings,
                                       taskID: item.keys.first.id,
                                       isImportant: !item.keys.first.isImportant,
                                     );
@@ -190,12 +197,18 @@ class _SearchPageState extends State<SearchPage> {
                             themeColor: MyTheme.blueColor,
                             onTapCheck: (bool? value) {
                               context.read<TaskMapViewModel>().updateTaskWith(
+                                    settings: context
+                                        .read<SettingsProvider>()
+                                        .settings,
                                     taskID: item.keys.first.id,
                                     isCompleted: value,
                                   );
                             },
                             onTapStar: () {
                               context.read<TaskMapViewModel>().updateTaskWith(
+                                    settings: context
+                                        .read<SettingsProvider>()
+                                        .settings,
                                     taskID: item.keys.first.id,
                                     isImportant: !item.keys.first.isImportant,
                                   );

@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../../../models/task.dart';
 import '../../../models/task_list.dart';
+import '../../../provider/settings_provider.dart';
 import '../../../ultility/type_def.dart';
 import '../../../view_models/group_view_model.dart';
 import '../../../view_models/task_list_view_model.dart';
@@ -28,7 +29,7 @@ class _MyDayPageState extends State<MyDayPage> {
   @override
   void didChangeDependencies() {
     addTaskDestinationTaskList =
-        context.watch<GroupViewModel>().readGroupByID('1').taskLists[0];
+        context.read<GroupViewModel>().readGroupByID('1').taskLists[0];
     myDayTaskList = context.watch<TaskListViewModel>().currentTaskList;
     super.didChangeDependencies();
   }
@@ -113,11 +114,15 @@ class _MyDayPageState extends State<MyDayPage> {
                         themeColor: myDayTaskList.themeColor,
                         onTapCheck: (bool? value) {
                           context.read<TaskMapViewModel>().updateTaskWith(
+                              settings:
+                                  context.read<SettingsProvider>().settings,
                               taskID: inCompleteList[index].keys.first.id,
                               isCompleted: value);
                         },
                         onTapStar: () {
                           context.read<TaskMapViewModel>().updateTaskWith(
+                                settings:
+                                    context.read<SettingsProvider>().settings,
                                 taskID: inCompleteList[index].keys.first.id,
                                 isImportant: !inCompleteList[index]
                                     .keys
@@ -162,6 +167,9 @@ class _MyDayPageState extends State<MyDayPage> {
                                     context
                                         .read<TaskMapViewModel>()
                                         .updateTaskWith(
+                                            settings: context
+                                                .read<SettingsProvider>()
+                                                .settings,
                                             taskID: task.id,
                                             isCompleted: value);
                                   },
@@ -169,6 +177,9 @@ class _MyDayPageState extends State<MyDayPage> {
                                     context
                                         .read<TaskMapViewModel>()
                                         .updateTaskWith(
+                                          settings: context
+                                              .read<SettingsProvider>()
+                                              .settings,
                                           taskID: task.id,
                                           isImportant: !task.isImportant,
                                         );

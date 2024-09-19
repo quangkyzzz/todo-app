@@ -119,6 +119,7 @@ class AddTaskItem extends StatelessWidget {
                   } else {
                     Provider.of<TaskListViewModel>(mContext, listen: false)
                         .addNewTask(
+                      settings: mContext.read<SettingsProvider>().settings,
                       taskName: _controller.text,
                       isCompleted: isChecked,
                     );

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../models/task_list.dart';
 import '../../../models/task.dart';
+import '../../../provider/settings_provider.dart';
 import '../../../view_models/group_view_model.dart';
 import '../../../view_models/task_list_view_model.dart';
 import '../../../view_models/task_map_view_model.dart';
@@ -96,11 +97,14 @@ class _TaskListPageState extends State<ImportantPage> {
                       themeColor: importantTaskList.themeColor,
                       onTapCheck: (bool? value) {
                         context.read<TaskMapViewModel>().updateTaskWith(
+                            settings: context.read<SettingsProvider>().settings,
                             taskID: importantTasks[index].keys.first.id,
                             isCompleted: value);
                       },
                       onTapStar: () {
                         context.read<TaskMapViewModel>().updateTaskWith(
+                              settings:
+                                  context.read<SettingsProvider>().settings,
                               taskID: importantTasks[index].keys.first.id,
                               isImportant:
                                   !importantTasks[index].keys.first.isImportant,

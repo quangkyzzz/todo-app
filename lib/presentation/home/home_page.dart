@@ -17,42 +17,6 @@ import 'home_bottom_navigation_bar.dart';
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-  onTapMyDay(BuildContext context, TaskList taskList) async {
-    await Navigator.of(context).pushNamed(myDayRoute, arguments: taskList);
-  }
-
-  onTapImportant(BuildContext context, TaskList taskList) async {
-    await Navigator.of(context).pushNamed(importantRoute, arguments: taskList);
-  }
-
-  onTapPlanned(BuildContext context, TaskList taskList) async {
-    await Navigator.of(context).pushNamed(plannedRoute, arguments: taskList);
-  }
-
-  onTapAssignToMe(BuildContext context, TaskList taskList) async {
-    await Navigator.of(context).pushNamed(taskListRoute, arguments: {
-      'haveCompletedList': true,
-      'taskList': taskList,
-    });
-  }
-
-  onTapFlaggedEmail(BuildContext context, TaskList taskList) async {
-    await Navigator.of(context).pushNamed(taskListRoute, arguments: {
-      'haveCompletedList': true,
-      'taskList': taskList,
-    });
-  }
-
-  onTapTask(BuildContext context, TaskList taskList) async {
-    await Navigator.of(context).pushNamed(
-      taskListRoute,
-      arguments: {
-        'haveCompletedList': true,
-        'taskList': taskList,
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final TaskListUltility taskListUltility =
@@ -68,10 +32,11 @@ class HomePage extends StatelessWidget {
             HomeItem(
               taskList: context.watch<GroupViewModel>().groups[0].taskLists[1],
               icon: Icons.wb_sunny_outlined,
-              onTap: () {
-                onTapMyDay(
-                  context,
-                  context.read<GroupViewModel>().groups[0].taskLists[1],
+              onTap: () async {
+                await Navigator.of(context).pushNamed(
+                  myDayRoute,
+                  arguments:
+                      context.read<GroupViewModel>().groups[0].taskLists[1],
                 );
               },
               endNumber: taskListUltility.countIncompletedMyDayTask(),
@@ -79,10 +44,11 @@ class HomePage extends StatelessWidget {
             HomeItem(
               taskList: context.watch<GroupViewModel>().groups[0].taskLists[2],
               icon: Icons.star_border,
-              onTap: () {
-                onTapImportant(
-                  context,
-                  context.read<GroupViewModel>().groups[0].taskLists[2],
+              onTap: () async {
+                await Navigator.of(context).pushNamed(
+                  importantRoute,
+                  arguments:
+                      context.read<GroupViewModel>().groups[0].taskLists[2],
                 );
               },
               endNumber: taskListUltility.countIncompletedImportantTask(),
@@ -90,10 +56,11 @@ class HomePage extends StatelessWidget {
             HomeItem(
               taskList: context.watch<GroupViewModel>().groups[0].taskLists[3],
               icon: Icons.list_alt_outlined,
-              onTap: () {
-                onTapPlanned(
-                  context,
-                  context.read<GroupViewModel>().groups[0].taskLists[3],
+              onTap: () async {
+                await Navigator.of(context).pushNamed(
+                  plannedRoute,
+                  arguments:
+                      context.read<GroupViewModel>().groups[0].taskLists[3],
                 );
               },
               endNumber: taskListUltility.countIncompletedPlannedTask(),
@@ -101,10 +68,14 @@ class HomePage extends StatelessWidget {
             HomeItem(
               taskList: context.watch<GroupViewModel>().groups[0].taskLists[4],
               icon: Icons.person_outline,
-              onTap: () {
-                onTapAssignToMe(
-                  context,
-                  context.read<GroupViewModel>().groups[0].taskLists[0],
+              onTap: () async {
+                await Navigator.of(context).pushNamed(
+                  taskListRoute,
+                  arguments: {
+                    'haveCompletedList': true,
+                    'taskList':
+                        context.read<GroupViewModel>().groups[0].taskLists[0],
+                  },
                 );
               },
               endNumber: 0,
@@ -112,10 +83,14 @@ class HomePage extends StatelessWidget {
             HomeItem(
               taskList: context.watch<GroupViewModel>().groups[0].taskLists[5],
               icon: Icons.flag_outlined,
-              onTap: () {
-                onTapFlaggedEmail(
-                  context,
-                  context.read<GroupViewModel>().groups[0].taskLists[0],
+              onTap: () async {
+                await Navigator.of(context).pushNamed(
+                  taskListRoute,
+                  arguments: {
+                    'haveCompletedList': true,
+                    'taskList':
+                        context.read<GroupViewModel>().groups[0].taskLists[0],
+                  },
                 );
               },
               endNumber: 0,
@@ -123,10 +98,14 @@ class HomePage extends StatelessWidget {
             HomeItem(
               taskList: context.watch<GroupViewModel>().groups[0].taskLists[0],
               icon: Icons.task_outlined,
-              onTap: () {
-                onTapTask(
-                  context,
-                  context.read<GroupViewModel>().groups[0].taskLists[0],
+              onTap: () async {
+                await Navigator.of(context).pushNamed(
+                  taskListRoute,
+                  arguments: {
+                    'haveCompletedList': true,
+                    'taskList':
+                        context.read<GroupViewModel>().groups[0].taskLists[0],
+                  },
                 );
               },
               endNumber: taskListUltility.countIncompletedTaskByID(

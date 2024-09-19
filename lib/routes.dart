@@ -15,7 +15,6 @@ import 'presentation/task/task_list/task_list_page.dart';
 import 'presentation/task/task_page/task_page.dart';
 import 'presentation/settings/settings_page.dart';
 import 'presentation/user_profile/user_profile_page.dart';
-import 'provider/settings_provider.dart';
 import 'view_models/auth_view_model.dart';
 import 'view_models/group_view_model.dart';
 import 'view_models/task_list_view_model.dart';
@@ -68,16 +67,8 @@ var allRoute = {
     TaskList taskList = arg['taskList'];
     return MultiProvider(
       providers: [
-        ChangeNotifierProxyProvider<SettingsProvider, TaskListViewModel>(
-          create: (context) => TaskListViewModel(
-            currentTaskList: taskList,
-            settingsProvider: context.read<SettingsProvider>(),
-          ),
-          update: (context, settingsProvider, taskListViewModel) =>
-              TaskListViewModel(
-            currentTaskList: taskList,
-            settingsProvider: settingsProvider,
-          ),
+        ChangeNotifierProvider(
+          create: (context) => TaskListViewModel(currentTaskList: taskList),
         ),
         ChangeNotifierProvider(
           create: (context) => TaskMapViewModel(),
@@ -106,16 +97,11 @@ var allRoute = {
       providers: [
         ChangeNotifierProvider(create: (context) => GroupViewModel()),
         ChangeNotifierProvider(create: (context) => TaskMapViewModel()),
-        ChangeNotifierProxyProvider<SettingsProvider, TaskListViewModel>(
-          create: (context) => TaskListViewModel(
-            currentTaskList: taskList,
-            settingsProvider: context.read<SettingsProvider>(),
-          ),
-          update: (context, settingsProvider, taskListViewModel) =>
-              TaskListViewModel(
-            currentTaskList: taskList,
-            settingsProvider: settingsProvider,
-          ),
+        ChangeNotifierProvider(
+          create: (context) => TaskListViewModel(currentTaskList: taskList),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => TaskListViewModel(currentTaskList: taskList),
         ),
       ],
       builder: (context, child) {
@@ -128,16 +114,8 @@ var allRoute = {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => TaskMapViewModel()),
-        ChangeNotifierProxyProvider<SettingsProvider, TaskListViewModel>(
-          create: (context) => TaskListViewModel(
-            currentTaskList: taskList,
-            settingsProvider: context.read<SettingsProvider>(),
-          ),
-          update: (context, settingsProvider, taskListViewModel) =>
-              TaskListViewModel(
-            currentTaskList: taskList,
-            settingsProvider: settingsProvider,
-          ),
+        ChangeNotifierProvider(
+          create: (context) => TaskListViewModel(currentTaskList: taskList),
         ),
       ],
       builder: (context, child) {
@@ -151,16 +129,8 @@ var allRoute = {
       providers: [
         ChangeNotifierProvider(create: (context) => GroupViewModel()),
         ChangeNotifierProvider(create: (context) => TaskMapViewModel()),
-        ChangeNotifierProxyProvider<SettingsProvider, TaskListViewModel>(
-          create: (context) => TaskListViewModel(
-            currentTaskList: taskList,
-            settingsProvider: context.read<SettingsProvider>(),
-          ),
-          update: (context, settingsProvider, taskListViewModel) =>
-              TaskListViewModel(
-            currentTaskList: taskList,
-            settingsProvider: settingsProvider,
-          ),
+        ChangeNotifierProvider(
+          create: (context) => TaskListViewModel(currentTaskList: taskList),
         ),
       ],
       builder: (context, child) {
@@ -172,16 +142,8 @@ var allRoute = {
     TaskList taskList = ModalRoute.of(context)?.settings.arguments as TaskList;
     return MultiProvider(
         providers: [
-          ChangeNotifierProxyProvider<SettingsProvider, TaskListViewModel>(
-            create: (context) => TaskListViewModel(
-              currentTaskList: taskList,
-              settingsProvider: context.read<SettingsProvider>(),
-            ),
-            update: (context, settingsProvider, taskListViewModel) =>
-                TaskListViewModel(
-              currentTaskList: taskList,
-              settingsProvider: settingsProvider,
-            ),
+          ChangeNotifierProvider(
+            create: (context) => TaskListViewModel(currentTaskList: taskList),
           ),
           ChangeNotifierProvider(create: (context) => TaskMapViewModel()),
           ChangeNotifierProvider(create: (context) => GroupViewModel()),
@@ -202,16 +164,8 @@ var allRoute = {
     TaskList taskList = ModalRoute.of(context)?.settings.arguments as TaskList;
     return MultiProvider(
       providers: [
-        ChangeNotifierProxyProvider<SettingsProvider, TaskListViewModel>(
-          create: (context) => TaskListViewModel(
-            currentTaskList: taskList,
-            settingsProvider: context.read<SettingsProvider>(),
-          ),
-          update: (context, settingsProvider, taskListViewModel) =>
-              TaskListViewModel(
-            currentTaskList: taskList,
-            settingsProvider: settingsProvider,
-          ),
+        ChangeNotifierProvider(
+          create: (context) => TaskListViewModel(currentTaskList: taskList),
         ),
         ChangeNotifierProvider(create: (context) => TaskMapViewModel()),
       ],
@@ -230,16 +184,8 @@ var allRoute = {
           ChangeNotifierProvider(
             create: (context) => TaskViewModel(currentTask: task),
           ),
-          ChangeNotifierProxyProvider<SettingsProvider, TaskListViewModel>(
-            create: (context) => TaskListViewModel(
-              currentTaskList: taskList,
-              settingsProvider: context.read<SettingsProvider>(),
-            ),
-            update: (context, settingsProvider, taskListViewModel) =>
-                TaskListViewModel(
-              currentTaskList: taskList,
-              settingsProvider: settingsProvider,
-            ),
+          ChangeNotifierProvider(
+            create: (context) => TaskListViewModel(currentTaskList: taskList),
           ),
         ],
         builder: (context, child) {

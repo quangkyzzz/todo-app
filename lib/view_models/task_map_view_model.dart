@@ -224,6 +224,10 @@ class TaskMapViewModel extends ChangeNotifier {
         .first;
   }
 
+  Map<Task, TaskList> readPair({required String taskID}) {
+    return allTask.firstWhere((element) => (element.keys.first.id == taskID));
+  }
+
   void addNewTask({
     required Settings settings,
     required TaskList taskList,
@@ -264,6 +268,7 @@ class TaskMapViewModel extends ChangeNotifier {
 
   void updateTaskWith({
     required String taskID,
+    required Settings settings,
     String? title,
     bool? isCompleted,
     bool? isImportant,
@@ -280,6 +285,7 @@ class TaskMapViewModel extends ChangeNotifier {
     if (note == '') {
       note = null;
     }
+    Map<Task, TaskList> pair = readPair(taskID: taskID);
 
     task.title = title ?? task.title;
     task.isCompleted = isCompleted ?? task.isCompleted;
@@ -291,6 +297,12 @@ class TaskMapViewModel extends ChangeNotifier {
     task.repeatFrequency = repeatFrequency ?? task.repeatFrequency;
     task.filePath = filePath ?? task.filePath;
     task.note = note ?? task.note;
+    if (settings.isMoveStarTaskToTop) {
+      if ((isImportant != null) && (isImportant)) {
+        allTask.remove(pair);
+        allTask.insert(0, pair);
+      }
+    }
 
     notifyListeners();
   }

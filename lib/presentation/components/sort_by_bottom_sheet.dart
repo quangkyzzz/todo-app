@@ -2,7 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../models/settings.dart';
 import '../../models/task_list.dart';
+import '../../provider/settings_provider.dart';
 import '../../view_models/task_list_view_model.dart';
 import '../items/popup_item.dart';
 import '../../themes.dart';
@@ -18,6 +20,7 @@ class SortByBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Settings settings = context.read<SettingsProvider>().settings;
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -35,6 +38,7 @@ class SortByBottomSheet extends StatelessWidget {
                     isAscending: false,
                   );
               mContext.read<TaskListViewModel>().updateTaskListWith(
+                settings: settings,
                 sortByType: {
                   'sortType': 'important',
                   'asc': false,
@@ -54,6 +58,7 @@ class SortByBottomSheet extends StatelessWidget {
                     isAscending: true,
                   );
               mContext.read<TaskListViewModel>().updateTaskListWith(
+                settings: settings,
                 sortByType: {
                   'sortType': 'due date',
                   'asc': true,
@@ -73,6 +78,7 @@ class SortByBottomSheet extends StatelessWidget {
                     isAscending: false,
                   );
               mContext.read<TaskListViewModel>().updateTaskListWith(
+                settings: settings,
                 sortByType: {
                   'sortType': 'my day',
                   'asc': false,
@@ -92,6 +98,7 @@ class SortByBottomSheet extends StatelessWidget {
                     isAscending: true,
                   );
               mContext.read<TaskListViewModel>().updateTaskListWith(
+                settings: settings,
                 sortByType: {
                   'sortType': 'alphabetically',
                   'asc': true,
@@ -111,6 +118,7 @@ class SortByBottomSheet extends StatelessWidget {
                     isAscending: true,
                   );
               mContext.read<TaskListViewModel>().updateTaskListWith(
+                settings: settings,
                 sortByType: {
                   'sortType': 'create date',
                   'asc': true,

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../models/task.dart';
 import '../../../models/task_list.dart';
+import '../../../provider/settings_provider.dart';
 import '../../../ultility/type_def.dart';
 import '../../../view_models/task_list_view_model.dart';
 import '../../../view_models/task_map_view_model.dart';
@@ -200,7 +201,7 @@ class _PlannedPageState extends State<PlannedPage> {
                       shrinkWrap: true,
                       physics: const ClampingScrollPhysics(),
                       itemCount: plannedTasks.length,
-                      itemBuilder: (BuildContext context, int index) {
+                      itemBuilder: (BuildContext _, int index) {
                         Task task = plannedTasks[index].keys.first;
                         return TaskListItem(
                           mContext: context,
@@ -209,12 +210,16 @@ class _PlannedPageState extends State<PlannedPage> {
                           themeColor: plannedTaskList.themeColor,
                           onTapCheck: (bool? value) {
                             context.read<TaskMapViewModel>().updateTaskWith(
+                                  settings:
+                                      context.read<SettingsProvider>().settings,
                                   taskID: task.id,
                                   isCompleted: value,
                                 );
                           },
                           onTapStar: () {
                             context.read<TaskMapViewModel>().updateTaskWith(
+                                  settings:
+                                      context.read<SettingsProvider>().settings,
                                   taskID: task.id,
                                   isImportant: !task.isImportant,
                                 );
