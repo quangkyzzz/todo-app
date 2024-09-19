@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import '../../../models/task.dart';
 import '../../../models/task_list.dart';
 import '../../../ultility/type_def.dart';
-import '../../../view_models/group_view_model.dart';
+import '../../../view_models/task_list_view_model.dart';
 import '../../../view_models/task_map_view_model.dart';
 import '../../items/task_list_item.dart';
 import '../../../themes.dart';
@@ -82,9 +82,8 @@ class _PlannedPageState extends State<PlannedPage> {
 
   @override
   void didChangeDependencies() {
-    plannedTaskList = Provider.of<GroupViewModel>(context, listen: true)
-        .readGroupByID('1')
-        .taskLists[3];
+    plannedTaskList =
+        Provider.of<TaskListViewModel>(context, listen: true).currentTaskList;
     super.didChangeDependencies();
   }
 

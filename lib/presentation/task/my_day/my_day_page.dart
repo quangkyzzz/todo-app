@@ -7,6 +7,7 @@ import '../../../models/task.dart';
 import '../../../models/task_list.dart';
 import '../../../ultility/type_def.dart';
 import '../../../view_models/group_view_model.dart';
+import '../../../view_models/task_list_view_model.dart';
 import '../../../view_models/task_map_view_model.dart';
 import '../../items/task_list_item.dart';
 import 'my_day_floating_buttons.dart';
@@ -25,11 +26,15 @@ class _MyDayPageState extends State<MyDayPage> {
   bool isExpanded = true;
 
   @override
-  Widget build(BuildContext context) {
+  void didChangeDependencies() {
     addTaskDestinationTaskList =
-        context.read<GroupViewModel>().readGroupByID('1').taskLists[0];
-    myDayTaskList =
-        context.watch<GroupViewModel>().readGroupByID('1').taskLists[1];
+        context.watch<GroupViewModel>().readGroupByID('1').taskLists[0];
+    myDayTaskList = context.watch<TaskListViewModel>().currentTaskList;
+    super.didChangeDependencies();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Stack(
       fit: StackFit.expand,
       children: [

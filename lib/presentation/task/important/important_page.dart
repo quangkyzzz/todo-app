@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../../models/task_list.dart';
 import '../../../models/task.dart';
 import '../../../view_models/group_view_model.dart';
+import '../../../view_models/task_list_view_model.dart';
 import '../../../view_models/task_map_view_model.dart';
 import '../../components/add_floating_button.dart';
 import '../../items/task_list_item.dart';
@@ -30,8 +31,7 @@ class _TaskListPageState extends State<ImportantPage> {
   void didChangeDependencies() {
     newTaskDestinationTaskList =
         context.read<GroupViewModel>().readGroupByID('1').taskLists[0];
-    importantTaskList =
-        context.watch<GroupViewModel>().readGroupByID('1').taskLists[2];
+    importantTaskList = context.watch<TaskListViewModel>().currentTaskList;
     super.didChangeDependencies();
   }
 

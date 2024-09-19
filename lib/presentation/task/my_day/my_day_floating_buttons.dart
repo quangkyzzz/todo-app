@@ -69,7 +69,7 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
                                 (listOlderSuggetTask.isEmpty))
                             ? const Center(
                                 child: Text(
-                                'There is no suggetion right now !',
+                                'There is no suggetion right now!',
                                 style: MyTheme.itemTextStyle,
                               ))
                             : Column(

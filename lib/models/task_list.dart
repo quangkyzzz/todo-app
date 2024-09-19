@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'task.dart';
 import '../themes.dart';
 
+//TODO: delete groupID
 class TaskList {
   final String id;
   String listName;
