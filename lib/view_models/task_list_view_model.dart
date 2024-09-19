@@ -70,7 +70,6 @@ class TaskListViewModel extends ChangeNotifier {
   }
 
   void updateTaskListWith({
-    required String taskListID,
     String? listName,
     String? groupID,
     String? backgroundImage,

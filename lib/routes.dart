@@ -92,7 +92,14 @@ var allRoute = {
   },
   loginRoute: (context) => const LoginPage(),
   signupRoute: (context) => const SignUpPage(),
-  userProfileRoute: (context) => const UserProfilePage(),
+  userProfileRoute: (context) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => AuthViewModel()),
+      ],
+      builder: (context, child) => const UserProfilePage(),
+    );
+  },
   importantRoute: (context) {
     TaskList taskList = ModalRoute.of(context)?.settings.arguments as TaskList;
     return MultiProvider(
@@ -116,7 +123,28 @@ var allRoute = {
       },
     );
   },
-  searchRoute: (context) => const SearchPage(),
+  searchRoute: (context) {
+    TaskList taskList = TaskList(id: '1', listName: 'test');
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => TaskMapViewModel()),
+        ChangeNotifierProxyProvider<SettingsProvider, TaskListViewModel>(
+          create: (context) => TaskListViewModel(
+            currentTaskList: taskList,
+            settingsProvider: context.read<SettingsProvider>(),
+          ),
+          update: (context, settingsProvider, taskListViewModel) =>
+              TaskListViewModel(
+            currentTaskList: taskList,
+            settingsProvider: settingsProvider,
+          ),
+        ),
+      ],
+      builder: (context, child) {
+        return const SearchPage();
+      },
+    );
+  },
   plannedRoute: (context) {
     TaskList taskList = ModalRoute.of(context)?.settings.arguments as TaskList;
     return MultiProvider(
@@ -162,7 +190,14 @@ var allRoute = {
           return const MyDayPage();
         });
   },
-  settingsRoute: (context) => const SettingsPage(),
+  settingsRoute: (context) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => AuthViewModel()),
+      ],
+      builder: (context, child) => const SettingsPage(),
+    );
+  },
   reorderRoute: (context) {
     TaskList taskList = ModalRoute.of(context)?.settings.arguments as TaskList;
     return MultiProvider(

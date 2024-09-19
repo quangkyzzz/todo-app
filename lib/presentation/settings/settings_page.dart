@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../app_configs.dart';
-import '../../provider/user_provider.dart';
 import '../../routes.dart';
 import '../../themes.dart';
+import '../../view_models/auth_view_model.dart';
 import 'settings_list.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -43,17 +43,17 @@ class _SettingsPageState extends State<SettingsPage> {
                     radius: 36,
                   ),
                   const SizedBox(width: 18),
-                  Consumer<UserProvider>(
-                      builder: (context, userProvider, child) {
+                  Consumer<AuthViewModel>(
+                      builder: (context, authViewModel, child) {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          userProvider.currentUser.userName,
+                          authViewModel.currentUser.userName,
                           style: MyTheme.itemTextStyle,
                         ),
                         Text(
-                          userProvider.currentUser.userEmail,
+                          authViewModel.currentUser.userEmail,
                           style: MyTheme.secondaryTitleGreyTextStyle,
                         ),
                         const SizedBox(height: 8),
@@ -73,7 +73,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                         InkWell(
                           onTap: () async {
-                            Provider.of<UserProvider>(context, listen: false)
+                            Provider.of<AuthViewModel>(context, listen: false)
                                 .logout();
                             await Navigator.pushNamedAndRemoveUntil(
                                 context, initialRoute, (route) => false);
