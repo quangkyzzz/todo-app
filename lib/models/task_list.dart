@@ -35,6 +35,14 @@ class TaskList {
     Color? themeColor,
     List<Task>? tasks,
   }) {
+    List<Task> newTasks = [];
+    if (tasks != null) {
+      newTasks = tasks;
+    } else {
+      for (var element in this.tasks) {
+        newTasks.add(element.copyWith());
+      }
+    }
     return TaskList(
       id: id ?? this.id,
       listName: listName ?? this.listName,
@@ -43,7 +51,7 @@ class TaskList {
       defaultImage: defaultImage ?? this.defaultImage,
       sortByType: sortByType ?? this.sortByType,
       themeColor: themeColor ?? this.themeColor,
-      tasks: tasks ?? this.tasks,
+      tasks: newTasks,
     );
   }
 

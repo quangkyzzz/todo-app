@@ -39,8 +39,6 @@ class TaskListItem extends StatelessWidget {
         if (step.isCompleted) countCompletedStep++;
       }
     }
-    //TaskMapViewModel taskMapViewModel = mContext.read<TaskMapViewModel>();
-    //TaskListViewModel taskListViewModel = mContext.read<TaskListViewModel>();
     unawaited(initializeDateFormatting('vi'));
     double screenWidth = MediaQuery.of(context).size.width;
     bool isAllBottomIconNull = ((!task.isOnMyDay) &&
@@ -78,17 +76,7 @@ class TaskListItem extends StatelessWidget {
               tristate: false,
               shape: const CircleBorder(),
               value: task.isCompleted,
-              onChanged: onTapCheck, //(bool? value) async {
-
-              // await taskMapViewModel.updateTask(
-              //   taskID: task.id,
-              //   newTask: task.copyWith(isCompleted: value),
-              // );
-              // taskListViewModel.updateTaskListWith(
-              //   taskListID: taskList.id,
-              //   newTask: task.copyWith(isCompleted: value),
-              // );
-              //},
+              onChanged: onTapCheck,
             ),
             (isAllBottomIconNull)
                 ? Column(
@@ -233,18 +221,7 @@ class TaskListItem extends StatelessWidget {
               shape: const CircleBorder(),
               child: (!havePlusIcon)
                   ? IconButton(
-                      onPressed: onTapStar, //() async {
-                      // await taskMapViewModel.updateTask(
-                      //   taskID: task.id,
-                      //   newTask:
-                      //       task.copyWith(isImportant: !task.isImportant),
-                      // );
-                      // taskListViewModel.updateTaskListWith(
-                      //   taskListID: taskList.id,
-                      //   newTask:
-                      //       task.copyWith(isImportant: !task.isImportant),
-                      // );
-                      //},
+                      onPressed: onTapStar,
                       icon: (task.isImportant)
                           ? Icon(
                               Icons.star,

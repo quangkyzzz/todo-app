@@ -64,7 +64,7 @@ var allRoute = {
     Map<dynamic, dynamic> arg =
         ModalRoute.of(context)?.settings.arguments as Map;
     bool havecompletedList = arg['haveCompletedList'] ?? true;
-    TaskList taskList = arg['taskList'];
+    TaskList taskList = arg['taskList'].copyWith();
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
@@ -92,7 +92,8 @@ var allRoute = {
     );
   },
   importantRoute: (context) {
-    TaskList taskList = ModalRoute.of(context)?.settings.arguments as TaskList;
+    TaskList taskList =
+        (ModalRoute.of(context)?.settings.arguments as TaskList).copyWith();
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => GroupViewModel()),
@@ -124,7 +125,8 @@ var allRoute = {
     );
   },
   plannedRoute: (context) {
-    TaskList taskList = ModalRoute.of(context)?.settings.arguments as TaskList;
+    TaskList taskList =
+        (ModalRoute.of(context)?.settings.arguments as TaskList).copyWith();
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => GroupViewModel()),
@@ -139,7 +141,8 @@ var allRoute = {
     );
   },
   myDayRoute: (context) {
-    TaskList taskList = ModalRoute.of(context)?.settings.arguments as TaskList;
+    TaskList taskList =
+        (ModalRoute.of(context)?.settings.arguments as TaskList).copyWith();
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(
@@ -161,7 +164,8 @@ var allRoute = {
     );
   },
   reorderRoute: (context) {
-    TaskList taskList = ModalRoute.of(context)?.settings.arguments as TaskList;
+    TaskList taskList =
+        (ModalRoute.of(context)?.settings.arguments as TaskList).copyWith();
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
