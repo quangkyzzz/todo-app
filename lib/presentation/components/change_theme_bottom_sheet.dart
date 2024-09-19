@@ -31,7 +31,6 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
     });
     TaskList newTaskList = widget.taskList.copyWith(themeColor: value);
     taskListViewModel.updateTaskList(
-      taskListID: widget.taskList.id,
       newTaskList: newTaskList,
     );
   }
@@ -45,7 +44,6 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
       defaultImage: value,
     );
     taskListViewModel.updateTaskList(
-      taskListID: widget.taskList.id,
       newTaskList: newTaskList,
     );
   }
@@ -65,7 +63,6 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
         defaultImage: -1,
       );
       taskListViewModel.updateTaskList(
-        taskListID: widget.taskList.id,
         newTaskList: newTaskList,
       );
       setState(() {
@@ -83,7 +80,6 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
     );
     newTaskList.backgroundImage = null;
     taskListViewModel.updateTaskList(
-      taskListID: widget.taskList.id,
       newTaskList: newTaskList,
     );
   }

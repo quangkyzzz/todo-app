@@ -35,7 +35,6 @@ class PopupMenu extends StatelessWidget {
     if (!context.mounted) return;
     if (newName != null) {
       context.read<TaskListViewModel>().renameList(
-            taskListID: taskList.id,
             newName: newName,
           );
     }

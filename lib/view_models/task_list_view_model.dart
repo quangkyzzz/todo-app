@@ -53,7 +53,6 @@ class TaskListViewModel extends ChangeNotifier {
   }
 
   void renameList({
-    required String taskListID,
     required String newName,
   }) {
     currentTaskList.listName = newName;
@@ -61,7 +60,6 @@ class TaskListViewModel extends ChangeNotifier {
   }
 
   void updateTaskList({
-    required String taskListID,
     required TaskList newTaskList,
   }) {
     currentTaskList.copyFrom(copyTaskList: newTaskList);
@@ -148,7 +146,6 @@ class TaskListViewModel extends ChangeNotifier {
   }
 
   void addNewTask({
-    required String taskListID,
     required String taskName,
     required bool isCompleted,
     bool isOnMyDay = false,

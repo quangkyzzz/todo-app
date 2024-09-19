@@ -66,7 +66,6 @@ class _ChangeSortTypeButtonState extends State<ChangeSortTypeButton> {
             TaskList newTaskList = widget.taskList.copyWith();
             newTaskList.sortByType = null;
             taskListViewModel.updateTaskList(
-              taskListID: widget.taskList.id,
               newTaskList: newTaskList,
             );
           },
