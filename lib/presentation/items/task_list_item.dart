@@ -1,16 +1,12 @@
 // ignore_for_file: unnecessary_string_interpolations
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../../models/task_list.dart';
 import '../../themes.dart';
 import '../../routes.dart';
 import '../../models/task.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
-import '../../view_models/task_list_view_model.dart';
-import '../../view_models/task_map_view_model.dart';
 
 class TaskListItem extends StatelessWidget {
   final BuildContext mContext;
@@ -18,6 +14,8 @@ class TaskListItem extends StatelessWidget {
   final TaskList taskList;
   final Color themeColor;
   final bool havePlusIcon;
+  final Function(bool?) onTapCheck;
+  final Function() onTapStar;
   final Function()? onTapPlus;
 
   const TaskListItem({
@@ -28,6 +26,8 @@ class TaskListItem extends StatelessWidget {
     this.havePlusIcon = false,
     this.onTapPlus,
     required this.mContext,
+    required this.onTapCheck,
+    required this.onTapStar,
   });
 
   @override
@@ -39,8 +39,8 @@ class TaskListItem extends StatelessWidget {
         if (step.isCompleted) countCompletedStep++;
       }
     }
-    TaskMapViewModel taskMapViewModel = mContext.read<TaskMapViewModel>();
-    TaskListViewModel taskListViewModel = mContext.read<TaskListViewModel>();
+    //TaskMapViewModel taskMapViewModel = mContext.read<TaskMapViewModel>();
+    //TaskListViewModel taskListViewModel = mContext.read<TaskListViewModel>();
     unawaited(initializeDateFormatting('vi'));
     double screenWidth = MediaQuery.of(context).size.width;
     bool isAllBottomIconNull = ((!task.isOnMyDay) &&
@@ -78,17 +78,17 @@ class TaskListItem extends StatelessWidget {
               tristate: false,
               shape: const CircleBorder(),
               value: task.isCompleted,
-              onChanged: (bool? value) async {
-                await taskMapViewModel.updateTask(
-                  taskListID: taskList.id,
-                  taskID: task.id,
-                  newTask: task.copyWith(isCompleted: value),
-                );
-                taskListViewModel.updateTaskListWith(
-                  taskListID: taskList.id,
-                  newTask: task.copyWith(isCompleted: value),
-                );
-              },
+              onChanged: onTapCheck, //(bool? value) async {
+
+              // await taskMapViewModel.updateTask(
+              //   taskID: task.id,
+              //   newTask: task.copyWith(isCompleted: value),
+              // );
+              // taskListViewModel.updateTaskListWith(
+              //   taskListID: taskList.id,
+              //   newTask: task.copyWith(isCompleted: value),
+              // );
+              //},
             ),
             (isAllBottomIconNull)
                 ? Column(
@@ -233,19 +233,18 @@ class TaskListItem extends StatelessWidget {
               shape: const CircleBorder(),
               child: (!havePlusIcon)
                   ? IconButton(
-                      onPressed: () async {
-                        await taskMapViewModel.updateTask(
-                          taskListID: taskList.id,
-                          taskID: task.id,
-                          newTask:
-                              task.copyWith(isImportant: !task.isImportant),
-                        );
-                        taskListViewModel.updateTaskListWith(
-                          taskListID: taskList.id,
-                          newTask:
-                              task.copyWith(isImportant: !task.isImportant),
-                        );
-                      },
+                      onPressed: onTapStar, //() async {
+                      // await taskMapViewModel.updateTask(
+                      //   taskID: task.id,
+                      //   newTask:
+                      //       task.copyWith(isImportant: !task.isImportant),
+                      // );
+                      // taskListViewModel.updateTaskListWith(
+                      //   taskListID: taskList.id,
+                      //   newTask:
+                      //       task.copyWith(isImportant: !task.isImportant),
+                      // );
+                      //},
                       icon: (task.isImportant)
                           ? Icon(
                               Icons.star,

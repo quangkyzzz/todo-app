@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import '../../../models/task.dart';
 import '../../../models/task_list.dart';
 import '../../../ultility/type_def.dart';
 import '../../../view_models/group_view_model.dart';
@@ -87,7 +88,7 @@ class _MyDayPageState extends State<MyDayPage> {
           body: SingleChildScrollView(
             child: Consumer<TaskMapViewModel>(
               builder: (context, taskListProvider, child) {
-                TaskMapList myDayList = taskListProvider.getOnMyDayTask();
+                TaskMapList myDayList = taskListProvider.readOnMyDayTask();
                 TaskMapList inCompleteList = myDayList
                     .where((element) => (!element.keys.first.isCompleted))
                     .toList();
@@ -105,6 +106,23 @@ class _MyDayPageState extends State<MyDayPage> {
                         task: inCompleteList[index].keys.first,
                         taskList: inCompleteList[index].values.first,
                         themeColor: myDayTaskList.themeColor,
+                        onTapCheck: (bool? value) {
+                          context.read<TaskMapViewModel>().updateTaskWith(
+                              taskListID: inCompleteList[index].values.first.id,
+                              taskID: inCompleteList[index].keys.first.id,
+                              isCompleted: value);
+                        },
+                        onTapStar: () {
+                          context.read<TaskMapViewModel>().updateTaskWith(
+                                taskListID:
+                                    inCompleteList[index].values.first.id,
+                                taskID: inCompleteList[index].keys.first.id,
+                                isImportant: !inCompleteList[index]
+                                    .keys
+                                    .first
+                                    .isImportant,
+                              );
+                        },
                       );
                     },
                   ),
@@ -132,11 +150,31 @@ class _MyDayPageState extends State<MyDayPage> {
                               physics: const ClampingScrollPhysics(),
                               itemCount: completedlist.length,
                               itemBuilder: (BuildContext _, int index) {
+                                Task task = completedlist[index].keys.first;
+                                TaskList taskList =
+                                    completedlist[index].values.first;
                                 return TaskListItem(
                                   mContext: context,
                                   task: completedlist[index].keys.first,
                                   taskList: completedlist[index].values.first,
                                   themeColor: myDayTaskList.themeColor,
+                                  onTapCheck: (bool? value) {
+                                    context
+                                        .read<TaskMapViewModel>()
+                                        .updateTaskWith(
+                                            taskListID: taskList.id,
+                                            taskID: task.id,
+                                            isCompleted: value);
+                                  },
+                                  onTapStar: () {
+                                    context
+                                        .read<TaskMapViewModel>()
+                                        .updateTaskWith(
+                                          taskListID: taskList.id,
+                                          taskID: task.id,
+                                          isImportant: !task.isImportant,
+                                        );
+                                  },
                                 );
                               },
                             )

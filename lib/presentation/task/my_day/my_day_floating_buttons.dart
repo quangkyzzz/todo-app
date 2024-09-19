@@ -29,6 +29,8 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
   }
 
   Future<void> onSuggestionsTap(BuildContext context, Color themeColor) async {
+    final taskMapViewModel =
+        Provider.of<TaskMapViewModel>(context, listen: false);
     await showModalBottomSheet(
       context: context,
       builder: (BuildContext _) {
@@ -39,114 +41,153 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
           expand: false,
           initialChildSize: 0.3,
           builder: (__, scrollController) {
-            return SingleChildScrollView(
-              controller: scrollController,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Center(
-                      child: Icon(
-                        Icons.horizontal_rule_rounded,
-                        size: 48,
+            return ListenableProvider.value(
+              value: taskMapViewModel,
+              child: SingleChildScrollView(
+                controller: scrollController,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Center(
+                        child: Icon(
+                          Icons.horizontal_rule_rounded,
+                          size: 48,
+                        ),
                       ),
-                    ),
-                    Builder(builder: (
-                      BuildContext ___,
-                    ) {
-                      TaskMapList listRecentTask = context
-                          .read<TaskMapViewModel>()
-                          .getRecentNotInMyDayTask();
-                      TaskMapList listOlderSuggetTask = context
-                          .read<TaskMapViewModel>()
-                          .getOlderNotInMyDayTask();
-                      return ((listRecentTask.isEmpty) &&
-                              (listOlderSuggetTask.isEmpty))
-                          ? const Center(
-                              child: Text(
-                              'There is no suggetion right now !',
-                              style: MyTheme.itemTextStyle,
-                            ))
-                          : Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                //////////////
-                                //Recent task
-                                (listRecentTask.isEmpty)
-                                    ? const SizedBox()
-                                    : const Text(
-                                        'Recenly added:',
-                                        style: MyTheme.itemTextStyle,
-                                      ),
-                                const SizedBox(height: 8),
-                                ListView.builder(
-                                  shrinkWrap: true,
-                                  physics: const ClampingScrollPhysics(),
-                                  itemCount: listRecentTask.length,
-                                  itemBuilder: (BuildContext ____, int index) {
-                                    Map<Task, TaskList> pair =
-                                        listRecentTask[index];
-                                    Task task = pair.keys.first;
-                                    TaskList taskList = pair.values.first;
-                                    return TaskListItem(
-                                      mContext: context,
-                                      task: task,
-                                      taskList: taskList,
-                                      themeColor: themeColor,
-                                      havePlusIcon: true,
-                                      onTapPlus: () {
-                                        context
-                                            .read<TaskMapViewModel>()
-                                            .updateTaskWith(
-                                              taskListID: taskList.id,
-                                              taskID: task.id,
-                                              isOnMyDay: true,
-                                            );
-                                      },
-                                    );
-                                  },
-                                ),
-                                /////////////
-                                //Older task
-                                (listOlderSuggetTask.isEmpty)
-                                    ? const SizedBox()
-                                    : const Text(
-                                        'Older:',
-                                        style: MyTheme.itemTextStyle,
-                                      ),
-                                const SizedBox(height: 8),
-                                ListView.builder(
-                                  shrinkWrap: true,
-                                  physics: const ClampingScrollPhysics(),
-                                  itemCount: listOlderSuggetTask.length,
-                                  itemBuilder: (BuildContext ____, int index) {
-                                    Map<Task, TaskList> pair =
-                                        listOlderSuggetTask[index];
-                                    Task task = pair.keys.first;
-                                    TaskList taskList = pair.values.first;
-                                    return TaskListItem(
-                                      mContext: context,
-                                      task: task,
-                                      taskList: taskList,
-                                      themeColor: themeColor,
-                                      havePlusIcon: true,
-                                      onTapPlus: () {
-                                        context
-                                            .read<TaskMapViewModel>()
-                                            .updateTaskWith(
-                                              taskListID: taskList.id,
-                                              taskID: task.id,
-                                              isOnMyDay: true,
-                                            );
-                                      },
-                                    );
-                                  },
-                                ),
-                              ],
-                            );
-                    }),
-                  ],
+                      Consumer<TaskMapViewModel>(builder: (
+                        BuildContext ___,
+                        taskMapViewModel,
+                        child,
+                      ) {
+                        TaskMapList listRecentTask =
+                            taskMapViewModel.readRecentNotInMyDayTask();
+                        TaskMapList listOlderSuggetTask =
+                            taskMapViewModel.readOlderNotInMyDayTask();
+                        return ((listRecentTask.isEmpty) &&
+                                (listOlderSuggetTask.isEmpty))
+                            ? const Center(
+                                child: Text(
+                                'There is no suggetion right now !',
+                                style: MyTheme.itemTextStyle,
+                              ))
+                            : Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  //////////////
+                                  //Recent task
+                                  (listRecentTask.isEmpty)
+                                      ? const SizedBox()
+                                      : const Text(
+                                          'Recenly added:',
+                                          style: MyTheme.itemTextStyle,
+                                        ),
+                                  const SizedBox(height: 8),
+                                  ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: const ClampingScrollPhysics(),
+                                    itemCount: listRecentTask.length,
+                                    itemBuilder:
+                                        (BuildContext ____, int index) {
+                                      Map<Task, TaskList> pair =
+                                          listRecentTask[index];
+                                      Task task = pair.keys.first;
+                                      TaskList taskList = pair.values.first;
+                                      return TaskListItem(
+                                        mContext: context,
+                                        task: task,
+                                        taskList: taskList,
+                                        themeColor: themeColor,
+                                        havePlusIcon: true,
+                                        onTapPlus: () {
+                                          context
+                                              .read<TaskMapViewModel>()
+                                              .updateTaskWith(
+                                                taskListID: taskList.id,
+                                                taskID: task.id,
+                                                isOnMyDay: true,
+                                              );
+                                        },
+                                        onTapCheck: (bool? value) {
+                                          context
+                                              .read<TaskMapViewModel>()
+                                              .updateTaskWith(
+                                                taskListID: taskList.id,
+                                                taskID: task.id,
+                                                isCompleted: value,
+                                              );
+                                        },
+                                        onTapStar: () {},
+                                      );
+                                    },
+                                  ),
+                                  /////////////
+                                  //Older task
+                                  (listOlderSuggetTask.isEmpty)
+                                      ? const SizedBox()
+                                      : const Text(
+                                          'Older:',
+                                          style: MyTheme.itemTextStyle,
+                                        ),
+                                  const SizedBox(height: 8),
+                                  ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: const ClampingScrollPhysics(),
+                                    itemCount: listOlderSuggetTask.length,
+                                    itemBuilder:
+                                        (BuildContext ____, int index) {
+                                      Map<Task, TaskList> pair =
+                                          listOlderSuggetTask[index];
+                                      Task task = pair.keys.first;
+                                      TaskList taskList = pair.values.first;
+                                      return TaskListItem(
+                                        mContext: context,
+                                        task: task,
+                                        taskList: taskList,
+                                        themeColor: themeColor,
+                                        havePlusIcon: true,
+                                        onTapPlus: () {
+                                          setState(() {
+                                            listOlderSuggetTask.remove(pair);
+                                          });
+                                          context
+                                              .read<TaskMapViewModel>()
+                                              .updateTaskWith(
+                                                taskListID: taskList.id,
+                                                taskID: task.id,
+                                                isOnMyDay: true,
+                                              );
+                                        },
+                                        onTapCheck: (bool? value) {
+                                          setState(() {
+                                            task.isCompleted = value ?? false;
+                                          });
+                                          context
+                                              .read<TaskMapViewModel>()
+                                              .updateTaskWith(
+                                                taskListID: taskList.id,
+                                                taskID: task.id,
+                                                isCompleted: value,
+                                              );
+                                        },
+                                        onTapStar: () {
+                                          context
+                                              .read<TaskMapViewModel>()
+                                              .updateTaskWith(
+                                                taskListID: taskList.id,
+                                                taskID: task.id,
+                                                isImportant: !task.isImportant,
+                                              );
+                                        },
+                                      );
+                                    },
+                                  ),
+                                ],
+                              );
+                      }),
+                    ],
+                  ),
                 ),
               ),
             );

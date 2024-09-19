@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import '../models/settings.dart';
 import '../models/task.dart';
 import '../models/task_list.dart';
 import '../models/task_step.dart';
+
 import '../ultility/general_ultility.dart';
 import '../ultility/type_def.dart';
 
-//TODO: continue to fix this
 class TaskMapViewModel extends ChangeNotifier {
   TaskMapList allTask = [
     {
@@ -216,7 +217,6 @@ class TaskMapViewModel extends ChangeNotifier {
       )
     },
   ];
-
   Task readTask({required String taskID}) {
     return allTask
         .firstWhere((element) => (element.keys.first.id == taskID))
@@ -224,8 +224,33 @@ class TaskMapViewModel extends ChangeNotifier {
         .first;
   }
 
+  void addNewTask({
+    required Settings settings,
+    required TaskList taskList,
+    required String taskName,
+    required bool isCompleted,
+    bool isOnMyDay = false,
+    bool isImportant = false,
+  }) {
+    Task task = Task(
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      title: taskName,
+      isCompleted: isCompleted,
+      isImportant: isImportant,
+      isOnMyDay: isOnMyDay,
+      createDate: DateTime.now(),
+    );
+    final pair = {task: taskList};
+    if (settings.isAddNewTaskOnTop) {
+      allTask.insert(0, pair);
+    } else {
+      allTask.add(pair);
+    }
+
+    notifyListeners();
+  }
+
   Future<void> updateTask({
-    required String taskListID,
     required String taskID,
     required Task newTask,
   }) async {
@@ -271,7 +296,7 @@ class TaskMapViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  TaskMapList getOnMyDayTask() {
+  TaskMapList readOnMyDayTask() {
     TaskMapList result = [];
     for (var pair in allTask) {
       if (pair.keys.first.isOnMyDay) {
@@ -281,7 +306,7 @@ class TaskMapViewModel extends ChangeNotifier {
     return result;
   }
 
-  TaskMapList getImportantTask() {
+  TaskMapList readImportantTask() {
     TaskMapList result = [];
     for (var pair in allTask) {
       if (pair.keys.first.isImportant) {
@@ -291,7 +316,7 @@ class TaskMapViewModel extends ChangeNotifier {
     return result;
   }
 
-  TaskMapList getPlannedTask() {
+  TaskMapList readPlannedTask() {
     TaskMapList result = [];
     for (var pair in allTask) {
       if (pair.keys.first.dueDate != null) {
@@ -301,7 +326,7 @@ class TaskMapViewModel extends ChangeNotifier {
     return result;
   }
 
-  TaskMapList getRecentNotInMyDayTask() {
+  TaskMapList readRecentNotInMyDayTask() {
     TaskMapList result = [];
     for (var pair in allTask) {
       DateTime createDate = DateTime(
@@ -321,7 +346,7 @@ class TaskMapViewModel extends ChangeNotifier {
     return result;
   }
 
-  TaskMapList getOlderNotInMyDayTask() {
+  TaskMapList readOlderNotInMyDayTask() {
     TaskMapList result = [];
     for (var pair in allTask) {
       DateTime createDate = DateTime(
@@ -341,9 +366,9 @@ class TaskMapViewModel extends ChangeNotifier {
     return result;
   }
 
-  TaskMapList getPlannedOverdueTask() {
+  TaskMapList readPlannedOverdueTask() {
     TaskMapList result = [];
-    TaskMapList plannedTask = getPlannedTask();
+    TaskMapList plannedTask = readPlannedTask();
     DateTime today = DateTime(
       DateTime.now().year,
       DateTime.now().month,
@@ -359,9 +384,9 @@ class TaskMapViewModel extends ChangeNotifier {
     return result;
   }
 
-  TaskMapList getPlannedTodayTask() {
+  TaskMapList readPlannedTodayTask() {
     TaskMapList result = [];
-    TaskMapList plannedTask = getPlannedTask();
+    TaskMapList plannedTask = readPlannedTask();
     DateTime today = DateTime(
       DateTime.now().year,
       DateTime.now().month,
@@ -377,9 +402,9 @@ class TaskMapViewModel extends ChangeNotifier {
     return result;
   }
 
-  TaskMapList getPlannedTomorrowTask() {
+  TaskMapList readPlannedTomorrowTask() {
     TaskMapList result = [];
-    TaskMapList plannedTask = getPlannedTask();
+    TaskMapList plannedTask = readPlannedTask();
     DateTime today = DateTime(
       DateTime.now().year,
       DateTime.now().month,
@@ -395,9 +420,9 @@ class TaskMapViewModel extends ChangeNotifier {
     return result;
   }
 
-  TaskMapList getPlannedThisWeekTask() {
+  TaskMapList readPlannedThisWeekTask() {
     TaskMapList result = [];
-    TaskMapList plannedTask = getPlannedTask();
+    TaskMapList plannedTask = readPlannedTask();
 
     for (var pair in plannedTask) {
       if (GeneralUltility.isTheSameWeekAsToday(pair.keys.first.dueDate!)) {
@@ -407,9 +432,9 @@ class TaskMapViewModel extends ChangeNotifier {
     return result;
   }
 
-  TaskMapList getPlannedLaterTask() {
+  TaskMapList readPlannedLaterTask() {
     TaskMapList result = [];
-    TaskMapList plannedTask = getPlannedTask();
+    TaskMapList plannedTask = readPlannedTask();
     DateTime today = DateTime(
       DateTime.now().year,
       DateTime.now().month,
@@ -420,6 +445,19 @@ class TaskMapViewModel extends ChangeNotifier {
       Duration diffTime = pair.keys.first.dueDate!.difference(today);
       if (!(GeneralUltility.isTheSameWeekAsToday(pair.keys.first.dueDate!)) &&
           (diffTime.inDays > 0)) {
+        result.add(pair);
+      }
+    }
+    return result;
+  }
+
+  TaskMapList searchTaskByName({
+    required String searchName,
+  }) {
+    searchName = searchName.toLowerCase();
+    TaskMapList result = [];
+    for (var pair in allTask) {
+      if (pair.keys.first.title.toLowerCase().contains(searchName)) {
         result.add(pair);
       }
     }

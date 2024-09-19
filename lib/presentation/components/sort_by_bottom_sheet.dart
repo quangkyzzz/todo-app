@@ -36,7 +36,6 @@ class SortByBottomSheet extends StatelessWidget {
                     isAscending: false,
                   );
               mContext.read<TaskListViewModel>().updateTaskListWith(
-                taskListID: taskList.id,
                 sortByType: {
                   'sortType': 'important',
                   'asc': false,
@@ -57,7 +56,6 @@ class SortByBottomSheet extends StatelessWidget {
                     isAscending: true,
                   );
               mContext.read<TaskListViewModel>().updateTaskListWith(
-                taskListID: taskList.id,
                 sortByType: {
                   'sortType': 'due date',
                   'asc': true,
@@ -78,7 +76,6 @@ class SortByBottomSheet extends StatelessWidget {
                     isAscending: false,
                   );
               mContext.read<TaskListViewModel>().updateTaskListWith(
-                taskListID: taskList.id,
                 sortByType: {
                   'sortType': 'my day',
                   'asc': false,
@@ -99,7 +96,6 @@ class SortByBottomSheet extends StatelessWidget {
                     isAscending: true,
                   );
               mContext.read<TaskListViewModel>().updateTaskListWith(
-                taskListID: taskList.id,
                 sortByType: {
                   'sortType': 'alphabetically',
                   'asc': true,
@@ -120,7 +116,6 @@ class SortByBottomSheet extends StatelessWidget {
                     isAscending: true,
                   );
               mContext.read<TaskListViewModel>().updateTaskListWith(
-                taskListID: taskList.id,
                 sortByType: {
                   'sortType': 'create date',
                   'asc': true,

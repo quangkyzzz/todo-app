@@ -37,7 +37,6 @@ class _ChangeSortTypeButtonState extends State<ChangeSortTypeButton> {
               isAscending: !widget.taskList.sortByType!['asc'],
             );
             taskListViewModel.updateTaskListWith(
-              taskListID: widget.taskList.id,
               sortByType: {
                 'sortType': widget.taskList.sortByType!['sortType'],
                 'asc': !widget.taskList.sortByType!['asc'],

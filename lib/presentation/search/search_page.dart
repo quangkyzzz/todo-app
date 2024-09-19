@@ -4,8 +4,9 @@ import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import '../../models/task_list.dart';
 import '../../models/task.dart';
+import '../../ultility/type_def.dart';
+import '../../view_models/task_map_view_model.dart';
 import '../items/task_list_item.dart';
-import '../../provider/task_list_provider.dart';
 import '../../themes.dart';
 
 class SearchPage extends StatefulWidget {
@@ -18,11 +19,9 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   bool isSpeechEnable = false;
   SpeechToText speechToText = SpeechToText();
-  List<Map<Task, TaskList>> tasks = [];
-  List<Map<Task, TaskList>> searchTasks = [];
+  TaskMapList searchTasks = [];
   bool isHideCompletedTask = false;
   String searchName = '';
-  late TaskListProvider taskListProvider;
   late TextEditingController _controller;
 
   void onSearchChange(String value) {
@@ -43,8 +42,7 @@ class _SearchPageState extends State<SearchPage> {
   void initState() {
     // ignore: discarded_futures
     speechToText.initialize();
-    taskListProvider = Provider.of<TaskListProvider>(context, listen: false);
-    searchTasks = taskListProvider.getAllTaskWithTaskList();
+    searchTasks = context.read<TaskMapViewModel>().allTask;
     _controller = TextEditingController();
     super.initState();
   }
@@ -113,9 +111,6 @@ class _SearchPageState extends State<SearchPage> {
                     onTap: () {
                       setState(() {
                         isHideCompletedTask = !isHideCompletedTask;
-                        searchTasks.removeWhere(
-                          (element) => (element.keys.first.isCompleted),
-                        );
                       });
                       Navigator.pop(context);
                     },
@@ -144,52 +139,78 @@ class _SearchPageState extends State<SearchPage> {
             )
           : SingleChildScrollView(
               padding: const EdgeInsets.only(top: 16),
-              child: Consumer<TaskListProvider>(builder: (
-                context,
-                consumerTaskListProvider,
-                child,
-              ) {
-                searchTasks = consumerTaskListProvider.searchTaskByName(
-                  searchName: searchName,
-                );
-
-                if (searchTasks.isEmpty) {
-                  return const Center(
-                    child: Text(
-                      'No match result!',
-                      style: MyTheme.itemTextStyle,
-                    ),
+              child: Consumer<TaskMapViewModel>(
+                builder: (_, taskMapViewModel, child) {
+                  searchTasks = taskMapViewModel.searchTaskByName(
+                    searchName: searchName,
                   );
-                } else {
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    physics: const ClampingScrollPhysics(),
-                    itemCount: searchTasks.length,
-                    itemBuilder: (BuildContext _, int index) {
-                      Map<Task, TaskList> item = searchTasks[index];
-                      if (isHideCompletedTask) {
-                        if (!item.keys.first.isCompleted) {
+
+                  if (searchTasks.isEmpty) {
+                    return const Center(
+                      child: Text(
+                        'No match result!',
+                        style: MyTheme.itemTextStyle,
+                      ),
+                    );
+                  } else {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      physics: const ClampingScrollPhysics(),
+                      itemCount: searchTasks.length,
+                      itemBuilder: (BuildContext _, int index) {
+                        Map<Task, TaskList> item = searchTasks[index];
+                        if (isHideCompletedTask) {
+                          if (!item.keys.first.isCompleted) {
+                            return TaskListItem(
+                              mContext: context,
+                              task: item.keys.first,
+                              taskList: item.values.first,
+                              themeColor: MyTheme.blueColor,
+                              onTapCheck: (bool? value) {
+                                context.read<TaskMapViewModel>().updateTaskWith(
+                                      taskListID: item.values.first.id,
+                                      taskID: item.keys.first.id,
+                                      isCompleted: value,
+                                    );
+                              },
+                              onTapStar: () {
+                                context.read<TaskMapViewModel>().updateTaskWith(
+                                      taskListID: item.values.first.id,
+                                      taskID: item.keys.first.id,
+                                      isImportant: !item.keys.first.isImportant,
+                                    );
+                              },
+                            );
+                          } else {
+                            return const SizedBox();
+                          }
+                        } else {
                           return TaskListItem(
                             mContext: context,
                             task: item.keys.first,
                             taskList: item.values.first,
                             themeColor: MyTheme.blueColor,
+                            onTapCheck: (bool? value) {
+                              context.read<TaskMapViewModel>().updateTaskWith(
+                                    taskListID: item.values.first.id,
+                                    taskID: item.keys.first.id,
+                                    isCompleted: value,
+                                  );
+                            },
+                            onTapStar: () {
+                              context.read<TaskMapViewModel>().updateTaskWith(
+                                    taskListID: item.values.first.id,
+                                    taskID: item.keys.first.id,
+                                    isImportant: !item.keys.first.isImportant,
+                                  );
+                            },
                           );
-                        } else {
-                          return const SizedBox();
                         }
-                      } else {
-                        return TaskListItem(
-                          mContext: context,
-                          task: item.keys.first,
-                          taskList: item.values.first,
-                          themeColor: MyTheme.blueColor,
-                        );
-                      }
-                    },
-                  );
-                }
-              }),
+                      },
+                    );
+                  }
+                },
+              ),
             ),
     );
   }

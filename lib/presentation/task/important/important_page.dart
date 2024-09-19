@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../models/task_list.dart';
@@ -82,9 +81,9 @@ class _TaskListPageState extends State<ImportantPage> {
           ),
           body: SingleChildScrollView(
             child: Consumer<TaskMapViewModel>(
-              builder: (context, taskViewModel, child) {
+              builder: (_, taskMapViewModel, child) {
                 List<Map<Task, TaskList>> importantTasks =
-                    taskViewModel.getImportantTask();
+                    taskMapViewModel.readImportantTask();
                 return ListView.builder(
                   shrinkWrap: true,
                   physics: const ClampingScrollPhysics(),
@@ -95,6 +94,20 @@ class _TaskListPageState extends State<ImportantPage> {
                       task: importantTasks[index].keys.first,
                       taskList: importantTasks[index].values.first,
                       themeColor: importantTaskList.themeColor,
+                      onTapCheck: (bool? value) {
+                        context.read<TaskMapViewModel>().updateTaskWith(
+                            taskListID: importantTasks[index].values.first.id,
+                            taskID: importantTasks[index].keys.first.id,
+                            isCompleted: value);
+                      },
+                      onTapStar: () {
+                        context.read<TaskMapViewModel>().updateTaskWith(
+                              taskListID: importantTasks[index].values.first.id,
+                              taskID: importantTasks[index].keys.first.id,
+                              isImportant:
+                                  !importantTasks[index].keys.first.isImportant,
+                            );
+                      },
                     );
                   },
                 );

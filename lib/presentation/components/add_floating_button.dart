@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/task_list.dart';
+import '../../provider/settings_provider.dart';
 import '../../themes.dart';
 import '../../view_models/task_list_view_model.dart';
+import '../../view_models/task_map_view_model.dart';
 
 class AddFloatingButton extends StatelessWidget {
   final Color themeColor;
@@ -97,17 +99,19 @@ class AddTaskItem extends StatelessWidget {
               IconButton(
                 onPressed: () {
                   if (isAddToMyDay) {
-                    Provider.of<TaskListViewModel>(mContext, listen: false)
+                    Provider.of<TaskMapViewModel>(mContext, listen: false)
                         .addNewTask(
-                      taskListID: taskList.id,
+                      settings: mContext.read<SettingsProvider>().settings,
+                      taskList: taskList,
                       taskName: _controller.text,
                       isCompleted: isChecked,
                       isOnMyDay: true,
                     );
                   } else if (isAddToImportant) {
-                    Provider.of<TaskListViewModel>(mContext, listen: false)
+                    Provider.of<TaskMapViewModel>(mContext, listen: false)
                         .addNewTask(
-                      taskListID: taskList.id,
+                      settings: mContext.read<SettingsProvider>().settings,
+                      taskList: taskList,
                       taskName: _controller.text,
                       isCompleted: isChecked,
                       isImportant: true,

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../../models/task.dart';
 import '../../../models/task_list.dart';
 import '../../../ultility/type_def.dart';
 import '../../../view_models/group_view_model.dart';
@@ -179,21 +180,21 @@ class _PlannedPageState extends State<PlannedPage> {
 
                 //task list
                 Consumer<TaskMapViewModel>(
-                  builder: (context, taskViewModel, child) {
+                  builder: (_, taskViewModel, child) {
                     TaskMapList plannedTasks = [];
                     switch (plannedState) {
                       case 0:
-                        plannedTasks = taskViewModel.getPlannedOverdueTask();
+                        plannedTasks = taskViewModel.readPlannedOverdueTask();
                       case 1:
-                        plannedTasks = taskViewModel.getPlannedTodayTask();
+                        plannedTasks = taskViewModel.readPlannedTodayTask();
                       case 2:
-                        plannedTasks = taskViewModel.getPlannedTomorrowTask();
+                        plannedTasks = taskViewModel.readPlannedTomorrowTask();
                       case 3:
-                        plannedTasks = taskViewModel.getPlannedThisWeekTask();
+                        plannedTasks = taskViewModel.readPlannedThisWeekTask();
                       case 4:
-                        plannedTasks = taskViewModel.getPlannedLaterTask();
+                        plannedTasks = taskViewModel.readPlannedLaterTask();
                       case 5:
-                        plannedTasks = taskViewModel.getPlannedTask();
+                        plannedTasks = taskViewModel.readPlannedTask();
                     }
 
                     return ListView.builder(
@@ -201,11 +202,27 @@ class _PlannedPageState extends State<PlannedPage> {
                       physics: const ClampingScrollPhysics(),
                       itemCount: plannedTasks.length,
                       itemBuilder: (BuildContext context, int index) {
+                        Task task = plannedTasks[index].keys.first;
+                        TaskList taskList = plannedTasks[index].values.first;
                         return TaskListItem(
                           mContext: context,
                           task: plannedTasks[index].keys.first,
                           taskList: plannedTasks[index].values.first,
                           themeColor: plannedTaskList.themeColor,
+                          onTapCheck: (bool? value) {
+                            context.read<TaskMapViewModel>().updateTaskWith(
+                                  taskListID: taskList.id,
+                                  taskID: task.id,
+                                  isCompleted: value,
+                                );
+                          },
+                          onTapStar: () {
+                            context.read<TaskMapViewModel>().updateTaskWith(
+                                  taskListID: taskList.id,
+                                  taskID: task.id,
+                                  isImportant: !task.isImportant,
+                                );
+                          },
                         );
                       },
                     );

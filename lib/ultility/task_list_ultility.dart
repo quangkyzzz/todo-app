@@ -20,7 +20,7 @@ class TaskListUltility {
 
   int countIncompletedMyDayTask() {
     int count = 0;
-    TaskMapList taskList = taskViewModel.getOnMyDayTask();
+    TaskMapList taskList = taskViewModel.readOnMyDayTask();
     for (var task in taskList) {
       if (!task.keys.first.isCompleted) count++;
     }
@@ -29,7 +29,7 @@ class TaskListUltility {
 
   int countIncompletedImportantTask() {
     int count = 0;
-    TaskMapList taskList = taskViewModel.getImportantTask();
+    TaskMapList taskList = taskViewModel.readImportantTask();
     for (var task in taskList) {
       if (!task.keys.first.isCompleted) count++;
     }
@@ -38,7 +38,7 @@ class TaskListUltility {
 
   int countIncompletedPlannedTask() {
     int count = 0;
-    TaskMapList taskList = taskViewModel.getPlannedTask();
+    TaskMapList taskList = taskViewModel.readPlannedTask();
     for (var task in taskList) {
       if (!task.keys.first.isCompleted) count++;
     }
