@@ -32,7 +32,6 @@ class _ChangeSortTypeButtonState extends State<ChangeSortTypeButton> {
         TextButton(
           onPressed: () {
             taskListViewModel.sortTaskListBy(
-              taskListID: widget.taskList.id,
               sortType: widget.taskList.sortByType!['sortType'],
               isAscending: !widget.taskList.sortByType!['asc'],
             );
@@ -60,7 +59,6 @@ class _ChangeSortTypeButtonState extends State<ChangeSortTypeButton> {
         IconButton(
           onPressed: () {
             taskListViewModel.sortTaskListBy(
-              taskListID: widget.taskList.id,
               sortType: 'create date',
               isAscending:
                   (settingsProvider.settings.isAddNewTaskOnTop) ? false : true,

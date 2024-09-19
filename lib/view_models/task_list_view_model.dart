@@ -94,7 +94,6 @@ class TaskListViewModel extends ChangeNotifier {
   }
 
   void sortTaskListBy({
-    required String taskListID,
     required String sortType,
     required bool isAscending,
   }) {

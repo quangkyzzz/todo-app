@@ -31,7 +31,6 @@ class SortByBottomSheet extends StatelessWidget {
           InkWell(
             onTap: () {
               mContext.read<TaskListViewModel>().sortTaskListBy(
-                    taskListID: taskList.id,
                     sortType: 'important',
                     isAscending: false,
                   );
@@ -51,7 +50,6 @@ class SortByBottomSheet extends StatelessWidget {
           InkWell(
             onTap: () {
               mContext.read<TaskListViewModel>().sortTaskListBy(
-                    taskListID: taskList.id,
                     sortType: 'due date',
                     isAscending: true,
                   );
@@ -71,7 +69,6 @@ class SortByBottomSheet extends StatelessWidget {
           InkWell(
             onTap: () {
               mContext.read<TaskListViewModel>().sortTaskListBy(
-                    taskListID: taskList.id,
                     sortType: 'my day',
                     isAscending: false,
                   );
@@ -91,7 +88,6 @@ class SortByBottomSheet extends StatelessWidget {
           InkWell(
             onTap: () {
               mContext.read<TaskListViewModel>().sortTaskListBy(
-                    taskListID: taskList.id,
                     sortType: 'alphabetically',
                     isAscending: true,
                   );
@@ -111,7 +107,6 @@ class SortByBottomSheet extends StatelessWidget {
           InkWell(
             onTap: () {
               mContext.read<TaskListViewModel>().sortTaskListBy(
-                    taskListID: taskList.id,
                     sortType: 'create date',
                     isAscending: true,
                   );
