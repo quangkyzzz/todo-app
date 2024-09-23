@@ -155,7 +155,7 @@ class _TaskPageState extends State<TaskPage> {
             },
             child: const CustomPopupItem(
               text: 'Weekdays',
-              icon: Icons.calendar_today_outlined,
+              icon: Icons.today_outlined,
             ),
           ),
           PopupMenuItem(
@@ -164,7 +164,7 @@ class _TaskPageState extends State<TaskPage> {
             },
             child: const CustomPopupItem(
               text: 'Weekly',
-              icon: Icons.calendar_today_outlined,
+              icon: Icons.date_range_outlined,
             ),
           ),
           PopupMenuItem(
@@ -173,7 +173,7 @@ class _TaskPageState extends State<TaskPage> {
             },
             child: const CustomPopupItem(
               text: 'Monthly',
-              icon: Icons.calendar_today_outlined,
+              icon: Icons.calendar_month_outlined,
             ),
           ),
           PopupMenuItem(
@@ -182,7 +182,7 @@ class _TaskPageState extends State<TaskPage> {
             },
             child: const CustomPopupItem(
               text: 'Yearly',
-              icon: Icons.calendar_today_outlined,
+              icon: Icons.calendar_view_month_outlined,
             ),
           ),
           PopupMenuItem(
@@ -194,7 +194,7 @@ class _TaskPageState extends State<TaskPage> {
             },
             child: const CustomPopupItem(
               text: 'Custom',
-              icon: Icons.calendar_today_outlined,
+              icon: Icons.edit_calendar_outlined,
             ),
           ),
         ],
