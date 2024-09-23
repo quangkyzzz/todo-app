@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../../models/task_list.dart';
 import '../../themes.dart';
 import '../../view_models/task_list_view_model.dart';
+import '../widgets/custom_outlined_button.dart';
 
 class ChangeThemeBottomSheet extends StatefulWidget {
   final TaskList taskList;
@@ -265,36 +266,6 @@ class SelectImageButton extends StatelessWidget {
                 )
               : const SizedBox(),
         ],
-      ),
-    );
-  }
-}
-
-class CustomOutlinedButton extends StatelessWidget {
-  final String text;
-  final bool isHighLighted;
-  final Function() onTap;
-  const CustomOutlinedButton({
-    super.key,
-    required this.isHighLighted,
-    required this.onTap,
-    required this.text,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return OutlinedButton(
-      onPressed: onTap,
-      style: OutlinedButton.styleFrom(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
-        side: const BorderSide(width: 1, color: MyTheme.whiteColor),
-        backgroundColor: (isHighLighted) ? MyTheme.lightGreyColor : null,
-      ),
-      child: Text(
-        text,
-        style: MyTheme.itemSmallTextStyle,
       ),
     );
   }

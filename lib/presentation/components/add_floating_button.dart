@@ -5,6 +5,7 @@ import '../../provider/settings_provider.dart';
 import '../../themes.dart';
 import '../../view_models/task_list_view_model.dart';
 import '../../view_models/task_map_view_model.dart';
+import '../widgets/custom_outlined_button.dart';
 
 class AddFloatingButton extends StatelessWidget {
   final Color themeColor;
@@ -75,63 +76,128 @@ class AddTaskItem extends StatelessWidget {
         return Padding(
           padding:
               EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Checkbox(
-                shape: const CircleBorder(),
-                value: isChecked,
-                onChanged: (bool? value) {
-                  setState(() {
-                    isChecked = value!;
-                  });
-                },
-              ),
-              Expanded(
-                child: TextField(
-                  controller: _controller,
-                  autofocus: true,
-                  decoration: const InputDecoration(
-                    hintText: 'Add a task',
+          child: SizedBox(
+            height: 120,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Checkbox(
+                      shape: const CircleBorder(),
+                      value: isChecked,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          isChecked = value!;
+                        });
+                      },
+                    ),
+                    Expanded(
+                      child: TextField(
+                        controller: _controller,
+                        autofocus: true,
+                        decoration: const InputDecoration(
+                          hintText: 'Add a task',
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        if (isAddToMyDay) {
+                          Provider.of<TaskMapViewModel>(mContext, listen: false)
+                              .addNewTask(
+                            settings:
+                                mContext.read<SettingsProvider>().settings,
+                            taskList: taskList,
+                            taskName: _controller.text,
+                            isCompleted: isChecked,
+                            isOnMyDay: true,
+                          );
+                        } else if (isAddToImportant) {
+                          Provider.of<TaskMapViewModel>(mContext, listen: false)
+                              .addNewTask(
+                            settings:
+                                mContext.read<SettingsProvider>().settings,
+                            taskList: taskList,
+                            taskName: _controller.text,
+                            isCompleted: isChecked,
+                            isImportant: true,
+                          );
+                        } else {
+                          Provider.of<TaskListViewModel>(mContext,
+                                  listen: false)
+                              .addNewTask(
+                            settings:
+                                mContext.read<SettingsProvider>().settings,
+                            taskName: _controller.text,
+                            isCompleted: isChecked,
+                          );
+                        }
+                        setState(() {
+                          isChecked = false;
+                        });
+                        _controller.clear();
+                      },
+                      icon: const Icon(Icons.arrow_upward),
+                    )
+                  ],
+                ),
+                const SizedBox(height: 8),
+                SingleChildScrollView(
+                  padding: const EdgeInsets.only(left: 8),
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    //TODO: need to add task(optional)
+                    //TODO: duedate
+                    //TODO: remindTime
+                    //TODO: repeatTime
+                    children: [
+                      CustomOutlinedButton(
+                        isHighLighted: false,
+                        onTap: () {},
+                        text: 'test',
+                      ),
+                      CustomOutlinedButton(
+                        isHighLighted: false,
+                        onTap: () {},
+                        text: 'test',
+                      ),
+                      CustomOutlinedButton(
+                        isHighLighted: false,
+                        onTap: () {},
+                        text: 'test',
+                      ),
+                      CustomOutlinedButton(
+                        isHighLighted: false,
+                        onTap: () {},
+                        text: 'test',
+                      ),
+                      CustomOutlinedButton(
+                        isHighLighted: false,
+                        onTap: () {},
+                        text: 'test',
+                      ),
+                      CustomOutlinedButton(
+                        isHighLighted: false,
+                        onTap: () {},
+                        text: 'test',
+                      ),
+                      CustomOutlinedButton(
+                        isHighLighted: false,
+                        onTap: () {},
+                        text: 'test',
+                      ),
+                      CustomOutlinedButton(
+                        isHighLighted: false,
+                        onTap: () {},
+                        text: 'test',
+                      ),
+                    ],
                   ),
                 ),
-              ),
-              IconButton(
-                onPressed: () {
-                  if (isAddToMyDay) {
-                    Provider.of<TaskMapViewModel>(mContext, listen: false)
-                        .addNewTask(
-                      settings: mContext.read<SettingsProvider>().settings,
-                      taskList: taskList,
-                      taskName: _controller.text,
-                      isCompleted: isChecked,
-                      isOnMyDay: true,
-                    );
-                  } else if (isAddToImportant) {
-                    Provider.of<TaskMapViewModel>(mContext, listen: false)
-                        .addNewTask(
-                      settings: mContext.read<SettingsProvider>().settings,
-                      taskList: taskList,
-                      taskName: _controller.text,
-                      isCompleted: isChecked,
-                      isImportant: true,
-                    );
-                  } else {
-                    Provider.of<TaskListViewModel>(mContext, listen: false)
-                        .addNewTask(
-                      settings: mContext.read<SettingsProvider>().settings,
-                      taskName: _controller.text,
-                      isCompleted: isChecked,
-                    );
-                  }
-                  setState(() {
-                    isChecked = false;
-                  });
-                  _controller.clear();
-                },
-                icon: const Icon(Icons.arrow_upward),
-              )
-            ],
+              ],
+            ),
           ),
         );
       },
