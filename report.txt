@@ -5,6 +5,7 @@ Báo cáo 23/9
     taskListViewModel
     -   Sửa cách truyền dữ liệu vào các trang myDay, planned, important
     -   Sửa các trang userProfile, setting, reorder theo đúng cấu trúc MVVM
+    -   Tách userViewModel và authProvider.
     -   Sửa lỗi các viewModel khi thay đổi ảnh hưởng tới các viewModel khác.
 Đang làm:
    
