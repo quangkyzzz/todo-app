@@ -1,9 +1,13 @@
-Báo cáo 19/9
+Báo cáo 23/9
 Đã làm:
-    -   Sửa chức năng thay đổi thứ tự của task. 
-    -   Hoàn thành sửa chức năng của màn taskListPage.
-    -   Sửa các màn taskPage, userProfilePage theo đúng cấu trúc mvvm.
+    -   Hoàn thành sửa chức năng update task trong taskViewModel
+    -   Sửa các chức năng sắp xếp task, đổi tên taskList, thêm task vào taskList trong
+    taskListViewModel
+    -   Sửa cách truyền dữ liệu vào các trang myDay, planned, important
+    -   Sửa các trang userProfile, setting, reorder theo đúng cấu trúc MVVM
+    -   Sửa lỗi các viewModel khi thay đổi ảnh hưởng tới các viewModel khác.
 Đang làm:
-    -   Sửa chức năng update task trong taskViewModel.
+   
 Dự định làm:
     -   Rà soát và tinh gọn cấu trúc code.
+    -   Dựa vào review để tiếp tục chỉnh sửa.

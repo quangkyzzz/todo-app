@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../app_configs.dart';
+import '../../provider/auth_provider.dart';
 import '../../routes.dart';
 import '../../themes.dart';
-import '../../view_models/auth_view_model.dart';
+import '../../view_models/user_view_model.dart';
 import 'settings_list.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -43,7 +44,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     radius: 36,
                   ),
                   const SizedBox(width: 18),
-                  Consumer<AuthViewModel>(
+                  Consumer<UserViewModel>(
                       builder: (context, authViewModel, child) {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,7 +74,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         ),
                         InkWell(
                           onTap: () async {
-                            Provider.of<AuthViewModel>(context, listen: false)
+                            Provider.of<AuthProvider>(context, listen: false)
                                 .logout();
                             await Navigator.pushNamedAndRemoveUntil(
                                 context, initialRoute, (route) => false);
@@ -83,7 +84,9 @@ class _SettingsPageState extends State<SettingsPage> {
                             child: const Text(
                               'SIGN OUT',
                               style: TextStyle(
-                                  fontSize: 18, color: MyTheme.redColor),
+                                fontSize: 18,
+                                color: MyTheme.redColor,
+                              ),
                             ),
                           ),
                         ),

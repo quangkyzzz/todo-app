@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'provider/auth_provider.dart';
 import 'provider/settings_provider.dart';
 import 'service/background_service.dart';
 import 'service/notification_service.dart';
@@ -20,8 +21,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => SettingsProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => SettingsProvider()),
+        ChangeNotifierProvider(create: (context) => AuthProvider()),
+      ],
       builder: (context, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,

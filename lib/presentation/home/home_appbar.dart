@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import '../../app_configs.dart';
 import '../../routes.dart';
 import '../../themes.dart';
-import '../../view_models/auth_view_model.dart';
+import '../../view_models/user_view_model.dart';
 
 class HomeAppBar {
   BuildContext context;
@@ -35,7 +35,7 @@ class HomeAppBar {
             await Navigator.of(context).pushNamed(userProfileRoute);
           },
           child:
-              Consumer<AuthViewModel>(builder: (context, authViewModel, child) {
+              Consumer<UserViewModel>(builder: (context, authViewModel, child) {
             return RichText(
               text: TextSpan(
                 text: authViewModel.currentUser.userName,

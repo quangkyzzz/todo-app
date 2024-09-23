@@ -15,7 +15,8 @@ import 'presentation/task/task_list/task_list_page.dart';
 import 'presentation/task/task_page/task_page.dart';
 import 'presentation/settings/settings_page.dart';
 import 'presentation/user_profile/user_profile_page.dart';
-import 'view_models/auth_view_model.dart';
+import 'provider/auth_provider.dart';
+import 'view_models/user_view_model.dart';
 import 'view_models/group_view_model.dart';
 import 'view_models/task_list_view_model.dart';
 import 'view_models/task_map_view_model.dart';
@@ -38,13 +39,15 @@ const noteEditRoute = '/task/note_edit';
 
 var allRoute = {
   initialRoute: (context) {
-    return ChangeNotifierProvider(
-      create: (context) => AuthViewModel(),
-      builder: (context, child) {
-        bool isLogin = context.watch<AuthViewModel>().isLogin;
+    return Builder(
+      builder: (context) {
+        bool isLogin = context.watch<AuthProvider>().isLogin;
         return (isLogin)
             ? MultiProvider(
                 providers: [
+                  ChangeNotifierProvider(
+                    create: (context) => UserViewModel(),
+                  ),
                   ChangeNotifierProvider(
                     create: (context) => GroupViewModel(),
                   ),
@@ -86,7 +89,7 @@ var allRoute = {
   userProfileRoute: (context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => AuthViewModel()),
+        ChangeNotifierProvider(create: (context) => UserViewModel()),
       ],
       builder: (context, child) => const UserProfilePage(),
     );
@@ -158,7 +161,7 @@ var allRoute = {
   settingsRoute: (context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => AuthViewModel()),
+        ChangeNotifierProvider(create: (context) => UserViewModel()),
       ],
       builder: (context, child) => const SettingsPage(),
     );

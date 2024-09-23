@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import '../../app_configs.dart';
 import '../../themes.dart';
 import '../../routes.dart';
-import '../../view_models/auth_view_model.dart';
+import '../../view_models/user_view_model.dart';
 
 class UserProfilePage extends StatefulWidget {
   const UserProfilePage({super.key});
@@ -19,7 +19,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
       body: Padding(
         padding: const EdgeInsets.only(left: 8, top: 42, right: 8),
         child:
-            Consumer<AuthViewModel>(builder: (context, authViewModel, child) {
+            Consumer<UserViewModel>(builder: (context, authViewModel, child) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
