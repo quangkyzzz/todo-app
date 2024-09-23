@@ -4,8 +4,6 @@ import '../models/settings.dart';
 import '../models/task_list.dart';
 import '../models/task.dart';
 
-import '../service/background_service.dart';
-
 class TaskListViewModel extends ChangeNotifier {
   TaskList currentTaskList;
   TaskListViewModel({
@@ -176,18 +174,17 @@ class TaskListViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteTask({
-    required String taskListID,
-    required String taskID,
-  }) {
-    currentTaskList.tasks.removeWhere((element) {
-      if ((element.id == taskID) && (element.remindTime != null)) {
-        // ignore: discarded_futures
-        BackGroundService.cancelTaskByID(id: taskID);
-      }
-      return (element.id == taskID);
-    });
+  // void deleteTask({
+  //   required String taskID,
+  // }) {
+  //   currentTaskList.tasks.removeWhere((element) {
+  //     if ((element.id == taskID) && (element.remindTime != null)) {
+  //       // ignore: discarded_futures
+  //       BackGroundService.cancelTaskByID(id: taskID);
+  //     }
+  //     return (element.id == taskID);
+  //   });
 
-    notifyListeners();
-  }
+  //   notifyListeners();
+  // }
 }

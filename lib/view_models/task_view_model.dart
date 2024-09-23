@@ -72,10 +72,7 @@ class TaskViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteTask({
-    required String taskListID,
-    required String taskID,
-  }) {
+  void deleteTask() {
     // TaskList? taskList = taskLists.firstWhereOrNull(
     //   (element) => (element.id == taskListID),
     // );
