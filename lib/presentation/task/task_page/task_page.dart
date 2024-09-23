@@ -44,7 +44,7 @@ class _TaskPageState extends State<TaskPage> {
   late bool isOnMyDay;
   late bool isCompleted;
   late bool isImportant;
-  late List<TaskStep>? steps;
+  late List<TaskStep> stepList;
   late DateTime? remindTime;
   late DateTime? dueDate;
   late String? repeatFrequency;
@@ -256,13 +256,12 @@ class _TaskPageState extends State<TaskPage> {
   }) {
     if (isDelete) {
       setState(() {
-        steps!.remove(newStep);
-        if (steps!.isEmpty) steps = null;
+        stepList.remove(newStep);
       });
     } else {
       setState(() {
         TaskStep step =
-            steps!.firstWhere((element) => (element.id == newStep.id));
+            stepList.firstWhere((element) => (element.id == newStep.id));
         step.copyFrom(newStep: newStep);
       });
     }
@@ -270,18 +269,18 @@ class _TaskPageState extends State<TaskPage> {
 
   void onSubmittedAddStep(String value) {
     if (value != '') {
-      if (steps == null) {
-        setState(() {
-          steps = List<TaskStep>.empty(growable: true);
-        });
-      }
+      // if (stepList.isEmpty) {
+      //   setState(() {
+      //     stepList = List<TaskStep>.empty(growable: true);
+      //   });
+      // }
       setState(() {
         TaskStep newStep = TaskStep(
           id: DateTime.now().millisecondsSinceEpoch.toString(),
           stepName: value,
           isCompleted: false,
         );
-        steps!.add(newStep);
+        stepList.add(newStep);
       });
       _stepController.clear();
     }
@@ -299,7 +298,7 @@ class _TaskPageState extends State<TaskPage> {
     isImportant = widget.task.isImportant;
     remindTime = widget.task.remindTime;
     dueDate = widget.task.dueDate;
-    steps = widget.task.stepList;
+    stepList = widget.task.stepList;
     repeatFrequency = widget.task.repeatFrequency;
     filePaths = widget.task.filePath;
     _taskNameController = TextEditingController(text: widget.task.title);
@@ -387,7 +386,7 @@ class _TaskPageState extends State<TaskPage> {
             isOnMyDay: isOnMyDay,
             remindTime: remindTime,
             dueDate: dueDate,
-            stepList: steps,
+            stepList: stepList,
             repeatFrequency: repeatFrequency,
             filePath: filePaths,
             note: widget.task.note,
@@ -414,14 +413,14 @@ class _TaskPageState extends State<TaskPage> {
               const SizedBox(height: 8),
               ////////////////
               //Step edit row
-              (steps != null)
+              (stepList.isNotEmpty)
                   ? ListView.builder(
                       physics: const ClampingScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: steps!.length,
+                      itemCount: stepList.length,
                       itemBuilder: (BuildContext context, int index) {
                         return StepItem(
-                          step: steps![index],
+                          step: stepList[index],
                           callBack: callBackEditStepItem,
                           taskList: widget.taskList,
                         );

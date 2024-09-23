@@ -33,16 +33,10 @@ class TaskListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isFirstIcon = true;
-    int countCompletedStep = 0;
-    if (task.stepList != null) {
-      for (var step in task.stepList!) {
-        if (step.isCompleted) countCompletedStep++;
-      }
-    }
     unawaited(initializeDateFormatting('vi'));
     double screenWidth = MediaQuery.of(context).size.width;
     bool isAllBottomIconNull = ((!task.isOnMyDay) &&
-        (task.stepList == null) &&
+        (task.stepList.isEmpty) &&
         (task.dueDate == null) &&
         (task.remindTime == null) &&
         (task.repeatFrequency == null) &&
@@ -120,13 +114,17 @@ class TaskListItem extends StatelessWidget {
                             }
                           }),
                           Builder(builder: (context) {
-                            if (task.stepList != null) {
+                            if (task.stepList.isNotEmpty) {
+                              int countCompletedStep = 0;
                               bool tempFirstIcon = isFirstIcon;
+                              for (var step in task.stepList) {
+                                if (step.isCompleted) countCompletedStep++;
+                              }
                               isFirstIcon = false;
                               return ItemBottomIcon(
                                 text: '$countCompletedStep'
-                                    'of'
-                                    '${task.stepList!.length.toString()}',
+                                    ' of '
+                                    '${task.stepList.length.toString()}',
                                 isFirstIcon: tempFirstIcon,
                               );
                             } else {

@@ -9,7 +9,7 @@ class Task {
   bool isImportant;
   bool isOnMyDay;
   final DateTime createDate;
-  List<TaskStep>? stepList;
+  List<TaskStep> stepList;
   DateTime? dueDate;
   DateTime? remindTime;
   String? repeatFrequency;
@@ -23,13 +23,13 @@ class Task {
     required this.isImportant,
     required this.isOnMyDay,
     required this.createDate,
-    this.stepList,
+    List<TaskStep>? stepList,
     this.dueDate,
     this.remindTime,
     this.filePath,
     this.repeatFrequency,
     this.note,
-  });
+  }) : stepList = stepList ?? [];
 
   void copyFrom({required Task copyTask}) {
     title = copyTask.title;
@@ -58,6 +58,14 @@ class Task {
     List<String>? filePath,
     String? note,
   }) {
+    List<TaskStep> newStepList = [];
+    if (stepList != null) {
+      newStepList = stepList;
+    } else {
+      for (TaskStep taskStep in this.stepList) {
+        newStepList.add(taskStep.copyWith());
+      }
+    }
     return Task(
       id: id ?? this.id,
       title: title ?? this.title,
@@ -65,7 +73,7 @@ class Task {
       isImportant: isImportant ?? this.isImportant,
       isOnMyDay: isOnMyDay ?? this.isOnMyDay,
       createDate: createDate ?? this.createDate,
-      stepList: stepList ?? this.stepList,
+      stepList: newStepList,
       dueDate: dueDate ?? this.dueDate,
       remindTime: remindTime ?? this.remindTime,
       repeatFrequency: repeatFrequency ?? this.repeatFrequency,

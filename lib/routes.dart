@@ -184,7 +184,7 @@ var allRoute = {
   taskRoute: (context) {
     Map<dynamic, dynamic> arg =
         ModalRoute.of(context)?.settings.arguments as Map;
-    Task task = arg['task'];
+    Task task = arg['task'].copyWith();
     TaskList taskList = arg['taskList'];
     return MultiProvider(
         providers: [

@@ -39,8 +39,8 @@ class TaskList {
     if (tasks != null) {
       newTasks = tasks;
     } else {
-      for (var element in this.tasks) {
-        newTasks.add(element.copyWith());
+      for (Task task in this.tasks) {
+        newTasks.add(task.copyWith());
       }
     }
     return TaskList(
