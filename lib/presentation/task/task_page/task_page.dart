@@ -51,7 +51,6 @@ class _TaskPageState extends State<TaskPage> {
   late List<String>? filePaths;
   late final TextEditingController _stepController;
   late final TextEditingController _taskNameController;
-  late List<Map<String, dynamic>> listRepeatPopupItem;
 
   void onTapAddToMyDay(BuildContext context, {bool isDisable = false}) {
     setState(() {
@@ -140,17 +139,65 @@ class _TaskPageState extends State<TaskPage> {
           0,
           0,
         ),
-        items: listRepeatPopupItem.map((item) {
-          return PopupMenuItem(
+        items: [
+          PopupMenuItem(
             onTap: () {
-              item['onTap'](context);
+              onCompleteSetRepeat('1 Days');
             },
-            child: CustomPopupItem(
-              text: item['text'],
-              icon: item['icon'],
+            child: const CustomPopupItem(
+              text: 'Daily',
+              icon: Icons.calendar_today_outlined,
             ),
-          );
-        }).toList(),
+          ),
+          PopupMenuItem(
+            onTap: () {
+              onCompleteSetRepeat('1 Weekdays');
+            },
+            child: const CustomPopupItem(
+              text: 'Weekdays',
+              icon: Icons.calendar_today_outlined,
+            ),
+          ),
+          PopupMenuItem(
+            onTap: () {
+              onCompleteSetRepeat('1 Weeks');
+            },
+            child: const CustomPopupItem(
+              text: 'Weekly',
+              icon: Icons.calendar_today_outlined,
+            ),
+          ),
+          PopupMenuItem(
+            onTap: () {
+              onCompleteSetRepeat('1 Months');
+            },
+            child: const CustomPopupItem(
+              text: 'Monthly',
+              icon: Icons.calendar_today_outlined,
+            ),
+          ),
+          PopupMenuItem(
+            onTap: () {
+              onCompleteSetRepeat('1 Years');
+            },
+            child: const CustomPopupItem(
+              text: 'Yearly',
+              icon: Icons.calendar_today_outlined,
+            ),
+          ),
+          PopupMenuItem(
+            onTap: () async {
+              String? result = await showCustomRepeatTimeDialog(context);
+              if (result != null) {
+                onCompleteSetRepeat(result);
+              }
+            },
+            child: const CustomPopupItem(
+              text: 'Custom',
+              icon: Icons.calendar_today_outlined,
+            ),
+          ),
+        ],
       );
     } else {
       setState(() {
@@ -269,11 +316,6 @@ class _TaskPageState extends State<TaskPage> {
 
   void onSubmittedAddStep(String value) {
     if (value != '') {
-      // if (stepList.isEmpty) {
-      //   setState(() {
-      //     stepList = List<TaskStep>.empty(growable: true);
-      //   });
-      // }
       setState(() {
         TaskStep newStep = TaskStep(
           id: DateTime.now().millisecondsSinceEpoch.toString(),
@@ -283,6 +325,8 @@ class _TaskPageState extends State<TaskPage> {
         stepList.add(newStep);
       });
       _stepController.clear();
+    } else {
+      FocusScope.of(context).unfocus();
     }
   }
 
@@ -303,53 +347,6 @@ class _TaskPageState extends State<TaskPage> {
     filePaths = widget.task.filePath;
     _taskNameController = TextEditingController(text: widget.task.title);
     _stepController = TextEditingController();
-    listRepeatPopupItem = [
-      {
-        'text': 'Daily',
-        'icon': Icons.calendar_today_outlined,
-        'onTap': (BuildContext context) {
-          onCompleteSetRepeat('1 Days');
-        },
-      },
-      {
-        'text': 'Weekdays',
-        'icon': Icons.calendar_today_outlined,
-        'onTap': (BuildContext context) {
-          onCompleteSetRepeat('1 Weekdays');
-        },
-      },
-      {
-        'text': 'Weekly',
-        'icon': Icons.calendar_today_outlined,
-        'onTap': (BuildContext context) {
-          onCompleteSetRepeat('1 Weeks');
-        },
-      },
-      {
-        'text': 'Monthly',
-        'icon': Icons.calendar_today_outlined,
-        'onTap': (BuildContext context) {
-          onCompleteSetRepeat('1 Months');
-        }
-      },
-      {
-        'text': 'Yearly',
-        'icon': Icons.calendar_today_outlined,
-        'onTap': (BuildContext context) {
-          onCompleteSetRepeat('1 Years');
-        },
-      },
-      {
-        'text': 'Custom',
-        'icon': Icons.calendar_today_outlined,
-        'onTap': (BuildContext context) async {
-          String? result = await showCustomRepeatTimeDialog(context);
-          if (result != null) {
-            onCompleteSetRepeat(result);
-          }
-        },
-      },
-    ];
     super.initState();
   }
 
@@ -434,9 +431,7 @@ class _TaskPageState extends State<TaskPage> {
                     onPressed: () {
                       onSubmittedAddStep(_stepController.text);
                     },
-                    icon: const Icon(
-                      Icons.add,
-                    ),
+                    icon: const Icon(Icons.add),
                     color: MyTheme.greyColor,
                   ),
                   const SizedBox(width: 8),
