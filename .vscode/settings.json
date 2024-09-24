@@ -1,5 +1,6 @@
 {
     //gg
     "cmake.sourceDirectory": "D:/Project/Flutter_Project/todo_app/windows/flutter",
-    "cmake.ignoreCMakeListsMissing": true
+    "cmake.ignoreCMakeListsMissing": true,
+    "todo-tree.tree.showBadges": true
 }
