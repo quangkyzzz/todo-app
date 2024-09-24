@@ -228,6 +228,7 @@ class TaskMapViewModel extends ChangeNotifier {
     return allTask.firstWhere((element) => (element.keys.first.id == taskID));
   }
 
+//TODO: add background service
   void addNewTask({
     required Settings settings,
     required TaskList taskList,
@@ -235,6 +236,9 @@ class TaskMapViewModel extends ChangeNotifier {
     required bool isCompleted,
     bool isOnMyDay = false,
     bool isImportant = false,
+    DateTime? dueDate,
+    DateTime? remindTime,
+    String? repeatFrequency,
   }) {
     Task task = Task(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
@@ -243,6 +247,9 @@ class TaskMapViewModel extends ChangeNotifier {
       isImportant: isImportant,
       isOnMyDay: isOnMyDay,
       createDate: DateTime.now(),
+      dueDate: dueDate,
+      remindTime: remindTime,
+      repeatFrequency: repeatFrequency,
     );
     final pair = {task: taskList};
     if (settings.isAddNewTaskOnTop) {

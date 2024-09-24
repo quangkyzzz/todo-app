@@ -2,6 +2,7 @@ import '../../themes.dart';
 import 'package:flutter/material.dart';
 
 class CustomOutlinedButton extends StatelessWidget {
+  final IconData? icon;
   final String text;
   final bool isHighLighted;
   final Function() onTap;
@@ -12,6 +13,7 @@ class CustomOutlinedButton extends StatelessWidget {
     required this.onTap,
     required this.text,
     this.highLightText,
+    this.icon,
   });
 
   @override
@@ -25,15 +27,20 @@ class CustomOutlinedButton extends StatelessWidget {
         side: const BorderSide(width: 1, color: MyTheme.whiteColor),
         backgroundColor: (isHighLighted) ? MyTheme.lightGreyColor : null,
       ),
-      child: (isHighLighted)
-          ? Text(
-              highLightText ?? text,
-              style: MyTheme.itemSmallTextStyle,
-            )
-          : Text(
-              text,
-              style: MyTheme.itemSmallTextStyle,
-            ),
+      child: Row(
+        children: [
+          (icon != null) ? Icon(icon) : const SizedBox(),
+          (isHighLighted)
+              ? Text(
+                  highLightText ?? text,
+                  style: MyTheme.itemSmallTextStyle,
+                )
+              : Text(
+                  text,
+                  style: MyTheme.itemSmallTextStyle,
+                ),
+        ],
+      ),
     );
   }
 }

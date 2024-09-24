@@ -150,12 +150,16 @@ class TaskListViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+//TODO: add background service
   void addNewTask({
     required String taskName,
     required bool isCompleted,
     required Settings settings,
     bool isOnMyDay = false,
     bool isImportant = false,
+    DateTime? dueDate,
+    DateTime? remindTime,
+    String? repeatFrequency,
   }) {
     Task task = Task(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
@@ -164,6 +168,9 @@ class TaskListViewModel extends ChangeNotifier {
       isImportant: isImportant,
       isOnMyDay: isOnMyDay,
       createDate: DateTime.now(),
+      dueDate: dueDate,
+      remindTime: remindTime,
+      repeatFrequency: repeatFrequency,
     );
     if (settings.isAddNewTaskOnTop) {
       currentTaskList.tasks.insert(0, task);

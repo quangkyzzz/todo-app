@@ -8,6 +8,7 @@ import '../../../models/task_step.dart';
 import '../../../models/task_list.dart';
 import '../../../view_models/task_view_model.dart';
 import '../../components/show_custom_repeat_time_dialog.dart';
+import '../../components/show_date_time_picker.dart';
 import 'file_item.dart';
 import '../../../provider/settings_provider.dart';
 import '../../../themes.dart';
@@ -59,38 +60,8 @@ class _TaskPageState extends State<TaskPage> {
   }
 
   void onTapRemindMe(BuildContext context, {bool isDisable = false}) async {
-    Future<DateTime?> getRemindTime({
-      required BuildContext context,
-      required DateTime initialDate,
-    }) async {
-      final DateTime? selectedDate = await showDatePicker(
-        context: context,
-        initialDate: initialDate,
-        firstDate: DateTime.now(),
-        lastDate: DateTime(2030),
-      );
-      if (selectedDate == null) return null;
-
-      if (!context.mounted) return null;
-
-      TimeOfDay? selectedTime = await showTimePicker(
-        context: context,
-        initialTime: TimeOfDay.fromDateTime(initialDate),
-      );
-
-      if (selectedTime == null) return null;
-
-      return DateTime(
-        selectedDate.year,
-        selectedDate.month,
-        selectedDate.day,
-        selectedTime.hour,
-        selectedTime.minute,
-      );
-    }
-
     if (!isDisable) {
-      DateTime? tempRemindTime = await getRemindTime(
+      DateTime? tempRemindTime = await showDateTimePicker(
         context: context,
         initialDate: remindTime ??
             DateTime(
@@ -469,8 +440,8 @@ class _TaskPageState extends State<TaskPage> {
                   onTapRemindMe(context, isDisable: isDisable);
                 },
                 task: widget.task,
-                activeText: 'Remind at'
-                    ' ${DateFormat('h:mm a, MMM d').format(remindTime ?? DateTime(2000))}',
+                activeText: 'Remind at '
+                    '${DateFormat('h:mm a, MMM d').format(remindTime ?? DateTime(2000))}',
               ),
               TaskPageItem(
                 isActive: (dueDate != null),

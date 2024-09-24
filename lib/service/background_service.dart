@@ -50,7 +50,9 @@ void callbackDispatcher() {
 
 class BackGroundService {
   static void executePeriodicBackGroundTask({
-    required Task task,
+    Task? task,
+    String? taskName,
+    String? taskID,
     required TaskList taskList,
     required DateTime remindTime,
     required String frequency,
@@ -62,12 +64,13 @@ class BackGroundService {
     int remindDay = remindTime.day;
     int remindMonth = remindTime.month;
     int remindYear = remindTime.year;
-
+    taskID ??= task!.id;
+    taskName ??= task!.title;
     Duration delayTime = remindTime.difference(DateTime.now());
     int period = int.parse(frequency.split(' ').first);
     String interval = frequency.split(' ')[1];
 
-    BackGroundService.cancelTaskByID(id: task.id);
+    BackGroundService.cancelTaskByID(id: taskID);
     if (delayTime.inSeconds < 0) {
       int secondDelay = delayTime.inSeconds % const Duration(days: 1).inSeconds;
       delayTime = Duration(seconds: secondDelay);
@@ -95,13 +98,13 @@ class BackGroundService {
         }
     }
     await Workmanager().registerPeriodicTask(
-      task.id,
-      task.title,
+      taskID,
+      taskName,
       initialDelay: delayTime,
       frequency: frequencyDuration,
       inputData: {
-        'id': task.id.substring(4),
-        'taskTitle': task.title,
+        'id': taskID.substring(4),
+        'taskTitle': taskName,
         'listName': taskList.listName,
         'remindYear': remindYear,
         'remindMonth': remindMonth,
@@ -116,24 +119,40 @@ class BackGroundService {
   }
 
   static void executeScheduleBackGroundTask({
-    required Task task,
+    Task? task,
+    String? taskID,
+    String? taskName,
     required TaskList taskList,
     required bool isPlaySound,
     required DateTime remindTime,
   }) async {
     Duration delayTime = remindTime.difference(DateTime.now());
     if (delayTime.inSeconds > 0) {
-      await Workmanager().registerOneOffTask(
-        task.id,
-        task.title,
-        initialDelay: delayTime,
-        inputData: {
-          'id': task.id.substring(4),
-          'taskTitle': task.title,
-          'listName': taskList.listName,
-          'isPlaySound': isPlaySound,
-        },
-      );
+      if (task != null) {
+        await Workmanager().registerOneOffTask(
+          task.id,
+          task.title,
+          initialDelay: delayTime,
+          inputData: {
+            'id': task.id.substring(4),
+            'taskTitle': task.title,
+            'listName': taskList.listName,
+            'isPlaySound': isPlaySound,
+          },
+        );
+      } else {
+        await Workmanager().registerOneOffTask(
+          taskID!,
+          taskName!,
+          initialDelay: delayTime,
+          inputData: {
+            'id': taskID.substring(4),
+            'taskTitle': taskName,
+            'listName': taskList.listName,
+            'isPlaySound': isPlaySound,
+          },
+        );
+      }
     }
   }
 

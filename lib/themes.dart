@@ -89,6 +89,11 @@ class MyTheme {
     fontWeight: FontWeight.w400,
     color: MyTheme.blackColor,
   );
+  static const TextStyle itemBlackSmallTextStyle = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w400,
+    color: MyTheme.blackColor,
+  );
   static const TextStyle itemSmallTextStyle = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.w400,
@@ -98,6 +103,11 @@ class MyTheme {
     fontSize: 16,
     fontWeight: FontWeight.w400,
     color: MyTheme.greyColor,
+  );
+  static const TextStyle itemExtraSmallBlackTextStyle = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    color: MyTheme.blackColor,
   );
   static const TextStyle itemExtraSmallTextStyle = TextStyle(
     fontSize: 12,
