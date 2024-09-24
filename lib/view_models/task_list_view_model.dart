@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/settings.dart';
 import '../models/task_list.dart';
 import '../models/task.dart';
+import '../service/background_service.dart';
 
 class TaskListViewModel extends ChangeNotifier {
   TaskList currentTaskList;
@@ -150,7 +151,6 @@ class TaskListViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-//TODO: add background service
   void addNewTask({
     required String taskName,
     required bool isCompleted,
@@ -177,7 +177,24 @@ class TaskListViewModel extends ChangeNotifier {
     } else {
       currentTaskList.tasks.add(task);
     }
-
+    if (task.remindTime != null) {
+      if (task.repeatFrequency == null) {
+        BackGroundService.executeScheduleBackGroundTask(
+          task: task,
+          taskList: currentTaskList,
+          isPlaySound: settings.isPlaySoundOnComplete,
+          remindTime: task.remindTime!,
+        );
+      } else {
+        BackGroundService.executePeriodicBackGroundTask(
+          task: task,
+          taskList: currentTaskList,
+          remindTime: task.remindTime!,
+          frequency: task.repeatFrequency!,
+          isPlaySound: settings.isPlaySoundOnComplete,
+        );
+      }
+    }
     notifyListeners();
   }
 

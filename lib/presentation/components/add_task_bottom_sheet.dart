@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import '../../models/task.dart';
 import '../../models/task_list.dart';
 import '../../provider/settings_provider.dart';
-import '../../service/background_service.dart';
 import '../../view_models/task_list_view_model.dart';
 import '../../view_models/task_map_view_model.dart';
 import 'add_floating_button.dart';
@@ -120,33 +119,6 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                         remindTime: newTask.remindTime,
                         repeatFrequency: newTask.repeatFrequency,
                       );
-                    }
-                    if (newTask.remindTime != null) {
-                      if (newTask.repeatFrequency == null) {
-                        BackGroundService.executeScheduleBackGroundTask(
-                          taskID: newTask.id,
-                          taskName: _controller.text,
-                          taskList: widget.taskList,
-                          // ignore: use_build_context_synchronously
-                          isPlaySound: context
-                              .read<SettingsProvider>()
-                              .settings
-                              .isPlaySoundOnComplete,
-                          remindTime: newTask.remindTime!,
-                        );
-                      } else {
-                        BackGroundService.executePeriodicBackGroundTask(
-                          taskID: newTask.id,
-                          taskName: _controller.text,
-                          taskList: widget.taskList,
-                          remindTime: newTask.remindTime!,
-                          frequency: newTask.repeatFrequency!,
-                          isPlaySound: context
-                              .read<SettingsProvider>()
-                              .settings
-                              .isPlaySoundOnComplete,
-                        );
-                      }
                     }
                     _controller.clear();
                     setState(() {

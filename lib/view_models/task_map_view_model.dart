@@ -4,6 +4,7 @@ import '../models/task.dart';
 import '../models/task_list.dart';
 import '../models/task_step.dart';
 
+import '../service/background_service.dart';
 import '../ultility/general_ultility.dart';
 import '../ultility/type_def.dart';
 
@@ -228,7 +229,6 @@ class TaskMapViewModel extends ChangeNotifier {
     return allTask.firstWhere((element) => (element.keys.first.id == taskID));
   }
 
-//TODO: add background service
   void addNewTask({
     required Settings settings,
     required TaskList taskList,
@@ -257,7 +257,24 @@ class TaskMapViewModel extends ChangeNotifier {
     } else {
       allTask.add(pair);
     }
-
+    if (task.remindTime != null) {
+      if (task.repeatFrequency == null) {
+        BackGroundService.executeScheduleBackGroundTask(
+          task: task,
+          taskList: taskList,
+          isPlaySound: settings.isPlaySoundOnComplete,
+          remindTime: task.remindTime!,
+        );
+      } else {
+        BackGroundService.executePeriodicBackGroundTask(
+          task: task,
+          taskList: taskList,
+          remindTime: task.remindTime!,
+          frequency: task.repeatFrequency!,
+          isPlaySound: settings.isPlaySoundOnComplete,
+        );
+      }
+    }
     notifyListeners();
   }
 
