@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../../models/task.dart';
 import '../../models/task_list.dart';
 import '../../provider/settings_provider.dart';
+import '../../themes.dart';
 import '../../view_models/task_list_view_model.dart';
 import '../../view_models/task_map_view_model.dart';
 import 'add_floating_button.dart';
@@ -52,10 +53,14 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    String repeatActiveText = (newTask.repeatFrequency ?? '').toLowerCase();
-    if (repeatActiveText.split(' ').first == '1') {
-      var temp = repeatActiveText.split(' ')[1];
-      repeatActiveText = temp.substring(0, temp.length - 1);
+    String dueDateHightLightText =
+        DateFormat('E, MMM d').format(newTask.dueDate ?? DateTime(2000));
+    String remindHightLightText = DateFormat('h:mm a, MMM d')
+        .format(newTask.remindTime ?? DateTime(2000));
+    String repeatHighLightText = (newTask.repeatFrequency ?? '').toLowerCase();
+    if (repeatHighLightText.split(' ').first == '1') {
+      var temp = repeatHighLightText.split(' ')[1];
+      repeatHighLightText = temp.substring(0, temp.length - 1);
     }
     return Padding(
       padding:
@@ -70,6 +75,10 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
               children: [
                 Checkbox(
                   shape: const CircleBorder(),
+                  activeColor: widget.themeColor,
+                  checkColor: (widget.themeColor == MyTheme.whiteColor)
+                      ? MyTheme.blackColor
+                      : MyTheme.whiteColor,
                   value: isChecked,
                   onChanged: (bool? value) {
                     setState(() {
@@ -144,8 +153,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
               child: Row(
                 children: [
                   CustomTaskButton(
-                    highLightText: 'Due '
-                        '${DateFormat('E, MMM d').format(newTask.dueDate ?? DateTime(2000))}',
+                    highLightText: 'Due $dueDateHightLightText',
                     themeColor: widget.themeColor,
                     icon: Icons.today,
                     text: 'Set due date',
@@ -186,8 +194,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                   ),
                   const SizedBox(width: 8),
                   CustomTaskButton(
-                    highLightText: 'Remind at '
-                        '${DateFormat('h:mm a, MMM d').format(newTask.remindTime ?? DateTime(2000))}',
+                    highLightText: 'Remind at $remindHightLightText',
                     themeColor: widget.themeColor,
                     icon: Icons.notifications_outlined,
                     text: 'Remind me',
@@ -214,7 +221,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                   ),
                   const SizedBox(width: 8),
                   CustomTaskButton(
-                    highLightText: 'Repeat every $repeatActiveText',
+                    highLightText: 'Repeat every $repeatHighLightText',
                     themeColor: widget.themeColor,
                     icon: Icons.repeat_outlined,
                     text: 'Repeat',
