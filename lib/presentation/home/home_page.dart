@@ -71,11 +71,8 @@ class HomePage extends StatelessWidget {
               onTap: () async {
                 await Navigator.of(context).pushNamed(
                   taskListRoute,
-                  arguments: {
-                    'haveCompletedList': true,
-                    'taskList':
-                        context.read<GroupViewModel>().groups[0].taskLists[0],
-                  },
+                  arguments:
+                      context.read<GroupViewModel>().groups[0].taskLists[0],
                 );
               },
               endNumber: 0,
@@ -86,11 +83,8 @@ class HomePage extends StatelessWidget {
               onTap: () async {
                 await Navigator.of(context).pushNamed(
                   taskListRoute,
-                  arguments: {
-                    'haveCompletedList': true,
-                    'taskList':
-                        context.read<GroupViewModel>().groups[0].taskLists[0],
-                  },
+                  arguments:
+                      context.read<GroupViewModel>().groups[0].taskLists[0],
                 );
               },
               endNumber: 0,
@@ -101,11 +95,8 @@ class HomePage extends StatelessWidget {
               onTap: () async {
                 await Navigator.of(context).pushNamed(
                   taskListRoute,
-                  arguments: {
-                    'haveCompletedList': true,
-                    'taskList':
-                        context.read<GroupViewModel>().groups[0].taskLists[0],
-                  },
+                  arguments:
+                      context.read<GroupViewModel>().groups[0].taskLists[0],
                 );
               },
               endNumber: taskListUltility.countIncompletedTaskByID(
@@ -134,10 +125,7 @@ class HomePage extends StatelessWidget {
                       onTap: () async {
                         await Navigator.of(context).pushNamed(
                           taskListRoute,
-                          arguments: {
-                            'haveCompletedList': true,
-                            'taskList': item,
-                          },
+                          arguments: item,
                         );
                       },
                     );

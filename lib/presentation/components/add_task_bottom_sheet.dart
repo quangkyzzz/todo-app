@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart' hide TextDirection;
 import 'package:provider/provider.dart';
+import '../../models/settings.dart';
 import '../../models/task.dart';
 import '../../models/task_list.dart';
 import '../../provider/settings_provider.dart';
@@ -36,10 +37,11 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
   final TextEditingController _controller = TextEditingController();
   bool isChecked = false;
   late Task newTask;
-
+  late final Settings settings;
   @override
   void initState() {
     unawaited(initializeDateFormatting());
+    settings = widget.mContext.read<SettingsProvider>().settings;
     newTask = Task(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       title: '',
@@ -103,8 +105,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                         widget.mContext,
                         listen: false,
                       ).addNewTask(
-                        settings:
-                            widget.mContext.read<SettingsProvider>().settings,
+                        settings: settings,
                         taskList: widget.taskList,
                         taskName: _controller.text,
                         isCompleted: isChecked,
@@ -119,8 +120,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                         widget.mContext,
                         listen: false,
                       ).addNewTask(
-                        settings:
-                            widget.mContext.read<SettingsProvider>().settings,
+                        settings: settings,
                         taskName: _controller.text,
                         isCompleted: isChecked,
                         dueDate: newTask.dueDate,
@@ -176,10 +176,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                             DateTime.now().month,
                             DateTime.now().day,
                           );
-                          if ((widget.mContext
-                                  .read<SettingsProvider>()
-                                  .settings
-                                  .isShowDueToday) &&
+                          if ((settings.isShowDueToday) &&
                               (newTask.dueDate!.isAtSameMomentAs(today)) &&
                               (!newTask.isOnMyDay)) {
                             newTask.isOnMyDay = true;

@@ -69,10 +69,7 @@ class _HomeGroupState extends State<HomeGroup> {
                     onTap: () async {
                       await Navigator.of(context).pushNamed(
                         taskListRoute,
-                        arguments: {
-                          'haveCompletedList': true,
-                          'taskList': item,
-                        },
+                        arguments: item,
                       );
                     },
                   );

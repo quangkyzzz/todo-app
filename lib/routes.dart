@@ -64,10 +64,8 @@ var allRoute = {
     );
   },
   taskListRoute: (context) {
-    Map<dynamic, dynamic> arg =
-        ModalRoute.of(context)?.settings.arguments as Map;
-    bool havecompletedList = arg['haveCompletedList'] ?? true;
-    TaskList taskList = arg['taskList'].copyWith();
+    TaskList taskList =
+        (ModalRoute.of(context)?.settings.arguments as TaskList).copyWith();
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
@@ -78,9 +76,7 @@ var allRoute = {
         ),
       ],
       builder: (context, child) {
-        return TaskListPage(
-          haveCompletedList: havecompletedList,
-        );
+        return const TaskListPage();
       },
     );
   },

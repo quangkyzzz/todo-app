@@ -11,22 +11,10 @@ import '../../components/popup_menu.dart';
 
 import 'change_sort_type_button.dart';
 
-class TaskListPage extends StatefulWidget {
-  final bool haveCompletedList;
+class TaskListPage extends StatelessWidget {
   const TaskListPage({
     super.key,
-    this.haveCompletedList = true,
   });
-
-  @override
-  State<TaskListPage> createState() => _TaskListPageState();
-}
-
-class _TaskListPageState extends State<TaskListPage> {
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,9 +75,7 @@ class _TaskListPageState extends State<TaskListPage> {
                           ? ChangeSortTypeButton(taskList: taskList)
                           : const SizedBox(),
                       IncompleteList(taskList: taskList),
-                      (widget.haveCompletedList)
-                          ? CompletedList(taskList: taskList)
-                          : const SizedBox()
+                      CompletedList(taskList: taskList)
                     ]);
               },
             ),

@@ -12,11 +12,8 @@ import '../../items/task_list_item.dart';
 import '../../components/popup_menu.dart';
 
 class ImportantPage extends StatefulWidget {
-  final bool haveCompletedList;
-
   const ImportantPage({
     super.key,
-    this.haveCompletedList = true,
   });
 
   @override
