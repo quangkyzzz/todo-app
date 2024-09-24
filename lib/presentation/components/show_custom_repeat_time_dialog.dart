@@ -45,6 +45,7 @@ Future<String?> showCustomRepeatTimeDialog(BuildContext context) {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   IconButton(
+                    padding: EdgeInsets.zero,
                     visualDensity:
                         const VisualDensity(horizontal: -4, vertical: -4),
                     onPressed: () {
@@ -59,6 +60,7 @@ Future<String?> showCustomRepeatTimeDialog(BuildContext context) {
                     icon: const Icon(Icons.arrow_drop_up, size: 32),
                   ),
                   IconButton(
+                    padding: EdgeInsets.zero,
                     visualDensity:
                         const VisualDensity(horizontal: -4, vertical: -4),
                     onPressed: () {

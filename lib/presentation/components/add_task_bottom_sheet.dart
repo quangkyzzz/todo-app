@@ -147,107 +147,109 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
               ],
             ),
             const SizedBox(height: 8),
-            SingleChildScrollView(
-              padding: const EdgeInsets.only(left: 8),
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  CustomTaskButton(
-                    highLightText: 'Due $dueDateHightLightText',
-                    themeColor: widget.themeColor,
-                    icon: Icons.today,
-                    text: 'Set due date',
-                    isHighLighted: (newTask.dueDate != null),
-                    onTap: () async {
-                      DateTime? newDueDate = await showDatePicker(
-                        context: context,
-                        initialDate: newTask.dueDate ?? DateTime.now(),
-                        firstDate: DateTime(2020),
-                        lastDate: DateTime(2050),
-                      );
-                      if (newDueDate != null) {
-                        setState(() {
-                          newTask.dueDate = newDueDate;
-                        });
-                        if (!context.mounted) return;
-                        DateTime today = DateTime(
-                          DateTime.now().year,
-                          DateTime.now().month,
-                          DateTime.now().day,
+            Scrollbar(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.only(left: 8, bottom: 4),
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    CustomTaskButton(
+                      highLightText: 'Due $dueDateHightLightText',
+                      themeColor: widget.themeColor,
+                      icon: Icons.today,
+                      text: 'Set due date',
+                      isHighLighted: (newTask.dueDate != null),
+                      onTap: () async {
+                        DateTime? newDueDate = await showDatePicker(
+                          context: context,
+                          initialDate: newTask.dueDate ?? DateTime.now(),
+                          firstDate: DateTime(2020),
+                          lastDate: DateTime(2050),
                         );
-                        if ((widget.mContext
-                                .read<SettingsProvider>()
-                                .settings
-                                .isShowDueToday) &&
-                            (newTask.dueDate!.isAtSameMomentAs(today)) &&
-                            (!newTask.isOnMyDay)) {
-                          newTask.isOnMyDay = true;
-                        }
-                      }
-                    },
-                    onTapDisable: () {
-                      setState(() {
-                        newTask.dueDate = null;
-                        newTask.isOnMyDay = false;
-                      });
-                    },
-                  ),
-                  const SizedBox(width: 8),
-                  CustomTaskButton(
-                    highLightText: 'Remind at $remindHightLightText',
-                    themeColor: widget.themeColor,
-                    icon: Icons.notifications_outlined,
-                    text: 'Remind me',
-                    isHighLighted: (newTask.remindTime != null),
-                    onTap: () async {
-                      DateTime? tempRemindTime = await showDateTimePicker(
-                        context: context,
-                        initialDate: newTask.remindTime,
-                      );
-                      if (tempRemindTime != null) {
-                        setState(() {
-                          newTask.remindTime = tempRemindTime;
-                        });
-                      }
-                    },
-                    onTapDisable: () {
-                      setState(() {
-                        newTask.remindTime = null;
-                        if (newTask.repeatFrequency != null) {
-                          newTask.repeatFrequency = null;
-                        }
-                      });
-                    },
-                  ),
-                  const SizedBox(width: 8),
-                  CustomTaskButton(
-                    highLightText: 'Repeat every $repeatHighLightText',
-                    themeColor: widget.themeColor,
-                    icon: Icons.repeat_outlined,
-                    text: 'Repeat',
-                    isHighLighted: (newTask.repeatFrequency != null),
-                    onTap: () async {
-                      String? result =
-                          await showCustomRepeatTimeDialog(context);
-                      if (result != null) {
-                        setState(() {
-                          newTask.repeatFrequency = result;
-                          newTask.remindTime ??= DateTime(
+                        if (newDueDate != null) {
+                          setState(() {
+                            newTask.dueDate = newDueDate;
+                          });
+                          if (!context.mounted) return;
+                          DateTime today = DateTime(
                             DateTime.now().year,
                             DateTime.now().month,
                             DateTime.now().day,
-                            9,
                           );
+                          if ((widget.mContext
+                                  .read<SettingsProvider>()
+                                  .settings
+                                  .isShowDueToday) &&
+                              (newTask.dueDate!.isAtSameMomentAs(today)) &&
+                              (!newTask.isOnMyDay)) {
+                            newTask.isOnMyDay = true;
+                          }
+                        }
+                      },
+                      onTapDisable: () {
+                        setState(() {
+                          newTask.dueDate = null;
+                          newTask.isOnMyDay = false;
                         });
-                      }
-                    },
-                    onTapDisable: () {
-                      setState(() {
-                        newTask.repeatFrequency = null;
-                      });
-                    },
-                  ),
-                ],
+                      },
+                    ),
+                    const SizedBox(width: 8),
+                    CustomTaskButton(
+                      highLightText: 'Remind at $remindHightLightText',
+                      themeColor: widget.themeColor,
+                      icon: Icons.notifications_outlined,
+                      text: 'Remind me',
+                      isHighLighted: (newTask.remindTime != null),
+                      onTap: () async {
+                        DateTime? tempRemindTime = await showDateTimePicker(
+                          context: context,
+                          initialDate: newTask.remindTime,
+                        );
+                        if (tempRemindTime != null) {
+                          setState(() {
+                            newTask.remindTime = tempRemindTime;
+                          });
+                        }
+                      },
+                      onTapDisable: () {
+                        setState(() {
+                          newTask.remindTime = null;
+                          if (newTask.repeatFrequency != null) {
+                            newTask.repeatFrequency = null;
+                          }
+                        });
+                      },
+                    ),
+                    const SizedBox(width: 8),
+                    CustomTaskButton(
+                      highLightText: 'Repeat every $repeatHighLightText',
+                      themeColor: widget.themeColor,
+                      icon: Icons.repeat_outlined,
+                      text: 'Repeat',
+                      isHighLighted: (newTask.repeatFrequency != null),
+                      onTap: () async {
+                        String? result =
+                            await showCustomRepeatTimeDialog(context);
+                        if (result != null) {
+                          setState(() {
+                            newTask.repeatFrequency = result;
+                            newTask.remindTime ??= DateTime(
+                              DateTime.now().year,
+                              DateTime.now().month,
+                              DateTime.now().day,
+                              9,
+                            );
+                          });
+                        }
+                      },
+                      onTapDisable: () {
+                        setState(() {
+                          newTask.repeatFrequency = null;
+                        });
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
