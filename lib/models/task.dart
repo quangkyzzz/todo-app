@@ -5,6 +5,7 @@ import 'task_step.dart';
 class Task {
   final String id;
   String title;
+  String taskListID;
   bool isCompleted;
   bool isImportant;
   bool isOnMyDay;
@@ -18,6 +19,7 @@ class Task {
 
   Task({
     required this.id,
+    required this.taskListID,
     required this.title,
     required this.isCompleted,
     required this.isImportant,
@@ -46,6 +48,7 @@ class Task {
 
   Task copyWith({
     String? id,
+    String? taskListID,
     String? title,
     bool? isCompleted,
     bool? isImportant,
@@ -68,6 +71,7 @@ class Task {
     }
     return Task(
       id: id ?? this.id,
+      taskListID: taskListID ?? this.taskListID,
       title: title ?? this.title,
       isCompleted: isCompleted ?? this.isCompleted,
       isImportant: isImportant ?? this.isImportant,
@@ -86,6 +90,7 @@ class Task {
     final result = <String, dynamic>{};
 
     result.addAll({'id': id});
+    result.addAll({'taskListID': taskListID});
     result.addAll({'title': title});
     result.addAll({'isCompleted': isCompleted});
     result.addAll({'isImportant': isImportant});
@@ -104,6 +109,8 @@ class Task {
   factory Task.fromMap(Map<String, dynamic> map) {
     return Task(
       id: map['id'] ?? DateTime.now().millisecondsSinceEpoch.toString(),
+      taskListID:
+          map['taskListID'] ?? DateTime.now().millisecondsSinceEpoch.toString(),
       title: map['title'] ?? 'Unknown title',
       isCompleted: map['isCompleted'] ?? false,
       isImportant: map['isImportant'] ?? false,
