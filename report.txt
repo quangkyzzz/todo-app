@@ -1,9 +1,10 @@
-Báo cáo 24/9
+Báo cáo 26/9
 Đã làm:
-    -   Sửa lỗi step khi thay đổi ảnh hưởng tới các viewModel khác. 
-    -   Sửa cấu trúc code taskPage.
-    -   Thêm các file riêng cho các custom buttom
+    -   Sửa chức năng nút thêm task mới.
+    -   Sửa cấu trúc code của bottom sheet thêm task và background service.
+    -   Thay đổi nhỏ giao diện.
 Đang làm:
-    -   Sửa chức năng của nút thêm task mới.
+    -   Sửa taskMapViewModel
 Dự định làm:
-    -   Dựa vào review để tiếp tục chỉnh sửa.
+    -   Hoàn thành sửa các màn liên quan đến taskMapViewModel
+     và xóa bỏ taskMapViewModel.
