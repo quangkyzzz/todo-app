@@ -8,3 +8,6 @@ Báo cáo 26/9
 Dự định làm:
     -   Hoàn thành sửa các màn liên quan đến taskMapViewModel
      và xóa bỏ taskMapViewModel.
+
+//about: getMyDay,planned,... function
+//about: move to taskListViewModel
