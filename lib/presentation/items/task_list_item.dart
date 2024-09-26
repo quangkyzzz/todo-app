@@ -1,33 +1,30 @@
 // ignore_for_file: unnecessary_string_interpolations
 import 'dart:async';
 import 'package:flutter/material.dart';
-import '../../models/task_list.dart';
+import 'package:provider/provider.dart';
+import '../../provider/settings_provider.dart';
 import '../../themes.dart';
 import '../../routes.dart';
 import '../../models/task.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
+import '../../view_models/task_list_view_model.dart';
+
 class TaskListItem extends StatelessWidget {
   final BuildContext mContext;
   final Task task;
-  final TaskList taskList;
   final Color themeColor;
   final bool havePlusIcon;
-  final Function(bool?) onTapCheck;
-  final Function() onTapStar;
   final Function()? onTapPlus;
 
   const TaskListItem({
     super.key,
     required this.task,
-    required this.taskList,
     required this.themeColor,
     this.havePlusIcon = false,
     this.onTapPlus,
     required this.mContext,
-    required this.onTapCheck,
-    required this.onTapStar,
   });
 
   @override
@@ -54,10 +51,7 @@ class TaskListItem extends StatelessWidget {
         onTap: () async {
           await Navigator.of(context).pushNamed(
             taskRoute,
-            arguments: {
-              'task': task,
-              'taskList': taskList,
-            },
+            arguments: task,
           );
         },
         child: Row(
@@ -70,7 +64,13 @@ class TaskListItem extends StatelessWidget {
               tristate: false,
               shape: const CircleBorder(),
               value: task.isCompleted,
-              onChanged: onTapCheck,
+              onChanged: (bool? value) {
+                Task newTask = task.copyWith(isCompleted: value);
+                context.read<TaskListViewModel>().updateTaskListWith(
+                      settings: context.read<SettingsProvider>().settings,
+                      newTask: newTask,
+                    );
+              },
             ),
             (isAllBottomIconNull)
                 ? Column(
@@ -219,7 +219,15 @@ class TaskListItem extends StatelessWidget {
               shape: const CircleBorder(),
               child: (!havePlusIcon)
                   ? IconButton(
-                      onPressed: onTapStar,
+                      onPressed: () {
+                        Task newTask =
+                            task.copyWith(isImportant: !task.isImportant);
+                        context.read<TaskListViewModel>().updateTaskListWith(
+                              settings:
+                                  context.read<SettingsProvider>().settings,
+                              newTask: newTask,
+                            );
+                      },
                       icon: (task.isImportant)
                           ? Icon(
                               Icons.star,

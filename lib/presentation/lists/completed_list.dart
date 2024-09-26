@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../../models/task_list.dart';
 import '../../models/task.dart';
-import '../../provider/settings_provider.dart';
-import '../../view_models/task_list_view_model.dart';
 import '../items/task_list_item.dart';
 
 class CompletedList extends StatefulWidget {
@@ -68,20 +65,7 @@ class _CompletedListState extends State<CompletedList> {
               return TaskListItem(
                 mContext: context,
                 task: task,
-                taskList: widget.taskList,
                 themeColor: widget.taskList.themeColor,
-                onTapCheck: (bool? value) {
-                  Task newTask = task.copyWith(isCompleted: value);
-                  context.read<TaskListViewModel>().updateTaskListWith(
-                      settings: context.read<SettingsProvider>().settings,
-                      newTask: newTask);
-                },
-                onTapStar: () {
-                  Task newTask = task.copyWith(isImportant: !task.isImportant);
-                  context.read<TaskListViewModel>().updateTaskListWith(
-                      settings: context.read<SettingsProvider>().settings,
-                      newTask: newTask);
-                },
               );
             },
           )

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../service/background_service.dart';
 import '../../../models/task_step.dart';
-import '../../../models/task_list.dart';
+import '../../../view_models/task_list_view_model.dart';
 import '../../../view_models/task_view_model.dart';
 import '../../components/show_custom_repeat_time_dialog.dart';
 import '../../components/show_date_time_picker.dart';
@@ -25,11 +25,9 @@ import 'package:open_filex/open_filex.dart';
 
 class TaskPage extends StatefulWidget {
   final Task task;
-  final TaskList taskList;
   const TaskPage({
     super.key,
     required this.task,
-    required this.taskList,
   });
 
   @override
@@ -39,6 +37,7 @@ class TaskPage extends StatefulWidget {
 class _TaskPageState extends State<TaskPage> {
   late TaskViewModel taskViewModel;
   late SettingsProvider settingsProvider;
+  late TaskListViewModel taskListViewModel;
   late bool isLoading;
   GlobalKey key = GlobalKey();
   late String title;
@@ -52,6 +51,27 @@ class _TaskPageState extends State<TaskPage> {
   late List<String>? filePaths;
   late final TextEditingController _stepController;
   late final TextEditingController _taskNameController;
+
+  @override
+  void initState() {
+    unawaited(initializeDateFormatting());
+    isLoading = false;
+    taskViewModel = Provider.of<TaskViewModel>(context, listen: false);
+    taskListViewModel = Provider.of<TaskListViewModel>(context, listen: false);
+    settingsProvider = Provider.of<SettingsProvider>(context, listen: false);
+    title = widget.task.title;
+    isOnMyDay = widget.task.isOnMyDay;
+    isCompleted = widget.task.isCompleted;
+    isImportant = widget.task.isImportant;
+    remindTime = widget.task.remindTime;
+    dueDate = widget.task.dueDate;
+    stepList = widget.task.stepList;
+    repeatFrequency = widget.task.repeatFrequency;
+    filePaths = widget.task.filePath;
+    _taskNameController = TextEditingController(text: widget.task.title);
+    _stepController = TextEditingController();
+    super.initState();
+  }
 
   void onTapAddToMyDay(BuildContext context, {bool isDisable = false}) {
     setState(() {
@@ -81,7 +101,7 @@ class _TaskPageState extends State<TaskPage> {
 
         BackGroundService.executeScheduleBackGroundTask(
           task: widget.task,
-          taskList: widget.taskList,
+          taskList: taskListViewModel.readTaskListByID(widget.task.taskListID),
           isPlaySound: settingsProvider.settings.isPlaySoundOnComplete,
           remindTime: remindTime!,
         );
@@ -177,7 +197,7 @@ class _TaskPageState extends State<TaskPage> {
       BackGroundService.cancelTaskByID(id: widget.task.id);
       BackGroundService.executeScheduleBackGroundTask(
         task: widget.task,
-        taskList: widget.taskList,
+        taskList: taskListViewModel.readTaskListByID(widget.task.taskListID),
         isPlaySound: settingsProvider.settings.isPlaySoundOnComplete,
         remindTime: remindTime!,
       );
@@ -197,7 +217,7 @@ class _TaskPageState extends State<TaskPage> {
     BackGroundService.cancelTaskByID(id: widget.task.id);
     BackGroundService.executePeriodicBackGroundTask(
       task: widget.task,
-      taskList: widget.taskList,
+      taskList: taskListViewModel.readTaskListByID(widget.task.taskListID),
       remindTime: remindTime!,
       frequency: frequency,
       isPlaySound: settingsProvider.settings.isPlaySoundOnComplete,
@@ -302,26 +322,6 @@ class _TaskPageState extends State<TaskPage> {
   }
 
   @override
-  void initState() {
-    unawaited(initializeDateFormatting());
-    isLoading = false;
-    taskViewModel = Provider.of<TaskViewModel>(context, listen: false);
-    settingsProvider = Provider.of<SettingsProvider>(context, listen: false);
-    title = widget.task.title;
-    isOnMyDay = widget.task.isOnMyDay;
-    isCompleted = widget.task.isCompleted;
-    isImportant = widget.task.isImportant;
-    remindTime = widget.task.remindTime;
-    dueDate = widget.task.dueDate;
-    stepList = widget.task.stepList;
-    repeatFrequency = widget.task.repeatFrequency;
-    filePaths = widget.task.filePath;
-    _taskNameController = TextEditingController(text: widget.task.title);
-    _stepController = TextEditingController();
-    super.initState();
-  }
-
-  @override
   void dispose() {
     _taskNameController.dispose();
     _stepController.dispose();
@@ -339,13 +339,14 @@ class _TaskPageState extends State<TaskPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          widget.taskList.listName,
+          taskListViewModel.readTaskListByID(widget.task.taskListID).listName,
           style: MyTheme.titleTextStyle,
         ),
       ),
       body: WillPopScope(
         onWillPop: () async {
           Task newTask = Task(
+            taskListID: widget.task.taskListID,
             id: widget.task.id,
             createDate: widget.task.createDate,
             title: _taskNameController.text,
@@ -360,7 +361,6 @@ class _TaskPageState extends State<TaskPage> {
             note: widget.task.note,
           );
           await taskViewModel.updateTask(
-            taskListID: widget.taskList.id,
             taskID: widget.task.id,
             newTask: newTask,
           );
@@ -390,7 +390,7 @@ class _TaskPageState extends State<TaskPage> {
                         return StepItem(
                           step: stepList[index],
                           callBack: callBackEditStepItem,
-                          taskList: widget.taskList,
+                          taskListID: widget.task.id,
                         );
                       },
                     )
@@ -513,7 +513,6 @@ class _TaskPageState extends State<TaskPage> {
               //Add and edit note button
               AddAndEditNoteButton(
                 task: widget.task,
-                taskList: widget.taskList,
               )
             ],
           ),
@@ -521,7 +520,6 @@ class _TaskPageState extends State<TaskPage> {
       ),
       bottomNavigationBar: TaskPageBottomNavigation(
         task: widget.task,
-        taskList: widget.taskList,
       ),
     );
   }
@@ -553,11 +551,9 @@ class AddAndEditNoteButton extends StatelessWidget {
   const AddAndEditNoteButton({
     super.key,
     required this.task,
-    required this.taskList,
   });
 
   final Task task;
-  final TaskList taskList;
 
   @override
   Widget build(BuildContext context) {
@@ -571,7 +567,6 @@ class AddAndEditNoteButton extends StatelessWidget {
                   noteEditRoute,
                   arguments: {
                     'task': task,
-                    'taskList': taskList,
                   },
                 );
               },
@@ -601,7 +596,6 @@ class AddAndEditNoteButton extends StatelessWidget {
                   noteEditRoute,
                   arguments: {
                     'task': task,
-                    'taskList': taskList,
                   },
                 );
               },

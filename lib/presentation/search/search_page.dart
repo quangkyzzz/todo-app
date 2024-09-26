@@ -4,12 +4,12 @@ import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import '../../models/task_list.dart';
 import '../../models/task.dart';
-import '../../provider/settings_provider.dart';
 import '../../ultility/type_def.dart';
-import '../../view_models/task_map_view_model.dart';
+import '../../view_models/group_view_model.dart';
 import '../items/task_list_item.dart';
 import '../../themes.dart';
 
+//TODO: fix this
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
 
@@ -43,7 +43,8 @@ class _SearchPageState extends State<SearchPage> {
   void initState() {
     // ignore: discarded_futures
     speechToText.initialize();
-    searchTasks = context.read<TaskMapViewModel>().allTask;
+    //FIXME: must fix read()
+    searchTasks = context.read().allTask;
     _controller = TextEditingController();
     super.initState();
   }
@@ -140,11 +141,13 @@ class _SearchPageState extends State<SearchPage> {
             )
           : SingleChildScrollView(
               padding: const EdgeInsets.only(top: 16),
-              child: Consumer<TaskMapViewModel>(
-                builder: (_, taskMapViewModel, child) {
-                  searchTasks = taskMapViewModel.searchTaskByName(
-                    searchName: searchName,
-                  );
+              child: Consumer<GroupViewModel>(
+                builder: (_, groupViewModel, child) {
+                  //FIXME: must fix this
+
+                  // searchTasks = groupViewModel.searchTaskByName(
+                  //   searchName: searchName,
+                  // );
 
                   if (searchTasks.isEmpty) {
                     return const Center(
@@ -165,26 +168,7 @@ class _SearchPageState extends State<SearchPage> {
                             return TaskListItem(
                               mContext: context,
                               task: item.keys.first,
-                              taskList: item.values.first,
                               themeColor: MyTheme.blueColor,
-                              onTapCheck: (bool? value) {
-                                context.read<TaskMapViewModel>().updateTaskWith(
-                                      settings: context
-                                          .read<SettingsProvider>()
-                                          .settings,
-                                      taskID: item.keys.first.id,
-                                      isCompleted: value,
-                                    );
-                              },
-                              onTapStar: () {
-                                context.read<TaskMapViewModel>().updateTaskWith(
-                                      settings: context
-                                          .read<SettingsProvider>()
-                                          .settings,
-                                      taskID: item.keys.first.id,
-                                      isImportant: !item.keys.first.isImportant,
-                                    );
-                              },
                             );
                           } else {
                             return const SizedBox();
@@ -193,26 +177,7 @@ class _SearchPageState extends State<SearchPage> {
                           return TaskListItem(
                             mContext: context,
                             task: item.keys.first,
-                            taskList: item.values.first,
                             themeColor: MyTheme.blueColor,
-                            onTapCheck: (bool? value) {
-                              context.read<TaskMapViewModel>().updateTaskWith(
-                                    settings: context
-                                        .read<SettingsProvider>()
-                                        .settings,
-                                    taskID: item.keys.first.id,
-                                    isCompleted: value,
-                                  );
-                            },
-                            onTapStar: () {
-                              context.read<TaskMapViewModel>().updateTaskWith(
-                                    settings: context
-                                        .read<SettingsProvider>()
-                                        .settings,
-                                    taskID: item.keys.first.id,
-                                    isImportant: !item.keys.first.isImportant,
-                                  );
-                            },
                           );
                         }
                       },

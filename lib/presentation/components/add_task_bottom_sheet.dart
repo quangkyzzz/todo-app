@@ -8,7 +8,6 @@ import '../../models/task_list.dart';
 import '../../provider/settings_provider.dart';
 import '../../themes.dart';
 import '../../view_models/task_list_view_model.dart';
-import '../../view_models/task_map_view_model.dart';
 import 'add_floating_button.dart';
 import 'package:flutter/material.dart';
 import 'show_custom_repeat_time_dialog.dart';
@@ -44,6 +43,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
     settings = widget.mContext.read<SettingsProvider>().settings;
     newTask = Task(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
+      taskListID: widget.taskList.id,
       title: '',
       isCompleted: isChecked,
       isImportant: widget.isAddToImportant,
@@ -100,40 +100,24 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                 IconButton(
                   onPressed: () {
                     if (_controller.text == '') return;
-                    if ((widget.isAddToMyDay) || (widget.isAddToImportant)) {
-                      Provider.of<TaskMapViewModel>(
-                        widget.mContext,
-                        listen: false,
-                      ).addNewTask(
-                        settings: settings,
-                        taskList: widget.taskList,
-                        taskName: _controller.text,
-                        isCompleted: isChecked,
-                        isImportant: widget.isAddToImportant,
-                        isOnMyDay: widget.isAddToMyDay,
-                        dueDate: newTask.dueDate,
-                        remindTime: newTask.remindTime,
-                        repeatFrequency: newTask.repeatFrequency,
-                      );
-                    } else {
-                      Provider.of<TaskListViewModel>(
-                        widget.mContext,
-                        listen: false,
-                      ).addNewTask(
-                        settings: settings,
-                        taskName: _controller.text,
-                        isCompleted: isChecked,
-                        dueDate: newTask.dueDate,
-                        isOnMyDay: newTask.isOnMyDay,
-                        remindTime: newTask.remindTime,
-                        repeatFrequency: newTask.repeatFrequency,
-                      );
-                    }
+                    Provider.of<TaskListViewModel>(
+                      widget.mContext,
+                      listen: false,
+                    ).addNewTask(
+                      settings: settings,
+                      taskName: _controller.text,
+                      isCompleted: isChecked,
+                      dueDate: newTask.dueDate,
+                      isOnMyDay: newTask.isOnMyDay,
+                      remindTime: newTask.remindTime,
+                      repeatFrequency: newTask.repeatFrequency,
+                    );
                     _controller.clear();
                     setState(() {
                       isChecked = false;
                       newTask = Task(
                         id: DateTime.now().millisecondsSinceEpoch.toString(),
+                        taskListID: widget.taskList.id,
                         title: '',
                         isCompleted: isChecked,
                         isImportant: widget.isAddToImportant,

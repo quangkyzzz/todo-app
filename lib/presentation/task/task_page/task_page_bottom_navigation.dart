@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../models/task_list.dart';
 import '../../../service/notification_service.dart';
 import '../../../provider/settings_provider.dart';
 import '../../../themes.dart';
@@ -10,12 +9,10 @@ import '../../components/show_alert_dialog.dart';
 import 'package:intl/intl.dart';
 
 class TaskPageBottomNavigation extends StatelessWidget {
-  final TaskList taskList;
   final Task task;
   const TaskPageBottomNavigation({
     super.key,
     required this.task,
-    required this.taskList,
   });
 
   String diffTimeFormat(Duration diffTime) {

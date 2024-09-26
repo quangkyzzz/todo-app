@@ -3,14 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import '../../../models/task.dart';
 import '../../../models/task_list.dart';
-import '../../../provider/settings_provider.dart';
-import '../../../ultility/type_def.dart';
-import '../../../view_models/group_view_model.dart';
 import '../../../view_models/task_list_view_model.dart';
-import '../../../view_models/task_map_view_model.dart';
-import '../../items/task_list_item.dart';
+import '../../lists/completed_list.dart';
+import '../../lists/incomplete_list.dart';
 import 'my_day_floating_buttons.dart';
 import '../../components/popup_menu.dart';
 
@@ -22,20 +18,18 @@ class MyDayPage extends StatefulWidget {
 }
 
 class _MyDayPageState extends State<MyDayPage> {
-  late TaskList addTaskDestinationTaskList;
   late TaskList myDayTaskList;
   bool isExpanded = true;
 
   @override
-  void didChangeDependencies() {
-    addTaskDestinationTaskList =
-        context.read<GroupViewModel>().readGroupByID('1').taskLists[0];
-    myDayTaskList = context.watch<TaskListViewModel>().currentTaskList;
-    super.didChangeDependencies();
+  void initState() {
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    myDayTaskList = context.watch<TaskListViewModel>().currentTaskList;
+    myDayTaskList.tasks = context.watch<TaskListViewModel>().readOnMyDayTask();
     return Stack(
       fit: StackFit.expand,
       children: [
@@ -92,110 +86,13 @@ class _MyDayPageState extends State<MyDayPage> {
             ],
           ),
           body: SingleChildScrollView(
-            child: Consumer<TaskMapViewModel>(
-              builder: (context, taskListProvider, child) {
-                TaskMapList myDayList = taskListProvider.readOnMyDayTask();
-                TaskMapList inCompleteList = myDayList
-                    .where((element) => (!element.keys.first.isCompleted))
-                    .toList();
-                TaskMapList completedlist = myDayList
-                    .where((element) => (element.keys.first.isCompleted))
-                    .toList();
-                return Column(children: [
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: const ClampingScrollPhysics(),
-                    itemCount: inCompleteList.length,
-                    itemBuilder: (BuildContext _, int index) {
-                      return TaskListItem(
-                        mContext: context,
-                        task: inCompleteList[index].keys.first,
-                        taskList: inCompleteList[index].values.first,
-                        themeColor: myDayTaskList.themeColor,
-                        onTapCheck: (bool? value) {
-                          context.read<TaskMapViewModel>().updateTaskWith(
-                              settings:
-                                  context.read<SettingsProvider>().settings,
-                              taskID: inCompleteList[index].keys.first.id,
-                              isCompleted: value);
-                        },
-                        onTapStar: () {
-                          context.read<TaskMapViewModel>().updateTaskWith(
-                                settings:
-                                    context.read<SettingsProvider>().settings,
-                                taskID: inCompleteList[index].keys.first.id,
-                                isImportant: !inCompleteList[index]
-                                    .keys
-                                    .first
-                                    .isImportant,
-                              );
-                        },
-                      );
-                    },
-                  ),
-                  (completedlist.isNotEmpty)
-                      ? ExpansionTile(
-                          initiallyExpanded: true,
-                          title: Text(
-                            'Completed ${completedlist.length}',
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: myDayTaskList.themeColor,
-                            ),
-                          ),
-                          onExpansionChanged: (bool expanded) {
-                            setState(() {
-                              isExpanded = expanded;
-                            });
-                          },
-                          trailing: Icon(isExpanded
-                              ? Icons.expand_more
-                              : Icons.keyboard_arrow_left),
-                          children: [
-                            ListView.builder(
-                              shrinkWrap: true,
-                              physics: const ClampingScrollPhysics(),
-                              itemCount: completedlist.length,
-                              itemBuilder: (BuildContext _, int index) {
-                                Task task = completedlist[index].keys.first;
-                                return TaskListItem(
-                                  mContext: context,
-                                  task: completedlist[index].keys.first,
-                                  taskList: completedlist[index].values.first,
-                                  themeColor: myDayTaskList.themeColor,
-                                  onTapCheck: (bool? value) {
-                                    context
-                                        .read<TaskMapViewModel>()
-                                        .updateTaskWith(
-                                            settings: context
-                                                .read<SettingsProvider>()
-                                                .settings,
-                                            taskID: task.id,
-                                            isCompleted: value);
-                                  },
-                                  onTapStar: () {
-                                    context
-                                        .read<TaskMapViewModel>()
-                                        .updateTaskWith(
-                                          settings: context
-                                              .read<SettingsProvider>()
-                                              .settings,
-                                          taskID: task.id,
-                                          isImportant: !task.isImportant,
-                                        );
-                                  },
-                                );
-                              },
-                            )
-                          ],
-                        )
-                      : const SizedBox(),
-                ]);
-              },
-            ),
+            child: Column(children: [
+              IncompleteList(taskList: myDayTaskList),
+              CompletedList(taskList: myDayTaskList),
+            ]),
           ),
           floatingActionButton: MyDayFloatingButtons(
-            taskList: addTaskDestinationTaskList,
+            taskList: myDayTaskList,
             themeColor: myDayTaskList.themeColor,
           ),
         ),

@@ -6,7 +6,6 @@ import '../../models/group.dart';
 import '../../models/task_list.dart';
 import '../../ultility/task_list_ultility.dart';
 import '../../view_models/group_view_model.dart';
-import '../../view_models/task_map_view_model.dart';
 import 'home_appbar.dart';
 import '../../themes.dart';
 import '../../routes.dart';
@@ -19,8 +18,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TaskListUltility taskListUltility =
-        TaskListUltility(taskViewModel: context.read<TaskMapViewModel>());
     return Scaffold(
       appBar: HomeAppBar(context: context).appBar(),
       body: SingleChildScrollView(
@@ -39,7 +36,9 @@ class HomePage extends StatelessWidget {
                       context.read<GroupViewModel>().groups[0].taskLists[1],
                 );
               },
-              endNumber: taskListUltility.countIncompletedMyDayTask(),
+              endNumber: TaskListUltility.countIncompletedTaskByID(
+                taskList: context.read<GroupViewModel>().groups[0].taskLists[1],
+              ),
             ),
             HomeItem(
               taskList: context.watch<GroupViewModel>().groups[0].taskLists[2],
@@ -51,7 +50,9 @@ class HomePage extends StatelessWidget {
                       context.read<GroupViewModel>().groups[0].taskLists[2],
                 );
               },
-              endNumber: taskListUltility.countIncompletedImportantTask(),
+              endNumber: TaskListUltility.countIncompletedTaskByID(
+                taskList: context.read<GroupViewModel>().groups[0].taskLists[2],
+              ),
             ),
             HomeItem(
               taskList: context.watch<GroupViewModel>().groups[0].taskLists[3],
@@ -63,7 +64,9 @@ class HomePage extends StatelessWidget {
                       context.read<GroupViewModel>().groups[0].taskLists[3],
                 );
               },
-              endNumber: taskListUltility.countIncompletedPlannedTask(),
+              endNumber: TaskListUltility.countIncompletedTaskByID(
+                taskList: context.read<GroupViewModel>().groups[0].taskLists[3],
+              ),
             ),
             HomeItem(
               taskList: context.watch<GroupViewModel>().groups[0].taskLists[4],
@@ -99,7 +102,7 @@ class HomePage extends StatelessWidget {
                       context.read<GroupViewModel>().groups[0].taskLists[0],
                 );
               },
-              endNumber: taskListUltility.countIncompletedTaskByID(
+              endNumber: TaskListUltility.countIncompletedTaskByID(
                 taskList:
                     context.watch<GroupViewModel>().groups[0].taskLists[0],
               ),
@@ -115,7 +118,7 @@ class HomePage extends StatelessWidget {
                 itemBuilder: (BuildContext context, int index) {
                   TaskList item = groupViewModel.groups[0].taskLists[index];
                   if (int.parse(item.id) > 10) {
-                    int endNumber = taskListUltility.countIncompletedTaskByID(
+                    int endNumber = TaskListUltility.countIncompletedTaskByID(
                       taskList: item,
                     );
                     return HomeItem(

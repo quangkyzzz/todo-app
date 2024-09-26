@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../models/task_step.dart';
-import '../../../models/task_list.dart';
 import '../../../view_models/task_view_model.dart';
 import '../../items/popup_item.dart';
 import '../../../themes.dart';
 
 class StepItem extends StatefulWidget {
   final TaskStep step;
-  final TaskList taskList;
+  final String taskListID;
   final Function callBack;
   const StepItem({
     super.key,
     required this.step,
     required this.callBack,
-    required this.taskList,
+    required this.taskListID,
   });
 
   @override
@@ -72,7 +71,7 @@ class _StepItemState extends State<StepItem> {
               onTap: () {
                 widget.callBack(step, isDelete: true);
                 taskViewModel.createTask(
-                  taskListID: widget.taskList.id,
+                  taskListID: widget.taskListID,
                   taskName: step.stepName,
                   isCompleted: step.isCompleted,
                 );

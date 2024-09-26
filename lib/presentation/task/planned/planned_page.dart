@@ -1,13 +1,8 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../models/task.dart';
 import '../../../models/task_list.dart';
-import '../../../provider/settings_provider.dart';
-import '../../../ultility/type_def.dart';
 import '../../../view_models/task_list_view_model.dart';
-import '../../../view_models/task_map_view_model.dart';
 import '../../items/task_list_item.dart';
 import '../../../themes.dart';
 import '../../components/popup_menu.dart';
@@ -90,6 +85,27 @@ class _PlannedPageState extends State<PlannedPage> {
 
   @override
   Widget build(BuildContext context) {
+    plannedTaskList = context.watch<TaskListViewModel>().currentTaskList;
+    switch (plannedState) {
+      case 0:
+        plannedTaskList.tasks =
+            context.watch<TaskListViewModel>().readPlannedOverdueTask();
+      case 1:
+        plannedTaskList.tasks =
+            context.watch<TaskListViewModel>().readPlannedTodayTask();
+      case 2:
+        plannedTaskList.tasks =
+            context.watch<TaskListViewModel>().readPlannedTomorrowTask();
+      case 3:
+        plannedTaskList.tasks =
+            context.watch<TaskListViewModel>().readPlannedThisWeekTask();
+      case 4:
+        plannedTaskList.tasks =
+            context.watch<TaskListViewModel>().readPlannedLaterTask();
+      case 5:
+        plannedTaskList.tasks =
+            context.watch<TaskListViewModel>().readPlannedTask();
+    }
     return Stack(
       fit: StackFit.expand,
       children: [
@@ -179,53 +195,15 @@ class _PlannedPageState extends State<PlannedPage> {
                 const SizedBox(height: 18),
 
                 //task list
-                Consumer<TaskMapViewModel>(
-                  builder: (_, taskViewModel, child) {
-                    TaskMapList plannedTasks = [];
-                    switch (plannedState) {
-                      case 0:
-                        plannedTasks = taskViewModel.readPlannedOverdueTask();
-                      case 1:
-                        plannedTasks = taskViewModel.readPlannedTodayTask();
-                      case 2:
-                        plannedTasks = taskViewModel.readPlannedTomorrowTask();
-                      case 3:
-                        plannedTasks = taskViewModel.readPlannedThisWeekTask();
-                      case 4:
-                        plannedTasks = taskViewModel.readPlannedLaterTask();
-                      case 5:
-                        plannedTasks = taskViewModel.readPlannedTask();
-                    }
-
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      physics: const ClampingScrollPhysics(),
-                      itemCount: plannedTasks.length,
-                      itemBuilder: (BuildContext _, int index) {
-                        Task task = plannedTasks[index].keys.first;
-                        return TaskListItem(
-                          mContext: context,
-                          task: plannedTasks[index].keys.first,
-                          taskList: plannedTasks[index].values.first,
-                          themeColor: plannedTaskList.themeColor,
-                          onTapCheck: (bool? value) {
-                            context.read<TaskMapViewModel>().updateTaskWith(
-                                  settings:
-                                      context.read<SettingsProvider>().settings,
-                                  taskID: task.id,
-                                  isCompleted: value,
-                                );
-                          },
-                          onTapStar: () {
-                            context.read<TaskMapViewModel>().updateTaskWith(
-                                  settings:
-                                      context.read<SettingsProvider>().settings,
-                                  taskID: task.id,
-                                  isImportant: !task.isImportant,
-                                );
-                          },
-                        );
-                      },
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const ClampingScrollPhysics(),
+                  itemCount: plannedTaskList.tasks.length,
+                  itemBuilder: (BuildContext _, int index) {
+                    return TaskListItem(
+                      mContext: context,
+                      task: plannedTaskList.tasks[index],
+                      themeColor: plannedTaskList.themeColor,
                     );
                   },
                 ),

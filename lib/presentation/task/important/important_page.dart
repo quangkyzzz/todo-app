@@ -2,11 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../models/task_list.dart';
-import '../../../models/task.dart';
-import '../../../provider/settings_provider.dart';
-import '../../../view_models/group_view_model.dart';
 import '../../../view_models/task_list_view_model.dart';
-import '../../../view_models/task_map_view_model.dart';
 import '../../components/add_floating_button.dart';
 import '../../items/task_list_item.dart';
 import '../../components/popup_menu.dart';
@@ -21,20 +17,14 @@ class ImportantPage extends StatefulWidget {
 }
 
 class _TaskListPageState extends State<ImportantPage> {
-  late TaskList newTaskDestinationTaskList;
   late TaskList importantTaskList;
   bool isExpanded = false;
 
   @override
-  void didChangeDependencies() {
-    newTaskDestinationTaskList =
-        context.read<GroupViewModel>().readGroupByID('1').taskLists[0];
-    importantTaskList = context.watch<TaskListViewModel>().currentTaskList;
-    super.didChangeDependencies();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    importantTaskList = context.watch<TaskListViewModel>().currentTaskList;
+    importantTaskList.tasks =
+        context.watch<TaskListViewModel>().readImportantTask();
     return Stack(
       fit: StackFit.expand,
       children: [
@@ -78,43 +68,21 @@ class _TaskListPageState extends State<ImportantPage> {
             ],
           ),
           body: SingleChildScrollView(
-            child: Consumer<TaskMapViewModel>(
-              builder: (_, taskMapViewModel, child) {
-                List<Map<Task, TaskList>> importantTasks =
-                    taskMapViewModel.readImportantTask();
-                return ListView.builder(
-                  shrinkWrap: true,
-                  physics: const ClampingScrollPhysics(),
-                  itemCount: importantTasks.length,
-                  itemBuilder: (BuildContext _, int index) {
-                    return TaskListItem(
-                      mContext: context,
-                      task: importantTasks[index].keys.first,
-                      taskList: importantTasks[index].values.first,
-                      themeColor: importantTaskList.themeColor,
-                      onTapCheck: (bool? value) {
-                        context.read<TaskMapViewModel>().updateTaskWith(
-                            settings: context.read<SettingsProvider>().settings,
-                            taskID: importantTasks[index].keys.first.id,
-                            isCompleted: value);
-                      },
-                      onTapStar: () {
-                        context.read<TaskMapViewModel>().updateTaskWith(
-                              settings:
-                                  context.read<SettingsProvider>().settings,
-                              taskID: importantTasks[index].keys.first.id,
-                              isImportant:
-                                  !importantTasks[index].keys.first.isImportant,
-                            );
-                      },
-                    );
-                  },
+            child: ListView.builder(
+              shrinkWrap: true,
+              physics: const ClampingScrollPhysics(),
+              itemCount: importantTaskList.tasks.length,
+              itemBuilder: (BuildContext _, int index) {
+                return TaskListItem(
+                  mContext: context,
+                  task: importantTaskList.tasks[index],
+                  themeColor: importantTaskList.themeColor,
                 );
               },
             ),
           ),
           floatingActionButton: AddFloatingButton(
-            taskList: newTaskDestinationTaskList,
+            taskList: importantTaskList,
             isAddToImportant: true,
             themeColor: importantTaskList.themeColor,
           ),

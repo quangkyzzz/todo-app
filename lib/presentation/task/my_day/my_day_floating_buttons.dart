@@ -3,10 +3,8 @@ import 'package:provider/provider.dart';
 import '../../../models/task_list.dart';
 import '../../../models/task.dart';
 import '../../../provider/settings_provider.dart';
-import '../../../ultility/type_def.dart';
-import '../../../view_models/task_map_view_model.dart';
+import '../../../view_models/task_list_view_model.dart';
 import '../../items/task_list_item.dart';
-
 import '../../../themes.dart';
 import '../../components/add_floating_button.dart';
 
@@ -30,8 +28,8 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
   }
 
   Future<void> onSuggestionsTap(BuildContext context, Color themeColor) async {
-    final taskMapViewModel =
-        Provider.of<TaskMapViewModel>(context, listen: false);
+    final taskListViewModel =
+        Provider.of<TaskListViewModel>(context, listen: false);
     await showModalBottomSheet(
       context: context,
       builder: (BuildContext _) {
@@ -43,7 +41,7 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
           initialChildSize: 0.3,
           builder: (__, scrollController) {
             return ListenableProvider.value(
-              value: taskMapViewModel,
+              value: taskListViewModel,
               child: SingleChildScrollView(
                 controller: scrollController,
                 child: Padding(
@@ -57,15 +55,11 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
                           size: 48,
                         ),
                       ),
-                      Consumer<TaskMapViewModel>(builder: (
-                        BuildContext ___,
-                        taskMapViewModel,
-                        child,
-                      ) {
-                        TaskMapList listRecentTask =
-                            taskMapViewModel.readRecentNotInMyDayTask();
-                        TaskMapList listOlderSuggetTask =
-                            taskMapViewModel.readOlderNotInMyDayTask();
+                      Builder(builder: (BuildContext ___) {
+                        List<Task> listRecentTask =
+                            taskListViewModel.readRecentNotInMyDayTask();
+                        List<Task> listOlderSuggetTask =
+                            taskListViewModel.readOlderNotInMyDayTask();
                         return ((listRecentTask.isEmpty) &&
                                 (listOlderSuggetTask.isEmpty))
                             ? const Center(
@@ -91,39 +85,26 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
                                     itemCount: listRecentTask.length,
                                     itemBuilder:
                                         (BuildContext ____, int index) {
-                                      Map<Task, TaskList> pair =
-                                          listRecentTask[index];
-                                      Task task = pair.keys.first;
-                                      TaskList taskList = pair.values.first;
+                                      Task task = listRecentTask[index];
+
                                       return TaskListItem(
                                         mContext: context,
                                         task: task,
-                                        taskList: taskList,
                                         themeColor: themeColor,
                                         havePlusIcon: true,
                                         onTapPlus: () {
+                                          //FIXME: must fix add tosk to My Day
+                                          setState(() {
+                                            listRecentTask.remove(task);
+                                          });
                                           context
-                                              .read<TaskMapViewModel>()
-                                              .updateTaskWith(
+                                              .read<TaskListViewModel>()
+                                              .updateTaskListWith(
                                                 settings: context
                                                     .read<SettingsProvider>()
                                                     .settings,
-                                                taskID: task.id,
-                                                isOnMyDay: true,
                                               );
                                         },
-                                        onTapCheck: (bool? value) {
-                                          context
-                                              .read<TaskMapViewModel>()
-                                              .updateTaskWith(
-                                                settings: context
-                                                    .read<SettingsProvider>()
-                                                    .settings,
-                                                taskID: task.id,
-                                                isCompleted: value,
-                                              );
-                                        },
-                                        onTapStar: () {},
                                       );
                                     },
                                   ),
@@ -142,53 +123,23 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
                                     itemCount: listOlderSuggetTask.length,
                                     itemBuilder:
                                         (BuildContext ____, int index) {
-                                      Map<Task, TaskList> pair =
-                                          listOlderSuggetTask[index];
-                                      Task task = pair.keys.first;
-                                      TaskList taskList = pair.values.first;
+                                      Task task = listOlderSuggetTask[index];
                                       return TaskListItem(
                                         mContext: context,
                                         task: task,
-                                        taskList: taskList,
                                         themeColor: themeColor,
                                         havePlusIcon: true,
                                         onTapPlus: () {
                                           setState(() {
-                                            listOlderSuggetTask.remove(pair);
+                                            listOlderSuggetTask.remove(task);
                                           });
+                                          //FIXME: must fix add tosk to My Day
                                           context
-                                              .read<TaskMapViewModel>()
-                                              .updateTaskWith(
+                                              .read<TaskListViewModel>()
+                                              .updateTaskListWith(
                                                 settings: context
                                                     .read<SettingsProvider>()
                                                     .settings,
-                                                taskID: task.id,
-                                                isOnMyDay: true,
-                                              );
-                                        },
-                                        onTapCheck: (bool? value) {
-                                          setState(() {
-                                            task.isCompleted = value ?? false;
-                                          });
-                                          context
-                                              .read<TaskMapViewModel>()
-                                              .updateTaskWith(
-                                                settings: context
-                                                    .read<SettingsProvider>()
-                                                    .settings,
-                                                taskID: task.id,
-                                                isCompleted: value,
-                                              );
-                                        },
-                                        onTapStar: () {
-                                          context
-                                              .read<TaskMapViewModel>()
-                                              .updateTaskWith(
-                                                settings: context
-                                                    .read<SettingsProvider>()
-                                                    .settings,
-                                                taskID: task.id,
-                                                isImportant: !task.isImportant,
                                               );
                                         },
                                       );

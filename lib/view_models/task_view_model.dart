@@ -32,7 +32,6 @@ class TaskViewModel extends ChangeNotifier {
   }
 
   Future<void> updateTask({
-    required String taskListID,
     required String taskID,
     required Task newTask,
   }) async {

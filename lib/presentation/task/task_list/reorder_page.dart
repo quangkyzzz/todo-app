@@ -41,10 +41,7 @@ class _ReorderPageState extends State<ReorderPage> {
                 mContext: context,
                 key: Key(item.id),
                 task: item,
-                taskList: widget.taskList,
                 themeColor: widget.taskList.themeColor,
-                onTapCheck: (bool? value) {},
-                onTapStar: () {},
               );
             }).toList(),
             onReorder: (int oldIndex, int newIndex) {

@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../models/task_list.dart';
 import '../../../models/task.dart';
 import '../../../themes.dart';
 import '../../../view_models/task_view_model.dart';
 
 class NoteEditPage extends StatefulWidget {
   final Task task;
-  final TaskList taskList;
+
   const NoteEditPage({
     super.key,
     required this.task,
-    required this.taskList,
   });
 
   @override
@@ -49,7 +47,6 @@ class _NoteEditPageState extends State<NoteEditPage> {
             onPressed: () async {
               Task newTask = widget.task.copyWith(note: _controller.text);
               await taskViewModel.updateTask(
-                taskListID: widget.taskList.id,
                 taskID: widget.task.id,
                 newTask: newTask,
               );

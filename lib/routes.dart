@@ -19,7 +19,6 @@ import 'provider/auth_provider.dart';
 import 'view_models/user_view_model.dart';
 import 'view_models/group_view_model.dart';
 import 'view_models/task_list_view_model.dart';
-import 'view_models/task_map_view_model.dart';
 import 'view_models/task_view_model.dart';
 
 const initialRoute = '/home';
@@ -51,9 +50,6 @@ var allRoute = {
                   ChangeNotifierProvider(
                     create: (context) => GroupViewModel(),
                   ),
-                  ChangeNotifierProvider(
-                    create: (context) => TaskMapViewModel(),
-                  )
                 ],
                 builder: (context, child) {
                   return const HomePage();
@@ -71,9 +67,6 @@ var allRoute = {
         ChangeNotifierProvider(
           create: (context) => TaskListViewModel(currentTaskList: taskList),
         ),
-        ChangeNotifierProvider(
-          create: (context) => TaskMapViewModel(),
-        ),
       ],
       builder: (context, child) {
         return const TaskListPage();
@@ -90,16 +83,24 @@ var allRoute = {
       builder: (context, child) => const UserProfilePage(),
     );
   },
+  myDayRoute: (context) {
+    TaskList taskList =
+        (ModalRoute.of(context)?.settings.arguments as TaskList).copyWith();
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (context) => TaskListViewModel(currentTaskList: taskList),
+          ),
+        ],
+        builder: (context, child) {
+          return const MyDayPage();
+        });
+  },
   importantRoute: (context) {
     TaskList taskList =
         (ModalRoute.of(context)?.settings.arguments as TaskList).copyWith();
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => GroupViewModel()),
-        ChangeNotifierProvider(create: (context) => TaskMapViewModel()),
-        ChangeNotifierProvider(
-          create: (context) => TaskListViewModel(currentTaskList: taskList),
-        ),
         ChangeNotifierProvider(
           create: (context) => TaskListViewModel(currentTaskList: taskList),
         ),
@@ -109,27 +110,11 @@ var allRoute = {
       },
     );
   },
-  searchRoute: (context) {
-    TaskList taskList = TaskList(id: '1', listName: 'test');
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => TaskMapViewModel()),
-        ChangeNotifierProvider(
-          create: (context) => TaskListViewModel(currentTaskList: taskList),
-        ),
-      ],
-      builder: (context, child) {
-        return const SearchPage();
-      },
-    );
-  },
   plannedRoute: (context) {
     TaskList taskList =
         (ModalRoute.of(context)?.settings.arguments as TaskList).copyWith();
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => GroupViewModel()),
-        ChangeNotifierProvider(create: (context) => TaskMapViewModel()),
         ChangeNotifierProvider(
           create: (context) => TaskListViewModel(currentTaskList: taskList),
         ),
@@ -139,20 +124,18 @@ var allRoute = {
       },
     );
   },
-  myDayRoute: (context) {
-    TaskList taskList =
-        (ModalRoute.of(context)?.settings.arguments as TaskList).copyWith();
+  searchRoute: (context) {
+    TaskList taskList = TaskList(id: '1', listName: 'test');
     return MultiProvider(
-        providers: [
-          ChangeNotifierProvider(
-            create: (context) => TaskListViewModel(currentTaskList: taskList),
-          ),
-          ChangeNotifierProvider(create: (context) => TaskMapViewModel()),
-          ChangeNotifierProvider(create: (context) => GroupViewModel()),
-        ],
-        builder: (context, child) {
-          return const MyDayPage();
-        });
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => TaskListViewModel(currentTaskList: taskList),
+        ),
+      ],
+      builder: (context, child) {
+        return const SearchPage();
+      },
+    );
   },
   settingsRoute: (context) {
     return MultiProvider(
@@ -170,7 +153,6 @@ var allRoute = {
         ChangeNotifierProvider(
           create: (context) => TaskListViewModel(currentTaskList: taskList),
         ),
-        ChangeNotifierProvider(create: (context) => TaskMapViewModel()),
       ],
       builder: (context, child) => ReorderPage(
         taskList: taskList,
@@ -178,31 +160,31 @@ var allRoute = {
     );
   },
   taskRoute: (context) {
-    Map<dynamic, dynamic> arg =
-        ModalRoute.of(context)?.settings.arguments as Map;
-    Task task = arg['task'].copyWith();
-    TaskList taskList = arg['taskList'];
+    Task arg = ModalRoute.of(context)?.settings.arguments as Task;
+    Task task = arg.copyWith();
+
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(
             create: (context) => TaskViewModel(currentTask: task),
           ),
           ChangeNotifierProvider(
-            create: (context) => TaskListViewModel(currentTaskList: taskList),
-          ),
+            create: (context) => TaskListViewModel(
+              currentTaskList:
+                  TaskList(id: 'test 2', listName: 'test task list'),
+            ),
+          )
         ],
         builder: (context, child) {
           return TaskPage(
             task: task,
-            taskList: taskList,
           );
         });
   },
   noteEditRoute: (context) {
-    Map<dynamic, dynamic> arg =
-        ModalRoute.of(context)?.settings.arguments as Map;
-    Task task = arg['task'];
-    TaskList taskList = arg['taskList'];
+    Task arg = ModalRoute.of(context)?.settings.arguments as Task;
+    Task task = arg.copyWith();
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
@@ -211,7 +193,6 @@ var allRoute = {
       ],
       builder: (context, child) => NoteEditPage(
         task: task,
-        taskList: taskList,
       ),
     );
   },
