@@ -1,13 +1,11 @@
-Báo cáo 26/9
+Báo cáo 27/9
 Đã làm:
-    -   Sửa chức năng nút thêm task mới.
-    -   Sửa cấu trúc code của bottom sheet thêm task và background service.
-    -   Thay đổi nhỏ giao diện.
+    -   Thêm thuộc tính taskListID vào taskModel
+    -   Loại bỏ taskMapListViewModel ra khỏi tất cả các màn có liên quan
+    -   Chuyển toàn bộ các hàm chức năng trong taskMapListViewModel vào taskListViewModel
 Đang làm:
-    -   Sửa taskMapViewModel
+    -   Sửa chức năng các hàm sau khi chuyển.
 Dự định làm:
-    -   Hoàn thành sửa các màn liên quan đến taskMapViewModel
-     và xóa bỏ taskMapViewModel.
+    -   Hoàn thành chỉnh sửa các hàm chức năng
+    -   Dựa vào review để tiếp tục chỉnh sửa.
 
-//about: getMyDay,planned,... function
-//about: move to taskListViewModel
