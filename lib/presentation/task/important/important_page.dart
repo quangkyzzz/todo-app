@@ -5,7 +5,7 @@ import '../../../models/task_list.dart';
 import '../../../view_models/task_list_view_model.dart';
 import '../../components/add_floating_button.dart';
 import '../../items/task_list_item.dart';
-import '../../components/popup_menu.dart';
+import '../../components/task_list_popup_menu.dart';
 
 class ImportantPage extends StatefulWidget {
   const ImportantPage({
@@ -57,7 +57,7 @@ class _TaskListPageState extends State<ImportantPage> {
               ),
             ),
             actions: [
-              PopupMenu(
+              TaskListPopupMenu(
                 taskList: importantTaskList,
                 toRemove: const [
                   'sort_by',

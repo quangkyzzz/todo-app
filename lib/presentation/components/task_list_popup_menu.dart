@@ -13,11 +13,11 @@ import '../items/popup_item.dart';
 import 'change_theme_bottom_sheet.dart';
 import 'sort_by_bottom_sheet.dart';
 
-class PopupMenu extends StatelessWidget {
+class TaskListPopupMenu extends StatelessWidget {
   final TaskList taskList;
   final List<Map<String, dynamic>>? customListPopupMenuItem;
   final List<String> toRemove;
-  const PopupMenu({
+  const TaskListPopupMenu({
     super.key,
     required this.taskList,
     this.toRemove = const [],

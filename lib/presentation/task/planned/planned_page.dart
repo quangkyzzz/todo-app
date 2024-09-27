@@ -5,7 +5,7 @@ import '../../../models/task_list.dart';
 import '../../../view_models/task_list_view_model.dart';
 import '../../items/task_list_item.dart';
 import '../../../themes.dart';
-import '../../components/popup_menu.dart';
+import '../../components/task_list_popup_menu.dart';
 import '../../items/popup_item.dart';
 
 class PlannedPage extends StatefulWidget {
@@ -127,7 +127,7 @@ class _PlannedPageState extends State<PlannedPage> {
               ),
             ),
             actions: [
-              PopupMenu(
+              TaskListPopupMenu(
                 taskList: plannedTaskList,
                 toRemove: const [
                   'sort_by',

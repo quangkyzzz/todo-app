@@ -109,6 +109,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                       isCompleted: isChecked,
                       dueDate: newTask.dueDate,
                       isOnMyDay: newTask.isOnMyDay,
+                      isImportant: newTask.isImportant,
                       remindTime: newTask.remindTime,
                       repeatFrequency: newTask.repeatFrequency,
                     );

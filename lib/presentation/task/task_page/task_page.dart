@@ -215,6 +215,7 @@ class _TaskPageState extends State<TaskPage> {
       );
     });
     BackGroundService.cancelTaskByID(id: widget.task.id);
+
     BackGroundService.executePeriodicBackGroundTask(
       task: widget.task,
       taskList: taskListViewModel.readTaskListByID(widget.task.taskListID),
@@ -565,9 +566,7 @@ class AddAndEditNoteButton extends StatelessWidget {
               onTap: () async {
                 await Navigator.of(context).pushNamed(
                   noteEditRoute,
-                  arguments: {
-                    'task': task,
-                  },
+                  arguments: task,
                 );
               },
               child: Container(

@@ -8,7 +8,7 @@ import '../../../view_models/task_list_view_model.dart';
 import '../../lists/completed_list.dart';
 import '../../lists/incomplete_list.dart';
 import 'my_day_floating_buttons.dart';
-import '../../components/popup_menu.dart';
+import '../../components/task_list_popup_menu.dart';
 
 class MyDayPage extends StatefulWidget {
   const MyDayPage({super.key});
@@ -71,7 +71,7 @@ class _MyDayPageState extends State<MyDayPage> {
                   ]),
             ),
             actions: [
-              PopupMenu(
+              TaskListPopupMenu(
                 taskList: myDayTaskList,
                 toRemove: const [
                   'sort_by',

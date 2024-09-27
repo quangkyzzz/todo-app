@@ -7,7 +7,7 @@ import '../../../view_models/task_list_view_model.dart';
 import '../../components/add_floating_button.dart';
 import '../../lists/completed_list.dart';
 import '../../lists/incomplete_list.dart';
-import '../../components/popup_menu.dart';
+import '../../components/task_list_popup_menu.dart';
 
 import 'change_sort_type_button.dart';
 
@@ -61,7 +61,7 @@ class _TaskListPageState extends State<TaskListPage> {
               );
             }),
             actions: [
-              PopupMenu(
+              TaskListPopupMenu(
                 taskList: currentTaskList,
                 toRemove: (currentTaskList.id == '1')
                     ? (['rename_list', 'hide_completed_tasks', 'delete_list'])
