@@ -250,7 +250,7 @@ class GroupViewModel extends ChangeNotifier {
   }
 
   void deleteGroup(Group group) {
-    readGroupByID('1').taskLists.addAll(group.taskLists);
+    groups[0].taskLists.addAll(group.taskLists);
     groups.remove(group);
     notifyListeners();
   }

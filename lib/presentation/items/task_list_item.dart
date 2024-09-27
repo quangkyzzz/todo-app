@@ -79,7 +79,7 @@ class TaskListItem extends StatelessWidget {
                       Text(
                         task.title,
                         style: MyTheme.itemTextStyle,
-                      )
+                      ),
                     ],
                   )
                 : Column(

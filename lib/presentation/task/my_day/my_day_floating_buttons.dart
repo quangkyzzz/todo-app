@@ -28,11 +28,14 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
   }
 
   Future<void> onSuggestionsTap(BuildContext context, Color themeColor) async {
-    final taskListViewModel =
-        Provider.of<TaskListViewModel>(context, listen: false);
     await showModalBottomSheet(
       context: context,
       builder: (BuildContext _) {
+        final taskListViewModel = context.read<TaskListViewModel>();
+        List<Task> listRecentTask =
+            taskListViewModel.readRecentNotInMyDayTask();
+        List<Task> listOlderSuggetTask =
+            taskListViewModel.readOlderNotInMyDayTask();
         return DraggableScrollableSheet(
           snap: true,
           minChildSize: 0.2,
@@ -40,116 +43,126 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
           expand: false,
           initialChildSize: 0.3,
           builder: (__, scrollController) {
-            return ListenableProvider.value(
-              value: taskListViewModel,
-              child: SingleChildScrollView(
-                controller: scrollController,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Center(
-                        child: Icon(
-                          Icons.horizontal_rule_rounded,
-                          size: 48,
-                        ),
+            return SingleChildScrollView(
+              controller: scrollController,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Center(
+                      child: Icon(
+                        Icons.horizontal_rule_rounded,
+                        size: 48,
                       ),
-                      Builder(builder: (BuildContext ___) {
-                        List<Task> listRecentTask =
-                            taskListViewModel.readRecentNotInMyDayTask();
-                        List<Task> listOlderSuggetTask =
-                            taskListViewModel.readOlderNotInMyDayTask();
-                        return ((listRecentTask.isEmpty) &&
-                                (listOlderSuggetTask.isEmpty))
-                            ? const Center(
-                                child: Text(
-                                'There is no suggetion right now!',
-                                style: MyTheme.itemTextStyle,
-                              ))
-                            : Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  //////////////
-                                  //Recent task
-                                  (listRecentTask.isEmpty)
-                                      ? const SizedBox()
-                                      : const Text(
-                                          'Recenly added:',
-                                          style: MyTheme.itemTextStyle,
-                                        ),
-                                  const SizedBox(height: 8),
-                                  ListView.builder(
-                                    shrinkWrap: true,
-                                    physics: const ClampingScrollPhysics(),
-                                    itemCount: listRecentTask.length,
-                                    itemBuilder:
-                                        (BuildContext ____, int index) {
-                                      Task task = listRecentTask[index];
+                    ),
+                    StatefulBuilder(builder: (
+                      BuildContext ___,
+                      setState,
+                    ) {
+                      return ((listRecentTask.isEmpty) &&
+                              (listOlderSuggetTask.isEmpty))
+                          ? const Center(
+                              child: Text(
+                              'There is no suggetion right now!',
+                              style: MyTheme.itemTextStyle,
+                            ))
+                          : Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                //////////////
+                                //Recent task
+                                (listRecentTask.isEmpty)
+                                    ? const SizedBox()
+                                    : const Text(
+                                        'Recenly added:',
+                                        style: MyTheme.itemTextStyle,
+                                      ),
+                                const SizedBox(height: 8),
+                                ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const ClampingScrollPhysics(),
+                                  itemCount: listRecentTask.length,
+                                  itemBuilder: (BuildContext ____, int index) {
+                                    Task task = listRecentTask[index];
 
-                                      return TaskListItem(
-                                        mContext: context,
-                                        task: task,
-                                        themeColor: themeColor,
-                                        havePlusIcon: true,
-                                        onTapPlus: () {
-                                          //FIXME: must fix add tosk to My Day
-                                          setState(() {
-                                            listRecentTask.remove(task);
-                                          });
-                                          context
-                                              .read<TaskListViewModel>()
-                                              .updateTaskListWith(
-                                                settings: context
-                                                    .read<SettingsProvider>()
-                                                    .settings,
-                                              );
-                                        },
-                                      );
-                                    },
-                                  ),
-                                  /////////////
-                                  //Older task
-                                  (listOlderSuggetTask.isEmpty)
-                                      ? const SizedBox()
-                                      : const Text(
-                                          'Older:',
-                                          style: MyTheme.itemTextStyle,
-                                        ),
-                                  const SizedBox(height: 8),
-                                  ListView.builder(
-                                    shrinkWrap: true,
-                                    physics: const ClampingScrollPhysics(),
-                                    itemCount: listOlderSuggetTask.length,
-                                    itemBuilder:
-                                        (BuildContext ____, int index) {
-                                      Task task = listOlderSuggetTask[index];
-                                      return TaskListItem(
-                                        mContext: context,
-                                        task: task,
-                                        themeColor: themeColor,
-                                        havePlusIcon: true,
-                                        onTapPlus: () {
-                                          setState(() {
-                                            listOlderSuggetTask.remove(task);
-                                          });
-                                          //FIXME: must fix add tosk to My Day
-                                          context
-                                              .read<TaskListViewModel>()
-                                              .updateTaskListWith(
-                                                settings: context
-                                                    .read<SettingsProvider>()
-                                                    .settings,
-                                              );
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ],
-                              );
-                      }),
-                    ],
-                  ),
+                                    return TaskListItem(
+                                      mContext: context,
+                                      task: task,
+                                      themeColor: themeColor,
+                                      havePlusIcon: true,
+                                      onTapPlus: () {
+                                        setState(() {
+                                          listRecentTask.remove(task);
+                                        });
+
+                                        List<Task> updateTaskList =
+                                            taskListViewModel
+                                                .currentTaskList.tasks;
+                                        Task updateTask = task.copyWith(
+                                          isOnMyDay: true,
+                                        );
+                                        updateTaskList.add(updateTask);
+                                        context
+                                            .read<TaskListViewModel>()
+                                            .updateTaskListWith(
+                                              settings: context
+                                                  .read<SettingsProvider>()
+                                                  .settings,
+                                              tasks: updateTaskList,
+                                            );
+                                      },
+                                    );
+                                  },
+                                ),
+                                /////////////
+                                //Older task
+                                (listOlderSuggetTask.isEmpty)
+                                    ? const SizedBox()
+                                    : const Text(
+                                        'Older:',
+                                        style: MyTheme.itemTextStyle,
+                                      ),
+                                const SizedBox(height: 8),
+                                ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const ClampingScrollPhysics(),
+                                  itemCount: listOlderSuggetTask.length,
+                                  itemBuilder: (BuildContext ____, int index) {
+                                    Task task = listOlderSuggetTask[index];
+                                    return TaskListItem(
+                                      mContext: context,
+                                      task: task,
+                                      themeColor: themeColor,
+                                      havePlusIcon: true,
+                                      onTapPlus: () {
+                                        setState(() {
+                                          listOlderSuggetTask.remove(task);
+                                        });
+
+                                        List<Task> updateTaskList =
+                                            taskListViewModel
+                                                .currentTaskList.tasks;
+                                        Task updateTask = task.copyWith(
+                                          isOnMyDay: true,
+                                        );
+                                        updateTaskList.add(updateTask);
+                                        context
+                                            .read<TaskListViewModel>()
+                                            .updateTaskListWith(
+                                              settings: context
+                                                  .read<SettingsProvider>()
+                                                  .settings,
+                                              tasks: updateTaskList,
+                                            );
+                                      },
+                                    );
+                                  },
+                                ),
+                              ],
+                            );
+                    }),
+                  ],
                 ),
               ),
             );

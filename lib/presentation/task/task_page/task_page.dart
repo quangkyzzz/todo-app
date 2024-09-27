@@ -594,9 +594,7 @@ class AddAndEditNoteButton extends StatelessWidget {
               onPressed: () async {
                 await Navigator.of(context).pushNamed(
                   noteEditRoute,
-                  arguments: {
-                    'task': task,
-                  },
+                  arguments: task,
                 );
               },
               child: const Text(

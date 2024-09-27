@@ -168,7 +168,8 @@ class TaskListViewModel extends ChangeNotifier {
   }) {
     Task task = Task(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
-      taskListID: currentTaskList.id,
+      taskListID:
+          (int.parse(currentTaskList.id) < 10) ? '1' : currentTaskList.id,
       title: taskName,
       isCompleted: isCompleted,
       isImportant: isImportant,
@@ -187,14 +188,14 @@ class TaskListViewModel extends ChangeNotifier {
       if (task.repeatFrequency == null) {
         BackGroundService.executeScheduleBackGroundTask(
           task: task,
-          taskList: currentTaskList,
+          taskList: readTaskListByID(task.taskListID),
           isPlaySound: settings.isPlaySoundOnComplete,
           remindTime: task.remindTime!,
         );
       } else {
         BackGroundService.executePeriodicBackGroundTask(
           task: task,
-          taskList: currentTaskList,
+          taskList: readTaskListByID(task.taskListID),
           remindTime: task.remindTime!,
           frequency: task.repeatFrequency!,
           isPlaySound: settings.isPlaySoundOnComplete,
