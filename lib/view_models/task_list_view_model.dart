@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/settings.dart';
 import '../models/task_list.dart';
 import '../models/task.dart';
+import '../models/task_step.dart';
 import '../service/background_service.dart';
 import '../ultility/general_ultility.dart';
 
@@ -475,6 +476,159 @@ class TaskListViewModel extends ChangeNotifier {
           (diffTime.inDays > 0)) {
         result.add(task);
       }
+    }
+    return result;
+  }
+
+  List<Task> searchTaskByName(String searchName) {
+    List<Task> allTask = [
+      Task(
+        id: '2',
+        title: 'few day',
+        taskListID: '1',
+        isCompleted: false,
+        isImportant: true,
+        isOnMyDay: true,
+        createDate: DateTime(2024, 6, 2),
+        dueDate: DateTime(2024, 6, 2),
+      ),
+      Task(
+        id: '1',
+        taskListID: '1',
+        title: 'Tasks',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: false,
+        createDate: DateTime(2024, 6, 9),
+        stepList: [
+          TaskStep(
+            id: '1',
+            stepName: 'step 1',
+            isCompleted: false,
+          ),
+          TaskStep(
+            id: '2',
+            stepName: 'step 2',
+            isCompleted: true,
+          ),
+        ],
+        note: 'note',
+      ),
+      Task(
+        id: '66',
+        taskListID: '1',
+        title: 'No step',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: true,
+        remindTime: DateTime(2024, 9, 1),
+        createDate: DateTime(2024, 6, 2),
+        dueDate: DateTime(2024, 6, 2),
+      ),
+      Task(
+        id: '3',
+        taskListID: '222',
+        title: 'few hour',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: true,
+        createDate: DateTime(2024, 7, 2, 7),
+        note: 'Really long note, long long long'
+            'long long long long long long',
+      ),
+      Task(
+        id: '4',
+        taskListID: '222',
+        title: 'recent',
+        isCompleted: false,
+        isImportant: true,
+        isOnMyDay: false,
+        createDate: DateTime(2024, 7, 2, 9, 38),
+      ),
+      Task(
+        id: '5',
+        taskListID: '222',
+        title: 'few minute',
+        isCompleted: false,
+        isImportant: true,
+        isOnMyDay: true,
+        createDate: DateTime(2024, 7, 2, 9, 30),
+      ),
+      Task(
+        id: '6',
+        taskListID: '333',
+        title: 'due today',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: false,
+        createDate: DateTime.now(),
+        dueDate: DateTime.now(),
+      ),
+      Task(
+        id: '7',
+        taskListID: '333',
+        title: 'due tomorrow',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: false,
+        createDate: DateTime.now(),
+        dueDate: DateTime.now().add(const Duration(days: 1)),
+      ),
+      Task(
+        id: '8',
+        taskListID: '333',
+        title: 'due next week',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: false,
+        createDate: DateTime.now(),
+        dueDate: DateTime.now().add(const Duration(days: 7)),
+      ),
+      Task(
+        id: '9',
+        taskListID: '444',
+        title: 'due next month',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: false,
+        createDate: DateTime.now(),
+        dueDate: DateTime.now().add(const Duration(days: 31)),
+      ),
+      Task(
+        id: '10',
+        taskListID: '444',
+        title: 'due next 2 day',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: false,
+        createDate: DateTime.now(),
+        dueDate: DateTime.now().add(const Duration(days: 2)),
+      ),
+      Task(
+        id: '11',
+        taskListID: '444',
+        title: 'due next 3 day',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: false,
+        createDate: DateTime.now(),
+        dueDate: DateTime.now().add(const Duration(days: 3)),
+      ),
+      Task(
+        id: '12',
+        taskListID: '555',
+        title: 'due next 4 day',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: false,
+        createDate: DateTime.now(),
+        dueDate: DateTime.now().add(const Duration(days: 4)),
+      ),
+    ];
+    searchName = searchName.toLowerCase();
+    List<Task> result = [];
+    for (var task in allTask) {
+      if (task.title.toLowerCase().contains(searchName)) result.add(task);
     }
     return result;
   }

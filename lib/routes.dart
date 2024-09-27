@@ -125,7 +125,9 @@ var allRoute = {
     );
   },
   searchRoute: (context) {
-    TaskList taskList = TaskList(id: '1', listName: 'test');
+    TaskList taskList =
+        (ModalRoute.of(context)?.settings.arguments as TaskList).copyWith();
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(

@@ -4,8 +4,7 @@ import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import '../../models/task_list.dart';
 import '../../models/task.dart';
-import '../../ultility/type_def.dart';
-import '../../view_models/group_view_model.dart';
+import '../../view_models/task_list_view_model.dart';
 import '../items/task_list_item.dart';
 import '../../themes.dart';
 
@@ -20,7 +19,7 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   bool isSpeechEnable = false;
   SpeechToText speechToText = SpeechToText();
-  TaskMapList searchTasks = [];
+  late TaskList searchTaskList;
   bool isHideCompletedTask = false;
   String searchName = '';
   late TextEditingController _controller;
@@ -43,14 +42,15 @@ class _SearchPageState extends State<SearchPage> {
   void initState() {
     // ignore: discarded_futures
     speechToText.initialize();
-    //FIXME: must fix read()
-    searchTasks = context.read().allTask;
     _controller = TextEditingController();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    searchTaskList = context.watch<TaskListViewModel>().currentTaskList;
+    searchTaskList.tasks =
+        context.watch<TaskListViewModel>().searchTaskByName(searchName);
     return Scaffold(
       appBar: AppBar(
         title: Container(
@@ -141,15 +141,9 @@ class _SearchPageState extends State<SearchPage> {
             )
           : SingleChildScrollView(
               padding: const EdgeInsets.only(top: 16),
-              child: Consumer<GroupViewModel>(
-                builder: (_, groupViewModel, child) {
-                  //FIXME: must fix this
-
-                  // searchTasks = groupViewModel.searchTaskByName(
-                  //   searchName: searchName,
-                  // );
-
-                  if (searchTasks.isEmpty) {
+              child: Builder(
+                builder: (_) {
+                  if (searchTaskList.tasks.isEmpty) {
                     return const Center(
                       child: Text(
                         'No match result!',
@@ -160,14 +154,14 @@ class _SearchPageState extends State<SearchPage> {
                     return ListView.builder(
                       shrinkWrap: true,
                       physics: const ClampingScrollPhysics(),
-                      itemCount: searchTasks.length,
+                      itemCount: searchTaskList.tasks.length,
                       itemBuilder: (BuildContext _, int index) {
-                        Map<Task, TaskList> item = searchTasks[index];
+                        Task task = searchTaskList.tasks[index];
                         if (isHideCompletedTask) {
-                          if (!item.keys.first.isCompleted) {
+                          if (!task.isCompleted) {
                             return TaskListItem(
                               mContext: context,
-                              task: item.keys.first,
+                              task: task,
                               themeColor: MyTheme.blueColor,
                             );
                           } else {
@@ -176,7 +170,7 @@ class _SearchPageState extends State<SearchPage> {
                         } else {
                           return TaskListItem(
                             mContext: context,
-                            task: item.keys.first,
+                            task: task,
                             themeColor: MyTheme.blueColor,
                           );
                         }

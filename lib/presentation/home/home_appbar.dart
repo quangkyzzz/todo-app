@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../../app_configs.dart';
 import '../../routes.dart';
 import '../../themes.dart';
+import '../../view_models/group_view_model.dart';
 import '../../view_models/user_view_model.dart';
 
 class HomeAppBar {
@@ -54,7 +55,10 @@ class HomeAppBar {
       actions: [
         IconButton(
           onPressed: () async {
-            await Navigator.of(context).pushNamed(searchRoute);
+            await Navigator.of(context).pushNamed(
+              searchRoute,
+              arguments: context.read<GroupViewModel>().groups[0].taskLists[6],
+            );
           },
           icon: const Icon(
             Icons.search,
