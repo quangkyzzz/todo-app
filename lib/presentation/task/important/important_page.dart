@@ -21,10 +21,14 @@ class _TaskListPageState extends State<ImportantPage> {
   bool isExpanded = false;
 
   @override
+  void initState() {
+    context.read<TaskListViewModel>().getImportantTask();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     importantTaskList = context.watch<TaskListViewModel>().currentTaskList;
-    importantTaskList.tasks =
-        context.watch<TaskListViewModel>().readImportantTask();
     return Stack(
       fit: StackFit.expand,
       children: [

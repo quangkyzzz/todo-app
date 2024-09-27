@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
-import '../../models/task_list.dart';
 import '../../models/task.dart';
 import '../../view_models/task_list_view_model.dart';
 import '../items/task_list_item.dart';
 import '../../themes.dart';
 
-//TODO: fix this
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
 
@@ -19,7 +17,7 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   bool isSpeechEnable = false;
   SpeechToText speechToText = SpeechToText();
-  late TaskList searchTaskList;
+  late List<Task> searchResult;
   bool isHideCompletedTask = false;
   String searchName = '';
   late TextEditingController _controller;
@@ -40,6 +38,8 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   void initState() {
+    context.read<TaskListViewModel>().getAllTask();
+
     // ignore: discarded_futures
     speechToText.initialize();
     _controller = TextEditingController();
@@ -48,9 +48,10 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    searchTaskList = context.watch<TaskListViewModel>().currentTaskList;
-    searchTaskList.tasks =
-        context.watch<TaskListViewModel>().searchTaskByName(searchName);
+    searchResult = context.watch<TaskListViewModel>().searchTaskByName(
+          searchName: searchName,
+          isHideCompleted: isHideCompletedTask,
+        );
     return Scaffold(
       appBar: AppBar(
         title: Container(
@@ -143,7 +144,7 @@ class _SearchPageState extends State<SearchPage> {
               padding: const EdgeInsets.only(top: 16),
               child: Builder(
                 builder: (_) {
-                  if (searchTaskList.tasks.isEmpty) {
+                  if (searchResult.isEmpty) {
                     return const Center(
                       child: Text(
                         'No match result!',
@@ -154,9 +155,9 @@ class _SearchPageState extends State<SearchPage> {
                     return ListView.builder(
                       shrinkWrap: true,
                       physics: const ClampingScrollPhysics(),
-                      itemCount: searchTaskList.tasks.length,
+                      itemCount: searchResult.length,
                       itemBuilder: (BuildContext _, int index) {
-                        Task task = searchTaskList.tasks[index];
+                        Task task = searchResult[index];
                         if (isHideCompletedTask) {
                           if (!task.isCompleted) {
                             return TaskListItem(

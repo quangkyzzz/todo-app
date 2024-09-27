@@ -23,13 +23,13 @@ class _MyDayPageState extends State<MyDayPage> {
 
   @override
   void initState() {
+    context.read<TaskListViewModel>().getOnMyDayTask();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     myDayTaskList = context.watch<TaskListViewModel>().currentTaskList;
-    myDayTaskList.tasks = context.watch<TaskListViewModel>().readOnMyDayTask();
     return Stack(
       fit: StackFit.expand,
       children: [

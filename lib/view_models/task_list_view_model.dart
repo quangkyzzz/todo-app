@@ -204,7 +204,7 @@ class TaskListViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<Task> readOnMyDayTask() {
+  void getOnMyDayTask() {
     List<Task> result = [
       Task(
         id: '2',
@@ -249,238 +249,11 @@ class TaskListViewModel extends ChangeNotifier {
       )
     ];
 
-    return result;
+    currentTaskList.tasks = result;
+    notifyListeners();
   }
 
-  //TODO: impliment this function
   List<Task> readRecentNotInMyDayTask() {
-    List<Task> result = [];
-    // for (var task in allTask) {
-    //   DateTime createDate = DateTime(
-    //     task.keys.first.createDate.year,
-    //     task.keys.first.createDate.month,
-    //     task.keys.first.createDate.day,
-    //   );
-    //   DateTime today = DateTime(
-    //     DateTime.now().year,
-    //     DateTime.now().month,
-    //     DateTime.now().day,
-    //   );
-    //   if ((createDate == today) && (!task.keys.first.isOnMyDay)) {
-    //     result.add(task);
-    //   }
-    // }
-    return result;
-  }
-
-  //TODO: impliment this function
-  List<Task> readOlderNotInMyDayTask() {
-    List<Task> result = [];
-    // for (var pair in allTask) {
-    //   DateTime createDate = DateTime(
-    //     pair.keys.first.createDate.year,
-    //     pair.keys.first.createDate.month,
-    //     pair.keys.first.createDate.day,
-    //   );
-    //   DateTime today = DateTime(
-    //     DateTime.now().year,
-    //     DateTime.now().month,
-    //     DateTime.now().day,
-    //   );
-    //   if ((!pair.keys.first.isOnMyDay) && (createDate.isBefore(today))) {
-    //     result.add(pair);
-    //   }
-    // }
-    return result;
-  }
-
-  List<Task> readImportantTask() {
-    List<Task> result = [
-      Task(
-        id: '2',
-        taskListID: '1',
-        title: 'few day',
-        isCompleted: false,
-        isImportant: true,
-        isOnMyDay: true,
-        createDate: DateTime(2024, 6, 2),
-        dueDate: DateTime(2024, 6, 2),
-      ),
-      Task(
-        id: '5',
-        taskListID: '222',
-        title: 'few minute',
-        isCompleted: false,
-        isImportant: true,
-        isOnMyDay: true,
-        createDate: DateTime(2024, 7, 2, 9, 30),
-      ),
-      Task(
-        id: '4',
-        taskListID: '222',
-        title: 'recent',
-        isCompleted: false,
-        isImportant: true,
-        isOnMyDay: false,
-        createDate: DateTime(2024, 7, 2, 9, 38),
-      )
-    ];
-    return result;
-  }
-
-  List<Task> readPlannedTask() {
-    List<Task> result = [
-      Task(
-        id: '2',
-        taskListID: '1',
-        title: 'few day',
-        isCompleted: false,
-        isImportant: true,
-        isOnMyDay: true,
-        createDate: DateTime(2024, 6, 2),
-        dueDate: DateTime(2024, 6, 2),
-      ),
-      Task(
-        id: '66',
-        taskListID: '1',
-        title: 'No step',
-        isCompleted: false,
-        isImportant: false,
-        isOnMyDay: true,
-        remindTime: DateTime(2024, 9, 1),
-        createDate: DateTime(2024, 6, 2),
-        dueDate: DateTime(2024, 6, 2),
-      ),
-      Task(
-        id: '6',
-        taskListID: '333',
-        title: 'due today',
-        isCompleted: false,
-        isImportant: false,
-        isOnMyDay: false,
-        createDate: DateTime.now(),
-        dueDate: DateTime.now(),
-      ),
-      Task(
-        id: '7',
-        taskListID: '333',
-        title: 'due tomorrow',
-        isCompleted: false,
-        isImportant: false,
-        isOnMyDay: false,
-        createDate: DateTime.now(),
-        dueDate: DateTime.now().add(const Duration(days: 1)),
-      ),
-      Task(
-        id: '8',
-        taskListID: '333',
-        title: 'due next week',
-        isCompleted: false,
-        isImportant: false,
-        isOnMyDay: false,
-        createDate: DateTime.now(),
-        dueDate: DateTime.now().add(const Duration(days: 7)),
-      ),
-      Task(
-        id: '9',
-        taskListID: '444',
-        title: 'due next month',
-        isCompleted: false,
-        isImportant: false,
-        isOnMyDay: false,
-        createDate: DateTime.now(),
-        dueDate: DateTime.now().add(const Duration(days: 31)),
-      )
-    ];
-    return result;
-  }
-
-  List<Task> readPlannedOverdueTask() {
-    List<Task> result = [];
-    List<Task> plannedTask = readPlannedTask();
-    DateTime today = DateTime(
-      DateTime.now().year,
-      DateTime.now().month,
-      DateTime.now().day,
-    );
-
-    for (var task in plannedTask) {
-      Duration diffTime = task.dueDate!.difference(today);
-      if (diffTime.inDays < 0) {
-        result.add(task);
-      }
-    }
-    return result;
-  }
-
-  List<Task> readPlannedTodayTask() {
-    List<Task> result = [];
-    List<Task> plannedTask = readPlannedTask();
-    DateTime today = DateTime(
-      DateTime.now().year,
-      DateTime.now().month,
-      DateTime.now().day,
-    );
-
-    for (var task in plannedTask) {
-      Duration diffTime = task.dueDate!.difference(today);
-      if (diffTime.inDays == 0) {
-        result.add(task);
-      }
-    }
-    return result;
-  }
-
-  List<Task> readPlannedTomorrowTask() {
-    List<Task> result = [];
-    List<Task> plannedTask = readPlannedTask();
-    DateTime today = DateTime(
-      DateTime.now().year,
-      DateTime.now().month,
-      DateTime.now().day,
-    );
-
-    for (var task in plannedTask) {
-      Duration diffTime = task.dueDate!.difference(today);
-      if (diffTime.inDays == 1) {
-        result.add(task);
-      }
-    }
-    return result;
-  }
-
-  List<Task> readPlannedThisWeekTask() {
-    List<Task> result = [];
-    List<Task> plannedTask = readPlannedTask();
-
-    for (var task in plannedTask) {
-      if (GeneralUltility.isTheSameWeekAsToday(task.dueDate!)) {
-        result.add(task);
-      }
-    }
-    return result;
-  }
-
-  List<Task> readPlannedLaterTask() {
-    List<Task> result = [];
-    List<Task> plannedTask = readPlannedTask();
-    DateTime today = DateTime(
-      DateTime.now().year,
-      DateTime.now().month,
-      DateTime.now().day,
-    );
-
-    for (var task in plannedTask) {
-      Duration diffTime = task.dueDate!.difference(today);
-      if (!(GeneralUltility.isTheSameWeekAsToday(task.dueDate!)) &&
-          (diffTime.inDays > 0)) {
-        result.add(task);
-      }
-    }
-    return result;
-  }
-
-  List<Task> searchTaskByName(String searchName) {
     List<Task> allTask = [
       Task(
         id: '2',
@@ -625,10 +398,543 @@ class TaskListViewModel extends ChangeNotifier {
         dueDate: DateTime.now().add(const Duration(days: 4)),
       ),
     ];
-    searchName = searchName.toLowerCase();
     List<Task> result = [];
     for (var task in allTask) {
-      if (task.title.toLowerCase().contains(searchName)) result.add(task);
+      DateTime createDate = DateTime(
+        task.createDate.year,
+        task.createDate.month,
+        task.createDate.day,
+      );
+      DateTime today = DateTime(
+        DateTime.now().year,
+        DateTime.now().month,
+        DateTime.now().day,
+      );
+      if ((createDate == today) && (!task.isOnMyDay)) {
+        result.add(task);
+      }
+    }
+    return result;
+  }
+
+  List<Task> readOlderNotInMyDayTask() {
+    List<Task> allTask = [
+      Task(
+        id: '2',
+        title: 'few day',
+        taskListID: '1',
+        isCompleted: false,
+        isImportant: true,
+        isOnMyDay: true,
+        createDate: DateTime(2024, 6, 2),
+        dueDate: DateTime(2024, 6, 2),
+      ),
+      Task(
+        id: '1',
+        taskListID: '1',
+        title: 'Tasks',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: false,
+        createDate: DateTime(2024, 6, 9),
+        stepList: [
+          TaskStep(
+            id: '1',
+            stepName: 'step 1',
+            isCompleted: false,
+          ),
+          TaskStep(
+            id: '2',
+            stepName: 'step 2',
+            isCompleted: true,
+          ),
+        ],
+        note: 'note',
+      ),
+      Task(
+        id: '66',
+        taskListID: '1',
+        title: 'No step',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: true,
+        remindTime: DateTime(2024, 9, 1),
+        createDate: DateTime(2024, 6, 2),
+        dueDate: DateTime(2024, 6, 2),
+      ),
+      Task(
+        id: '3',
+        taskListID: '222',
+        title: 'few hour',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: true,
+        createDate: DateTime(2024, 7, 2, 7),
+        note: 'Really long note, long long long'
+            'long long long long long long',
+      ),
+      Task(
+        id: '4',
+        taskListID: '222',
+        title: 'recent',
+        isCompleted: false,
+        isImportant: true,
+        isOnMyDay: false,
+        createDate: DateTime(2024, 7, 2, 9, 38),
+      ),
+      Task(
+        id: '5',
+        taskListID: '222',
+        title: 'few minute',
+        isCompleted: false,
+        isImportant: true,
+        isOnMyDay: true,
+        createDate: DateTime(2024, 7, 2, 9, 30),
+      ),
+      Task(
+        id: '6',
+        taskListID: '333',
+        title: 'due today',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: false,
+        createDate: DateTime.now(),
+        dueDate: DateTime.now(),
+      ),
+      Task(
+        id: '7',
+        taskListID: '333',
+        title: 'due tomorrow',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: false,
+        createDate: DateTime.now(),
+        dueDate: DateTime.now().add(const Duration(days: 1)),
+      ),
+      Task(
+        id: '8',
+        taskListID: '333',
+        title: 'due next week',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: false,
+        createDate: DateTime.now(),
+        dueDate: DateTime.now().add(const Duration(days: 7)),
+      ),
+      Task(
+        id: '9',
+        taskListID: '444',
+        title: 'due next month',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: false,
+        createDate: DateTime.now(),
+        dueDate: DateTime.now().add(const Duration(days: 31)),
+      ),
+      Task(
+        id: '10',
+        taskListID: '444',
+        title: 'due next 2 day',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: false,
+        createDate: DateTime.now(),
+        dueDate: DateTime.now().add(const Duration(days: 2)),
+      ),
+      Task(
+        id: '11',
+        taskListID: '444',
+        title: 'due next 3 day',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: false,
+        createDate: DateTime.now(),
+        dueDate: DateTime.now().add(const Duration(days: 3)),
+      ),
+      Task(
+        id: '12',
+        taskListID: '555',
+        title: 'due next 4 day',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: false,
+        createDate: DateTime.now(),
+        dueDate: DateTime.now().add(const Duration(days: 4)),
+      ),
+    ];
+    List<Task> result = [];
+    for (var pair in allTask) {
+      DateTime createDate = DateTime(
+        pair.createDate.year,
+        pair.createDate.month,
+        pair.createDate.day,
+      );
+      DateTime today = DateTime(
+        DateTime.now().year,
+        DateTime.now().month,
+        DateTime.now().day,
+      );
+      if ((!pair.isOnMyDay) && (createDate.isBefore(today))) {
+        result.add(pair);
+      }
+    }
+    return result;
+  }
+
+  void getImportantTask() {
+    List<Task> result = [
+      Task(
+        id: '2',
+        taskListID: '1',
+        title: 'few day',
+        isCompleted: false,
+        isImportant: true,
+        isOnMyDay: true,
+        createDate: DateTime(2024, 6, 2),
+        dueDate: DateTime(2024, 6, 2),
+      ),
+      Task(
+        id: '5',
+        taskListID: '222',
+        title: 'few minute',
+        isCompleted: false,
+        isImportant: true,
+        isOnMyDay: true,
+        createDate: DateTime(2024, 7, 2, 9, 30),
+      ),
+      Task(
+        id: '4',
+        taskListID: '222',
+        title: 'recent',
+        isCompleted: false,
+        isImportant: true,
+        isOnMyDay: false,
+        createDate: DateTime(2024, 7, 2, 9, 38),
+      )
+    ];
+    currentTaskList.tasks = result;
+  }
+
+  void getPlannedTask() {
+    List<Task> result = [
+      Task(
+        id: '2',
+        taskListID: '1',
+        title: 'few day',
+        isCompleted: false,
+        isImportant: true,
+        isOnMyDay: true,
+        createDate: DateTime(2024, 6, 2),
+        dueDate: DateTime(2024, 6, 2),
+      ),
+      Task(
+        id: '66',
+        taskListID: '1',
+        title: 'No step',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: true,
+        remindTime: DateTime(2024, 9, 1),
+        createDate: DateTime(2024, 6, 2),
+        dueDate: DateTime(2024, 6, 2),
+      ),
+      Task(
+        id: '6',
+        taskListID: '333',
+        title: 'due today',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: false,
+        createDate: DateTime.now(),
+        dueDate: DateTime.now(),
+      ),
+      Task(
+        id: '7',
+        taskListID: '333',
+        title: 'due tomorrow',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: false,
+        createDate: DateTime.now(),
+        dueDate: DateTime.now().add(const Duration(days: 1)),
+      ),
+      Task(
+        id: '8',
+        taskListID: '333',
+        title: 'due next week',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: false,
+        createDate: DateTime.now(),
+        dueDate: DateTime.now().add(const Duration(days: 7)),
+      ),
+      Task(
+        id: '9',
+        taskListID: '444',
+        title: 'due next month',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: false,
+        createDate: DateTime.now(),
+        dueDate: DateTime.now().add(const Duration(days: 31)),
+      )
+    ];
+    currentTaskList.tasks = result;
+  }
+
+  List<Task> readPlannedOverdueTask() {
+    List<Task> result = [];
+    DateTime today = DateTime(
+      DateTime.now().year,
+      DateTime.now().month,
+      DateTime.now().day,
+    );
+
+    for (var task in currentTaskList.tasks) {
+      if (task.dueDate != null) {
+        Duration diffTime = task.dueDate!.difference(today);
+        if (diffTime.inDays < 0) {
+          result.add(task);
+        }
+      }
+    }
+    return result;
+  }
+
+  List<Task> readPlannedTodayTask() {
+    List<Task> result = [];
+    DateTime today = DateTime(
+      DateTime.now().year,
+      DateTime.now().month,
+      DateTime.now().day,
+    );
+
+    for (var task in currentTaskList.tasks) {
+      if (task.dueDate != null) {
+        Duration diffTime = task.dueDate!.difference(today);
+        if (diffTime.inDays == 0) {
+          result.add(task);
+        }
+      }
+    }
+    return result;
+  }
+
+  List<Task> readPlannedTomorrowTask() {
+    List<Task> result = [];
+    DateTime today = DateTime(
+      DateTime.now().year,
+      DateTime.now().month,
+      DateTime.now().day,
+    );
+
+    for (var task in currentTaskList.tasks) {
+      if (task.dueDate != null) {
+        Duration diffTime = task.dueDate!.difference(today);
+        if (diffTime.inDays == 1) {
+          result.add(task);
+        }
+      }
+    }
+    return result;
+  }
+
+  List<Task> readPlannedThisWeekTask() {
+    List<Task> result = [];
+
+    for (var task in currentTaskList.tasks) {
+      if (task.dueDate != null) {
+        if (GeneralUltility.isTheSameWeekAsToday(task.dueDate!)) {
+          result.add(task);
+        }
+      }
+    }
+    return result;
+  }
+
+  List<Task> readPlannedLaterTask() {
+    List<Task> result = [];
+    DateTime today = DateTime(
+      DateTime.now().year,
+      DateTime.now().month,
+      DateTime.now().day,
+    );
+
+    for (var task in currentTaskList.tasks) {
+      if (task.dueDate != null) {
+        Duration diffTime = task.dueDate!.difference(today);
+        if (!(GeneralUltility.isTheSameWeekAsToday(task.dueDate!)) &&
+            (diffTime.inDays > 0)) {
+          result.add(task);
+        }
+      }
+    }
+    return result;
+  }
+
+  void getAllTask() {
+    List<Task> allTask = [
+      Task(
+        id: '2',
+        title: 'few day',
+        taskListID: '1',
+        isCompleted: false,
+        isImportant: true,
+        isOnMyDay: true,
+        createDate: DateTime(2024, 6, 2),
+        dueDate: DateTime(2024, 6, 2),
+      ),
+      Task(
+        id: '1',
+        taskListID: '1',
+        title: 'Tasks',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: false,
+        createDate: DateTime(2024, 6, 9),
+        stepList: [
+          TaskStep(
+            id: '1',
+            stepName: 'step 1',
+            isCompleted: false,
+          ),
+          TaskStep(
+            id: '2',
+            stepName: 'step 2',
+            isCompleted: true,
+          ),
+        ],
+        note: 'note',
+      ),
+      Task(
+        id: '66',
+        taskListID: '1',
+        title: 'No step',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: true,
+        remindTime: DateTime(2024, 9, 1),
+        createDate: DateTime(2024, 6, 2),
+        dueDate: DateTime(2024, 6, 2),
+      ),
+      Task(
+        id: '3',
+        taskListID: '222',
+        title: 'few hour',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: true,
+        createDate: DateTime(2024, 7, 2, 7),
+        note: 'Really long note, long long long'
+            'long long long long long long',
+      ),
+      Task(
+        id: '4',
+        taskListID: '222',
+        title: 'recent',
+        isCompleted: false,
+        isImportant: true,
+        isOnMyDay: false,
+        createDate: DateTime(2024, 7, 2, 9, 38),
+      ),
+      Task(
+        id: '5',
+        taskListID: '222',
+        title: 'few minute',
+        isCompleted: false,
+        isImportant: true,
+        isOnMyDay: true,
+        createDate: DateTime(2024, 7, 2, 9, 30),
+      ),
+      Task(
+        id: '6',
+        taskListID: '333',
+        title: 'due today',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: false,
+        createDate: DateTime.now(),
+        dueDate: DateTime.now(),
+      ),
+      Task(
+        id: '7',
+        taskListID: '333',
+        title: 'due tomorrow',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: false,
+        createDate: DateTime.now(),
+        dueDate: DateTime.now().add(const Duration(days: 1)),
+      ),
+      Task(
+        id: '8',
+        taskListID: '333',
+        title: 'due next week',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: false,
+        createDate: DateTime.now(),
+        dueDate: DateTime.now().add(const Duration(days: 7)),
+      ),
+      Task(
+        id: '9',
+        taskListID: '444',
+        title: 'due next month',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: false,
+        createDate: DateTime.now(),
+        dueDate: DateTime.now().add(const Duration(days: 31)),
+      ),
+      Task(
+        id: '10',
+        taskListID: '444',
+        title: 'due next 2 day',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: false,
+        createDate: DateTime.now(),
+        dueDate: DateTime.now().add(const Duration(days: 2)),
+      ),
+      Task(
+        id: '11',
+        taskListID: '444',
+        title: 'due next 3 day',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: false,
+        createDate: DateTime.now(),
+        dueDate: DateTime.now().add(const Duration(days: 3)),
+      ),
+      Task(
+        id: '12',
+        taskListID: '555',
+        title: 'due next 4 day',
+        isCompleted: false,
+        isImportant: false,
+        isOnMyDay: false,
+        createDate: DateTime.now(),
+        dueDate: DateTime.now().add(const Duration(days: 4)),
+      ),
+    ];
+    currentTaskList.tasks = allTask;
+  }
+
+  List<Task> searchTaskByName({
+    required String searchName,
+    bool isHideCompleted = false,
+  }) {
+    searchName = searchName.toLowerCase();
+    List<Task> result = [];
+    for (var task in currentTaskList.tasks) {
+      if (isHideCompleted) {
+        if ((task.title.toLowerCase().contains(searchName)) &&
+            (!task.isCompleted)) {
+          result.add(task);
+        }
+      } else {
+        if (task.title.toLowerCase().contains(searchName)) result.add(task);
+      }
     }
     return result;
   }

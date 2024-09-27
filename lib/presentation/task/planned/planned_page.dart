@@ -72,15 +72,8 @@ class _PlannedPageState extends State<PlannedPage> {
         }
       },
     ];
-
+    context.read<TaskListViewModel>().getPlannedTask();
     super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    plannedTaskList =
-        Provider.of<TaskListViewModel>(context, listen: true).currentTaskList;
-    super.didChangeDependencies();
   }
 
   @override
@@ -104,7 +97,7 @@ class _PlannedPageState extends State<PlannedPage> {
             context.watch<TaskListViewModel>().readPlannedLaterTask();
       case 5:
         plannedTaskList.tasks =
-            context.watch<TaskListViewModel>().readPlannedTask();
+            context.watch<TaskListViewModel>().currentTaskList.tasks;
     }
     return Stack(
       fit: StackFit.expand,
