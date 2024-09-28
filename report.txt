@@ -1,11 +1,6 @@
-Báo cáo 27/9
+Báo cáo 28/9
 Đã làm:
-    -   Thêm thuộc tính taskListID vào taskModel
-    -   Loại bỏ taskMapListViewModel ra khỏi tất cả các màn có liên quan
-    -   Chuyển toàn bộ các hàm chức năng trong taskMapListViewModel vào taskListViewModel
-Đang làm:
-    -   Sửa chức năng các hàm sau khi chuyển.
+    -   Sửa chức năng tìm kiếm sau khi xóa bỏ taskMapListViewModel
+    -   Sửa chức năng suggestion và thêm task vào các taskList đặc biệt
 Dự định làm:
-    -   Hoàn thành chỉnh sửa các hàm chức năng
     -   Dựa vào review để tiếp tục chỉnh sửa.
-
