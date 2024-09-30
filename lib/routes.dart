@@ -162,8 +162,10 @@ var allRoute = {
     );
   },
   taskRoute: (context) {
-    Task arg = ModalRoute.of(context)?.settings.arguments as Task;
-    Task task = arg.copyWith();
+    Map<String, dynamic> arg =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    Task task = arg['task'].copyWith();
+    TaskList taskList = arg['taskList'].copyWith();
 
     return MultiProvider(
         providers: [
@@ -171,21 +173,18 @@ var allRoute = {
             create: (context) => TaskViewModel(currentTask: task),
           ),
           ChangeNotifierProvider(
-            create: (context) => TaskListViewModel(
-              currentTaskList:
-                  TaskList(id: 'test 2', listName: 'test task list'),
-            ),
+            create: (context) => TaskListViewModel(currentTaskList: taskList),
           )
         ],
         builder: (context, child) {
-          return TaskPage(
-            task: task,
-          );
+          return const TaskPage();
         });
   },
   noteEditRoute: (context) {
-    Task arg = ModalRoute.of(context)?.settings.arguments as Task;
-    Task task = arg.copyWith();
+    Map<String, dynamic> arg =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    Task task = arg['task'].copyWith();
+    TaskList taskList = arg['taskList'].copyWith();
 
     return MultiProvider(
       providers: [
@@ -195,6 +194,7 @@ var allRoute = {
       ],
       builder: (context, child) => NoteEditPage(
         task: task,
+        taskList: taskList,
       ),
     );
   },

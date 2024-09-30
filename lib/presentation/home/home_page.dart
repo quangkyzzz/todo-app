@@ -69,30 +69,6 @@ class HomePage extends StatelessWidget {
               ),
             ),
             HomeItem(
-              taskList: context.watch<GroupViewModel>().groups[0].taskLists[4],
-              icon: Icons.person_outline,
-              onTap: () async {
-                await Navigator.of(context).pushNamed(
-                  taskListRoute,
-                  arguments:
-                      context.read<GroupViewModel>().groups[0].taskLists[0],
-                );
-              },
-              endNumber: 0,
-            ),
-            HomeItem(
-              taskList: context.watch<GroupViewModel>().groups[0].taskLists[5],
-              icon: Icons.flag_outlined,
-              onTap: () async {
-                await Navigator.of(context).pushNamed(
-                  taskListRoute,
-                  arguments:
-                      context.read<GroupViewModel>().groups[0].taskLists[0],
-                );
-              },
-              endNumber: 0,
-            ),
-            HomeItem(
               taskList: context.watch<GroupViewModel>().groups[0].taskLists[0],
               icon: Icons.task_outlined,
               onTap: () async {

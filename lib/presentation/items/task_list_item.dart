@@ -51,7 +51,12 @@ class TaskListItem extends StatelessWidget {
         onTap: () async {
           await Navigator.of(context).pushNamed(
             taskRoute,
-            arguments: task,
+            arguments: {
+              'task': task,
+              'taskList': context
+                  .read<TaskListViewModel>()
+                  .getTaskListByID(task.taskListID),
+            },
           );
         },
         child: Row(
@@ -78,7 +83,9 @@ class TaskListItem extends StatelessWidget {
                     children: [
                       Text(
                         task.title,
-                        style: MyTheme.itemTextStyle,
+                        style: (task.isCompleted)
+                            ? MyTheme.itemDeleteTextStyle
+                            : MyTheme.itemTextStyle,
                       ),
                     ],
                   )
@@ -91,7 +98,9 @@ class TaskListItem extends StatelessWidget {
                         child: Text(
                           task.title,
                           overflow: TextOverflow.ellipsis,
-                          style: MyTheme.itemTextStyle,
+                          style: (task.isCompleted)
+                              ? MyTheme.itemDeleteTextStyle
+                              : MyTheme.itemTextStyle,
                         ),
                       ),
                       const SizedBox(height: 4),

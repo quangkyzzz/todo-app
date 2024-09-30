@@ -66,7 +66,7 @@ class TaskListViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  TaskList readTaskListByID(String taskListID) {
+  TaskList getTaskListByID(String taskListID) {
     return TaskList(id: 'test', listName: 'For test purposse task list');
   }
 
@@ -188,14 +188,14 @@ class TaskListViewModel extends ChangeNotifier {
       if (task.repeatFrequency == null) {
         BackGroundService.executeScheduleBackGroundTask(
           task: task,
-          taskList: readTaskListByID(task.taskListID),
+          taskList: getTaskListByID(task.taskListID),
           isPlaySound: settings.isPlaySoundOnComplete,
           remindTime: task.remindTime!,
         );
       } else {
         BackGroundService.executePeriodicBackGroundTask(
           task: task,
-          taskList: readTaskListByID(task.taskListID),
+          taskList: getTaskListByID(task.taskListID),
           remindTime: task.remindTime!,
           frequency: task.repeatFrequency!,
           isPlaySound: settings.isPlaySoundOnComplete,
@@ -251,7 +251,6 @@ class TaskListViewModel extends ChangeNotifier {
     ];
 
     currentTaskList.tasks = result;
-    notifyListeners();
   }
 
   List<Task> readRecentNotInMyDayTask() {

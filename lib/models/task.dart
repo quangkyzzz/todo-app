@@ -14,7 +14,9 @@ class Task {
   DateTime? dueDate;
   DateTime? remindTime;
   String? repeatFrequency;
+  //TODO: fix file path to not null type
   List<String>? filePath;
+  //TODO: fix note to not null type
   String? note;
 
   Task({

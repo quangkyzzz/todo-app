@@ -73,6 +73,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
                 Checkbox(
@@ -97,37 +98,50 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                     ),
                   ),
                 ),
-                IconButton(
-                  onPressed: () {
-                    if (_controller.text == '') return;
-                    Provider.of<TaskListViewModel>(
-                      widget.mContext,
-                      listen: false,
-                    ).addNewTask(
-                      settings: settings,
-                      taskName: _controller.text,
-                      isCompleted: isChecked,
-                      dueDate: newTask.dueDate,
-                      isOnMyDay: newTask.isOnMyDay,
-                      isImportant: newTask.isImportant,
-                      remindTime: newTask.remindTime,
-                      repeatFrequency: newTask.repeatFrequency,
-                    );
-                    _controller.clear();
-                    setState(() {
-                      isChecked = false;
-                      newTask = Task(
-                        id: DateTime.now().millisecondsSinceEpoch.toString(),
-                        taskListID: widget.taskList.id,
-                        title: '',
-                        isCompleted: isChecked,
-                        isImportant: widget.isAddToImportant,
-                        isOnMyDay: widget.isAddToMyDay,
-                        createDate: DateTime.now(),
-                      );
-                    });
-                  },
-                  icon: const Icon(Icons.arrow_upward),
+                Container(
+                  decoration: const BoxDecoration(
+                    color: MyTheme.dardGreyColor,
+                  ),
+                  height: 28,
+                  width: 28,
+                  margin: const EdgeInsets.all(8),
+                  child: Center(
+                    child: IconButton(
+                      padding: EdgeInsets.zero,
+                      onPressed: () {
+                        if (_controller.text == '') return;
+                        Provider.of<TaskListViewModel>(
+                          widget.mContext,
+                          listen: false,
+                        ).addNewTask(
+                          settings: settings,
+                          taskName: _controller.text,
+                          isCompleted: isChecked,
+                          dueDate: newTask.dueDate,
+                          isOnMyDay: newTask.isOnMyDay,
+                          isImportant: newTask.isImportant,
+                          remindTime: newTask.remindTime,
+                          repeatFrequency: newTask.repeatFrequency,
+                        );
+                        _controller.clear();
+                        setState(() {
+                          isChecked = false;
+                          newTask = Task(
+                            id: DateTime.now()
+                                .millisecondsSinceEpoch
+                                .toString(),
+                            taskListID: widget.taskList.id,
+                            title: '',
+                            isCompleted: isChecked,
+                            isImportant: widget.isAddToImportant,
+                            isOnMyDay: widget.isAddToMyDay,
+                            createDate: DateTime.now(),
+                          );
+                        });
+                      },
+                      icon: const Icon(Icons.arrow_upward),
+                    ),
+                  ),
                 )
               ],
             ),

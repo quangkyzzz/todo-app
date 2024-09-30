@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../../models/task.dart';
 import '../../../models/task_list.dart';
 import '../../../view_models/task_list_view_model.dart';
 import '../../items/task_list_item.dart';
@@ -19,6 +20,7 @@ class _PlannedPageState extends State<PlannedPage> {
   late List<Map<String, dynamic>> listPopupMennu;
   int plannedState = 5;
   late TaskList plannedTaskList;
+  late List<Task> displayList;
 
   void onPlannedStateChange(int value) {
     setState(() {
@@ -81,23 +83,20 @@ class _PlannedPageState extends State<PlannedPage> {
     plannedTaskList = context.watch<TaskListViewModel>().currentTaskList;
     switch (plannedState) {
       case 0:
-        plannedTaskList.tasks =
+        displayList =
             context.watch<TaskListViewModel>().readPlannedOverdueTask();
       case 1:
-        plannedTaskList.tasks =
-            context.watch<TaskListViewModel>().readPlannedTodayTask();
+        displayList = context.watch<TaskListViewModel>().readPlannedTodayTask();
       case 2:
-        plannedTaskList.tasks =
+        displayList =
             context.watch<TaskListViewModel>().readPlannedTomorrowTask();
       case 3:
-        plannedTaskList.tasks =
+        displayList =
             context.watch<TaskListViewModel>().readPlannedThisWeekTask();
       case 4:
-        plannedTaskList.tasks =
-            context.watch<TaskListViewModel>().readPlannedLaterTask();
+        displayList = context.watch<TaskListViewModel>().readPlannedLaterTask();
       case 5:
-        plannedTaskList.tasks =
-            context.watch<TaskListViewModel>().currentTaskList.tasks;
+        displayList = context.watch<TaskListViewModel>().currentTaskList.tasks;
     }
     return Stack(
       fit: StackFit.expand,
@@ -146,7 +145,7 @@ class _PlannedPageState extends State<PlannedPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 48),
-
+                /////////////
                 //popup menu
                 PopupMenuButton(
                   offset: const Offset(0, 48),
@@ -171,7 +170,7 @@ class _PlannedPageState extends State<PlannedPage> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Icon(
-                          Icons.list,
+                          listPopupMennu[plannedState]['icon'],
                           size: 32,
                           color: plannedTaskList.themeColor,
                         ),
@@ -191,11 +190,11 @@ class _PlannedPageState extends State<PlannedPage> {
                 ListView.builder(
                   shrinkWrap: true,
                   physics: const ClampingScrollPhysics(),
-                  itemCount: plannedTaskList.tasks.length,
+                  itemCount: displayList.length,
                   itemBuilder: (BuildContext _, int index) {
                     return TaskListItem(
                       mContext: context,
-                      task: plannedTaskList.tasks[index],
+                      task: displayList[index],
                       themeColor: plannedTaskList.themeColor,
                     );
                   },

@@ -79,6 +79,12 @@ class MyTheme {
     fontWeight: FontWeight.w400,
     color: MyTheme.whiteColor,
   );
+  static const TextStyle itemDeleteTextStyle = TextStyle(
+    decoration: TextDecoration.lineThrough,
+    fontSize: 18,
+    fontWeight: FontWeight.w400,
+    color: MyTheme.greyColor,
+  );
   static const TextStyle itemGreyTextStyle = TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.w400,

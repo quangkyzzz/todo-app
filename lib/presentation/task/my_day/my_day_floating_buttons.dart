@@ -8,24 +8,11 @@ import '../../items/task_list_item.dart';
 import '../../../themes.dart';
 import '../../components/add_floating_button.dart';
 
-class MyDayFloatingButtons extends StatefulWidget {
+class MyDayFloatingButtons extends StatelessWidget {
   final Color themeColor;
   final TaskList taskList;
   const MyDayFloatingButtons(
       {super.key, required this.taskList, required this.themeColor});
-
-  @override
-  State<MyDayFloatingButtons> createState() => _MyDayFloatingButtonsState();
-}
-
-class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
-  late TaskList taskList;
-
-  @override
-  void initState() {
-    taskList = widget.taskList;
-    super.initState();
-  }
 
   Future<void> onSuggestionsTap(BuildContext context, Color themeColor) async {
     await showModalBottomSheet(
@@ -182,13 +169,13 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
           decoration: BoxDecoration(
             shape: BoxShape.rectangle,
             borderRadius: BorderRadius.circular(18),
-            color: widget.themeColor,
+            color: themeColor,
           ),
           child: InkWell(
             splashColor: MyTheme.blackColor,
             customBorder: const CircleBorder(),
             onTap: () async {
-              await onSuggestionsTap(context, widget.themeColor);
+              await onSuggestionsTap(context, themeColor);
             },
             child: Ink(
               decoration: const BoxDecoration(shape: BoxShape.circle),
@@ -197,7 +184,7 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w400,
-                  color: (widget.themeColor == MyTheme.whiteColor)
+                  color: (themeColor == MyTheme.whiteColor)
                       ? MyTheme.blackColor
                       : MyTheme.whiteColor,
                 ),
@@ -209,7 +196,7 @@ class _MyDayFloatingButtonsState extends State<MyDayFloatingButtons> {
         AddFloatingButton(
           taskList: taskList,
           isAddToMyDay: true,
-          themeColor: widget.themeColor,
+          themeColor: themeColor,
         ),
       ],
     );

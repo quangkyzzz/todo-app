@@ -258,6 +258,7 @@ class GroupViewModel extends ChangeNotifier {
   void renameGroup(Group group, String newName) {
     groups.firstWhere((element) => (element.id == group.id)).groupName =
         newName;
+
     notifyListeners();
   }
 
