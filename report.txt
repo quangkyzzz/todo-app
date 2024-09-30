@@ -1,6 +1,11 @@
-Báo cáo 28/9
+Báo cáo 30/9
 Đã làm:
-    -   Sửa chức năng tìm kiếm sau khi xóa bỏ taskMapListViewModel
-    -   Sửa chức năng suggestion và thêm task vào các taskList đặc biệt
+    -   Chỉnh sửa cấu trúc code của bottom sheet thêm task
+    -   Chuyển đổi một vài widget về stateless widget
+    -   Chỉnh sửa nhỏ về giao diện.
+    -   Tìm hiểu sơ qua về nguyên lý SOLID
+Đang làm:
+    -   Sửa taskPage và taskViewModel
 Dự định làm:
+    -   Rà soát lại những lỗi tương tự.
     -   Dựa vào review để tiếp tục chỉnh sửa.
