@@ -140,9 +140,6 @@ class TaskListPopupMenu extends StatelessWidget {
           title: 'Duplicate list?',
           acceptText: 'Yes',
           onAccept: () {
-            context
-                .read<TaskListViewModel>()
-                .duplicateTaskList(taskListID: taskList.id);
             Navigator.of(context).pop();
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
@@ -185,11 +182,11 @@ class TaskListPopupMenu extends StatelessWidget {
       if (!context.mounted) return;
       if (isDelete) {
         Navigator.pop(context);
-        context.read<TaskListViewModel>().deleteTaskList(taskList: taskList);
+        //context.read<TaskListViewModel>().deleteTaskList(taskList: taskList);
       }
     } else {
       Navigator.pop(context);
-      context.read<TaskListViewModel>().deleteTaskList(taskList: taskList);
+      //context.read<TaskListViewModel>().deleteTaskList(taskList: taskList);
     }
   }
 

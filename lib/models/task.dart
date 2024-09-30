@@ -13,8 +13,7 @@ class Task {
   List<TaskStep> stepList;
   DateTime? dueDate;
   DateTime? remindTime;
-  String? repeatFrequency;
-  //TODO: fix file path to not null type
+  String repeatFrequency;
   List<String>? filePath;
   //TODO: fix note to not null type
   String? note;
@@ -31,7 +30,7 @@ class Task {
     this.dueDate,
     this.remindTime,
     this.filePath,
-    this.repeatFrequency,
+    this.repeatFrequency = '',
     this.note,
   }) : stepList = stepList ?? [];
 

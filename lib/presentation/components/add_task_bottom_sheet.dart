@@ -59,7 +59,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
         DateFormat('E, MMM d').format(newTask.dueDate ?? DateTime(2000));
     String remindHightLightText = DateFormat('h:mm a, MMM d')
         .format(newTask.remindTime ?? DateTime(2000));
-    String repeatHighLightText = (newTask.repeatFrequency ?? '').toLowerCase();
+    String repeatHighLightText = (newTask.repeatFrequency).toLowerCase();
     if (repeatHighLightText.split(' ').first == '1') {
       var temp = repeatHighLightText.split(' ')[1];
       repeatHighLightText = temp.substring(0, temp.length - 1);
@@ -210,8 +210,8 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                       onTapDisable: () {
                         setState(() {
                           newTask.remindTime = null;
-                          if (newTask.repeatFrequency != null) {
-                            newTask.repeatFrequency = null;
+                          if (newTask.repeatFrequency != '') {
+                            newTask.repeatFrequency = '';
                           }
                         });
                       },
@@ -222,7 +222,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                       themeColor: widget.themeColor,
                       icon: Icons.repeat_outlined,
                       text: 'Repeat',
-                      isHighLighted: (newTask.repeatFrequency != null),
+                      isHighLighted: (newTask.repeatFrequency != ''),
                       onTap: () async {
                         String? result =
                             await showCustomRepeatTimeDialog(context);
@@ -240,7 +240,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                       },
                       onTapDisable: () {
                         setState(() {
-                          newTask.repeatFrequency = null;
+                          newTask.repeatFrequency = '';
                         });
                       },
                     ),

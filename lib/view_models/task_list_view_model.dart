@@ -12,45 +12,6 @@ class TaskListViewModel extends ChangeNotifier {
     required this.currentTaskList,
   });
 
-  void deleteTaskList({
-    required TaskList taskList,
-  }) {
-    // TaskList tempTaskList = readTaskList(taskListID: taskList.id);
-    // for (Task task in tempTaskList.tasks) {
-    //   // ignore: unawaited_futures
-    //   BackGroundService.cancelTaskByID(id: task.id);
-    // }
-
-    // taskLists.remove(taskList);
-    // notifyListeners();
-  }
-
-  void duplicateTaskList({
-    required String taskListID,
-  }) {
-    // TaskListModel originTaskList = getTaskList(taskListID: taskListID);
-    // List<TaskModel> newTasks = originTaskList.tasks.map((task) {
-    //   TaskModel newTask = task.copyWith(
-    //     id: (DateTime.now().millisecondsSinceEpoch + Random().nextInt(500))
-    //         .toString(),
-    //     createDate: DateTime.now(),
-    //   );
-    //   newTask.remindTime = null;
-    //   newTask.repeatFrequency = null;
-    //   return newTask;
-    // }).toList();
-    // TaskListModel newTaskList = originTaskList.copyWith(
-    //   id: DateTime.now().millisecondsSinceEpoch.toString(),
-    //   listName: '${originTaskList.listName} copy',
-    //   tasks: newTasks,
-    // );
-    // newTaskList.sortByType = null;
-    // newTaskList.groupID = null;
-    // taskLists.add(newTaskList);
-
-    // notifyListeners();
-  }
-
   void renameList({
     required String newName,
   }) {
@@ -164,7 +125,7 @@ class TaskListViewModel extends ChangeNotifier {
     bool isImportant = false,
     DateTime? dueDate,
     DateTime? remindTime,
-    String? repeatFrequency,
+    String repeatFrequency = '',
   }) {
     Task task = Task(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
@@ -185,7 +146,7 @@ class TaskListViewModel extends ChangeNotifier {
       currentTaskList.tasks.add(task);
     }
     if (task.remindTime != null) {
-      if (task.repeatFrequency == null) {
+      if (task.repeatFrequency == '') {
         BackGroundService.executeScheduleBackGroundTask(
           task: task,
           taskList: getTaskListByID(task.taskListID),
@@ -197,7 +158,7 @@ class TaskListViewModel extends ChangeNotifier {
           task: task,
           taskList: getTaskListByID(task.taskListID),
           remindTime: task.remindTime!,
-          frequency: task.repeatFrequency!,
+          frequency: task.repeatFrequency,
           isPlaySound: settings.isPlaySoundOnComplete,
         );
       }

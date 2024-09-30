@@ -10,31 +10,6 @@ class TaskViewModel extends ChangeNotifier {
   Task currentTask;
   TaskViewModel({required this.currentTask});
 
-  void createTask({
-    required String taskListID,
-    required String taskName,
-    required bool isCompleted,
-    bool isOnMyDay = false,
-    bool isImportant = false,
-  }) {
-    // Task task = Task(
-    //   id: DateTime.now().millisecondsSinceEpoch.toString(),
-    //   title: taskName,
-    //   isCompleted: isCompleted,
-    //   isImportant: isImportant,
-    //   isOnMyDay: isOnMyDay,
-    //   createDate: DateTime.now(),
-    // );
-    // TaskList? taskList = getTaskList(taskListID: taskListID);
-    // if (settingsProvider.settings.isAddNewTaskOnTop) {
-    //   taskList.tasks.insert(0, task);
-    // } else {
-    //   taskList.tasks.add(task);
-    // }
-
-    notifyListeners();
-  }
-
   void updateTaskWith({
     required String taskID,
     required Settings settings,
@@ -53,12 +28,13 @@ class TaskViewModel extends ChangeNotifier {
     if ((title != null) && (currentTask.title != title)) {
       currentTask.title = title;
       BackGroundService.cancelTaskByID(id: taskID);
-      if ((repeatFrequency == null) && (remindTime != null)) {
+      if ((currentTask.repeatFrequency == '') &&
+          (currentTask.remindTime != null)) {
         BackGroundService.executeScheduleBackGroundTask(
           task: currentTask,
           taskList: taskList,
           isPlaySound: settings.isPlaySoundOnComplete,
-          remindTime: remindTime,
+          remindTime: currentTask.remindTime!,
         );
       } else if (remindTime != null) {
         BackGroundService.executePeriodicBackGroundTask(
@@ -88,6 +64,7 @@ class TaskViewModel extends ChangeNotifier {
       }
     }
     if (remindTime != null) {
+      //TODO: fix this with repeat already set
       currentTask.remindTime = remindTime;
       BackGroundService.cancelTaskByID(id: currentTask.id);
       BackGroundService.executeScheduleBackGroundTask(
@@ -139,10 +116,10 @@ class TaskViewModel extends ChangeNotifier {
     if (remindTime) {
       currentTask.remindTime = null;
       BackGroundService.cancelTaskByID(id: currentTask.id);
-      currentTask.repeatFrequency = null;
+      currentTask.repeatFrequency = '';
     }
     if (repeatFrequency) {
-      currentTask.repeatFrequency = null;
+      currentTask.repeatFrequency = '';
       BackGroundService.cancelTaskByID(id: currentTask.id);
       BackGroundService.executeScheduleBackGroundTask(
         task: currentTask,
@@ -157,50 +134,10 @@ class TaskViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateTask({
-    required String taskID,
-    required TaskList taskList,
-    required Task newTask,
-    required Settings settings,
-  }) {
-    if (currentTask.title != newTask.title) {
-      BackGroundService.cancelTaskByID(id: taskID);
-      if ((newTask.repeatFrequency == null) && (newTask.remindTime != null)) {
-        BackGroundService.executeScheduleBackGroundTask(
-          task: newTask,
-          taskList: taskList,
-          isPlaySound: settings.isPlaySoundOnComplete,
-          remindTime: newTask.remindTime!,
-        );
-      } else if (newTask.remindTime != null) {
-        BackGroundService.executePeriodicBackGroundTask(
-          task: newTask,
-          taskList: taskList,
-          remindTime: newTask.remindTime!,
-          frequency: newTask.repeatFrequency!,
-          isPlaySound: settings.isPlaySoundOnComplete,
-        );
-      }
-    }
-    if (currentTask.note == '') currentTask.note = null;
-
-    notifyListeners();
-  }
-
   void deleteTask() {
-    // TaskList? taskList = taskLists.firstWhereOrNull(
-    //   (element) => (element.id == taskListID),
-    // );
-    // if (taskList != null) {
-    //   taskList.tasks.removeWhere((element) {
-    //     if ((element.id == taskID) && (element.remindTime != null)) {
-    //       // ignore: discarded_futures
-    //       BackGroundService.cancelTaskByID(id: taskID);
-    //     }
-    //     return (element.id == taskID);
-    //   });
-    // }
-
+    if (currentTask.remindTime != null) {
+      BackGroundService.cancelTaskByID(id: currentTask.id);
+    }
     notifyListeners();
   }
 }

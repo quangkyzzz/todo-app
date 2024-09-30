@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../models/task_list.dart';
@@ -8,7 +7,6 @@ import '../../components/add_floating_button.dart';
 import '../../lists/completed_list.dart';
 import '../../lists/incomplete_list.dart';
 import '../../components/task_list_popup_menu.dart';
-
 import 'change_sort_type_button.dart';
 
 class TaskListPage extends StatefulWidget {

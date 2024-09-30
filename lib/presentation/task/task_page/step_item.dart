@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../../../models/task_step.dart';
-import '../../../view_models/task_view_model.dart';
 import '../../items/popup_item.dart';
 import '../../../themes.dart';
 
-class StepItem extends StatefulWidget {
+class StepItem extends StatelessWidget {
   final TaskStep step;
   final String taskListID;
   final Function callBack;
@@ -17,32 +15,9 @@ class StepItem extends StatefulWidget {
   });
 
   @override
-  State<StepItem> createState() => _StepItemState();
-}
-
-class _StepItemState extends State<StepItem> {
-  late final TaskViewModel taskViewModel;
-  late TaskStep step;
-  late TextEditingController _controller;
-
-  @override
-  void initState() {
-    taskViewModel = Provider.of<TaskViewModel>(context, listen: false);
-    step = widget.step;
-    _controller = TextEditingController();
-    _controller.text = widget.step.stepName;
-    super.initState();
-  }
-
-  @override
-  void didUpdateWidget(covariant StepItem oldWidget) {
-    _controller.text = widget.step.stepName;
-    step = widget.step;
-    super.didUpdateWidget(oldWidget);
-  }
-
-  @override
   Widget build(BuildContext context) {
+    TextEditingController controller =
+        TextEditingController(text: step.stepName);
     return Row(
       children: [
         Checkbox(
@@ -50,18 +25,15 @@ class _StepItemState extends State<StepItem> {
           shape: const CircleBorder(),
           value: step.isCompleted,
           onChanged: (bool? value) {
-            setState(() {
-              step.isCompleted = value!;
-            });
-            widget.callBack(step);
+            callBack(step.copyWith(isCompleted: value));
           },
         ),
         Expanded(
           child: TextField(
-            controller: _controller,
+            controller: controller,
             onSubmitted: (value) {
               step.stepName = value;
-              widget.callBack(step);
+              callBack(step.copyWith(stepName: value));
             },
           ),
         ),
@@ -69,12 +41,14 @@ class _StepItemState extends State<StepItem> {
           return [
             PopupMenuItem(
               onTap: () {
-                widget.callBack(step, isDelete: true);
-                taskViewModel.createTask(
-                  taskListID: widget.taskListID,
-                  taskName: step.stepName,
-                  isCompleted: step.isCompleted,
-                );
+                callBack(step, isDelete: true);
+                //TODO: implement this
+
+                // taskViewModel.createTask(
+                //   taskListID: taskListID,
+                //   taskName: step.stepName,
+                //   isCompleted: step.isCompleted,
+                // );
               },
               child: const CustomPopupItem(
                 text: 'Promote to task',
@@ -83,7 +57,7 @@ class _StepItemState extends State<StepItem> {
             ),
             PopupMenuItem(
               onTap: () {
-                widget.callBack(step, isDelete: true);
+                callBack(step, isDelete: true);
               },
               child: const CustomPopupItem(
                 text: 'Delete step',

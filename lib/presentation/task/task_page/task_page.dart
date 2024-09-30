@@ -298,7 +298,7 @@ class _TaskPageState extends State<TaskPage> {
   @override
   Widget build(BuildContext context) {
     task = context.watch<TaskViewModel>().currentTask;
-    String repeatActiveText = (task.repeatFrequency ?? '').toLowerCase();
+    String repeatActiveText = (task.repeatFrequency).toLowerCase();
     if (repeatActiveText.split(' ').first == '1') {
       var temp = repeatActiveText.split(' ')[1];
       repeatActiveText = temp.substring(0, temp.length - 1);
@@ -400,7 +400,7 @@ class _TaskPageState extends State<TaskPage> {
                   '${DateFormat('E, MMM d').format(task.dueDate ?? DateTime(2000))}',
             ),
             TaskPageItem(
-              isActive: (task.repeatFrequency != null),
+              isActive: (task.repeatFrequency != ''),
               icon: Icons.repeat_outlined,
               key: key,
               text: 'Repeat',
