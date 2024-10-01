@@ -18,7 +18,6 @@ class ImportantPage extends StatefulWidget {
 
 class _TaskListPageState extends State<ImportantPage> {
   late TaskList importantTaskList;
-  bool isExpanded = false;
 
   @override
   void initState() {

@@ -64,15 +64,25 @@ class TaskViewModel extends ChangeNotifier {
       }
     }
     if (remindTime != null) {
-      //TODO: fix this with repeat already set
       currentTask.remindTime = remindTime;
-      BackGroundService.cancelTaskByID(id: currentTask.id);
-      BackGroundService.executeScheduleBackGroundTask(
-        task: currentTask,
-        taskList: taskList,
-        isPlaySound: settings.isPlaySoundOnComplete,
-        remindTime: currentTask.remindTime!,
-      );
+      if (currentTask.repeatFrequency == '') {
+        BackGroundService.cancelTaskByID(id: currentTask.id);
+        BackGroundService.executeScheduleBackGroundTask(
+          task: currentTask,
+          taskList: taskList,
+          isPlaySound: settings.isPlaySoundOnComplete,
+          remindTime: currentTask.remindTime!,
+        );
+      } else {
+        BackGroundService.cancelTaskByID(id: currentTask.id);
+        BackGroundService.executePeriodicBackGroundTask(
+          task: currentTask,
+          taskList: taskList,
+          remindTime: currentTask.remindTime!,
+          frequency: currentTask.repeatFrequency,
+          isPlaySound: settings.isPlaySoundOnComplete,
+        );
+      }
     }
     if (repeatFrequency != null) {
       currentTask.repeatFrequency = repeatFrequency;

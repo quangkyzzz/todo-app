@@ -19,8 +19,6 @@ class MyDayPage extends StatefulWidget {
 
 class _MyDayPageState extends State<MyDayPage> {
   late TaskList myDayTaskList;
-  bool isExpanded = true;
-
   @override
   void initState() {
     context.read<TaskListViewModel>().getOnMyDayTask();
