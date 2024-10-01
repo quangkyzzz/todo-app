@@ -38,7 +38,7 @@ class TaskListItem extends StatelessWidget {
         (task.remindTime == null) &&
         (task.repeatFrequency == '') &&
         (task.filePath.isEmpty) &&
-        (task.note == null));
+        (task.note == ''));
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
@@ -207,7 +207,7 @@ class TaskListItem extends StatelessWidget {
                             }
                           }),
                           Builder(builder: (context) {
-                            if (task.note != null) {
+                            if (task.note != '') {
                               bool tempFirstIcon = isFirstIcon;
                               isFirstIcon = false;
                               return ItemBottomIcon(

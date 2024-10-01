@@ -508,7 +508,7 @@ class AddAndEditNoteButton extends StatelessWidget {
     ScrollController scrollController = ScrollController();
     return Padding(
       padding: const EdgeInsets.all(16),
-      child: (task.note != null)
+      child: (task.note != '')
           ? InkWell(
               onTap: () async {
                 await Navigator.of(context).pushNamed(
@@ -531,7 +531,7 @@ class AddAndEditNoteButton extends StatelessWidget {
                     controller: scrollController,
                     padding: const EdgeInsets.only(right: 8),
                     child: Text(
-                      context.watch<TaskViewModel>().currentTask.note!,
+                      context.watch<TaskViewModel>().currentTask.note,
                       maxLines: null,
                       style: MyTheme.itemSmallTextStyle,
                     ),

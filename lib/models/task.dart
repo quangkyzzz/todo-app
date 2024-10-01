@@ -14,10 +14,8 @@ class Task {
   DateTime? dueDate;
   DateTime? remindTime;
   String repeatFrequency;
-  //TODO: fix filePath
   List<String> filePath;
-  //TODO: fix note to not null type
-  String? note;
+  String note;
 
   Task({
     required this.id,
@@ -32,7 +30,7 @@ class Task {
     this.remindTime,
     List<String>? filePath,
     this.repeatFrequency = '',
-    this.note,
+    this.note = '',
   })  : stepList = stepList ?? [],
         filePath = filePath ?? [];
 
@@ -124,7 +122,7 @@ class Task {
       remindTime: map['remindTime'],
       repeatFrequency: map['repeatFrequency'] ?? '',
       filePath: map['filePath'] ?? [],
-      note: map['note'],
+      note: map['note'] ?? '',
     );
   }
 }
