@@ -221,11 +221,12 @@ class _TaskPageState extends State<TaskPage> {
       allowMultiple: true,
     );
     if (result != null) {
+      task.filePath.addAll(result.files.map((file) => file.path!).toList());
       taskViewModel.updateTaskWith(
         taskID: task.id,
         settings: settingsProvider.settings,
         taskList: taskListViewModel.currentTaskList,
-        filePath: result.files.map((file) => file.path!).toList(),
+        filePath: task.filePath,
       );
     }
     setState(() {
@@ -413,25 +414,26 @@ class _TaskPageState extends State<TaskPage> {
             const SizedBox(height: 6),
             //////////////////////////
             //Add and edit file button
-            (task.filePath != null)
+            (task.filePath.isNotEmpty)
                 ? ListView.builder(
                     shrinkWrap: true,
                     physics: const ClampingScrollPhysics(),
-                    itemCount: task.filePath!.length,
+                    itemCount: task.filePath.length,
                     itemBuilder: (BuildContext context, int index) {
-                      String path = task.filePath![index];
+                      String path = task.filePath[index];
                       return FileItem(
                         filePath: path,
                         onTap: () async {
                           await OpenFilex.open(path);
                         },
                         onClose: () {
-                          setState(() {
-                            task.filePath!.remove(path);
-                          });
-                          if (task.filePath!.isEmpty) {
-                            task.filePath = null;
-                          }
+                          task.filePath.remove(path);
+                          taskViewModel.updateTaskWith(
+                            taskID: task.id,
+                            settings: settingsProvider.settings,
+                            taskList: taskListViewModel.currentTaskList,
+                            filePath: task.filePath,
+                          );
                         },
                       );
                     },

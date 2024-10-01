@@ -101,8 +101,7 @@ class TaskViewModel extends ChangeNotifier {
       );
     }
     if (filePath != null) {
-      currentTask.filePath ??= [];
-      currentTask.filePath!.addAll(filePath);
+      currentTask.filePath = filePath;
     }
     currentTask.note = note ?? currentTask.note;
 

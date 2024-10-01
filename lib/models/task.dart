@@ -15,7 +15,7 @@ class Task {
   DateTime? remindTime;
   String repeatFrequency;
   //TODO: fix filePath
-  List<String>? filePath;
+  List<String> filePath;
   //TODO: fix note to not null type
   String? note;
 
@@ -30,10 +30,11 @@ class Task {
     List<TaskStep>? stepList,
     this.dueDate,
     this.remindTime,
-    this.filePath,
+    List<String>? filePath,
     this.repeatFrequency = '',
     this.note,
-  }) : stepList = stepList ?? [];
+  })  : stepList = stepList ?? [],
+        filePath = filePath ?? [];
 
   void copyFrom({required Task copyTask}) {
     title = copyTask.title;
@@ -118,11 +119,11 @@ class Task {
       isImportant: map['isImportant'] ?? false,
       isOnMyDay: map['isOnMyDay'] ?? false,
       createDate: map['createDate'] ?? DateTime.now(),
-      stepList: map['stepList'],
+      stepList: map['stepList'] ?? [],
       dueDate: map['dueDate'],
       remindTime: map['remindTime'],
-      repeatFrequency: map['repeatFrequency'],
-      filePath: map['filePath'],
+      repeatFrequency: map['repeatFrequency'] ?? '',
+      filePath: map['filePath'] ?? [],
       note: map['note'],
     );
   }
