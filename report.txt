@@ -1,11 +1,10 @@
-Báo cáo 30/9
+Báo cáo 1/10
 Đã làm:
-    -   Chỉnh sửa cấu trúc code của bottom sheet thêm task
-    -   Chuyển đổi một vài widget về stateless widget
-    -   Chỉnh sửa nhỏ về giao diện.
-    -   Tìm hiểu sơ qua về nguyên lý SOLID
+    -   Hoàn thành chỉnh sửa taskPage và taskViewModel
+    -   Sửa kiểu biến của các thuộc tính trong taskModel và các hàm liên quan
 Đang làm:
-    -   Sửa taskPage và taskViewModel
+    -   Ra soát lại các lỗi.
 Dự định làm:
-    -   Rà soát lại những lỗi tương tự.
     -   Dựa vào review để tiếp tục chỉnh sửa.
+
+//about: create task function unuse
