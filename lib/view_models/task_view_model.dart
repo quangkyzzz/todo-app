@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../models/settings.dart';
 import '../models/task.dart';
 import '../models/task_list.dart';
@@ -116,9 +115,6 @@ class TaskViewModel extends ChangeNotifier {
     required Settings settings,
     bool dueDate = false,
     bool remindTime = false,
-    bool repeatFrequency = false,
-    bool filePath = false,
-    bool note = false,
   }) {
     if (dueDate) {
       currentTask.dueDate = null;
@@ -128,18 +124,6 @@ class TaskViewModel extends ChangeNotifier {
       BackGroundService.cancelTaskByID(id: currentTask.id);
       currentTask.repeatFrequency = '';
     }
-    if (repeatFrequency) {
-      currentTask.repeatFrequency = '';
-      BackGroundService.cancelTaskByID(id: currentTask.id);
-      BackGroundService.executeScheduleBackGroundTask(
-        task: currentTask,
-        taskList: taskList,
-        isPlaySound: settings.isPlaySoundOnComplete,
-        remindTime: currentTask.remindTime!,
-      );
-    }
-    if (filePath) currentTask.filePath = null;
-    if (note) currentTask.filePath = null;
 
     notifyListeners();
   }
