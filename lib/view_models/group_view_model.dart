@@ -123,7 +123,6 @@ class GroupViewModel extends ChangeNotifier {
         TaskList(
           id: '333',
           listName: 'group 1 list 1',
-          groupID: '111',
           tasks: [
             Task(
               id: '6',
@@ -160,7 +159,6 @@ class GroupViewModel extends ChangeNotifier {
         TaskList(
           id: '444',
           listName: 'group 1 list 2',
-          groupID: '111',
           tasks: [
             Task(
               id: '9',
@@ -203,7 +201,6 @@ class GroupViewModel extends ChangeNotifier {
         TaskList(
           id: '555',
           listName: 'group 2 list 1',
-          groupID: '222',
           tasks: [
             Task(
               id: '12',
@@ -220,7 +217,6 @@ class GroupViewModel extends ChangeNotifier {
         TaskList(
           id: '666',
           listName: 'group 2 list 2',
-          groupID: '222',
         ),
       ],
     ),

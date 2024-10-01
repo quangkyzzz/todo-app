@@ -34,7 +34,6 @@ class TaskListViewModel extends ChangeNotifier {
   void updateTaskListWith({
     required Settings settings,
     String? listName,
-    String? groupID,
     String? backgroundImage,
     int? defaultImage,
     Map<String, dynamic>? sortByType,
@@ -42,7 +41,6 @@ class TaskListViewModel extends ChangeNotifier {
     Task? newTask,
   }) {
     currentTaskList.listName = listName ?? currentTaskList.listName;
-    currentTaskList.groupID = groupID ?? currentTaskList.groupID;
     currentTaskList.backgroundImage =
         backgroundImage ?? currentTaskList.backgroundImage;
     currentTaskList.defaultImage = defaultImage ?? currentTaskList.defaultImage;

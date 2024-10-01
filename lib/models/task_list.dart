@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 import 'task.dart';
 import '../themes.dart';
 
-//TODO: delete groupID
 class TaskList {
   final String id;
   String listName;
-  String? groupID;
   String? backgroundImage;
   int defaultImage;
   Map<String, dynamic>? sortByType;
@@ -17,7 +15,6 @@ class TaskList {
   TaskList({
     required this.id,
     required this.listName,
-    this.groupID,
     this.backgroundImage,
     this.defaultImage = -1,
     this.themeColor = MyTheme.blueColor,
@@ -28,7 +25,6 @@ class TaskList {
   TaskList copyWith({
     String? id,
     String? listName,
-    String? groupID,
     String? backgroundImage,
     int? defaultImage,
     Map<String, String>? sortByType,
@@ -46,7 +42,6 @@ class TaskList {
     return TaskList(
       id: id ?? this.id,
       listName: listName ?? this.listName,
-      groupID: groupID ?? this.groupID,
       backgroundImage: backgroundImage ?? this.backgroundImage,
       defaultImage: defaultImage ?? this.defaultImage,
       sortByType: sortByType ?? this.sortByType,
@@ -57,7 +52,6 @@ class TaskList {
 
   void copyFrom({required TaskList copyTaskList}) {
     listName = copyTaskList.listName;
-    groupID = copyTaskList.groupID;
     backgroundImage = copyTaskList.backgroundImage;
     defaultImage = copyTaskList.defaultImage;
     sortByType = copyTaskList.sortByType;
@@ -74,7 +68,6 @@ class TaskList {
     result.addAll({'defaultImage': defaultImage});
     result.addAll({'sortByType': sortByType});
     result.addAll({'themeColor': themeColor});
-    result.addAll({'groupID': groupID});
     result.addAll({'taskList': tasks});
 
     return result;
@@ -88,7 +81,6 @@ class TaskList {
       defaultImage: map['defaultImage'],
       sortByType: map['sortByType'],
       themeColor: map['themeColor'],
-      groupID: map['groupID'],
       tasks: map['taskList'] ?? [],
     );
   }

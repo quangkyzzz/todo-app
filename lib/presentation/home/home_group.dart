@@ -87,7 +87,6 @@ class _HomeGroupState extends State<HomeGroup> {
 class HomeGroupTrailing extends StatelessWidget {
   final BuildContext context;
   final Group group;
-
   final bool isExpanded;
   const HomeGroupTrailing({
     super.key,
@@ -139,7 +138,7 @@ class HomeGroupTrailing extends StatelessWidget {
                         List<TaskList> oldTaskLists = group.taskLists;
                         List<TaskList>? newTaskLists = await showAddListDialog(
                           context: context,
-                          groupID: group.id,
+                          group: group,
                         );
                         if (!context.mounted) return;
                         if (newTaskLists != null) {
@@ -206,14 +205,13 @@ class HomeGroupTrailing extends StatelessWidget {
 
 Future<List<TaskList>?> showAddListDialog({
   required BuildContext context,
-  required String groupID,
+  required Group group,
 }) {
   return showDialog(
     context: context,
     builder: (_) {
       List<TaskList> checkedTaskList = [];
       List<TaskList> allTaskList = [];
-      Group group = context.read<GroupViewModel>().readGroupByID(groupID);
 
       checkedTaskList.addAll(group.taskLists);
       allTaskList.addAll(checkedTaskList);
