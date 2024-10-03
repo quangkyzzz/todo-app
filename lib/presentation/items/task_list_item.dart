@@ -70,10 +70,10 @@ class TaskListItem extends StatelessWidget {
               shape: const CircleBorder(),
               value: task.isCompleted,
               onChanged: (bool? value) {
-                Task newTask = task.copyWith(isCompleted: value);
+                Task updatedTask = task.copyWith(isCompleted: value);
                 context.read<TaskListViewModel>().updateTaskListWith(
                       settings: context.read<SettingsProvider>().settings,
-                      newTask: newTask,
+                      updatedTask: updatedTask,
                     );
               },
             ),
@@ -234,7 +234,7 @@ class TaskListItem extends StatelessWidget {
                         context.read<TaskListViewModel>().updateTaskListWith(
                               settings:
                                   context.read<SettingsProvider>().settings,
-                              newTask: newTask,
+                              updatedTask: newTask,
                             );
                       },
                       icon: (task.isImportant)

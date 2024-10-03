@@ -89,7 +89,7 @@ class _TaskPageState extends State<TaskPage> {
         taskID: task.id,
         taskList: taskListViewModel.currentTaskList,
         settings: settingsProvider.settings,
-        remindTime: true,
+        setRemindTime: true,
       );
     }
   }
@@ -168,10 +168,11 @@ class _TaskPageState extends State<TaskPage> {
         ],
       );
     } else {
-      taskViewModel.updateTaskWithNull(
+      taskViewModel.updateTaskWith(
         taskID: task.id,
         taskList: taskListViewModel.currentTaskList,
         settings: settingsProvider.settings,
+        repeatFrequency: '',
       );
     }
   }
@@ -208,7 +209,7 @@ class _TaskPageState extends State<TaskPage> {
         taskID: task.id,
         taskList: taskListViewModel.currentTaskList,
         settings: settingsProvider.settings,
-        dueDate: true,
+        setDueDate: true,
       );
     }
   }

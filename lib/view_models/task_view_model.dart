@@ -112,13 +112,13 @@ class TaskViewModel extends ChangeNotifier {
     required String taskID,
     required TaskList taskList,
     required Settings settings,
-    bool dueDate = false,
-    bool remindTime = false,
+    bool setDueDate = false,
+    bool setRemindTime = false,
   }) {
-    if (dueDate) {
+    if (setDueDate) {
       currentTask.dueDate = null;
     }
-    if (remindTime) {
+    if (setRemindTime) {
       currentTask.remindTime = null;
       BackGroundService.cancelTaskByID(id: currentTask.id);
       currentTask.repeatFrequency = '';

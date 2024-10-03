@@ -138,10 +138,8 @@ class BackGroundService {
 
   static void cancelTaskByID({required String id}) {
     if (id.length > 10) {
-      print('did this');
       NotificationService.cancelNotification(int.parse(id.substring(6)));
     } else {
-      print('did this 2');
       NotificationService.cancelNotification(int.parse(id));
     }
     Workmanager().cancelByUniqueName(id);

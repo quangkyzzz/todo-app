@@ -19,14 +19,6 @@ class TaskListViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateTaskList({
-    required TaskList newTaskList,
-  }) {
-    currentTaskList.copyFrom(copyTaskList: newTaskList);
-
-    notifyListeners();
-  }
-
   TaskList getTaskListByID(String taskListID) {
     return TaskList(id: 'test', listName: 'For test purposse task list');
   }
@@ -37,24 +29,39 @@ class TaskListViewModel extends ChangeNotifier {
     String? backgroundImage,
     int? defaultImage,
     Map<String, dynamic>? sortByType,
-    Task? newTask,
+    Color? themeColor,
+    Task? updatedTask,
   }) {
     currentTaskList.listName = listName ?? currentTaskList.listName;
     currentTaskList.backgroundImage =
         backgroundImage ?? currentTaskList.backgroundImage;
     currentTaskList.defaultImage = defaultImage ?? currentTaskList.defaultImage;
     currentTaskList.sortByType = sortByType ?? currentTaskList.sortByType;
-    if (newTask != null) {
+    currentTaskList.themeColor = themeColor ?? currentTaskList.themeColor;
+    if (updatedTask != null) {
       Task oldTask = currentTaskList.tasks
-          .firstWhere((element) => (element.id == newTask.id));
+          .firstWhere((element) => (element.id == updatedTask.id));
       if ((settings.isMoveStarTaskToTop) &&
-          (newTask.isImportant) &&
+          (updatedTask.isImportant) &&
           (!oldTask.isImportant)) {
         currentTaskList.tasks.remove(oldTask);
-        currentTaskList.tasks.insert(0, newTask);
+        currentTaskList.tasks.insert(0, updatedTask);
       } else {
-        oldTask.copyFrom(copyTask: newTask);
+        oldTask.copyFrom(copyTask: updatedTask);
       }
+    }
+    notifyListeners();
+  }
+
+  void updateTaskListWithNull({
+    bool setBackGroundImage = false,
+    bool setSortByType = false,
+  }) {
+    if (setBackGroundImage) {
+      currentTaskList.backgroundImage = null;
+    }
+    if (setSortByType) {
+      currentTaskList.sortByType = null;
     }
     notifyListeners();
   }

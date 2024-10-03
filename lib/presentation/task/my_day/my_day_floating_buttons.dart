@@ -24,7 +24,7 @@ class MyDayFloatingButtons extends StatelessWidget {
             taskListViewModel.readOlderNotInMyDayTask();
         return DraggableScrollableSheet(
           snap: true,
-          minChildSize: 0.2,
+          minChildSize: 0.1,
           snapSizes: const [0.3, 0.7, 0.8],
           expand: false,
           initialChildSize: 0.3,
@@ -126,8 +126,7 @@ class MyDayFloatingButtons extends StatelessWidget {
                                         context
                                             .read<TaskListViewModel>()
                                             .addMultipleTask(
-                                          tasks: [updateTask],
-                                        );
+                                                tasks: [updateTask]);
                                       },
                                     );
                                   },
