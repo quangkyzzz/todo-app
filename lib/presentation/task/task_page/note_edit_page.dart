@@ -49,7 +49,6 @@ class _NoteEditPageState extends State<NoteEditPage> {
           IconButton(
             onPressed: () {
               taskViewModel.updateTaskWith(
-                taskID: widget.task.id,
                 settings: context.read<SettingsProvider>().settings,
                 taskList: widget.taskList,
                 note: _controller.text,

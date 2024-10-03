@@ -33,7 +33,7 @@ class HomeItem extends StatelessWidget {
             ),
             const SizedBox(width: 8),
             Text(
-              taskList.listName,
+              taskList.title,
               style: MyTheme.itemTextStyle,
             ),
             const Spacer(

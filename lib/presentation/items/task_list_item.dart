@@ -8,7 +8,6 @@ import '../../routes.dart';
 import '../../models/task.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
-
 import '../../view_models/task_list_view_model.dart';
 
 class TaskListItem extends StatelessWidget {

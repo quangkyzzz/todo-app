@@ -15,24 +15,28 @@ class TaskListViewModel extends ChangeNotifier {
   void renameList({
     required String newName,
   }) {
-    currentTaskList.listName = newName;
+    currentTaskList.title = newName;
     notifyListeners();
   }
 
   TaskList getTaskListByID(String taskListID) {
-    return TaskList(id: 'test', listName: 'For test purposse task list');
+    return TaskList(id: 'test', title: 'For test purposse task list');
+  }
+
+  void updateTaskList({required}) {
+//TODO: implement this
   }
 
   void updateTaskListWith({
     required Settings settings,
-    String? listName,
+    String? title,
     String? backgroundImage,
     int? defaultImage,
     Map<String, dynamic>? sortByType,
     Color? themeColor,
     Task? updatedTask,
   }) {
-    currentTaskList.listName = listName ?? currentTaskList.listName;
+    currentTaskList.title = title ?? currentTaskList.title;
     currentTaskList.backgroundImage =
         backgroundImage ?? currentTaskList.backgroundImage;
     currentTaskList.defaultImage = defaultImage ?? currentTaskList.defaultImage;
@@ -156,15 +160,17 @@ class TaskListViewModel extends ChangeNotifier {
     if (task.remindTime != null) {
       if (task.repeatFrequency == '') {
         BackGroundService.executeScheduleBackGroundTask(
-          task: task,
-          taskList: getTaskListByID(task.taskListID),
+          taskID: task.id,
+          taskTitle: task.title,
+          taskListTitle: currentTaskList.title,
           isPlaySound: settings.isPlaySoundOnComplete,
           remindTime: task.remindTime!,
         );
       } else {
         BackGroundService.executePeriodicBackGroundTask(
-          task: task,
-          taskList: getTaskListByID(task.taskListID),
+          taskTitle: task.title,
+          taskID: task.id,
+          taskListTitle: currentTaskList.title,
           remindTime: task.remindTime!,
           frequency: task.repeatFrequency,
           isPlaySound: settings.isPlaySoundOnComplete,

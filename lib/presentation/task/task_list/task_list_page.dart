@@ -51,7 +51,7 @@ class _TaskListPageState extends State<TaskListPage> {
             title: Consumer<TaskListViewModel>(
                 builder: (context, taskListViewModel, child) {
               return Text(
-                taskListViewModel.currentTaskList.listName,
+                taskListViewModel.currentTaskList.title,
                 style: TextStyle(
                   fontSize: 24,
                   color: taskListViewModel.currentTaskList.themeColor,

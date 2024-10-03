@@ -13,7 +13,7 @@ class GroupViewModel extends ChangeNotifier {
       taskLists: [
         TaskList(
           id: '1',
-          listName: 'Tasks',
+          title: 'Tasks',
           tasks: [
             Task(
               id: '2',
@@ -62,17 +62,17 @@ class GroupViewModel extends ChangeNotifier {
         ),
         TaskList(
           id: '2',
-          listName: 'My Day',
+          title: 'My Day',
           themeColor: MyTheme.whiteColor,
           backgroundImage: 'assets/backgrounds/bg_my_day.jpg',
           defaultImage: 0,
         ),
-        TaskList(id: '3', listName: 'Important', themeColor: MyTheme.pinkColor),
-        TaskList(id: '4', listName: 'Planned', themeColor: MyTheme.redColor),
-        TaskList(id: '7', listName: 'Search task list'),
+        TaskList(id: '3', title: 'Important', themeColor: MyTheme.pinkColor),
+        TaskList(id: '4', title: 'Planned', themeColor: MyTheme.redColor),
+        TaskList(id: '7', title: 'Search task list'),
         TaskList(
           id: '222',
-          listName: 'personal list 1',
+          title: 'personal list 1',
           tasks: [
             Task(
                 id: '3',
@@ -112,7 +112,7 @@ class GroupViewModel extends ChangeNotifier {
       taskLists: [
         TaskList(
           id: '333',
-          listName: 'group 1 list 1',
+          title: 'group 1 list 1',
           tasks: [
             Task(
               id: '6',
@@ -148,7 +148,7 @@ class GroupViewModel extends ChangeNotifier {
         ),
         TaskList(
           id: '444',
-          listName: 'group 1 list 2',
+          title: 'group 1 list 2',
           tasks: [
             Task(
               id: '9',
@@ -190,7 +190,7 @@ class GroupViewModel extends ChangeNotifier {
       taskLists: [
         TaskList(
           id: '555',
-          listName: 'group 2 list 1',
+          title: 'group 2 list 1',
           tasks: [
             Task(
               id: '12',
@@ -206,7 +206,7 @@ class GroupViewModel extends ChangeNotifier {
         ),
         TaskList(
           id: '666',
-          listName: 'group 2 list 2',
+          title: 'group 2 list 2',
         ),
       ],
     ),
@@ -229,7 +229,7 @@ class GroupViewModel extends ChangeNotifier {
   }) {
     TaskList newTaskList = TaskList(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
-      listName: name,
+      title: name,
     );
     groups[0].taskLists.add(newTaskList);
     notifyListeners();

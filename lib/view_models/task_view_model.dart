@@ -5,12 +5,12 @@ import '../models/task_list.dart';
 import '../models/task_step.dart';
 import '../service/background_service.dart';
 
+//TODO: fix update function
 class TaskViewModel extends ChangeNotifier {
   Task currentTask;
   TaskViewModel({required this.currentTask});
 
   void updateTaskWith({
-    required String taskID,
     required Settings settings,
     required TaskList taskList,
     String? title,
@@ -26,19 +26,21 @@ class TaskViewModel extends ChangeNotifier {
   }) {
     if ((title != null) && (currentTask.title != title)) {
       currentTask.title = title;
-      BackGroundService.cancelTaskByID(id: taskID);
+      BackGroundService.cancelTaskByID(id: currentTask.id);
       if ((currentTask.repeatFrequency == '') &&
           (currentTask.remindTime != null)) {
         BackGroundService.executeScheduleBackGroundTask(
-          task: currentTask,
-          taskList: taskList,
+          taskTitle: currentTask.title,
+          taskID: currentTask.id,
+          taskListTitle: taskList.title,
           isPlaySound: settings.isPlaySoundOnComplete,
           remindTime: currentTask.remindTime!,
         );
       } else if (remindTime != null) {
         BackGroundService.executePeriodicBackGroundTask(
-          task: currentTask,
-          taskList: taskList,
+          taskTitle: currentTask.title,
+          taskID: currentTask.id,
+          taskListTitle: taskList.title,
           remindTime: remindTime,
           frequency: repeatFrequency!,
           isPlaySound: settings.isPlaySoundOnComplete,
@@ -67,16 +69,18 @@ class TaskViewModel extends ChangeNotifier {
       if (currentTask.repeatFrequency == '') {
         BackGroundService.cancelTaskByID(id: currentTask.id);
         BackGroundService.executeScheduleBackGroundTask(
-          task: currentTask,
-          taskList: taskList,
+          taskTitle: currentTask.title,
+          taskID: currentTask.id,
+          taskListTitle: taskList.title,
           isPlaySound: settings.isPlaySoundOnComplete,
           remindTime: currentTask.remindTime!,
         );
       } else {
         BackGroundService.cancelTaskByID(id: currentTask.id);
         BackGroundService.executePeriodicBackGroundTask(
-          task: currentTask,
-          taskList: taskList,
+          taskTitle: currentTask.title,
+          taskID: currentTask.id,
+          taskListTitle: taskList.title,
           remindTime: currentTask.remindTime!,
           frequency: currentTask.repeatFrequency,
           isPlaySound: settings.isPlaySoundOnComplete,
@@ -93,8 +97,9 @@ class TaskViewModel extends ChangeNotifier {
       );
       BackGroundService.cancelTaskByID(id: currentTask.id);
       BackGroundService.executePeriodicBackGroundTask(
-        task: currentTask,
-        taskList: taskList,
+        taskTitle: currentTask.title,
+        taskID: currentTask.id,
+        taskListTitle: taskList.title,
         remindTime: currentTask.remindTime!,
         frequency: repeatFrequency,
         isPlaySound: settings.isPlaySoundOnComplete,

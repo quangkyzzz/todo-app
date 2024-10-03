@@ -243,7 +243,7 @@ Future<List<TaskList>?> showAddListDialog({
                   bool isChecked = checkedTaskList.contains(item);
                   return Row(
                     children: [
-                      Text(item.listName),
+                      Text(item.title),
                       const Spacer(),
                       IconButton(
                           icon: Icon(

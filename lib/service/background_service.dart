@@ -1,14 +1,12 @@
 // ignore_for_file: discarded_futures
 
-import '../models/task_list.dart';
-import '../models/task.dart';
 import 'notification_service.dart';
 import 'package:workmanager/workmanager.dart';
 
 @pragma('vm:entry-point')
 void callbackDispatcher() {
   Workmanager().executeTask((taskName, inputData) async {
-    String title = inputData!['listName'];
+    String title = inputData!['title'];
     String body = inputData['taskTitle'];
     int id = int.parse(inputData['id']);
     bool isPlaySound = inputData['isPlaySound'];
@@ -50,8 +48,9 @@ void callbackDispatcher() {
 
 class BackGroundService {
   static void executePeriodicBackGroundTask({
-    required Task task,
-    required TaskList taskList,
+    required String taskID,
+    required String taskTitle,
+    required String taskListTitle,
     required DateTime remindTime,
     required String frequency,
     required bool isPlaySound,
@@ -66,7 +65,7 @@ class BackGroundService {
     Duration delayTime = remindTime.difference(DateTime.now());
     int period = int.parse(frequency.split(' ').first);
     String interval = frequency.split(' ')[1];
-    BackGroundService.cancelTaskByID(id: task.id);
+    BackGroundService.cancelTaskByID(id: taskID);
     if (delayTime.inSeconds < 0) {
       int secondDelay = delayTime.inSeconds % const Duration(days: 1).inSeconds;
       delayTime = Duration(seconds: secondDelay);
@@ -94,14 +93,14 @@ class BackGroundService {
         }
     }
     await Workmanager().registerPeriodicTask(
-      task.id,
-      task.title,
+      taskID,
+      taskTitle,
       initialDelay: delayTime,
       frequency: frequencyDuration,
       inputData: {
-        'id': (task.id.length > 10) ? task.id.substring(6) : task.id,
-        'taskTitle': task.title,
-        'listName': taskList.listName,
+        'id': (taskID.length > 10) ? taskID.substring(6) : taskID,
+        'taskTitle': taskTitle,
+        'title': taskTitle,
         'remindYear': remindYear,
         'remindMonth': remindMonth,
         'remindDay': remindDay,
@@ -114,22 +113,25 @@ class BackGroundService {
     );
   }
 
+  //TODO: change taskList to taskList name only,
+  //TODO: and remove redudance task
   static void executeScheduleBackGroundTask({
-    required Task task,
-    required TaskList taskList,
+    required String taskTitle,
+    required String taskID,
+    required String taskListTitle,
     required bool isPlaySound,
     required DateTime remindTime,
   }) async {
     Duration delayTime = remindTime.difference(DateTime.now());
     if (delayTime.inSeconds > 0) {
       await Workmanager().registerOneOffTask(
-        task.id,
-        task.title,
+        taskID,
+        taskTitle,
         initialDelay: delayTime,
         inputData: {
-          'id': (task.id.length > 10) ? task.id.substring(6) : task.id,
-          'taskTitle': task.title,
-          'listName': taskList.listName,
+          'id': (taskID.length > 10) ? taskID.substring(6) : taskID,
+          'taskTitle': taskTitle,
+          'title': taskListTitle,
           'isPlaySound': isPlaySound,
         },
       );

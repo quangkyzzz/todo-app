@@ -32,6 +32,8 @@ class TaskPage extends StatefulWidget {
   State<TaskPage> createState() => _TaskPageState();
 }
 
+//TODO: move isLoading to model
+//TODO: remove depend on taskListViewModel
 class _TaskPageState extends State<TaskPage> {
   late Task task;
   late TaskViewModel taskViewModel;
@@ -55,9 +57,9 @@ class _TaskPageState extends State<TaskPage> {
     super.initState();
   }
 
+  //TODO: move funtion to widget tree
   void onTapAddToMyDay(BuildContext context, {bool isDisable = false}) {
     taskViewModel.updateTaskWith(
-      taskID: task.id,
       settings: settingsProvider.settings,
       taskList: taskListViewModel.currentTaskList,
       isOnMyDay: !task.isOnMyDay,
@@ -78,7 +80,6 @@ class _TaskPageState extends State<TaskPage> {
       );
       if (tempRemindTime != null) {
         taskViewModel.updateTaskWith(
-          taskID: task.id,
           settings: settingsProvider.settings,
           taskList: taskListViewModel.currentTaskList,
           remindTime: tempRemindTime,
@@ -169,7 +170,6 @@ class _TaskPageState extends State<TaskPage> {
       );
     } else {
       taskViewModel.updateTaskWith(
-        taskID: task.id,
         taskList: taskListViewModel.currentTaskList,
         settings: settingsProvider.settings,
         repeatFrequency: '',
@@ -179,7 +179,6 @@ class _TaskPageState extends State<TaskPage> {
 
   void onCompleteSetRepeat(String frequency) {
     taskViewModel.updateTaskWith(
-      taskID: task.id,
       settings: settingsProvider.settings,
       taskList: taskListViewModel.currentTaskList,
       repeatFrequency: frequency,
@@ -196,7 +195,6 @@ class _TaskPageState extends State<TaskPage> {
       );
       if (newDueDate != null) {
         taskViewModel.updateTaskWith(
-          taskID: task.id,
           settings: settingsProvider.settings,
           taskList: taskListViewModel.currentTaskList,
           dueDate: newDueDate,
@@ -224,7 +222,6 @@ class _TaskPageState extends State<TaskPage> {
     if (result != null) {
       task.filePath.addAll(result.files.map((file) => file.path!).toList());
       taskViewModel.updateTaskWith(
-        taskID: task.id,
         settings: settingsProvider.settings,
         taskList: taskListViewModel.currentTaskList,
         filePath: task.filePath,
@@ -237,7 +234,6 @@ class _TaskPageState extends State<TaskPage> {
 
   void callBackEditTask(bool setComplete, bool setImportant) {
     taskViewModel.updateTaskWith(
-      taskID: task.id,
       settings: settingsProvider.settings,
       taskList: taskListViewModel.currentTaskList,
       isCompleted: setComplete,
@@ -257,7 +253,6 @@ class _TaskPageState extends State<TaskPage> {
       step.copyFrom(newStep: newStep);
     }
     taskViewModel.updateTaskWith(
-      taskID: task.id,
       settings: settingsProvider.settings,
       taskList: taskListViewModel.currentTaskList,
       stepList: task.stepList,
@@ -273,7 +268,6 @@ class _TaskPageState extends State<TaskPage> {
       );
       task.stepList.add(newStep);
       taskViewModel.updateTaskWith(
-        taskID: task.id,
         settings: settingsProvider.settings,
         taskList: taskListViewModel.currentTaskList,
         stepList: task.stepList,
@@ -303,7 +297,7 @@ class _TaskPageState extends State<TaskPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          taskListViewModel.currentTaskList.listName,
+          taskListViewModel.currentTaskList.title,
           style: MyTheme.titleTextStyle,
         ),
       ),
@@ -424,7 +418,6 @@ class _TaskPageState extends State<TaskPage> {
                         onClose: () {
                           task.filePath.remove(path);
                           taskViewModel.updateTaskWith(
-                            taskID: task.id,
                             settings: settingsProvider.settings,
                             taskList: taskListViewModel.currentTaskList,
                             filePath: task.filePath,

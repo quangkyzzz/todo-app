@@ -29,7 +29,7 @@ class TaskListPopupMenu extends StatelessWidget {
       context: context,
       title: 'Rename your list',
       hintText: '',
-      initText: taskList.listName,
+      initText: taskList.title,
       positiveButton: 'Save',
     );
     if (!context.mounted) return;

@@ -5,7 +5,7 @@ import '../themes.dart';
 
 class TaskList {
   final String id;
-  String listName;
+  String title;
   String? backgroundImage;
   int defaultImage;
   Map<String, dynamic>? sortByType;
@@ -14,7 +14,7 @@ class TaskList {
 
   TaskList({
     required this.id,
-    required this.listName,
+    required this.title,
     this.backgroundImage,
     this.defaultImage = -1,
     this.themeColor = MyTheme.blueColor,
@@ -24,7 +24,7 @@ class TaskList {
 
   TaskList copyWith({
     String? id,
-    String? listName,
+    String? title,
     String? backgroundImage,
     int? defaultImage,
     Map<String, String>? sortByType,
@@ -41,7 +41,7 @@ class TaskList {
     }
     return TaskList(
       id: id ?? this.id,
-      listName: listName ?? this.listName,
+      title: title ?? this.title,
       backgroundImage: backgroundImage ?? this.backgroundImage,
       defaultImage: defaultImage ?? this.defaultImage,
       sortByType: sortByType ?? this.sortByType,
@@ -51,7 +51,7 @@ class TaskList {
   }
 
   void copyFrom({required TaskList copyTaskList}) {
-    listName = copyTaskList.listName;
+    title = copyTaskList.title;
     backgroundImage = copyTaskList.backgroundImage;
     defaultImage = copyTaskList.defaultImage;
     sortByType = copyTaskList.sortByType;
@@ -63,7 +63,7 @@ class TaskList {
     final result = <String, dynamic>{};
 
     result.addAll({'id': id});
-    result.addAll({'listName': listName});
+    result.addAll({'title': title});
     result.addAll({'backgroundImage': backgroundImage});
     result.addAll({'defaultImage': defaultImage});
     result.addAll({'sortByType': sortByType});
@@ -76,7 +76,7 @@ class TaskList {
   factory TaskList.fromMap(Map<String, dynamic> map) {
     return TaskList(
       id: map['id'] ?? '-1',
-      listName: map['listName'] ?? 'Untitle list',
+      title: map['title'] ?? 'Untitle list',
       backgroundImage: map['backgroundImage'],
       defaultImage: map['defaultImage'],
       sortByType: map['sortByType'],
