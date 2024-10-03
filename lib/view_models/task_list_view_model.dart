@@ -37,7 +37,6 @@ class TaskListViewModel extends ChangeNotifier {
     String? backgroundImage,
     int? defaultImage,
     Map<String, dynamic>? sortByType,
-    List<Task>? tasks,
     Task? newTask,
   }) {
     currentTaskList.listName = listName ?? currentTaskList.listName;
@@ -45,7 +44,6 @@ class TaskListViewModel extends ChangeNotifier {
         backgroundImage ?? currentTaskList.backgroundImage;
     currentTaskList.defaultImage = defaultImage ?? currentTaskList.defaultImage;
     currentTaskList.sortByType = sortByType ?? currentTaskList.sortByType;
-    currentTaskList.tasks = tasks ?? currentTaskList.tasks;
     if (newTask != null) {
       Task oldTask = currentTaskList.tasks
           .firstWhere((element) => (element.id == newTask.id));
@@ -115,7 +113,12 @@ class TaskListViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addNewTask({
+  void addMultipleTask({required List<Task> tasks}) {
+    currentTaskList.tasks.addAll(tasks);
+    notifyListeners();
+  }
+
+  void createNewTask({
     required String taskName,
     required bool isCompleted,
     required Settings settings,

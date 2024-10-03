@@ -41,14 +41,7 @@ class StepItem extends StatelessWidget {
           return [
             PopupMenuItem(
               onTap: () {
-                callBack(step, isDelete: true);
-                //TODO: implement this
-
-                // taskViewModel.createTask(
-                //   taskListID: taskListID,
-                //   taskName: step.stepName,
-                //   isCompleted: step.isCompleted,
-                // );
+                callBack(step);
               },
               child: const CustomPopupItem(
                 text: 'Promote to task',

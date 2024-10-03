@@ -99,7 +99,7 @@ class BackGroundService {
       initialDelay: delayTime,
       frequency: frequencyDuration,
       inputData: {
-        'id': (task.id.length > 10) ? task.id.substring(4) : task.id,
+        'id': (task.id.length > 10) ? task.id.substring(6) : task.id,
         'taskTitle': task.title,
         'listName': taskList.listName,
         'remindYear': remindYear,
@@ -127,7 +127,7 @@ class BackGroundService {
         task.title,
         initialDelay: delayTime,
         inputData: {
-          'id': (task.id.length > 10) ? task.id.substring(4) : task.id,
+          'id': (task.id.length > 10) ? task.id.substring(6) : task.id,
           'taskTitle': task.title,
           'listName': taskList.listName,
           'isPlaySound': isPlaySound,
@@ -138,7 +138,11 @@ class BackGroundService {
 
   static void cancelTaskByID({required String id}) {
     if (id.length > 10) {
-      NotificationService.cancelNotification(int.parse(id.substring(4)));
+      print('did this');
+      NotificationService.cancelNotification(int.parse(id.substring(6)));
+    } else {
+      print('did this 2');
+      NotificationService.cancelNotification(int.parse(id));
     }
     Workmanager().cancelByUniqueName(id);
   }

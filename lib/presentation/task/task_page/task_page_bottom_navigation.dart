@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../service/notification_service.dart';
 import '../../../provider/settings_provider.dart';
 import '../../../themes.dart';
 import '../../../models/task.dart';
@@ -64,8 +63,6 @@ class TaskPageBottomNavigation extends StatelessWidget {
                 );
                 if (!context.mounted) return;
                 if (isDelete) {
-                  await NotificationService.cancelNotification(
-                      int.parse(task.id));
                   taskViewModel.deleteTask();
                   if (context.mounted) {
                     Navigator.pop(context);

@@ -113,7 +113,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                         Provider.of<TaskListViewModel>(
                           widget.mContext,
                           listen: false,
-                        ).addNewTask(
+                        ).createNewTask(
                           settings: settings,
                           taskName: _controller.text,
                           isCompleted: isChecked,

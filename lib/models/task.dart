@@ -18,20 +18,22 @@ class Task {
   String note;
 
   Task({
-    required this.id,
+    String? id,
     required this.taskListID,
     required this.title,
     required this.isCompleted,
     required this.isImportant,
     required this.isOnMyDay,
-    required this.createDate,
+    DateTime? createDate,
     List<TaskStep>? stepList,
     this.dueDate,
     this.remindTime,
     List<String>? filePath,
     this.repeatFrequency = '',
     this.note = '',
-  })  : stepList = stepList ?? [],
+  })  : id = id ?? DateTime.now().millisecondsSinceEpoch.toString(),
+        createDate = createDate ?? DateTime.now(),
+        stepList = stepList ?? [],
         filePath = filePath ?? [];
 
   void copyFrom({required Task copyTask}) {

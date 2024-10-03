@@ -69,16 +69,6 @@ class GroupViewModel extends ChangeNotifier {
         ),
         TaskList(id: '3', listName: 'Important', themeColor: MyTheme.pinkColor),
         TaskList(id: '4', listName: 'Planned', themeColor: MyTheme.redColor),
-        TaskList(
-          id: '5',
-          listName: 'Assigned to me',
-          themeColor: MyTheme.greenColor,
-        ),
-        TaskList(
-          id: '6',
-          listName: 'Flagged email',
-          themeColor: MyTheme.orangeColor,
-        ),
         TaskList(id: '7', listName: 'Search task list'),
         TaskList(
           id: '222',
@@ -91,7 +81,7 @@ class GroupViewModel extends ChangeNotifier {
                 isCompleted: false,
                 isImportant: false,
                 isOnMyDay: true,
-                createDate: DateTime(2024, 7, 2, 7),
+                createDate: DateTime.now().subtract(const Duration(hours: 2)),
                 note: 'Really long note, long long long'
                     'long long long long long long'),
             Task(
@@ -101,7 +91,7 @@ class GroupViewModel extends ChangeNotifier {
               isCompleted: false,
               isImportant: true,
               isOnMyDay: false,
-              createDate: DateTime(2024, 7, 2, 9, 38),
+              createDate: DateTime.now(),
             ),
             Task(
               id: '5',
@@ -110,7 +100,7 @@ class GroupViewModel extends ChangeNotifier {
               isCompleted: false,
               isImportant: true,
               isOnMyDay: true,
-              createDate: DateTime(2024, 7, 2, 9, 30),
+              createDate: DateTime.now().subtract(const Duration(minutes: 12)),
             ),
           ],
         ),

@@ -250,23 +250,17 @@ class _TaskPageState extends State<TaskPage> {
   }) {
     if (isDelete) {
       task.stepList.remove(newStep);
-      taskViewModel.updateTaskWith(
-        taskID: task.id,
-        settings: settingsProvider.settings,
-        taskList: taskListViewModel.currentTaskList,
-        stepList: task.stepList,
-      );
     } else {
       TaskStep step =
           task.stepList.firstWhere((element) => (element.id == newStep.id));
       step.copyFrom(newStep: newStep);
-      taskViewModel.updateTaskWith(
-        taskID: task.id,
-        settings: settingsProvider.settings,
-        taskList: taskListViewModel.currentTaskList,
-        stepList: task.stepList,
-      );
     }
+    taskViewModel.updateTaskWith(
+      taskID: task.id,
+      settings: settingsProvider.settings,
+      taskList: taskListViewModel.currentTaskList,
+      stepList: task.stepList,
+    );
   }
 
   void onSubmittedAddStep(String value) {

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../models/task_list.dart';
 import '../../../models/task.dart';
-import '../../../provider/settings_provider.dart';
 import '../../../view_models/task_list_view_model.dart';
 import '../../items/task_list_item.dart';
 import '../../../themes.dart';
@@ -72,7 +71,6 @@ class MyDayFloatingButtons extends StatelessWidget {
                                   itemCount: listRecentTask.length,
                                   itemBuilder: (BuildContext ____, int index) {
                                     Task task = listRecentTask[index];
-
                                     return TaskListItem(
                                       mContext: context,
                                       task: task,
@@ -83,21 +81,15 @@ class MyDayFloatingButtons extends StatelessWidget {
                                           listRecentTask.remove(task);
                                         });
 
-                                        List<Task> updateTaskList =
-                                            taskListViewModel
-                                                .currentTaskList.tasks;
                                         Task updateTask = task.copyWith(
                                           isOnMyDay: true,
                                         );
-                                        updateTaskList.add(updateTask);
+
                                         context
                                             .read<TaskListViewModel>()
-                                            .updateTaskListWith(
-                                              settings: context
-                                                  .read<SettingsProvider>()
-                                                  .settings,
-                                              tasks: updateTaskList,
-                                            );
+                                            .addMultipleTask(
+                                          tasks: [updateTask],
+                                        );
                                       },
                                     );
                                   },
@@ -127,21 +119,15 @@ class MyDayFloatingButtons extends StatelessWidget {
                                           listOlderSuggetTask.remove(task);
                                         });
 
-                                        List<Task> updateTaskList =
-                                            taskListViewModel
-                                                .currentTaskList.tasks;
                                         Task updateTask = task.copyWith(
                                           isOnMyDay: true,
                                         );
-                                        updateTaskList.add(updateTask);
+
                                         context
                                             .read<TaskListViewModel>()
-                                            .updateTaskListWith(
-                                              settings: context
-                                                  .read<SettingsProvider>()
-                                                  .settings,
-                                              tasks: updateTaskList,
-                                            );
+                                            .addMultipleTask(
+                                          tasks: [updateTask],
+                                        );
                                       },
                                     );
                                   },
