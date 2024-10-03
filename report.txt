@@ -1,9 +1,11 @@
-Báo cáo 1/10
+Báo cáo 3/10
 Đã làm:
-    -   Hoàn thành chỉnh sửa taskPage và taskViewModel
-    -   Sửa kiểu biến của các thuộc tính trong taskModel và các hàm liên quan
+    -   Sửa hàm đặt remind time.
+    -   Loại bỏ các biến không cần thiết ở các màn taskList, my day.
+    -   Xóa các thuộc tính không cần thiết trong taskListModel 
+    -   Sửa các thuộc tính của taskModel
 Đang làm:
-    -   Ra soát lại các lỗi.
+    -   Sửa hàm creat task trong taskViewModel
 Dự định làm:
-    -   Sửa hàm create task trong taskViewModel
+    -   Rà soát lại các lỗi.
     -   Dựa vào review để tiếp tục chỉnh sửa.
