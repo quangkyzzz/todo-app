@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import '../models/settings.dart';
 import '../models/task.dart';
-import '../models/task_list.dart';
-import '../models/task_step.dart';
 import '../service/background_service.dart';
 
-//TODO: fix update function
 class TaskViewModel extends ChangeNotifier {
   Task currentTask;
+  bool isLoadingFile = false;
   TaskViewModel({required this.currentTask});
 
   void updateTask({required updatedTask}) {
@@ -15,132 +12,20 @@ class TaskViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateTaskWith({
-    required Settings settings,
-    required TaskList taskList,
-    String? title,
-    bool? isCompleted,
-    bool? isImportant,
-    bool? isOnMyDay,
-    List<TaskStep>? stepList,
-    DateTime? dueDate,
-    DateTime? remindTime,
-    String? repeatFrequency,
-    List<String>? filePath,
-    String? note,
-  }) {
-    if ((title != null) && (currentTask.title != title)) {
-      currentTask.title = title;
-      BackGroundService.cancelTaskByID(id: currentTask.id);
-      if ((currentTask.repeatFrequency == '') &&
-          (currentTask.remindTime != null)) {
-        BackGroundService.executeScheduleBackGroundTask(
-          taskTitle: currentTask.title,
-          taskID: currentTask.id,
-          taskListTitle: taskList.title,
-          isPlaySound: settings.isPlaySoundOnComplete,
-          remindTime: currentTask.remindTime!,
-        );
-      } else if (remindTime != null) {
-        BackGroundService.executePeriodicBackGroundTask(
-          taskTitle: currentTask.title,
-          taskID: currentTask.id,
-          taskListTitle: taskList.title,
-          remindTime: remindTime,
-          frequency: repeatFrequency!,
-          isPlaySound: settings.isPlaySoundOnComplete,
-        );
-      }
-    }
-    currentTask.isCompleted = isCompleted ?? currentTask.isCompleted;
-    currentTask.isImportant = isImportant ?? currentTask.isImportant;
-    currentTask.isOnMyDay = isOnMyDay ?? currentTask.isOnMyDay;
-    currentTask.stepList = stepList ?? currentTask.stepList;
-    if (dueDate != null) {
-      currentTask.dueDate = dueDate;
-      DateTime today = DateTime(
-        DateTime.now().year,
-        DateTime.now().month,
-        DateTime.now().day,
-      );
-      if ((settings.isShowDueToday) &&
-          (currentTask.dueDate!.isAtSameMomentAs(today)) &&
-          (!currentTask.isOnMyDay)) {
-        currentTask.isOnMyDay = true;
-      }
-    }
-    if (remindTime != null) {
-      currentTask.remindTime = remindTime;
-      if (currentTask.repeatFrequency == '') {
-        BackGroundService.cancelTaskByID(id: currentTask.id);
-        BackGroundService.executeScheduleBackGroundTask(
-          taskTitle: currentTask.title,
-          taskID: currentTask.id,
-          taskListTitle: taskList.title,
-          isPlaySound: settings.isPlaySoundOnComplete,
-          remindTime: currentTask.remindTime!,
-        );
-      } else {
-        BackGroundService.cancelTaskByID(id: currentTask.id);
-        BackGroundService.executePeriodicBackGroundTask(
-          taskTitle: currentTask.title,
-          taskID: currentTask.id,
-          taskListTitle: taskList.title,
-          remindTime: currentTask.remindTime!,
-          frequency: currentTask.repeatFrequency,
-          isPlaySound: settings.isPlaySoundOnComplete,
-        );
-      }
-    }
-    if (repeatFrequency != null) {
-      currentTask.repeatFrequency = repeatFrequency;
-      currentTask.remindTime ??= DateTime(
-        DateTime.now().year,
-        DateTime.now().month,
-        DateTime.now().day,
-        9,
-      );
-      BackGroundService.cancelTaskByID(id: currentTask.id);
-      BackGroundService.executePeriodicBackGroundTask(
-        taskTitle: currentTask.title,
-        taskID: currentTask.id,
-        taskListTitle: taskList.title,
-        remindTime: currentTask.remindTime!,
-        frequency: repeatFrequency,
-        isPlaySound: settings.isPlaySoundOnComplete,
-      );
-    }
-    if (filePath != null) {
-      currentTask.filePath = filePath;
-    }
-    currentTask.note = note ?? currentTask.note;
-
-    notifyListeners();
-  }
-
-  void updateTaskWithNull({
-    required String taskID,
-    required TaskList taskList,
-    required Settings settings,
-    bool setDueDate = false,
-    bool setRemindTime = false,
-  }) {
-    if (setDueDate) {
-      currentTask.dueDate = null;
-    }
-    if (setRemindTime) {
-      currentTask.remindTime = null;
-      BackGroundService.cancelTaskByID(id: currentTask.id);
-      currentTask.repeatFrequency = '';
-    }
-
-    notifyListeners();
-  }
-
   void deleteTask() {
     if (currentTask.remindTime != null) {
       BackGroundService.cancelTaskByID(id: currentTask.id);
     }
+    notifyListeners();
+  }
+
+  void changeLoadingFileStatusToFalse() {
+    isLoadingFile = false;
+    notifyListeners();
+  }
+
+  void changeLoadingFileStatusToTrue() {
+    isLoadingFile = true;
     notifyListeners();
   }
 }
