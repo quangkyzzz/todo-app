@@ -10,6 +10,11 @@ class TaskViewModel extends ChangeNotifier {
   Task currentTask;
   TaskViewModel({required this.currentTask});
 
+  void updateTask({required updatedTask}) {
+    currentTask = updatedTask;
+    notifyListeners();
+  }
+
   void updateTaskWith({
     required Settings settings,
     required TaskList taskList,

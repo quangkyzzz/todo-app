@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../models/task.dart';
-import '../../../models/task_list.dart';
-import '../../../provider/settings_provider.dart';
+
 import '../../../themes.dart';
 import '../../../view_models/task_view_model.dart';
 
 class NoteEditPage extends StatefulWidget {
-  final Task task;
-  final TaskList taskList;
   const NoteEditPage({
     super.key,
-    required this.task,
-    required this.taskList,
   });
 
   @override
@@ -20,14 +15,12 @@ class NoteEditPage extends StatefulWidget {
 }
 
 class _NoteEditPageState extends State<NoteEditPage> {
-  late TaskViewModel taskViewModel;
   late TextEditingController _controller;
 
   @override
   void initState() {
-    taskViewModel = Provider.of<TaskViewModel>(context, listen: false);
-    _controller = TextEditingController(text: widget.task.note);
-
+    _controller = TextEditingController(
+        text: context.read<TaskViewModel>().currentTask.note);
     super.initState();
   }
 
@@ -42,17 +35,17 @@ class _NoteEditPageState extends State<NoteEditPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          widget.task.title,
+          context.watch<TaskViewModel>().currentTask.title,
           style: MyTheme.titleTextStyle,
         ),
         actions: [
           IconButton(
             onPressed: () {
-              taskViewModel.updateTaskWith(
-                settings: context.read<SettingsProvider>().settings,
-                taskList: widget.taskList,
-                note: _controller.text,
-              );
+              Task updatedTask = context.read<TaskViewModel>().currentTask;
+              updatedTask.note = _controller.text;
+              context.read<TaskViewModel>().updateTask(
+                    updatedTask: updatedTask,
+                  );
               if (mounted) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(

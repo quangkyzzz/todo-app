@@ -184,7 +184,6 @@ var allRoute = {
     Map<String, dynamic> arg =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
     Task task = arg['task'].copyWith();
-    TaskList taskList = arg['taskList'].copyWith();
 
     return MultiProvider(
       providers: [
@@ -192,10 +191,7 @@ var allRoute = {
           create: (context) => TaskViewModel(currentTask: task),
         )
       ],
-      builder: (context, child) => NoteEditPage(
-        task: task,
-        taskList: taskList,
-      ),
+      builder: (context, child) => const NoteEditPage(),
     );
   },
 };
