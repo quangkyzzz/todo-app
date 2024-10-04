@@ -44,6 +44,14 @@ class TaskEditRow extends StatelessWidget {
                   .read<TaskViewModel>()
                   .updateTask(updatedTask: updatedTask);
             },
+            onTapOutside: (event) {
+              FocusScope.of(context).unfocus();
+              Task updatedTask = context.read<TaskViewModel>().currentTask;
+              updatedTask.title = textEditingController.text;
+              context
+                  .read<TaskViewModel>()
+                  .updateTask(updatedTask: updatedTask);
+            },
           ),
         ),
         const SizedBox(width: 12),

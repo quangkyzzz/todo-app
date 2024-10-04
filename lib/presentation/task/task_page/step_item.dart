@@ -45,6 +45,17 @@ class StepItem extends StatelessWidget {
                   .read<TaskViewModel>()
                   .updateTask(updatedTask: updatedTask);
             },
+            onTapOutside: (event) {
+              FocusScope.of(context).unfocus();
+              step.stepName = controller.text;
+              Task updatedTask = context.read<TaskViewModel>().currentTask;
+              updatedTask.stepList
+                  .firstWhere((element) => element.id == step.id)
+                  .stepName = controller.text;
+              context
+                  .read<TaskViewModel>()
+                  .updateTask(updatedTask: updatedTask);
+            },
           ),
         ),
         PopupMenuButton(itemBuilder: (BuildContext context) {
