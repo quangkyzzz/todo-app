@@ -2,6 +2,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../models/settings.dart';
+import '../../models/task_list.dart';
 import '../../provider/settings_provider.dart';
 import '../../themes.dart';
 import '../../routes.dart';
@@ -69,10 +71,13 @@ class TaskListItem extends StatelessWidget {
               shape: const CircleBorder(),
               value: task.isCompleted,
               onChanged: (bool? value) {
-                Task updatedTask = task.copyWith(isCompleted: value);
-                context.read<TaskListViewModel>().updateTaskListWith(
-                      settings: context.read<SettingsProvider>().settings,
-                      updatedTask: updatedTask,
+                TaskList updatedTaskList =
+                    context.read<TaskListViewModel>().currentTaskList;
+                updatedTaskList.tasks
+                    .firstWhere((e) => e.id == task.id)
+                    .isCompleted = value!;
+                context.read<TaskListViewModel>().updateTaskList(
+                      updatedTaskList: updatedTaskList,
                     );
               },
             ),
@@ -228,12 +233,20 @@ class TaskListItem extends StatelessWidget {
               child: (!havePlusIcon)
                   ? IconButton(
                       onPressed: () {
-                        Task newTask =
-                            task.copyWith(isImportant: !task.isImportant);
-                        context.read<TaskListViewModel>().updateTaskListWith(
-                              settings:
-                                  context.read<SettingsProvider>().settings,
-                              updatedTask: newTask,
+                        Settings settings =
+                            context.read<SettingsProvider>().settings;
+                        TaskList updatedTaskList =
+                            context.read<TaskListViewModel>().currentTaskList;
+                        Task updatedTask = updatedTaskList.tasks
+                            .firstWhere((e) => e.id == task.id);
+                        updatedTask.isImportant = !updatedTask.isImportant;
+                        if ((settings.isMoveStarTaskToTop) &&
+                            (updatedTask.isImportant)) {
+                          updatedTaskList.tasks.remove(updatedTask);
+                          updatedTaskList.tasks.insert(0, updatedTask);
+                        }
+                        context.read<TaskListViewModel>().updateTaskList(
+                              updatedTaskList: updatedTaskList,
                             );
                       },
                       icon: (task.isImportant)

@@ -2,9 +2,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../models/settings.dart';
 import '../../models/task_list.dart';
-import '../../provider/settings_provider.dart';
 import '../../themes.dart';
 import '../../view_models/task_list_view_model.dart';
 import '../widgets/custom_outlined_button.dart';
@@ -23,31 +21,7 @@ class ChangeThemeBottomSheet extends StatefulWidget {
 }
 
 class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
-  late Settings settings;
   late int _page;
-  late Color _selectedColor;
-  late int _selectedImage;
-  late TaskListViewModel taskListViewModel;
-
-  onColorChange(Color value) {
-    setState(() {
-      _selectedColor = value;
-    });
-    taskListViewModel.updateTaskListWith(
-      settings: settings,
-      themeColor: value,
-    );
-  }
-
-  onImageChange(int value) {
-    setState(() {
-      _selectedImage = value;
-    });
-    taskListViewModel.updateTaskListWith(
-      settings: settings,
-      defaultImage: value,
-    );
-  }
 
   onPickFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -57,51 +31,27 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
         'png',
       ],
     );
+    if (!context.mounted) return;
     if (result != null) {
       String resultPath = result.files.single.path!;
-      taskListViewModel.updateTaskListWith(
-        settings: settings,
-        backgroundImage: resultPath,
-        defaultImage: -1,
-      );
-      setState(() {
-        _selectedImage = -1;
-      });
+      TaskList updatedTaskList =
+          context.read<TaskListViewModel>().currentTaskList;
+      updatedTaskList.defaultImage = -1;
+      updatedTaskList.backgroundImage = resultPath;
+      context.read<TaskListViewModel>().updateTaskList(
+            updatedTaskList: updatedTaskList,
+          );
     }
-  }
-
-  onClean() {
-    setState(() {
-      _selectedImage = -1;
-    });
-    taskListViewModel.updateTaskListWith(
-      settings: settings,
-      defaultImage: -1,
-    );
-    taskListViewModel.updateTaskListWithNull(
-      setBackGroundImage: true,
-    );
-  }
-
-  onPageChange(int value) {
-    setState(() {
-      _page = value;
-    });
   }
 
   @override
   void initState() {
     _page = 0;
-    _selectedColor = widget.taskList.themeColor;
-    _selectedImage = widget.taskList.defaultImage;
-    settings = context.read<SettingsProvider>().settings;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    taskListViewModel =
-        Provider.of<TaskListViewModel>(widget.mContext, listen: false);
     double screenHeight = MediaQuery.of(context).size.height;
     return Padding(
       padding: const EdgeInsets.all(16),
@@ -119,7 +69,9 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
                 CustomOutlinedButton(
                   isHighLighted: (_page == 0),
                   onTap: () {
-                    onPageChange(0);
+                    setState(() {
+                      _page = 0;
+                    });
                   },
                   text: 'Color :',
                 ),
@@ -127,7 +79,9 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
                 CustomOutlinedButton(
                   isHighLighted: (_page == 1),
                   onTap: () {
-                    onPageChange(1);
+                    setState(() {
+                      _page = 1;
+                    });
                   },
                   text: 'Image :',
                 ),
@@ -135,7 +89,9 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
                 CustomOutlinedButton(
                   isHighLighted: (_page == 2),
                   onTap: () {
-                    onPageChange(2);
+                    setState(() {
+                      _page = 2;
+                    });
                   },
                   text: 'Custom :',
                 ),
@@ -148,10 +104,20 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
                       children: MyTheme.colorThemeList.map((color) {
                         return SelectColorButton(
                           onTap: () {
-                            onColorChange(color);
+                            TaskList updatedTaskList = context
+                                .read<TaskListViewModel>()
+                                .currentTaskList;
+                            updatedTaskList.themeColor = color;
+                            context.read<TaskListViewModel>().updateTaskList(
+                                  updatedTaskList: updatedTaskList,
+                                );
                           },
                           color: color,
-                          isHighLighted: (_selectedColor == color),
+                          isHighLighted: (context
+                                  .watch<TaskListViewModel>()
+                                  .currentTaskList
+                                  .themeColor ==
+                              color),
                         );
                       }).toList(),
                     )
@@ -160,7 +126,18 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
                           children: [
                             CustomOutlinedButton(
                               isHighLighted: false,
-                              onTap: onClean,
+                              onTap: () {
+                                TaskList updatedTaskList = context
+                                    .read<TaskListViewModel>()
+                                    .currentTaskList;
+                                updatedTaskList.defaultImage = -1;
+                                updatedTaskList.backgroundImage = null;
+                                context
+                                    .read<TaskListViewModel>()
+                                    .updateTaskList(
+                                      updatedTaskList: updatedTaskList,
+                                    );
+                              },
                               text: 'Clean',
                             ),
                             const SizedBox(width: 6),
@@ -168,10 +145,22 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
                               return SelectImageButton(
                                 imgPath: imgPath,
                                 onTap: () {
-                                  onImageChange(
-                                      MyTheme.imageList.indexOf(imgPath));
+                                  TaskList updatedTaskList = context
+                                      .read<TaskListViewModel>()
+                                      .currentTaskList;
+                                  updatedTaskList.backgroundImage = imgPath;
+                                  updatedTaskList.defaultImage =
+                                      MyTheme.imageList.indexOf(imgPath);
+                                  context
+                                      .read<TaskListViewModel>()
+                                      .updateTaskList(
+                                        updatedTaskList: updatedTaskList,
+                                      );
                                 },
-                                isHighLighted: (_selectedImage ==
+                                isHighLighted: (context
+                                        .watch<TaskListViewModel>()
+                                        .currentTaskList
+                                        .defaultImage ==
                                     MyTheme.imageList.indexOf(imgPath)),
                               );
                             })
@@ -181,7 +170,18 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
                           children: [
                             CustomOutlinedButton(
                               isHighLighted: false,
-                              onTap: onClean,
+                              onTap: () {
+                                TaskList updatedTaskList = context
+                                    .read<TaskListViewModel>()
+                                    .currentTaskList;
+                                updatedTaskList.defaultImage = -1;
+                                updatedTaskList.backgroundImage = null;
+                                context
+                                    .read<TaskListViewModel>()
+                                    .updateTaskList(
+                                      updatedTaskList: updatedTaskList,
+                                    );
+                              },
                               text: 'Clean',
                             ),
                             IconButton(

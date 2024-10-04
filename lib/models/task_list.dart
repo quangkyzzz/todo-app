@@ -27,7 +27,7 @@ class TaskList {
     String? title,
     String? backgroundImage,
     int? defaultImage,
-    Map<String, String>? sortByType,
+    Map<String, dynamic>? sortByType,
     Color? themeColor,
     List<Task>? tasks,
   }) {

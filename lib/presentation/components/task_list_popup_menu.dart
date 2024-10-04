@@ -87,9 +87,12 @@ class TaskListPopupMenu extends StatelessWidget {
       context: context,
       showDragHandle: true,
       builder: (BuildContext _) {
-        return ChangeThemeBottomSheet(
-          mContext: context,
-          taskList: taskList,
+        return ListenableProvider.value(
+          value: context.read<TaskListViewModel>(),
+          child: ChangeThemeBottomSheet(
+            mContext: context,
+            taskList: taskList,
+          ),
         );
       },
     );
