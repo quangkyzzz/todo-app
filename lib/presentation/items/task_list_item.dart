@@ -54,9 +54,10 @@ class TaskListItem extends StatelessWidget {
             taskRoute,
             arguments: {
               'task': task,
-              'taskList': context
+              'taskListName': context
                   .read<TaskListViewModel>()
-                  .getTaskListByID(task.taskListID),
+                  .getTaskListByID(task.taskListID)
+                  .title,
             },
           );
         },

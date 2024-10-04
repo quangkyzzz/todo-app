@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../../models/task.dart';
 import '../../../models/task_step.dart';
+import '../../../view_models/task_view_model.dart';
 import '../../items/popup_item.dart';
 import '../../../themes.dart';
 
 class StepItem extends StatelessWidget {
   final TaskStep step;
-  final String taskListID;
-  final Function callBack;
+
   const StepItem({
     super.key,
     required this.step,
-    required this.callBack,
-    required this.taskListID,
   });
 
   @override
@@ -25,7 +25,11 @@ class StepItem extends StatelessWidget {
           shape: const CircleBorder(),
           value: step.isCompleted,
           onChanged: (bool? value) {
-            callBack(step.copyWith(isCompleted: value));
+            Task updatedTask = context.read<TaskViewModel>().currentTask;
+            updatedTask.stepList
+                .firstWhere((e) => e.id == step.id)
+                .isCompleted = value!;
+            context.read<TaskViewModel>().updateTask(updatedTask: updatedTask);
           },
         ),
         Expanded(
@@ -33,7 +37,13 @@ class StepItem extends StatelessWidget {
             controller: controller,
             onSubmitted: (value) {
               step.stepName = value;
-              callBack(step.copyWith(stepName: value));
+              Task updatedTask = context.read<TaskViewModel>().currentTask;
+              updatedTask.stepList
+                  .firstWhere((element) => element.id == step.id)
+                  .stepName = value;
+              context
+                  .read<TaskViewModel>()
+                  .updateTask(updatedTask: updatedTask);
             },
           ),
         ),
@@ -41,7 +51,11 @@ class StepItem extends StatelessWidget {
           return [
             PopupMenuItem(
               onTap: () {
-                callBack(step, isDelete: true);
+                Task updatedTask = context.read<TaskViewModel>().currentTask;
+                updatedTask.stepList.remove(step);
+                context
+                    .read<TaskViewModel>()
+                    .updateTask(updatedTask: updatedTask);
               },
               child: const CustomPopupItem(
                 text: 'Promote to task',
@@ -50,7 +64,11 @@ class StepItem extends StatelessWidget {
             ),
             PopupMenuItem(
               onTap: () {
-                callBack(step, isDelete: true);
+                Task updatedTask = context.read<TaskViewModel>().currentTask;
+                updatedTask.stepList.remove(step);
+                context
+                    .read<TaskViewModel>()
+                    .updateTask(updatedTask: updatedTask);
               },
               child: const CustomPopupItem(
                 text: 'Delete step',

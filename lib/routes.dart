@@ -165,25 +165,22 @@ var allRoute = {
     Map<String, dynamic> arg =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
     Task task = arg['task'].copyWith();
-    TaskList taskList = arg['taskList'].copyWith();
+    String taskListName = arg['taskListName'];
 
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(
             create: (context) => TaskViewModel(currentTask: task),
           ),
-          ChangeNotifierProvider(
-            create: (context) => TaskListViewModel(currentTaskList: taskList),
-          )
         ],
         builder: (context, child) {
-          return const TaskPage();
+          return TaskPage(
+            currentTaskListName: taskListName,
+          );
         });
   },
   noteEditRoute: (context) {
-    Map<String, dynamic> arg =
-        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
-    Task task = arg['task'].copyWith();
+    Task task = (ModalRoute.of(context)?.settings.arguments as Task).copyWith();
 
     return MultiProvider(
       providers: [
