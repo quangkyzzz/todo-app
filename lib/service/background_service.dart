@@ -113,8 +113,6 @@ class BackGroundService {
     );
   }
 
-  //TODO: change taskList to taskList name only,
-  //TODO: and remove redudance task
   static void executeScheduleBackGroundTask({
     required String taskTitle,
     required String taskID,

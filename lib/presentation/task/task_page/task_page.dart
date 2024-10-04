@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../../../models/settings.dart';
 import '../../../models/task_step.dart';
 import '../../../provider/settings_provider.dart';
+import '../../../service/background_service.dart';
 import '../../../view_models/task_view_model.dart';
 import '../../components/show_custom_repeat_time_dialog.dart';
 import '../../components/show_date_time_picker.dart';
@@ -22,34 +23,18 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:open_filex/open_filex.dart';
 
-class TaskPage extends StatefulWidget {
+class TaskPage extends StatelessWidget {
   final String currentTaskListName;
-  const TaskPage({
+  TaskPage({
     super.key,
     required this.currentTaskListName,
   });
-
-  @override
-  State<TaskPage> createState() => _TaskPageState();
-}
-
-//TODO: exercute background after pop
-//TODO: move isLoading to model
-class _TaskPageState extends State<TaskPage> {
-  late bool isLoading;
-  GlobalKey key = GlobalKey();
+  final GlobalKey popupKey = GlobalKey();
   final TextEditingController _stepController = TextEditingController();
-
-  @override
-  void initState() {
-    unawaited(initializeDateFormatting());
-    isLoading = false;
-    super.initState();
-  }
 
   Future<void> onTapRepeat(BuildContext context,
       {bool isDisable = false}) async {
-    RenderBox box = key.currentContext!.findRenderObject() as RenderBox;
+    RenderBox box = popupKey.currentContext!.findRenderObject() as RenderBox;
     Offset possition = box.localToGlobal(Offset.zero);
     if (!isDisable) {
       await showMenu(
@@ -63,7 +48,7 @@ class _TaskPageState extends State<TaskPage> {
         items: [
           PopupMenuItem(
             onTap: () {
-              onCompleteSetRepeat('1 Days');
+              onCompleteSetRepeat(context, '1 Days');
             },
             child: const CustomPopupItem(
               text: 'Daily',
@@ -72,7 +57,7 @@ class _TaskPageState extends State<TaskPage> {
           ),
           PopupMenuItem(
             onTap: () {
-              onCompleteSetRepeat('1 Weekdays');
+              onCompleteSetRepeat(context, '1 Weekdays');
             },
             child: const CustomPopupItem(
               text: 'Weekdays',
@@ -81,7 +66,7 @@ class _TaskPageState extends State<TaskPage> {
           ),
           PopupMenuItem(
             onTap: () {
-              onCompleteSetRepeat('1 Weeks');
+              onCompleteSetRepeat(context, '1 Weeks');
             },
             child: const CustomPopupItem(
               text: 'Weekly',
@@ -90,7 +75,7 @@ class _TaskPageState extends State<TaskPage> {
           ),
           PopupMenuItem(
             onTap: () {
-              onCompleteSetRepeat('1 Months');
+              onCompleteSetRepeat(context, '1 Months');
             },
             child: const CustomPopupItem(
               text: 'Monthly',
@@ -99,7 +84,7 @@ class _TaskPageState extends State<TaskPage> {
           ),
           PopupMenuItem(
             onTap: () {
-              onCompleteSetRepeat('1 Years');
+              onCompleteSetRepeat(context, '1 Years');
             },
             child: const CustomPopupItem(
               text: 'Yearly',
@@ -109,8 +94,9 @@ class _TaskPageState extends State<TaskPage> {
           PopupMenuItem(
             onTap: () async {
               String? result = await showCustomRepeatTimeDialog(context);
+              if (!context.mounted) return;
               if (result != null) {
-                onCompleteSetRepeat(result);
+                onCompleteSetRepeat(context, result);
               }
             },
             child: const CustomPopupItem(
@@ -127,7 +113,7 @@ class _TaskPageState extends State<TaskPage> {
     }
   }
 
-  void onCompleteSetRepeat(String frequency) {
+  void onCompleteSetRepeat(BuildContext context, String frequency) {
     Task updatedTask = context.read<TaskViewModel>().currentTask;
     updatedTask.repeatFrequency = frequency;
     updatedTask.remindTime ??= DateTime(
@@ -136,11 +122,12 @@ class _TaskPageState extends State<TaskPage> {
       DateTime.now().day,
       9,
     );
-    context.watch<TaskViewModel>().updateTask(updatedTask: updatedTask);
+    context.read<TaskViewModel>().updateTask(updatedTask: updatedTask);
   }
 
   @override
   Widget build(BuildContext context) {
+    unawaited(initializeDateFormatting());
     Task watchCurrentTask = context.watch<TaskViewModel>().currentTask;
     TaskViewModel readTaskViewModel = context.read<TaskViewModel>();
     String repeatActiveText = (watchCurrentTask.repeatFrequency).toLowerCase();
@@ -152,72 +139,71 @@ class _TaskPageState extends State<TaskPage> {
         .format(watchCurrentTask.remindTime ?? DateTime(2000));
     String dueActiveText = DateFormat('E, MMM d')
         .format(watchCurrentTask.dueDate ?? DateTime(2000));
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          widget.currentTaskListName,
-          style: MyTheme.titleTextStyle,
+    return WillPopScope(
+      onWillPop: () async {
+        Settings settings = context.read<SettingsProvider>().settings;
+        Task currentTask = context.read<TaskViewModel>().currentTask;
+        BackGroundService.cancelTaskByID(id: currentTask.id);
+        if (currentTask.remindTime != null) {
+          if (currentTask.repeatFrequency == '') {
+            BackGroundService.executeScheduleBackGroundTask(
+              taskTitle: currentTask.title,
+              taskID: currentTask.id,
+              taskListTitle: currentTaskListName,
+              isPlaySound: settings.isPlaySoundOnComplete,
+              remindTime: currentTask.remindTime!,
+            );
+          } else {
+            BackGroundService.executePeriodicBackGroundTask(
+              taskTitle: currentTask.title,
+              taskID: currentTask.id,
+              taskListTitle: currentTaskListName,
+              remindTime: currentTask.remindTime!,
+              frequency: currentTask.repeatFrequency,
+              isPlaySound: settings.isPlaySoundOnComplete,
+            );
+          }
+        }
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            currentTaskListName,
+            style: MyTheme.titleTextStyle,
+          ),
         ),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ////////////////
-            //Edit task row
-            const TaskEditRow(),
-            const SizedBox(height: 8),
-            ////////////////
-            //Step edit row
-            (watchCurrentTask.stepList.isNotEmpty)
-                ? ListView.builder(
-                    physics: const ClampingScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: watchCurrentTask.stepList.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return StepItem(
-                        step: watchCurrentTask.stepList[index],
-                      );
-                    },
-                  )
-                : const SizedBox(),
-            Row(
-              children: [
-                const SizedBox(width: 6),
-                IconButton(
-                  onPressed: () {
-                    if (_stepController.text != '') {
-                      TaskStep newStep = TaskStep(
-                        id: DateTime.now().millisecondsSinceEpoch.toString(),
-                        stepName: _stepController.text,
-                        isCompleted: false,
-                      );
-                      Task updatedTask =
-                          context.read<TaskViewModel>().currentTask;
-                      updatedTask.stepList.add(newStep);
-                      readTaskViewModel.updateTask(updatedTask: updatedTask);
-                      _stepController.clear();
-                    } else {
-                      FocusScope.of(context).unfocus();
-                    }
-                  },
-                  icon: const Icon(Icons.add),
-                  color: MyTheme.greyColor,
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: TextField(
-                    controller: _stepController,
-                    decoration: const InputDecoration(
-                      hintText: 'Add step',
-                      border: InputBorder.none,
-                    ),
-                    style: MyTheme.itemSmallTextStyle,
-                    onSubmitted: (String value) {
-                      if (value != '') {
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ////////////////
+              //Edit task row
+              const TaskEditRow(),
+              const SizedBox(height: 8),
+              ////////////////
+              //Step edit row
+              (watchCurrentTask.stepList.isNotEmpty)
+                  ? ListView.builder(
+                      physics: const ClampingScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: watchCurrentTask.stepList.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return StepItem(
+                          step: watchCurrentTask.stepList[index],
+                        );
+                      },
+                    )
+                  : const SizedBox(),
+              Row(
+                children: [
+                  const SizedBox(width: 6),
+                  IconButton(
+                    onPressed: () {
+                      if (_stepController.text != '') {
                         TaskStep newStep = TaskStep(
                           id: DateTime.now().millisecondsSinceEpoch.toString(),
-                          stepName: value,
+                          stepName: _stepController.text,
                           isCompleted: false,
                         );
                         Task updatedTask =
@@ -229,170 +215,199 @@ class _TaskPageState extends State<TaskPage> {
                         FocusScope.of(context).unfocus();
                       }
                     },
+                    icon: const Icon(Icons.add),
+                    color: MyTheme.greyColor,
                   ),
-                )
-              ],
-            ),
-            //////////////
-            //My Day item
-            const SizedBox(height: 6),
-            TaskPageItem(
-              isActive: watchCurrentTask.isOnMyDay,
-              icon: Icons.wb_sunny_outlined,
-              text: 'Add to My Day',
-              onTap: ({bool isDisable = false}) {
-                Task updatedTask = context.read<TaskViewModel>().currentTask;
-                updatedTask.isOnMyDay = !updatedTask.isOnMyDay;
-                readTaskViewModel.updateTask(updatedTask: updatedTask);
-              },
-              activeText: 'Added to My Day',
-            ),
-            //////////////
-            //Remind item
-            TaskPageItem(
-              isActive: (watchCurrentTask.remindTime != null),
-              icon: Icons.notifications_outlined,
-              text: 'Remind me',
-              onTap: ({bool isDisable = false}) async {
-                Task updatedTask = context.read<TaskViewModel>().currentTask;
-                if (!isDisable) {
-                  DateTime? tempRemindTime = await showDateTimePicker(
-                    context: context,
-                    initialDate: watchCurrentTask.remindTime ??
-                        DateTime(
-                          DateTime.now().year,
-                          DateTime.now().month,
-                          DateTime.now().day,
-                          9,
-                        ),
-                  );
-                  if (!context.mounted) return;
-
-                  if (tempRemindTime != null) {
-                    updatedTask.remindTime = tempRemindTime;
-                    readTaskViewModel.updateTask(updatedTask: updatedTask);
-                  }
-                } else {
-                  updatedTask.remindTime = null;
-                  updatedTask.repeatFrequency = '';
-                  readTaskViewModel.updateTask(updatedTask: updatedTask);
-                }
-              },
-              activeText: 'Remind at $remindActiveText',
-            ),
-            ////////////////
-            //Due date item
-            TaskPageItem(
-              isActive: (watchCurrentTask.dueDate != null),
-              icon: Icons.calendar_today_outlined,
-              text: 'Add due date',
-              onTap: ({bool isDisable = false}) async {
-                Settings settings = context.read<SettingsProvider>().settings;
-                Task updatedTask = context.read<TaskViewModel>().currentTask;
-                if (!isDisable) {
-                  DateTime? newDueDate = await showDatePicker(
-                    context: context,
-                    initialDate: watchCurrentTask.dueDate ?? DateTime.now(),
-                    firstDate: DateTime(2020),
-                    lastDate: DateTime(2050),
-                  );
-                  if (newDueDate != null) {
-                    updatedTask.dueDate = newDueDate;
-                    DateTime today = DateTime(
-                      DateTime.now().year,
-                      DateTime.now().month,
-                      DateTime.now().day,
-                    );
-                    if ((newDueDate.isAtSameMomentAs(today)) &&
-                        (settings.isShowDueToday)) {
-                      updatedTask.isOnMyDay = true;
-                    }
-                  }
-                } else {
-                  updatedTask.dueDate = null;
-                }
-                readTaskViewModel.updateTask(updatedTask: updatedTask);
-              },
-              activeText: 'Due $dueActiveText',
-            ),
-            //////////////
-            //Repeat item
-            TaskPageItem(
-              isActive: (watchCurrentTask.repeatFrequency != ''),
-              icon: Icons.repeat_outlined,
-              key: key,
-              text: 'Repeat',
-              onTap: ({bool isDisable = false}) async {
-                onTapRepeat(context, isDisable: isDisable);
-              },
-              activeText: 'Repeat every $repeatActiveText',
-            ),
-            const SizedBox(height: 6),
-            //////////////////////////
-            //Add and edit file button
-            (watchCurrentTask.filePath.isNotEmpty)
-                ? ListView.builder(
-                    shrinkWrap: true,
-                    physics: const ClampingScrollPhysics(),
-                    itemCount: watchCurrentTask.filePath.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      String path = watchCurrentTask.filePath[index];
-                      return FileItem(
-                        filePath: path,
-                        onTap: () async {
-                          await OpenFilex.open(path);
-                        },
-                        onClose: () {
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: TextField(
+                      controller: _stepController,
+                      decoration: const InputDecoration(
+                        hintText: 'Add step',
+                        border: InputBorder.none,
+                      ),
+                      style: MyTheme.itemSmallTextStyle,
+                      onSubmitted: (String value) {
+                        if (value != '') {
+                          TaskStep newStep = TaskStep(
+                            id: DateTime.now()
+                                .millisecondsSinceEpoch
+                                .toString(),
+                            stepName: value,
+                            isCompleted: false,
+                          );
                           Task updatedTask =
                               context.read<TaskViewModel>().currentTask;
-                          updatedTask.filePath.remove(path);
+                          updatedTask.stepList.add(newStep);
                           readTaskViewModel.updateTask(
                               updatedTask: updatedTask);
-                        },
-                      );
-                    },
+                          _stepController.clear();
+                        } else {
+                          FocusScope.of(context).unfocus();
+                        }
+                      },
+                    ),
                   )
-                : const SizedBox(),
-            (isLoading)
-                ? const Padding(
-                    padding: EdgeInsets.only(left: 8),
-                    child: LoadingWidget(),
-                  )
-                : const SizedBox(),
-            TaskPageItem(
-              isActive: false,
-              icon: Icons.attach_file_outlined,
-              text: 'Add file',
-              onTap: ({bool isDisable = false}) async {
-                Task updatedTask = context.read<TaskViewModel>().currentTask;
-                setState(() {
-                  isLoading = true;
-                });
-                FilePickerResult? result = await FilePicker.platform.pickFiles(
-                  allowMultiple: true,
-                );
-                if (result != null) {
-                  updatedTask.filePath
-                      .addAll(result.files.map((file) => file.path!));
+                ],
+              ),
+              //////////////
+              //My Day item
+              const SizedBox(height: 6),
+              TaskPageItem(
+                isActive: watchCurrentTask.isOnMyDay,
+                icon: Icons.wb_sunny_outlined,
+                text: 'Add to My Day',
+                onTap: ({bool isDisable = false}) {
+                  Task updatedTask = context.read<TaskViewModel>().currentTask;
+                  updatedTask.isOnMyDay = !updatedTask.isOnMyDay;
                   readTaskViewModel.updateTask(updatedTask: updatedTask);
-                }
-                setState(() {
-                  isLoading = false;
-                });
-              },
-              activeText: 'active',
-            ),
+                },
+                activeText: 'Added to My Day',
+              ),
+              //////////////
+              //Remind item
+              TaskPageItem(
+                isActive: (watchCurrentTask.remindTime != null),
+                icon: Icons.notifications_outlined,
+                text: 'Remind me',
+                onTap: ({bool isDisable = false}) async {
+                  Task updatedTask = context.read<TaskViewModel>().currentTask;
+                  if (!isDisable) {
+                    DateTime? tempRemindTime = await showDateTimePicker(
+                      context: context,
+                      initialDate: watchCurrentTask.remindTime ??
+                          DateTime(
+                            DateTime.now().year,
+                            DateTime.now().month,
+                            DateTime.now().day,
+                            9,
+                          ),
+                    );
+                    if (!context.mounted) return;
 
-            //////////////////////////
-            //Add and edit note button
-            AddAndEditNoteButton(
-              task: watchCurrentTask,
-            )
-          ],
+                    if (tempRemindTime != null) {
+                      updatedTask.remindTime = tempRemindTime;
+                      readTaskViewModel.updateTask(updatedTask: updatedTask);
+                    }
+                  } else {
+                    updatedTask.remindTime = null;
+                    updatedTask.repeatFrequency = '';
+                    readTaskViewModel.updateTask(updatedTask: updatedTask);
+                  }
+                },
+                activeText: 'Remind at $remindActiveText',
+              ),
+              ////////////////
+              //Due date item
+              TaskPageItem(
+                isActive: (watchCurrentTask.dueDate != null),
+                icon: Icons.calendar_today_outlined,
+                text: 'Add due date',
+                onTap: ({bool isDisable = false}) async {
+                  Settings settings = context.read<SettingsProvider>().settings;
+                  Task updatedTask = context.read<TaskViewModel>().currentTask;
+                  if (!isDisable) {
+                    DateTime? newDueDate = await showDatePicker(
+                      context: context,
+                      initialDate: watchCurrentTask.dueDate ?? DateTime.now(),
+                      firstDate: DateTime(2020),
+                      lastDate: DateTime(2050),
+                    );
+                    if (newDueDate != null) {
+                      updatedTask.dueDate = newDueDate;
+                      DateTime today = DateTime(
+                        DateTime.now().year,
+                        DateTime.now().month,
+                        DateTime.now().day,
+                      );
+                      if ((newDueDate.isAtSameMomentAs(today)) &&
+                          (settings.isShowDueToday)) {
+                        updatedTask.isOnMyDay = true;
+                      }
+                    }
+                  } else {
+                    updatedTask.dueDate = null;
+                  }
+                  readTaskViewModel.updateTask(updatedTask: updatedTask);
+                },
+                activeText: 'Due $dueActiveText',
+              ),
+              //////////////
+              //Repeat item
+              TaskPageItem(
+                isActive: (watchCurrentTask.repeatFrequency != ''),
+                icon: Icons.repeat_outlined,
+                key: popupKey,
+                text: 'Repeat',
+                onTap: ({bool isDisable = false}) async {
+                  onTapRepeat(context, isDisable: isDisable);
+                },
+                activeText: 'Repeat every $repeatActiveText',
+              ),
+              const SizedBox(height: 6),
+              //////////////////////////
+              //Add and edit file button
+              (watchCurrentTask.filePath.isNotEmpty)
+                  ? ListView.builder(
+                      shrinkWrap: true,
+                      physics: const ClampingScrollPhysics(),
+                      itemCount: watchCurrentTask.filePath.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        String path = watchCurrentTask.filePath[index];
+                        return FileItem(
+                          filePath: path,
+                          onTap: () async {
+                            await OpenFilex.open(path);
+                          },
+                          onClose: () {
+                            Task updatedTask =
+                                context.read<TaskViewModel>().currentTask;
+                            updatedTask.filePath.remove(path);
+                            readTaskViewModel.updateTask(
+                                updatedTask: updatedTask);
+                          },
+                        );
+                      },
+                    )
+                  : const SizedBox(),
+              (context.watch<TaskViewModel>().isLoadingFile)
+                  ? const Padding(
+                      padding: EdgeInsets.only(left: 8),
+                      child: LoadingWidget(),
+                    )
+                  : const SizedBox(),
+              TaskPageItem(
+                isActive: false,
+                icon: Icons.attach_file_outlined,
+                text: 'Add file',
+                onTap: ({bool isDisable = false}) async {
+                  Task updatedTask = context.read<TaskViewModel>().currentTask;
+                  readTaskViewModel.changeLoadingFileStatusToTrue();
+                  FilePickerResult? result =
+                      await FilePicker.platform.pickFiles(
+                    allowMultiple: true,
+                  );
+                  if (result != null) {
+                    updatedTask.filePath
+                        .addAll(result.files.map((file) => file.path!));
+                    readTaskViewModel.updateTask(updatedTask: updatedTask);
+                  }
+                  readTaskViewModel.changeLoadingFileStatusToFalse();
+                },
+                activeText: 'active',
+              ),
+
+              //////////////////////////
+              //Add and edit note button
+              AddAndEditNoteButton(
+                task: watchCurrentTask,
+              )
+            ],
+          ),
         ),
-      ),
-      bottomNavigationBar: TaskPageBottomNavigation(
-        task: watchCurrentTask,
+        bottomNavigationBar: TaskPageBottomNavigation(
+          task: watchCurrentTask,
+        ),
       ),
     );
   }
