@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../models/task.dart';
 import '../../../themes.dart';
 
-class TaskPageItem extends StatefulWidget {
-  final Task task;
+class TaskPageItem extends StatelessWidget {
   final bool isActive;
   final IconData icon;
   final String text;
@@ -16,27 +14,8 @@ class TaskPageItem extends StatefulWidget {
     required this.icon,
     required this.text,
     required this.onTap,
-    required this.task,
     required this.activeText,
   });
-
-  @override
-  State<TaskPageItem> createState() => _TaskPageItemState();
-}
-
-class _TaskPageItemState extends State<TaskPageItem> {
-  late bool isActive;
-  @override
-  void initState() {
-    isActive = widget.isActive;
-    super.initState();
-  }
-
-  @override
-  void didUpdateWidget(covariant TaskPageItem oldWidget) {
-    isActive = widget.isActive;
-    super.didUpdateWidget(oldWidget);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,14 +23,14 @@ class _TaskPageItemState extends State<TaskPageItem> {
       children: [
         const SizedBox(width: 16),
         Icon(
-          widget.icon,
+          icon,
           color: (isActive) ? MyTheme.blueColor : MyTheme.greyColor,
         ),
         const SizedBox(width: 8),
         TextButton(
-          onPressed: widget.onTap,
+          onPressed: onTap,
           child: Text(
-            (isActive) ? widget.activeText : widget.text,
+            (isActive) ? activeText : text,
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w400,
@@ -63,7 +42,7 @@ class _TaskPageItemState extends State<TaskPageItem> {
         (isActive)
             ? IconButton(
                 onPressed: () {
-                  widget.onTap(isDisable: true);
+                  onTap(isDisable: true);
                 },
                 icon: Transform.scale(
                   scale: 0.6,

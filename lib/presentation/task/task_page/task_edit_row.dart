@@ -1,49 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../../models/task.dart';
 import '../../../themes.dart';
+import '../../../view_models/task_view_model.dart';
 
-class TaskEditRow extends StatefulWidget {
-  final bool isChecked;
-  final bool isImportant;
-  final TextEditingController taskNameController;
-  final Function callBack;
+class TaskEditRow extends StatelessWidget {
   const TaskEditRow({
     super.key,
-    required this.isChecked,
-    required this.isImportant,
-    required this.taskNameController,
-    required this.callBack,
   });
 
   @override
-  State<TaskEditRow> createState() => _TaskEditRowState();
-}
-
-class _TaskEditRowState extends State<TaskEditRow> {
-  late bool _isChecked;
-  late bool _isImportant;
-
-  @override
-  void initState() {
-    super.initState();
-    _isChecked = widget.isChecked;
-    _isImportant = widget.isImportant;
-  }
-
-  @override
   Widget build(BuildContext context) {
+    Task watchCurrentTask = context.watch<TaskViewModel>().currentTask;
+    TextEditingController textEditingController = TextEditingController(
+      text: context.read<TaskViewModel>().currentTask.title,
+    );
     return Row(
       children: [
         Transform.scale(
           scale: 1.3,
           child: Checkbox(
             activeColor: MyTheme.blueColor,
-            value: _isChecked,
+            value: watchCurrentTask.isCompleted,
             shape: const CircleBorder(),
             onChanged: (bool? value) {
-              setState(() {
-                _isChecked = value!;
-              });
-              widget.callBack(_isChecked, _isImportant);
+              Task updatedTask = context.read<TaskViewModel>().currentTask;
+              updatedTask.isCompleted = value!;
+              context
+                  .read<TaskViewModel>()
+                  .updateTask(updatedTask: updatedTask);
             },
           ),
         ),
@@ -51,18 +36,26 @@ class _TaskEditRowState extends State<TaskEditRow> {
           child: TextField(
             decoration: const InputDecoration(border: InputBorder.none),
             style: MyTheme.titleTextStyle,
-            controller: widget.taskNameController,
+            controller: textEditingController,
+            onSubmitted: (String value) {
+              Task updatedTask = context.read<TaskViewModel>().currentTask;
+              updatedTask.title = value;
+              context
+                  .read<TaskViewModel>()
+                  .updateTask(updatedTask: updatedTask);
+            },
           ),
         ),
         const SizedBox(width: 12),
         GestureDetector(
           onTap: () {
-            setState(() {
-              _isImportant = !_isImportant;
-            });
-            widget.callBack(_isChecked, _isImportant);
+            Task updatedTask = context.read<TaskViewModel>().currentTask;
+
+            updatedTask.isImportant =
+                !context.read<TaskViewModel>().currentTask.isImportant;
+            context.read<TaskViewModel>().updateTask(updatedTask: updatedTask);
           },
-          child: (_isImportant)
+          child: (watchCurrentTask.isImportant)
               ? Transform.scale(
                   scale: 1.3,
                   child: const Icon(
