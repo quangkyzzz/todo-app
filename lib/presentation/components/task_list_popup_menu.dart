@@ -14,12 +14,10 @@ import 'change_theme_bottom_sheet.dart';
 import 'sort_by_bottom_sheet.dart';
 
 class TaskListPopupMenu extends StatelessWidget {
-  final TaskList taskList;
   final List<Map<String, dynamic>>? customListPopupMenuItem;
   final List<String> toRemove;
   const TaskListPopupMenu({
     super.key,
-    required this.taskList,
     this.toRemove = const [],
     this.customListPopupMenuItem,
   });
@@ -266,7 +264,10 @@ class TaskListPopupMenu extends StatelessWidget {
           return PopupMenuItem(
             value: item['value'],
             onTap: () {
-              item['onTap'](context, taskList);
+              item['onTap'](
+                context,
+                context.read<TaskListViewModel>().currentTaskList,
+              );
             },
             child: CustomPopupItem(
               text: item['text'],

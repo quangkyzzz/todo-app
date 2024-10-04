@@ -36,7 +36,10 @@ class TaskEditRow extends StatelessWidget {
           child: TextField(
             decoration: const InputDecoration(border: InputBorder.none),
             style: MyTheme.titleTextStyle,
-            controller: textEditingController,
+            controller: textEditingController
+              ..selection = TextSelection.fromPosition(TextPosition(
+                offset: textEditingController.text.length,
+              )),
             onSubmitted: (String value) {
               Task updatedTask = context.read<TaskViewModel>().currentTask;
               updatedTask.title = value;

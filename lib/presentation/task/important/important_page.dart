@@ -55,10 +55,9 @@ class _TaskListPageState extends State<ImportantPage> {
                 color: importantTaskList.themeColor,
               ),
             ),
-            actions: [
+            actions: const [
               TaskListPopupMenu(
-                taskList: importantTaskList,
-                toRemove: const [
+                toRemove: [
                   'sort_by',
                   'rename_list',
                   'reorder',

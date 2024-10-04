@@ -55,7 +55,6 @@ class TaskListPage extends StatelessWidget {
             }),
             actions: [
               TaskListPopupMenu(
-                taskList: currentTaskList,
                 toRemove: (currentTaskList.id == '1')
                     ? (['rename_list', 'hide_completed_tasks', 'delete_list'])
                     : (['hide_completed_tasks']),

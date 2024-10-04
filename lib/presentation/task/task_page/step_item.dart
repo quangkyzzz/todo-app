@@ -34,7 +34,10 @@ class StepItem extends StatelessWidget {
         ),
         Expanded(
           child: TextField(
-            controller: controller,
+            controller: controller
+              ..selection = TextSelection.fromPosition(TextPosition(
+                offset: controller.text.length,
+              )),
             onSubmitted: (value) {
               step.stepName = value;
               Task updatedTask = context.read<TaskViewModel>().currentTask;
