@@ -49,9 +49,9 @@ class TaskListPopupMenu extends StatelessWidget {
       context: context,
       showDragHandle: true,
       builder: (BuildContext _) {
-        return SortByBottomSheet(
-          mContext: context,
-          taskList: taskList,
+        return ListenableProvider.value(
+          value: context.read<TaskListViewModel>(),
+          child: const SortByBottomSheet(),
         );
       },
     );
@@ -89,10 +89,7 @@ class TaskListPopupMenu extends StatelessWidget {
       builder: (BuildContext _) {
         return ListenableProvider.value(
           value: context.read<TaskListViewModel>(),
-          child: ChangeThemeBottomSheet(
-            mContext: context,
-            taskList: taskList,
-          ),
+          child: const ChangeThemeBottomSheet(),
         );
       },
     );

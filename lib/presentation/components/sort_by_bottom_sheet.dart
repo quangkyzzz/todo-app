@@ -2,25 +2,18 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../models/settings.dart';
 import '../../models/task_list.dart';
-import '../../provider/settings_provider.dart';
 import '../../view_models/task_list_view_model.dart';
 import '../items/popup_item.dart';
 import '../../themes.dart';
 
 class SortByBottomSheet extends StatelessWidget {
-  final TaskList taskList;
-  final BuildContext mContext;
   const SortByBottomSheet({
     super.key,
-    required this.taskList,
-    required this.mContext,
   });
 
   @override
   Widget build(BuildContext context) {
-    final Settings settings = context.read<SettingsProvider>().settings;
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -33,17 +26,21 @@ class SortByBottomSheet extends StatelessWidget {
           const SizedBox(height: 8),
           InkWell(
             onTap: () {
-              mContext.read<TaskListViewModel>().sortTaskListBy(
+              context.read<TaskListViewModel>().sortTaskListBy(
                     sortType: 'important',
                     isAscending: false,
                   );
-              mContext.read<TaskListViewModel>().updateTaskListWith(
-                settings: settings,
-                sortByType: {
-                  'sortType': 'important',
-                  'asc': false,
-                },
-              );
+
+              TaskList updatedTaskList =
+                  context.read<TaskListViewModel>().currentTaskList;
+              updatedTaskList.sortByType = {
+                'sortType': 'important',
+                'asc': false,
+              };
+              context.read<TaskListViewModel>().updateTaskList(
+                    updatedTaskList: updatedTaskList,
+                  );
+
               Navigator.pop(context);
             },
             child: const CustomPopupItem(
@@ -53,17 +50,21 @@ class SortByBottomSheet extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              mContext.read<TaskListViewModel>().sortTaskListBy(
+              context.read<TaskListViewModel>().sortTaskListBy(
                     sortType: 'due date',
                     isAscending: true,
                   );
-              mContext.read<TaskListViewModel>().updateTaskListWith(
-                settings: settings,
-                sortByType: {
-                  'sortType': 'due date',
-                  'asc': true,
-                },
-              );
+
+              TaskList updatedTaskList =
+                  context.read<TaskListViewModel>().currentTaskList;
+              updatedTaskList.sortByType = {
+                'sortType': 'due date',
+                'asc': true,
+              };
+              context.read<TaskListViewModel>().updateTaskList(
+                    updatedTaskList: updatedTaskList,
+                  );
+
               Navigator.pop(context);
             },
             child: const CustomPopupItem(
@@ -73,17 +74,19 @@ class SortByBottomSheet extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              mContext.read<TaskListViewModel>().sortTaskListBy(
+              context.read<TaskListViewModel>().sortTaskListBy(
                     sortType: 'my day',
                     isAscending: false,
                   );
-              mContext.read<TaskListViewModel>().updateTaskListWith(
-                settings: settings,
-                sortByType: {
-                  'sortType': 'my day',
-                  'asc': false,
-                },
-              );
+              TaskList updatedTaskList =
+                  context.read<TaskListViewModel>().currentTaskList;
+              updatedTaskList.sortByType = {
+                'sortType': 'my day',
+                'asc': false,
+              };
+              context.read<TaskListViewModel>().updateTaskList(
+                    updatedTaskList: updatedTaskList,
+                  );
               Navigator.pop(context);
             },
             child: const CustomPopupItem(
@@ -93,17 +96,21 @@ class SortByBottomSheet extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              mContext.read<TaskListViewModel>().sortTaskListBy(
+              context.read<TaskListViewModel>().sortTaskListBy(
                     sortType: 'alphabetically',
                     isAscending: true,
                   );
-              mContext.read<TaskListViewModel>().updateTaskListWith(
-                settings: settings,
-                sortByType: {
-                  'sortType': 'alphabetically',
-                  'asc': true,
-                },
-              );
+
+              TaskList updatedTaskList =
+                  context.read<TaskListViewModel>().currentTaskList;
+              updatedTaskList.sortByType = {
+                'sortType': 'alphabetically',
+                'asc': true,
+              };
+              context.read<TaskListViewModel>().updateTaskList(
+                    updatedTaskList: updatedTaskList,
+                  );
+
               Navigator.pop(context);
             },
             child: const CustomPopupItem(
@@ -113,17 +120,21 @@ class SortByBottomSheet extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              mContext.read<TaskListViewModel>().sortTaskListBy(
+              context.read<TaskListViewModel>().sortTaskListBy(
                     sortType: 'create date',
                     isAscending: true,
                   );
-              mContext.read<TaskListViewModel>().updateTaskListWith(
-                settings: settings,
-                sortByType: {
-                  'sortType': 'create date',
-                  'asc': true,
-                },
-              );
+
+              TaskList updatedTaskList =
+                  context.read<TaskListViewModel>().currentTaskList;
+              updatedTaskList.sortByType = {
+                'sortType': 'create date',
+                'asc': true,
+              };
+              context.read<TaskListViewModel>().updateTaskList(
+                    updatedTaskList: updatedTaskList,
+                  );
+
               Navigator.pop(context);
             },
             child: const CustomPopupItem(

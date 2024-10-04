@@ -8,12 +8,8 @@ import '../../view_models/task_list_view_model.dart';
 import '../widgets/custom_outlined_button.dart';
 
 class ChangeThemeBottomSheet extends StatefulWidget {
-  final TaskList taskList;
-  final BuildContext mContext;
   const ChangeThemeBottomSheet({
     super.key,
-    required this.taskList,
-    required this.mContext,
   });
 
   @override
@@ -23,7 +19,7 @@ class ChangeThemeBottomSheet extends StatefulWidget {
 class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
   late int _page;
 
-  onPickFile() async {
+  void onPickFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowedExtensions: [
