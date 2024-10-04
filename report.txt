@@ -1,11 +1,13 @@
-Báo cáo 3/10
+Báo cáo 4/10
 Đã làm:
-    -   Sửa hàm đặt remind time.
-    -   Loại bỏ các biến không cần thiết ở các màn taskList, my day.
-    -   Xóa các thuộc tính không cần thiết trong taskListModel 
+    -   Sửa hàm create task trong taskViewModel
+    -   Sửa hàm thêm task vào taskList.
     -   Sửa các thuộc tính của taskModel
 Đang làm:
-    -   Sửa hàm creat task trong taskViewModel
+    -   Sửa hàm update task và update taskList trong các viewModel tương ứng
 Dự định làm:
-    -   Rà soát lại các lỗi.
+    -   Sửa cách triển khai viewModel ở các view tương ứng.
+    -   Sửa các backGround service.
     -   Dựa vào review để tiếp tục chỉnh sửa.
+
+//about: bottomsheet and provider
