@@ -25,12 +25,12 @@ import 'package:open_filex/open_filex.dart';
 
 class TaskPage extends StatelessWidget {
   final String currentTaskListName;
+  final GlobalKey popupKey = GlobalKey();
+  final TextEditingController _stepController = TextEditingController();
   TaskPage({
     super.key,
     required this.currentTaskListName,
   });
-  final GlobalKey popupKey = GlobalKey();
-  final TextEditingController _stepController = TextEditingController();
 
   Future<void> onTapRepeat(BuildContext context,
       {bool isDisable = false}) async {

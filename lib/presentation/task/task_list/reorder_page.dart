@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import '../../../models/task_list.dart';
+import 'package:provider/provider.dart';
 import '../../../themes.dart';
+import '../../../view_models/task_list_view_model.dart';
 import '../../items/task_list_item.dart';
 
 class ReorderPage extends StatefulWidget {
-  final TaskList taskList;
   const ReorderPage({
     super.key,
-    required this.taskList,
   });
 
   @override
@@ -36,12 +35,19 @@ class _ReorderPageState extends State<ReorderPage> {
                 style: MyTheme.itemTextStyle,
               ),
             ),
-            children: widget.taskList.tasks.map((item) {
+            children: context
+                .watch<TaskListViewModel>()
+                .currentTaskList
+                .tasks
+                .map((item) {
               return TaskListItem(
                 mContext: context,
                 key: Key(item.id),
                 task: item,
-                themeColor: widget.taskList.themeColor,
+                themeColor: context
+                    .read<TaskListViewModel>()
+                    .currentTaskList
+                    .themeColor,
               );
             }).toList(),
             onReorder: (int oldIndex, int newIndex) {
@@ -49,8 +55,16 @@ class _ReorderPageState extends State<ReorderPage> {
                 if (oldIndex < newIndex) {
                   newIndex -= 1;
                 }
-                final item = widget.taskList.tasks.removeAt(oldIndex);
-                widget.taskList.tasks.insert(newIndex, item);
+                final item = context
+                    .read<TaskListViewModel>()
+                    .currentTaskList
+                    .tasks
+                    .removeAt(oldIndex);
+                context
+                    .read<TaskListViewModel>()
+                    .currentTaskList
+                    .tasks
+                    .insert(newIndex, item);
               });
             }),
       ),

@@ -9,16 +9,11 @@ import '../../lists/incomplete_list.dart';
 import '../../components/task_list_popup_menu.dart';
 import 'change_sort_type_button.dart';
 
-class TaskListPage extends StatefulWidget {
+class TaskListPage extends StatelessWidget {
   const TaskListPage({
     super.key,
   });
 
-  @override
-  State<TaskListPage> createState() => _TaskListPageState();
-}
-
-class _TaskListPageState extends State<TaskListPage> {
   @override
   Widget build(BuildContext context) {
     TaskList currentTaskList =

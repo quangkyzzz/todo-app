@@ -156,9 +156,7 @@ var allRoute = {
           create: (context) => TaskListViewModel(currentTaskList: taskList),
         ),
       ],
-      builder: (context, child) => ReorderPage(
-        taskList: taskList,
-      ),
+      builder: (context, child) => const ReorderPage(),
     );
   },
   taskRoute: (context) {

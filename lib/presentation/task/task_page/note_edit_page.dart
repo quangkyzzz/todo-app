@@ -5,33 +5,15 @@ import '../../../models/task.dart';
 import '../../../themes.dart';
 import '../../../view_models/task_view_model.dart';
 
-class NoteEditPage extends StatefulWidget {
+class NoteEditPage extends StatelessWidget {
   const NoteEditPage({
     super.key,
   });
 
   @override
-  State<NoteEditPage> createState() => _NoteEditPageState();
-}
-
-class _NoteEditPageState extends State<NoteEditPage> {
-  late TextEditingController _controller;
-
-  @override
-  void initState() {
-    _controller = TextEditingController(
-        text: context.read<TaskViewModel>().currentTask.note);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    TextEditingController controller = TextEditingController(
+        text: context.read<TaskViewModel>().currentTask.note);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -42,11 +24,11 @@ class _NoteEditPageState extends State<NoteEditPage> {
           IconButton(
             onPressed: () {
               Task updatedTask = context.read<TaskViewModel>().currentTask;
-              updatedTask.note = _controller.text;
+              updatedTask.note = controller.text;
               context.read<TaskViewModel>().updateTask(
                     updatedTask: updatedTask,
                   );
-              if (mounted) {
+              if (context.mounted) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     backgroundColor: MyTheme.backgroundGreyColor,
@@ -70,7 +52,7 @@ class _NoteEditPageState extends State<NoteEditPage> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: TextField(
-          controller: _controller,
+          controller: controller,
           maxLines: null,
           keyboardType: TextInputType.multiline,
         ),
