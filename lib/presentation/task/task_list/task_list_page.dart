@@ -75,7 +75,7 @@ class _TaskListPageState extends State<TaskListPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       (taskList.sortByType != null)
-                          ? ChangeSortTypeButton(taskList: taskList)
+                          ? const ChangeSortTypeButton()
                           : const SizedBox(),
                       IncompleteList(taskList: taskList),
                       CompletedList(taskList: taskList)
