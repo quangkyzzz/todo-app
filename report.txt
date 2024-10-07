@@ -1,13 +1,10 @@
-Báo cáo 4/10
+Báo cáo 7/10
 Đã làm:
-    -   Sửa hàm create task trong taskViewModel
-    -   Sửa hàm thêm task vào taskList.
-    -   Sửa các thuộc tính của taskModel
+    -   Sửa backGround service.
+    -   Sửa logic triển khai hàm update task và update taskList trong các view.
+    -   Lược bỏ các biến không cần thiết trong màn.
 Đang làm:
-    -   Sửa hàm update task và update taskList trong các viewModel tương ứng
+    -   Sửa hàm update task và update taskList thành các hàm riêng biệt.
 Dự định làm:
-    -   Sửa cách triển khai viewModel ở các view tương ứng.
-    -   Sửa các backGround service.
-    -   Dựa vào review để tiếp tục chỉnh sửa.
-
-//about: bottomsheet and provider
+    -   Chuyển frequency thành enum.
+    -   Rà soát lại các lỗi.
