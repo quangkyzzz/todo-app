@@ -24,11 +24,6 @@ class TaskListViewModel extends ChangeNotifier {
     return TaskList(id: 'test', title: 'For test purposse task list');
   }
 
-  void updateTaskList({required updatedTaskList}) {
-    currentTaskList = updatedTaskList;
-    notifyListeners();
-  }
-
   void updateSortType({
     SortType? newSortType,
     bool isAscending = true,
