@@ -1,5 +1,6 @@
 import 'dart:core';
 import 'package:flutter/material.dart';
+import '../ultility/enum.dart';
 import 'task.dart';
 import '../themes.dart';
 
@@ -8,7 +9,8 @@ class TaskList {
   String title;
   String? backgroundImage;
   int defaultImage;
-  Map<String, dynamic>? sortByType;
+  SortType? sortByType;
+  bool isAscending;
   Color themeColor;
   List<Task> tasks;
 
@@ -19,6 +21,7 @@ class TaskList {
     this.defaultImage = -1,
     this.themeColor = MyTheme.blueColor,
     this.sortByType,
+    this.isAscending = true,
     List<Task>? tasks,
   }) : tasks = tasks ?? [];
 
@@ -27,7 +30,8 @@ class TaskList {
     String? title,
     String? backgroundImage,
     int? defaultImage,
-    Map<String, dynamic>? sortByType,
+    SortType? sortByType,
+    bool? isAscending,
     Color? themeColor,
     List<Task>? tasks,
   }) {
@@ -45,6 +49,7 @@ class TaskList {
       backgroundImage: backgroundImage ?? this.backgroundImage,
       defaultImage: defaultImage ?? this.defaultImage,
       sortByType: sortByType ?? this.sortByType,
+      isAscending: isAscending ?? this.isAscending,
       themeColor: themeColor ?? this.themeColor,
       tasks: newTasks,
     );
@@ -55,6 +60,7 @@ class TaskList {
     backgroundImage = copyTaskList.backgroundImage;
     defaultImage = copyTaskList.defaultImage;
     sortByType = copyTaskList.sortByType;
+    isAscending = copyTaskList.isAscending;
     themeColor = copyTaskList.themeColor;
     tasks = copyTaskList.tasks;
   }
@@ -67,6 +73,7 @@ class TaskList {
     result.addAll({'backgroundImage': backgroundImage});
     result.addAll({'defaultImage': defaultImage});
     result.addAll({'sortByType': sortByType});
+    result.addAll({'isAscending': isAscending});
     result.addAll({'themeColor': themeColor});
     result.addAll({'taskList': tasks});
 
@@ -80,7 +87,8 @@ class TaskList {
       backgroundImage: map['backgroundImage'],
       defaultImage: map['defaultImage'],
       sortByType: map['sortByType'],
-      themeColor: map['themeColor'],
+      isAscending: map['isAscending'] ?? true,
+      themeColor: map['themeColor'] ?? MyTheme.blueColor,
       tasks: map['taskList'] ?? [],
     );
   }

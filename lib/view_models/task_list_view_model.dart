@@ -4,6 +4,7 @@ import '../models/task_list.dart';
 import '../models/task.dart';
 import '../models/task_step.dart';
 import '../service/background_service.dart';
+import '../ultility/enum.dart';
 import '../ultility/general_ultility.dart';
 
 class TaskListViewModel extends ChangeNotifier {
@@ -29,9 +30,11 @@ class TaskListViewModel extends ChangeNotifier {
   }
 
   void updateSortType({
-    Map<String, dynamic>? newSortType,
+    SortType? newSortType,
+    bool isAscending = true,
   }) {
     currentTaskList.sortByType = newSortType;
+    currentTaskList.isAscending = isAscending;
     notifyListeners();
   }
 
@@ -74,12 +77,12 @@ class TaskListViewModel extends ChangeNotifier {
   }
 
   void sortTaskListBy({
-    required String sortType,
+    required SortType sortType,
     required bool isAscending,
   }) {
     int asc = (isAscending) ? 1 : -1;
     switch (sortType) {
-      case 'important':
+      case SortType.important:
         currentTaskList.tasks.sort((a, b) {
           if (a.isImportant && !b.isImportant) {
             return 1 * asc;
@@ -91,7 +94,7 @@ class TaskListViewModel extends ChangeNotifier {
             return -1 * asc;
           }
         });
-      case 'due date':
+      case SortType.dueDate:
         currentTaskList.tasks.sort((a, b) {
           if ((b.dueDate == null) && (a.dueDate == null)) {
             return b.createDate.compareTo(a.createDate) * asc;
@@ -103,7 +106,7 @@ class TaskListViewModel extends ChangeNotifier {
             return a.dueDate!.compareTo(b.dueDate!) * asc;
           }
         });
-      case 'my day':
+      case SortType.myDay:
         currentTaskList.tasks.sort((a, b) {
           if (a.isOnMyDay && !b.isOnMyDay) {
             return 1 * asc;
@@ -115,11 +118,11 @@ class TaskListViewModel extends ChangeNotifier {
             return -1 * asc;
           }
         });
-      case 'alphabetically':
+      case SortType.alphabetically:
         currentTaskList.tasks.sort((a, b) {
           return a.title.toLowerCase().compareTo(b.title.toLowerCase()) * asc;
         });
-      case 'create date':
+      case SortType.createDate:
         currentTaskList.tasks.sort((a, b) {
           return a.createDate.compareTo(b.createDate) * asc;
         });

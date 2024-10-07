@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../models/task_list.dart';
+import '../../ultility/enum.dart';
 import '../../view_models/task_list_view_model.dart';
 import '../items/popup_item.dart';
 import '../../themes.dart';
@@ -28,18 +28,13 @@ class SortByBottomSheet extends StatelessWidget {
             //fix sortByType to enum
             onTap: () {
               context.read<TaskListViewModel>().sortTaskListBy(
-                    sortType: 'important',
+                    sortType: SortType.important,
                     isAscending: false,
                   );
 
-              TaskList updatedTaskList =
-                  context.read<TaskListViewModel>().currentTaskList;
-              updatedTaskList.sortByType = {
-                'sortType': 'important',
-                'asc': false,
-              };
-              context.read<TaskListViewModel>().updateTaskList(
-                    updatedTaskList: updatedTaskList,
+              context.read<TaskListViewModel>().updateSortType(
+                    newSortType: SortType.important,
+                    isAscending: false,
                   );
 
               Navigator.pop(context);
@@ -52,19 +47,13 @@ class SortByBottomSheet extends StatelessWidget {
           InkWell(
             onTap: () {
               context.read<TaskListViewModel>().sortTaskListBy(
-                    sortType: 'due date',
+                    sortType: SortType.dueDate,
                     isAscending: true,
                   );
 
-              TaskList updatedTaskList =
-                  context.read<TaskListViewModel>().currentTaskList;
-              updatedTaskList.sortByType = {
-                'sortType': 'due date',
-                'asc': true,
-              };
-              context.read<TaskListViewModel>().updateTaskList(
-                    updatedTaskList: updatedTaskList,
-                  );
+              context
+                  .read<TaskListViewModel>()
+                  .updateSortType(newSortType: SortType.dueDate);
 
               Navigator.pop(context);
             },
@@ -76,17 +65,13 @@ class SortByBottomSheet extends StatelessWidget {
           InkWell(
             onTap: () {
               context.read<TaskListViewModel>().sortTaskListBy(
-                    sortType: 'my day',
+                    sortType: SortType.myDay,
                     isAscending: false,
                   );
-              TaskList updatedTaskList =
-                  context.read<TaskListViewModel>().currentTaskList;
-              updatedTaskList.sortByType = {
-                'sortType': 'my day',
-                'asc': false,
-              };
-              context.read<TaskListViewModel>().updateTaskList(
-                    updatedTaskList: updatedTaskList,
+
+              context.read<TaskListViewModel>().updateSortType(
+                    newSortType: SortType.myDay,
+                    isAscending: false,
                   );
               Navigator.pop(context);
             },
@@ -98,18 +83,12 @@ class SortByBottomSheet extends StatelessWidget {
           InkWell(
             onTap: () {
               context.read<TaskListViewModel>().sortTaskListBy(
-                    sortType: 'alphabetically',
+                    sortType: SortType.alphabetically,
                     isAscending: true,
                   );
 
-              TaskList updatedTaskList =
-                  context.read<TaskListViewModel>().currentTaskList;
-              updatedTaskList.sortByType = {
-                'sortType': 'alphabetically',
-                'asc': true,
-              };
-              context.read<TaskListViewModel>().updateTaskList(
-                    updatedTaskList: updatedTaskList,
+              context.read<TaskListViewModel>().updateSortType(
+                    newSortType: SortType.alphabetically,
                   );
 
               Navigator.pop(context);
@@ -122,18 +101,12 @@ class SortByBottomSheet extends StatelessWidget {
           InkWell(
             onTap: () {
               context.read<TaskListViewModel>().sortTaskListBy(
-                    sortType: 'create date',
+                    sortType: SortType.createDate,
                     isAscending: true,
                   );
 
-              TaskList updatedTaskList =
-                  context.read<TaskListViewModel>().currentTaskList;
-              updatedTaskList.sortByType = {
-                'sortType': 'create date',
-                'asc': true,
-              };
-              context.read<TaskListViewModel>().updateTaskList(
-                    updatedTaskList: updatedTaskList,
+              context.read<TaskListViewModel>().updateSortType(
+                    newSortType: SortType.createDate,
                   );
 
               Navigator.pop(context);

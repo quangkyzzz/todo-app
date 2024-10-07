@@ -1,3 +1,20 @@
-enum Freaquency { day, week, month, year }
+enum Freaquency {
+  day('Day'),
+  week('Week'),
+  month('Month'),
+  year('Year');
 
-enum SortType { important, dueDate, myDay, alphabetically, createDate }
+  const Freaquency(this.value);
+  final String value;
+}
+
+enum SortType {
+  important('important'),
+  dueDate('due date'),
+  myDay('my day'),
+  alphabetically('alphabetically'),
+  createDate('create date');
+
+  const SortType(this.value);
+  final String value;
+}
