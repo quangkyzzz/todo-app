@@ -102,13 +102,8 @@ class TaskViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void changeLoadingFileStatusToFalse() {
-    isLoadingFile = false;
-    notifyListeners();
-  }
-
-  void changeLoadingFileStatusToTrue() {
-    isLoadingFile = true;
+  void changeLoadingFileStatus({required bool isLoading}) {
+    isLoadingFile = isLoading;
     notifyListeners();
   }
 }

@@ -136,12 +136,12 @@ class TaskPage extends StatelessWidget {
             ),
           );
     }
-    context
-        .read<TaskViewModel>()
-        .updateRepeatFrequency(newRepeatFrequency: frequency);
-    context
-        .read<TaskViewModel>()
-        .updateFrequencyMultiplier(newFrequencyMultiplier: frequencyMultiplier);
+    context.read<TaskViewModel>().updateRepeatFrequency(
+          newRepeatFrequency: frequency,
+        );
+    context.read<TaskViewModel>().updateFrequencyMultiplier(
+          newFrequencyMultiplier: frequencyMultiplier,
+        );
   }
 
   @override
@@ -397,7 +397,7 @@ class TaskPage extends StatelessWidget {
                 icon: Icons.attach_file_outlined,
                 text: 'Add file',
                 onTap: ({bool isDisable = false}) async {
-                  readTaskViewModel.changeLoadingFileStatusToTrue();
+                  readTaskViewModel.changeLoadingFileStatus(isLoading: true);
                   FilePickerResult? result =
                       await FilePicker.platform.pickFiles(
                     allowMultiple: true,
@@ -407,7 +407,7 @@ class TaskPage extends StatelessWidget {
                       filePath: result.files.map((file) => file.path!).toList(),
                     );
                   }
-                  readTaskViewModel.changeLoadingFileStatusToFalse();
+                  readTaskViewModel.changeLoadingFileStatus(isLoading: false);
                 },
                 activeText: 'active',
               ),
