@@ -219,10 +219,7 @@ class TaskPage extends StatelessWidget {
                           stepName: _stepController.text,
                           isCompleted: false,
                         );
-                        Task updatedTask =
-                            context.read<TaskViewModel>().currentTask;
-                        updatedTask.stepList.add(newStep);
-                        readTaskViewModel.updateTask(updatedTask: updatedTask);
+                        readTaskViewModel.addStep(newStep: newStep);
                         _stepController.clear();
                       } else {
                         FocusScope.of(context).unfocus();

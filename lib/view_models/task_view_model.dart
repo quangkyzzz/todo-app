@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/task.dart';
+import '../models/task_step.dart';
 import '../service/background_service.dart';
 import '../ultility/enum.dart';
 
@@ -45,6 +46,11 @@ class TaskViewModel extends ChangeNotifier {
 
   void updateNote({required String newNote}) {
     currentTask.note = newNote;
+    notifyListeners();
+  }
+
+  void addStep({required TaskStep newStep}) {
+    currentTask.stepList.add(newStep);
     notifyListeners();
   }
 
