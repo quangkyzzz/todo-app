@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../models/task.dart';
 import '../../../models/task_step.dart';
 import '../../../view_models/task_view_model.dart';
 import '../../items/popup_item.dart';
@@ -25,11 +24,9 @@ class StepItem extends StatelessWidget {
           shape: const CircleBorder(),
           value: step.isCompleted,
           onChanged: (bool? value) {
-            Task updatedTask = context.read<TaskViewModel>().currentTask;
-            updatedTask.stepList
-                .firstWhere((e) => e.id == step.id)
-                .isCompleted = value!;
-            context.read<TaskViewModel>().updateTask(updatedTask: updatedTask);
+            context
+                .read<TaskViewModel>()
+                .updateStepIsCompleted(stepID: step.id, isCompleted: value!);
           },
         ),
         Expanded(
@@ -39,25 +36,15 @@ class StepItem extends StatelessWidget {
                 offset: controller.text.length,
               )),
             onSubmitted: (value) {
-              step.stepName = value;
-              Task updatedTask = context.read<TaskViewModel>().currentTask;
-              updatedTask.stepList
-                  .firstWhere((element) => element.id == step.id)
-                  .stepName = value;
               context
                   .read<TaskViewModel>()
-                  .updateTask(updatedTask: updatedTask);
+                  .updateStepName(stepID: step.id, newName: value);
             },
             onTapOutside: (event) {
               FocusScope.of(context).unfocus();
-              step.stepName = controller.text;
-              Task updatedTask = context.read<TaskViewModel>().currentTask;
-              updatedTask.stepList
-                  .firstWhere((element) => element.id == step.id)
-                  .stepName = controller.text;
               context
                   .read<TaskViewModel>()
-                  .updateTask(updatedTask: updatedTask);
+                  .updateStepName(stepID: step.id, newName: controller.text);
             },
           ),
         ),
@@ -65,11 +52,7 @@ class StepItem extends StatelessWidget {
           return [
             PopupMenuItem(
               onTap: () {
-                Task updatedTask = context.read<TaskViewModel>().currentTask;
-                updatedTask.stepList.remove(step);
-                context
-                    .read<TaskViewModel>()
-                    .updateTask(updatedTask: updatedTask);
+                context.read<TaskViewModel>().deleteStep(stepID: step.id);
               },
               child: const CustomPopupItem(
                 text: 'Promote to task',
@@ -78,11 +61,7 @@ class StepItem extends StatelessWidget {
             ),
             PopupMenuItem(
               onTap: () {
-                Task updatedTask = context.read<TaskViewModel>().currentTask;
-                updatedTask.stepList.remove(step);
-                context
-                    .read<TaskViewModel>()
-                    .updateTask(updatedTask: updatedTask);
+                context.read<TaskViewModel>().deleteStep(stepID: step.id);
               },
               child: const CustomPopupItem(
                 text: 'Delete step',

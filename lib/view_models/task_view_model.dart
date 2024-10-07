@@ -32,6 +32,27 @@ class TaskViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updateStepName({required String stepID, required String newName}) {
+    currentTask.stepList
+        .firstWhere((element) => element.id == stepID)
+        .stepName = newName;
+
+    notifyListeners();
+  }
+
+  void updateStepIsCompleted({required String stepID, required isCompleted}) {
+    currentTask.stepList
+        .firstWhere((element) => element.id == stepID)
+        .isCompleted = isCompleted;
+
+    notifyListeners();
+  }
+
+  void deleteStep({required String stepID}) {
+    currentTask.stepList.removeWhere((element) => element.id == stepID);
+    notifyListeners();
+  }
+
   void deleteTask() {
     if (currentTask.remindTime != null) {
       BackGroundService.cancelTaskByID(id: currentTask.id);
