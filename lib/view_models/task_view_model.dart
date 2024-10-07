@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/task.dart';
 import '../service/background_service.dart';
+import '../ultility/enum.dart';
 
 class TaskViewModel extends ChangeNotifier {
   Task currentTask;
@@ -24,6 +25,21 @@ class TaskViewModel extends ChangeNotifier {
 
   void updateIsImportant({required bool isImportant}) {
     currentTask.isImportant = isImportant;
+    notifyListeners();
+  }
+
+  void updateRemindTime({required DateTime? newRemindTime}) {
+    currentTask.remindTime = newRemindTime;
+    notifyListeners();
+  }
+
+  void updateRepeatFrequency({required Frequency? newRepeatFrequency}) {
+    currentTask.repeatFrequency = newRepeatFrequency;
+    notifyListeners();
+  }
+
+  void updateFrequencyMultiplier({required int newFrequencyMultiplier}) {
+    currentTask.frequencyMultiplier = newFrequencyMultiplier;
     notifyListeners();
   }
 

@@ -113,10 +113,12 @@ class TaskPage extends StatelessWidget {
         ],
       );
     } else {
-      Task updatedTask = context.read<TaskViewModel>().currentTask;
-      updatedTask.repeatFrequency = null;
-      updatedTask.frequencyMultiplier = 1;
-      context.read<TaskViewModel>().updateTask(updatedTask: updatedTask);
+      context
+          .read<TaskViewModel>()
+          .updateRepeatFrequency(newRepeatFrequency: null);
+      context
+          .read<TaskViewModel>()
+          .updateFrequencyMultiplier(newFrequencyMultiplier: 1);
     }
   }
 
@@ -125,16 +127,22 @@ class TaskPage extends StatelessWidget {
     Frequency frequency, {
     int frequencyMultiplier = 1,
   }) {
-    Task updatedTask = context.read<TaskViewModel>().currentTask;
-    updatedTask.repeatFrequency = frequency;
-    updatedTask.frequencyMultiplier = frequencyMultiplier;
-    updatedTask.remindTime ??= DateTime(
-      DateTime.now().year,
-      DateTime.now().month,
-      DateTime.now().day,
-      9,
-    );
-    context.read<TaskViewModel>().updateTask(updatedTask: updatedTask);
+    if (context.read<TaskViewModel>().currentTask.remindTime == null) {
+      context.read<TaskViewModel>().updateRemindTime(
+            newRemindTime: DateTime(
+              DateTime.now().year,
+              DateTime.now().month,
+              DateTime.now().day,
+              9,
+            ),
+          );
+    }
+    context
+        .read<TaskViewModel>()
+        .updateRepeatFrequency(newRepeatFrequency: frequency);
+    context
+        .read<TaskViewModel>()
+        .updateFrequencyMultiplier(newFrequencyMultiplier: frequencyMultiplier);
   }
 
   @override
@@ -279,8 +287,6 @@ class TaskPage extends StatelessWidget {
                   icon: Icons.notifications_outlined,
                   text: 'Remind me',
                   onTap: ({bool isDisable = false}) async {
-                    Task updatedTask =
-                        context.read<TaskViewModel>().currentTask;
                     if (!isDisable) {
                       DateTime? tempRemindTime = await showDateTimePicker(
                         context: context,
@@ -295,13 +301,18 @@ class TaskPage extends StatelessWidget {
                       if (!context.mounted) return;
 
                       if (tempRemindTime != null) {
-                        updatedTask.remindTime = tempRemindTime;
-                        readTaskViewModel.updateTask(updatedTask: updatedTask);
+                        readTaskViewModel.updateRemindTime(
+                          newRemindTime: tempRemindTime,
+                        );
                       }
                     } else {
-                      updatedTask.remindTime = null;
-                      updatedTask.repeatFrequency = null;
-                      readTaskViewModel.updateTask(updatedTask: updatedTask);
+                      readTaskViewModel.updateRemindTime(newRemindTime: null);
+                      readTaskViewModel.updateRepeatFrequency(
+                        newRepeatFrequency: null,
+                      );
+                      readTaskViewModel.updateFrequencyMultiplier(
+                        newFrequencyMultiplier: 1,
+                      );
                     }
                   },
                   activeText: 'Remind at $remindActiveText',
