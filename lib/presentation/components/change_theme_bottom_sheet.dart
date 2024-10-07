@@ -19,24 +19,6 @@ class ChangeThemeBottomSheet extends StatefulWidget {
 class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
   late int _page;
 
-  void onPickFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: [
-        'jpg',
-        'png',
-      ],
-    );
-    if (!context.mounted) return;
-    if (result != null) {
-      String resultPath = result.files.single.path!;
-      context.read<TaskListViewModel>().updateBackGroundImage(
-            backGroundImage: resultPath,
-            defaultImage: -1,
-          );
-    }
-  }
-
   @override
   void initState() {
     _page = 0;
@@ -157,11 +139,6 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
                             CustomOutlinedButton(
                               isHighLighted: false,
                               onTap: () {
-                                TaskList updatedTaskList = context
-                                    .read<TaskListViewModel>()
-                                    .currentTaskList;
-                                updatedTaskList.defaultImage = -1;
-                                updatedTaskList.backgroundImage = null;
                                 context
                                     .read<TaskListViewModel>()
                                     .updateBackGroundImage(
@@ -171,8 +148,28 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
                               },
                               text: 'Clean',
                             ),
+                            const SizedBox(width: 4),
                             IconButton(
-                              onPressed: onPickFile,
+                              onPressed: () async {
+                                FilePickerResult? result =
+                                    await FilePicker.platform.pickFiles(
+                                  type: FileType.custom,
+                                  allowedExtensions: [
+                                    'jpg',
+                                    'png',
+                                  ],
+                                );
+                                if (!context.mounted) return;
+                                if (result != null) {
+                                  String resultPath = result.files.single.path!;
+                                  context
+                                      .read<TaskListViewModel>()
+                                      .updateBackGroundImage(
+                                        backGroundImage: resultPath,
+                                        defaultImage: -1,
+                                      );
+                                }
+                              },
                               icon: const Icon(Icons.add_outlined),
                             )
                           ],
