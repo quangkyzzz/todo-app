@@ -35,25 +35,25 @@ class TaskListViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateIsCompleted({required Task task, required bool newValue}) {
+  void updateIsCompleted({required Task task, required bool isCompleted}) {
     currentTaskList.tasks
         .firstWhere((element) => element.id == task.id)
-        .isCompleted = newValue;
+        .isCompleted = isCompleted;
     notifyListeners();
   }
 
   void updateIsImportant({
     required Task task,
-    required bool newValue,
+    required bool isImportant,
     required Settings settings,
   }) {
-    if ((settings.isMoveStarTaskToTop) && (newValue)) {
+    if ((settings.isMoveStarTaskToTop) && (isImportant)) {
       currentTaskList.tasks.remove(task);
       currentTaskList.tasks.insert(0, task);
     }
     currentTaskList.tasks
         .firstWhere((element) => element.id == task.id)
-        .isImportant = newValue;
+        .isImportant = isImportant;
     notifyListeners();
   }
 

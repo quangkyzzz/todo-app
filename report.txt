@@ -8,3 +8,5 @@ Báo cáo 7/10
 Dự định làm:
     -   Chuyển frequency thành enum.
     -   Rà soát lại các lỗi.
+
+//about: update isCompleted inside taskList or task view model

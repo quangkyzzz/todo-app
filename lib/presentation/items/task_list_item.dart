@@ -74,7 +74,7 @@ class TaskListItem extends StatelessWidget {
               onChanged: (bool? value) {
                 context
                     .read<TaskListViewModel>()
-                    .updateIsCompleted(task: task, newValue: value!);
+                    .updateIsCompleted(task: task, isCompleted: value!);
               },
             ),
             (isAllBottomIconNull)
