@@ -76,6 +76,14 @@ class Task {
         newStepList.add(taskStep.copyWith());
       }
     }
+    List<String> newFilePath = [];
+    if (filePath != null) {
+      newFilePath = newFilePath;
+    } else {
+      for (String file in this.filePath) {
+        newFilePath.add(file);
+      }
+    }
     return Task(
       id: id ?? this.id,
       taskListID: taskListID ?? this.taskListID,
@@ -89,7 +97,7 @@ class Task {
       remindTime: remindTime ?? this.remindTime,
       repeatFrequency: repeatFrequency ?? this.repeatFrequency,
       frequencyMultiplier: frequencyMultiplier ?? this.frequencyMultiplier,
-      filePath: filePath ?? this.filePath,
+      filePath: newFilePath,
       note: note ?? this.note,
     );
   }
