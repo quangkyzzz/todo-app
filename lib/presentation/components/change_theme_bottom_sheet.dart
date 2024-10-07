@@ -30,12 +30,9 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
     if (!context.mounted) return;
     if (result != null) {
       String resultPath = result.files.single.path!;
-      TaskList updatedTaskList =
-          context.read<TaskListViewModel>().currentTaskList;
-      updatedTaskList.defaultImage = -1;
-      updatedTaskList.backgroundImage = resultPath;
-      context.read<TaskListViewModel>().updateTaskList(
-            updatedTaskList: updatedTaskList,
+      context.read<TaskListViewModel>().updateBackGroundImage(
+            backGroundImage: resultPath,
+            defaultImage: -1,
           );
     }
   }
@@ -100,12 +97,8 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
                       children: MyTheme.colorThemeList.map((color) {
                         return SelectColorButton(
                           onTap: () {
-                            TaskList updatedTaskList = context
-                                .read<TaskListViewModel>()
-                                .currentTaskList;
-                            updatedTaskList.themeColor = color;
-                            context.read<TaskListViewModel>().updateTaskList(
-                                  updatedTaskList: updatedTaskList,
+                            context.read<TaskListViewModel>().updateThemeColor(
+                                  themeColor: color,
                                 );
                           },
                           color: color,
@@ -130,8 +123,9 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
                                 updatedTaskList.backgroundImage = null;
                                 context
                                     .read<TaskListViewModel>()
-                                    .updateTaskList(
-                                      updatedTaskList: updatedTaskList,
+                                    .updateBackGroundImage(
+                                      backGroundImage: null,
+                                      defaultImage: -1,
                                     );
                               },
                               text: 'Clean',
@@ -141,16 +135,12 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
                               return SelectImageButton(
                                 imgPath: imgPath,
                                 onTap: () {
-                                  TaskList updatedTaskList = context
-                                      .read<TaskListViewModel>()
-                                      .currentTaskList;
-                                  updatedTaskList.backgroundImage = imgPath;
-                                  updatedTaskList.defaultImage =
-                                      MyTheme.imageList.indexOf(imgPath);
                                   context
                                       .read<TaskListViewModel>()
-                                      .updateTaskList(
-                                        updatedTaskList: updatedTaskList,
+                                      .updateBackGroundImage(
+                                        backGroundImage: imgPath,
+                                        defaultImage:
+                                            MyTheme.imageList.indexOf(imgPath),
                                       );
                                 },
                                 isHighLighted: (context
@@ -174,8 +164,9 @@ class _ChangeThemeBottomSheetState extends State<ChangeThemeBottomSheet> {
                                 updatedTaskList.backgroundImage = null;
                                 context
                                     .read<TaskListViewModel>()
-                                    .updateTaskList(
-                                      updatedTaskList: updatedTaskList,
+                                    .updateBackGroundImage(
+                                      backGroundImage: null,
+                                      defaultImage: -1,
                                     );
                               },
                               text: 'Clean',

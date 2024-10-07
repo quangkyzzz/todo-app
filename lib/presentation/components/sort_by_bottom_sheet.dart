@@ -25,6 +25,7 @@ class SortByBottomSheet extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           InkWell(
+            //fix sortByType to enum
             onTap: () {
               context.read<TaskListViewModel>().sortTaskListBy(
                     sortType: 'important',

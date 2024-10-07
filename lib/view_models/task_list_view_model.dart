@@ -57,6 +57,22 @@ class TaskListViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updateBackGroundImage({
+    required String? backGroundImage,
+    required int defaultImage,
+  }) {
+    currentTaskList.backgroundImage = backGroundImage;
+    currentTaskList.defaultImage = defaultImage;
+    notifyListeners();
+  }
+
+  void updateThemeColor({
+    required Color themeColor,
+  }) {
+    currentTaskList.themeColor = themeColor;
+    notifyListeners();
+  }
+
   void sortTaskListBy({
     required String sortType,
     required bool isAscending,
