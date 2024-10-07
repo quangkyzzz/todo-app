@@ -23,15 +23,12 @@ class ChangeSortTypeButton extends StatelessWidget {
                   sortType: readCurrentTaskList.sortByType!['sortType'],
                   isAscending: !readCurrentTaskList.sortByType!['asc'],
                 );
-            TaskList updatedTaskList = readCurrentTaskList.copyWith(
-              sortByType: {
+            context.read<TaskListViewModel>().updateSortType(
+              newSortType: {
                 'sortType': readCurrentTaskList.sortByType!['sortType'],
                 'asc': !readCurrentTaskList.sortByType!['asc'],
               },
             );
-            context
-                .read<TaskListViewModel>()
-                .updateTaskList(updatedTaskList: updatedTaskList);
           },
           child: Row(
             children: [
@@ -60,12 +57,7 @@ class ChangeSortTypeButton extends StatelessWidget {
                       ? false
                       : true,
                 );
-            TaskList updatedTaskList =
-                context.read<TaskListViewModel>().currentTaskList;
-            updatedTaskList.sortByType = null;
-            context
-                .read<TaskListViewModel>()
-                .updateTaskList(updatedTaskList: updatedTaskList);
+            context.read<TaskListViewModel>().updateSortType(newSortType: null);
           },
           icon: Icon(
             Icons.close_outlined,

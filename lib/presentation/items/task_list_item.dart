@@ -72,14 +72,9 @@ class TaskListItem extends StatelessWidget {
               shape: const CircleBorder(),
               value: task.isCompleted,
               onChanged: (bool? value) {
-                TaskList updatedTaskList =
-                    context.read<TaskListViewModel>().currentTaskList;
-                updatedTaskList.tasks
-                    .firstWhere((e) => e.id == task.id)
-                    .isCompleted = value!;
-                context.read<TaskListViewModel>().updateTaskList(
-                      updatedTaskList: updatedTaskList,
-                    );
+                context
+                    .read<TaskListViewModel>()
+                    .updateIsCompleted(task: task, newValue: value!);
               },
             ),
             (isAllBottomIconNull)

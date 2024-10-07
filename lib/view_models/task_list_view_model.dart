@@ -28,6 +28,35 @@ class TaskListViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updateSortType({
+    Map<String, dynamic>? newSortType,
+  }) {
+    currentTaskList.sortByType = newSortType;
+    notifyListeners();
+  }
+
+  void updateIsCompleted({required Task task, required bool newValue}) {
+    currentTaskList.tasks
+        .firstWhere((element) => element.id == task.id)
+        .isCompleted = newValue;
+    notifyListeners();
+  }
+
+  void updateIsImportant({
+    required Task task,
+    required bool newValue,
+    required Settings settings,
+  }) {
+    if ((settings.isMoveStarTaskToTop) && (newValue)) {
+      currentTaskList.tasks.remove(task);
+      currentTaskList.tasks.insert(0, task);
+    }
+    currentTaskList.tasks
+        .firstWhere((element) => element.id == task.id)
+        .isImportant = newValue;
+    notifyListeners();
+  }
+
   void sortTaskListBy({
     required String sortType,
     required bool isAscending,
