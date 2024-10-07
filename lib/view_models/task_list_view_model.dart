@@ -131,6 +131,7 @@ class TaskListViewModel extends ChangeNotifier {
   }
 
   void createNewTask({
+    required String id,
     required String taskName,
     required bool isCompleted,
     required Settings settings,
@@ -138,10 +139,10 @@ class TaskListViewModel extends ChangeNotifier {
     bool isImportant = false,
     DateTime? dueDate,
     DateTime? remindTime,
-    String repeatFrequency = '',
+    Frequency? repeatFrequency,
   }) {
     Task task = Task(
-      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      id: id,
       taskListID:
           (int.parse(currentTaskList.id) < 10) ? '1' : currentTaskList.id,
       title: taskName,
@@ -158,26 +159,7 @@ class TaskListViewModel extends ChangeNotifier {
     } else {
       currentTaskList.tasks.add(task);
     }
-    if (task.remindTime != null) {
-      if (task.repeatFrequency == '') {
-        BackGroundService.executeScheduleBackGroundTask(
-          taskID: task.id,
-          taskTitle: task.title,
-          taskListTitle: currentTaskList.title,
-          isPlaySound: settings.isPlaySoundOnComplete,
-          remindTime: task.remindTime!,
-        );
-      } else {
-        BackGroundService.executePeriodicBackGroundTask(
-          taskTitle: task.title,
-          taskID: task.id,
-          taskListTitle: currentTaskList.title,
-          remindTime: task.remindTime!,
-          frequency: task.repeatFrequency,
-          isPlaySound: settings.isPlaySoundOnComplete,
-        );
-      }
-    }
+
     notifyListeners();
   }
 

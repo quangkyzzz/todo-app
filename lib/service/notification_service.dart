@@ -7,7 +7,6 @@ import 'package:timezone/data/latest_all.dart' as tz;
 
 class NotificationService {
   NotificationService();
-
   static final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
   static final BehaviorSubject<String> behaviorSubject = BehaviorSubject();

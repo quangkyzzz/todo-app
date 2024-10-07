@@ -1,5 +1,5 @@
 import 'dart:core';
-
+import '../ultility/enum.dart';
 import 'task_step.dart';
 
 class Task {
@@ -13,7 +13,8 @@ class Task {
   List<TaskStep> stepList;
   DateTime? dueDate;
   DateTime? remindTime;
-  String repeatFrequency;
+  Frequency? repeatFrequency;
+  int frequencyMultiplier;
   List<String> filePath;
   String note;
 
@@ -29,7 +30,8 @@ class Task {
     this.dueDate,
     this.remindTime,
     List<String>? filePath,
-    this.repeatFrequency = '',
+    this.repeatFrequency,
+    this.frequencyMultiplier = 1,
     this.note = '',
   })  : id = id ?? DateTime.now().millisecondsSinceEpoch.toString(),
         createDate = createDate ?? DateTime.now(),
@@ -45,6 +47,7 @@ class Task {
     dueDate = copyTask.dueDate;
     remindTime = copyTask.remindTime;
     repeatFrequency = copyTask.repeatFrequency;
+    frequencyMultiplier = copyTask.frequencyMultiplier;
     filePath = copyTask.filePath;
     note = copyTask.note;
   }
@@ -60,7 +63,8 @@ class Task {
     List<TaskStep>? stepList,
     DateTime? dueDate,
     DateTime? remindTime,
-    String? repeatFrequency,
+    Frequency? repeatFrequency,
+    int? frequencyMultiplier,
     List<String>? filePath,
     String? note,
   }) {
@@ -84,6 +88,7 @@ class Task {
       dueDate: dueDate ?? this.dueDate,
       remindTime: remindTime ?? this.remindTime,
       repeatFrequency: repeatFrequency ?? this.repeatFrequency,
+      frequencyMultiplier: frequencyMultiplier ?? this.frequencyMultiplier,
       filePath: filePath ?? this.filePath,
       note: note ?? this.note,
     );
@@ -103,6 +108,7 @@ class Task {
     result.addAll({'dueDate': dueDate});
     result.addAll({'remindTime': remindTime});
     result.addAll({'repeatFreaquency': repeatFrequency});
+    result.addAll({'frequencyMultiplier': frequencyMultiplier});
     result.addAll({'filePath': filePath});
     result.addAll({'note': note});
 
@@ -122,7 +128,8 @@ class Task {
       stepList: map['stepList'] ?? [],
       dueDate: map['dueDate'],
       remindTime: map['remindTime'],
-      repeatFrequency: map['repeatFrequency'] ?? '',
+      repeatFrequency: map['repeatFrequency'],
+      frequencyMultiplier: map['frequencyMultiplier'],
       filePath: map['filePath'] ?? [],
       note: map['note'] ?? '',
     );

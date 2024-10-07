@@ -1,5 +1,6 @@
 // ignore_for_file: discarded_futures
 
+import '../ultility/enum.dart';
 import 'notification_service.dart';
 import 'package:workmanager/workmanager.dart';
 
@@ -13,7 +14,7 @@ void callbackDispatcher() {
     bool isWeekDay = inputData['isWeekDay'] ?? false;
     bool isMonthly = inputData['isMonthly'] ?? false;
     bool isYearly = inputData['isYearly'] ?? false;
-    int period = inputData['period'] ?? 1;
+    int frequencyMultiplier = inputData['frequencyMultiplier'] ?? 1;
     int remindDay = inputData['remindDay'] ?? 1;
     int remindMonth = inputData['remindMonth'] ?? 1;
     int remindYear = inputData['remindYear'] ?? 1;
@@ -23,12 +24,12 @@ void callbackDispatcher() {
       isExecute = true;
     } else if ((isMonthly) &&
         (today.day == remindDay) &&
-        (((today.month - remindMonth) % period) == 0)) {
+        (((today.month - remindMonth) % frequencyMultiplier) == 0)) {
       isExecute = true;
     } else if ((isYearly) &&
         (today.day == remindDay) &&
         (today.month == remindMonth) &&
-        (((today.year - remindYear) % period) == 0)) {
+        (((today.year - remindYear) % frequencyMultiplier) == 0)) {
       isExecute = true;
     } else if ((!isWeekDay) && (!isMonthly) && (!isYearly)) {
       isExecute = true;
@@ -52,7 +53,8 @@ class BackGroundService {
     required String taskTitle,
     required String taskListTitle,
     required DateTime remindTime,
-    required String frequency,
+    required Frequency frequency,
+    required int frequencyMultiplier,
     required bool isPlaySound,
   }) async {
     bool isWeekDay = false;
@@ -63,32 +65,31 @@ class BackGroundService {
     int remindYear = remindTime.year;
 
     Duration delayTime = remindTime.difference(DateTime.now());
-    int period = int.parse(frequency.split(' ').first);
-    String interval = frequency.split(' ')[1];
+
     BackGroundService.cancelTaskByID(id: taskID);
     if (delayTime.inSeconds < 0) {
       int secondDelay = delayTime.inSeconds % const Duration(days: 1).inSeconds;
       delayTime = Duration(seconds: secondDelay);
     }
-    late Duration frequencyDuration;
-    switch (interval) {
-      case 'Days':
-        frequencyDuration = Duration(days: period);
-      case 'Weekdays':
+    late Duration waitDuration;
+    switch (frequency) {
+      case Frequency.day:
+        waitDuration = Duration(days: frequencyMultiplier);
+      case Frequency.weekday:
         {
-          frequencyDuration = const Duration(days: 15);
+          waitDuration = const Duration(days: 1);
           isWeekDay = true;
         }
-      case 'Weeks':
-        frequencyDuration = Duration(days: period * 7);
-      case 'Months':
+      case Frequency.week:
+        waitDuration = Duration(days: frequencyMultiplier * 7);
+      case Frequency.month:
         {
-          frequencyDuration = const Duration(days: 1);
+          waitDuration = const Duration(days: 1);
           isMonthly = true;
         }
-      case 'Years':
+      case Frequency.year:
         {
-          frequencyDuration = const Duration(days: 1);
+          waitDuration = const Duration(days: 1);
           isYearly = true;
         }
     }
@@ -96,11 +97,11 @@ class BackGroundService {
       taskID,
       taskTitle,
       initialDelay: delayTime,
-      frequency: frequencyDuration,
+      frequency: waitDuration,
       inputData: {
         'id': (taskID.length > 10) ? taskID.substring(6) : taskID,
         'taskTitle': taskTitle,
-        'title': taskTitle,
+        'title': taskListTitle,
         'remindYear': remindYear,
         'remindMonth': remindMonth,
         'remindDay': remindDay,
@@ -108,7 +109,7 @@ class BackGroundService {
         'isWeekDay': isWeekDay,
         'isMonthly': isMonthly,
         'isYearly': isYearly,
-        'period': period,
+        'frequencyMultiplier': frequencyMultiplier,
       },
     );
   }

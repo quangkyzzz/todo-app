@@ -1,10 +1,11 @@
-enum Freaquency {
+enum Frequency {
   day('Day'),
+  weekday('Weekday'),
   week('Week'),
   month('Month'),
   year('Year');
 
-  const Freaquency(this.value);
+  const Frequency(this.value);
   final String value;
 }
 

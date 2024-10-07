@@ -7,6 +7,7 @@ import '../../../models/settings.dart';
 import '../../../models/task_step.dart';
 import '../../../provider/settings_provider.dart';
 import '../../../service/background_service.dart';
+import '../../../ultility/enum.dart';
 import '../../../view_models/task_view_model.dart';
 import '../../components/show_custom_repeat_time_dialog.dart';
 import '../../components/show_date_time_picker.dart';
@@ -48,7 +49,7 @@ class TaskPage extends StatelessWidget {
         items: [
           PopupMenuItem(
             onTap: () {
-              onCompleteSetRepeat(context, '1 Days');
+              onCompleteSetRepeat(context, Frequency.day);
             },
             child: const CustomPopupItem(
               text: 'Daily',
@@ -57,7 +58,7 @@ class TaskPage extends StatelessWidget {
           ),
           PopupMenuItem(
             onTap: () {
-              onCompleteSetRepeat(context, '1 Weekdays');
+              onCompleteSetRepeat(context, Frequency.weekday);
             },
             child: const CustomPopupItem(
               text: 'Weekdays',
@@ -66,7 +67,7 @@ class TaskPage extends StatelessWidget {
           ),
           PopupMenuItem(
             onTap: () {
-              onCompleteSetRepeat(context, '1 Weeks');
+              onCompleteSetRepeat(context, Frequency.week);
             },
             child: const CustomPopupItem(
               text: 'Weekly',
@@ -75,7 +76,7 @@ class TaskPage extends StatelessWidget {
           ),
           PopupMenuItem(
             onTap: () {
-              onCompleteSetRepeat(context, '1 Months');
+              onCompleteSetRepeat(context, Frequency.month);
             },
             child: const CustomPopupItem(
               text: 'Monthly',
@@ -84,7 +85,7 @@ class TaskPage extends StatelessWidget {
           ),
           PopupMenuItem(
             onTap: () {
-              onCompleteSetRepeat(context, '1 Years');
+              onCompleteSetRepeat(context, Frequency.year);
             },
             child: const CustomPopupItem(
               text: 'Yearly',
@@ -93,10 +94,15 @@ class TaskPage extends StatelessWidget {
           ),
           PopupMenuItem(
             onTap: () async {
-              String? result = await showCustomRepeatTimeDialog(context);
+              (int, Frequency)? result =
+                  await showCustomRepeatTimeDialog(context);
               if (!context.mounted) return;
               if (result != null) {
-                onCompleteSetRepeat(context, result);
+                onCompleteSetRepeat(
+                  context,
+                  result.$2,
+                  frequencyMultiplier: result.$1,
+                );
               }
             },
             child: const CustomPopupItem(
@@ -108,14 +114,20 @@ class TaskPage extends StatelessWidget {
       );
     } else {
       Task updatedTask = context.read<TaskViewModel>().currentTask;
-      updatedTask.repeatFrequency = '';
+      updatedTask.repeatFrequency = null;
+      updatedTask.frequencyMultiplier = 1;
       context.read<TaskViewModel>().updateTask(updatedTask: updatedTask);
     }
   }
 
-  void onCompleteSetRepeat(BuildContext context, String frequency) {
+  void onCompleteSetRepeat(
+    BuildContext context,
+    Frequency frequency, {
+    int frequencyMultiplier = 1,
+  }) {
     Task updatedTask = context.read<TaskViewModel>().currentTask;
     updatedTask.repeatFrequency = frequency;
+    updatedTask.frequencyMultiplier = frequencyMultiplier;
     updatedTask.remindTime ??= DateTime(
       DateTime.now().year,
       DateTime.now().month,
@@ -130,37 +142,30 @@ class TaskPage extends StatelessWidget {
     unawaited(initializeDateFormatting());
     Task watchCurrentTask = context.watch<TaskViewModel>().currentTask;
     TaskViewModel readTaskViewModel = context.read<TaskViewModel>();
-    String repeatActiveText = (watchCurrentTask.repeatFrequency).toLowerCase();
-    if (repeatActiveText.split(' ').first == '1') {
-      var temp = repeatActiveText.split(' ')[1];
-      repeatActiveText = temp.substring(0, temp.length - 1);
-    }
-    String remindActiveText = DateFormat('h:mm a, MMM d')
-        .format(watchCurrentTask.remindTime ?? DateTime(2000));
-    String dueActiveText = DateFormat('E, MMM d')
-        .format(watchCurrentTask.dueDate ?? DateTime(2000));
+
     return WillPopScope(
       onWillPop: () async {
         Settings settings = context.read<SettingsProvider>().settings;
         Task currentTask = context.read<TaskViewModel>().currentTask;
         BackGroundService.cancelTaskByID(id: currentTask.id);
         if (currentTask.remindTime != null) {
-          if (currentTask.repeatFrequency == '') {
+          if (currentTask.repeatFrequency != null) {
+            BackGroundService.executePeriodicBackGroundTask(
+              taskTitle: currentTask.title,
+              taskID: currentTask.id,
+              taskListTitle: currentTaskListName,
+              remindTime: currentTask.remindTime!,
+              frequency: currentTask.repeatFrequency!,
+              frequencyMultiplier: currentTask.frequencyMultiplier,
+              isPlaySound: settings.isPlaySoundOnComplete,
+            );
+          } else {
             BackGroundService.executeScheduleBackGroundTask(
               taskTitle: currentTask.title,
               taskID: currentTask.id,
               taskListTitle: currentTaskListName,
               isPlaySound: settings.isPlaySoundOnComplete,
               remindTime: currentTask.remindTime!,
-            );
-          } else {
-            BackGroundService.executePeriodicBackGroundTask(
-              taskTitle: currentTask.title,
-              taskID: currentTask.id,
-              taskListTitle: currentTaskListName,
-              remindTime: currentTask.remindTime!,
-              frequency: currentTask.repeatFrequency,
-              isPlaySound: settings.isPlaySoundOnComplete,
             );
           }
         }
@@ -266,84 +271,105 @@ class TaskPage extends StatelessWidget {
               ),
               //////////////
               //Remind item
-              TaskPageItem(
-                isActive: (watchCurrentTask.remindTime != null),
-                icon: Icons.notifications_outlined,
-                text: 'Remind me',
-                onTap: ({bool isDisable = false}) async {
-                  Task updatedTask = context.read<TaskViewModel>().currentTask;
-                  if (!isDisable) {
-                    DateTime? tempRemindTime = await showDateTimePicker(
-                      context: context,
-                      initialDate: watchCurrentTask.remindTime ??
-                          DateTime(
-                            DateTime.now().year,
-                            DateTime.now().month,
-                            DateTime.now().day,
-                            9,
-                          ),
-                    );
-                    if (!context.mounted) return;
+              Builder(builder: (context) {
+                String remindActiveText = DateFormat('h:mm a, MMM d')
+                    .format(watchCurrentTask.remindTime ?? DateTime(2000));
+                return TaskPageItem(
+                  isActive: (watchCurrentTask.remindTime != null),
+                  icon: Icons.notifications_outlined,
+                  text: 'Remind me',
+                  onTap: ({bool isDisable = false}) async {
+                    Task updatedTask =
+                        context.read<TaskViewModel>().currentTask;
+                    if (!isDisable) {
+                      DateTime? tempRemindTime = await showDateTimePicker(
+                        context: context,
+                        initialDate: watchCurrentTask.remindTime ??
+                            DateTime(
+                              DateTime.now().year,
+                              DateTime.now().month,
+                              DateTime.now().day,
+                              9,
+                            ),
+                      );
+                      if (!context.mounted) return;
 
-                    if (tempRemindTime != null) {
-                      updatedTask.remindTime = tempRemindTime;
+                      if (tempRemindTime != null) {
+                        updatedTask.remindTime = tempRemindTime;
+                        readTaskViewModel.updateTask(updatedTask: updatedTask);
+                      }
+                    } else {
+                      updatedTask.remindTime = null;
+                      updatedTask.repeatFrequency = null;
                       readTaskViewModel.updateTask(updatedTask: updatedTask);
                     }
-                  } else {
-                    updatedTask.remindTime = null;
-                    updatedTask.repeatFrequency = '';
-                    readTaskViewModel.updateTask(updatedTask: updatedTask);
-                  }
-                },
-                activeText: 'Remind at $remindActiveText',
-              ),
+                  },
+                  activeText: 'Remind at $remindActiveText',
+                );
+              }),
               ////////////////
               //Due date item
-              TaskPageItem(
-                isActive: (watchCurrentTask.dueDate != null),
-                icon: Icons.calendar_today_outlined,
-                text: 'Add due date',
-                onTap: ({bool isDisable = false}) async {
-                  Settings settings = context.read<SettingsProvider>().settings;
-                  Task updatedTask = context.read<TaskViewModel>().currentTask;
-                  if (!isDisable) {
-                    DateTime? newDueDate = await showDatePicker(
-                      context: context,
-                      initialDate: watchCurrentTask.dueDate ?? DateTime.now(),
-                      firstDate: DateTime(2020),
-                      lastDate: DateTime(2050),
-                    );
-                    if (newDueDate != null) {
-                      updatedTask.dueDate = newDueDate;
-                      DateTime today = DateTime(
-                        DateTime.now().year,
-                        DateTime.now().month,
-                        DateTime.now().day,
+              Builder(builder: (context) {
+                String dueActiveText = DateFormat('E, MMM d')
+                    .format(watchCurrentTask.dueDate ?? DateTime(2000));
+                return TaskPageItem(
+                  isActive: (watchCurrentTask.dueDate != null),
+                  icon: Icons.calendar_today_outlined,
+                  text: 'Add due date',
+                  onTap: ({bool isDisable = false}) async {
+                    Settings settings =
+                        context.read<SettingsProvider>().settings;
+                    Task updatedTask =
+                        context.read<TaskViewModel>().currentTask;
+                    if (!isDisable) {
+                      DateTime? newDueDate = await showDatePicker(
+                        context: context,
+                        initialDate: watchCurrentTask.dueDate ?? DateTime.now(),
+                        firstDate: DateTime(2020),
+                        lastDate: DateTime(2050),
                       );
-                      if ((newDueDate.isAtSameMomentAs(today)) &&
-                          (settings.isShowDueToday)) {
-                        updatedTask.isOnMyDay = true;
+                      if (newDueDate != null) {
+                        updatedTask.dueDate = newDueDate;
+                        DateTime today = DateTime(
+                          DateTime.now().year,
+                          DateTime.now().month,
+                          DateTime.now().day,
+                        );
+                        if ((newDueDate.isAtSameMomentAs(today)) &&
+                            (settings.isShowDueToday)) {
+                          updatedTask.isOnMyDay = true;
+                        }
                       }
+                    } else {
+                      updatedTask.dueDate = null;
                     }
-                  } else {
-                    updatedTask.dueDate = null;
-                  }
-                  readTaskViewModel.updateTask(updatedTask: updatedTask);
-                },
-                activeText: 'Due $dueActiveText',
-              ),
+                    readTaskViewModel.updateTask(updatedTask: updatedTask);
+                  },
+                  activeText: 'Due $dueActiveText',
+                );
+              }),
               //////////////
               //Repeat item
-              TaskPageItem(
-                isActive: (watchCurrentTask.repeatFrequency != ''),
-                icon: Icons.repeat_outlined,
-                key: popupKey,
-                text: 'Repeat',
-                onTap: ({bool isDisable = false}) async {
-                  onTapRepeat(context, isDisable: isDisable);
-                },
-                activeText: 'Repeat every $repeatActiveText',
-              ),
+              Builder(builder: (context) {
+                String repeatActiveText =
+                    (watchCurrentTask.repeatFrequency ?? Frequency.day)
+                        .value
+                        .toLowerCase();
+                if (watchCurrentTask.frequencyMultiplier > 1) {
+                  repeatActiveText =
+                      '${watchCurrentTask.frequencyMultiplier} ${repeatActiveText}s';
+                }
+                return TaskPageItem(
+                  isActive: (watchCurrentTask.repeatFrequency != null),
+                  icon: Icons.repeat_outlined,
+                  key: popupKey,
+                  text: 'Repeat',
+                  onTap: ({bool isDisable = false}) async {
+                    onTapRepeat(context, isDisable: isDisable);
+                  },
+                  activeText: 'Repeat every $repeatActiveText',
+                );
+              }),
               const SizedBox(height: 6),
               //////////////////////////
               //Add and edit file button

@@ -1,32 +1,16 @@
 import 'package:flutter/material.dart';
 import '../../themes.dart';
+import '../../ultility/enum.dart';
 
-Future<String?> showCustomRepeatTimeDialog(BuildContext context) {
-  return showDialog<String>(
+Future<(int, Frequency)?> showCustomRepeatTimeDialog(BuildContext context) {
+  return showDialog<(int, Frequency)>(
     context: context,
     builder: (context) {
-      int popUpIndex = 0;
-      List<Map<String, dynamic>> listPopUpMennu = [
-        {
-          'index': 0,
-          'text': 'Days',
-        },
-        {
-          'index': 1,
-          'text': 'Weeks',
-        },
-        {
-          'index': 2,
-          'text': 'Months',
-        },
-        {
-          'index': 3,
-          'text': 'Years',
-        },
-      ];
-
+      TextEditingController controller = TextEditingController(text: '1');
+      Frequency selectedFrequency = Frequency.day;
+      List<Frequency> listPopUpMennu = Frequency.values.toList()
+        ..remove(Frequency.weekday);
       return StatefulBuilder(builder: (context, setState) {
-        TextEditingController controller = TextEditingController(text: '1');
         return AlertDialog(
           title: const Text('Repeat every:'),
           content: Row(
@@ -85,16 +69,16 @@ Future<String?> showCustomRepeatTimeDialog(BuildContext context) {
                   itemBuilder: (BuildContext context) {
                     return listPopUpMennu.map((item) {
                       return PopupMenuItem(
-                        child: Text(item['text']),
+                        child: Text(item.value),
                         onTap: () {
                           setState(() {
-                            popUpIndex = item['index'];
+                            selectedFrequency = item;
                           });
                         },
                       );
                     }).toList();
                   },
-                  child: Text(listPopUpMennu[popUpIndex]['text']),
+                  child: Text(selectedFrequency.value),
                 ),
               )
             ],
@@ -113,8 +97,7 @@ Future<String?> showCustomRepeatTimeDialog(BuildContext context) {
                 } else {
                   int numberOfDay = int.parse(controller.text);
 
-                  String result =
-                      '$numberOfDay ${listPopUpMennu[popUpIndex]['text']}';
+                  (int, Frequency) result = (numberOfDay, selectedFrequency);
                   Navigator.pop(context, result);
                 }
               },

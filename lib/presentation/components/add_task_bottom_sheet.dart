@@ -6,7 +6,9 @@ import '../../models/settings.dart';
 import '../../models/task.dart';
 import '../../models/task_list.dart';
 import '../../provider/settings_provider.dart';
+import '../../service/background_service.dart';
 import '../../themes.dart';
+import '../../ultility/enum.dart';
 import '../../view_models/task_list_view_model.dart';
 import 'package:flutter/material.dart';
 import 'custom_task_button.dart';
@@ -59,10 +61,11 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
         DateFormat('E, MMM d').format(newTask.dueDate ?? DateTime(2000));
     String remindHightLightText = DateFormat('h:mm a, MMM d')
         .format(newTask.remindTime ?? DateTime(2000));
-    String repeatHighLightText = (newTask.repeatFrequency).toLowerCase();
-    if (repeatHighLightText.split(' ').first == '1') {
-      var temp = repeatHighLightText.split(' ')[1];
-      repeatHighLightText = temp.substring(0, temp.length - 1);
+    String repeatHighLightText =
+        (newTask.repeatFrequency ?? Frequency.day).value.toLowerCase();
+    if (newTask.frequencyMultiplier > 1) {
+      repeatHighLightText =
+          '${newTask.frequencyMultiplier} ${repeatHighLightText}s';
     }
     return Padding(
       padding:
@@ -114,6 +117,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                           widget.mContext,
                           listen: false,
                         ).createNewTask(
+                          id: newTask.id,
                           settings: settings,
                           taskName: _controller.text,
                           isCompleted: isChecked,
@@ -123,6 +127,27 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                           remindTime: newTask.remindTime,
                           repeatFrequency: newTask.repeatFrequency,
                         );
+                        if (newTask.remindTime != null) {
+                          if (newTask.repeatFrequency == null) {
+                            BackGroundService.executeScheduleBackGroundTask(
+                              taskID: newTask.id,
+                              taskTitle: _controller.text,
+                              taskListTitle: widget.taskList.title,
+                              isPlaySound: settings.isPlaySoundOnComplete,
+                              remindTime: newTask.remindTime!,
+                            );
+                          } else {
+                            BackGroundService.executePeriodicBackGroundTask(
+                              taskTitle: _controller.text,
+                              taskID: newTask.id,
+                              taskListTitle: widget.taskList.title,
+                              remindTime: newTask.remindTime!,
+                              frequency: newTask.repeatFrequency!,
+                              frequencyMultiplier: newTask.frequencyMultiplier,
+                              isPlaySound: settings.isPlaySoundOnComplete,
+                            );
+                          }
+                        }
                         _controller.clear();
                         setState(() {
                           isChecked = false;
@@ -210,8 +235,8 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                       onTapDisable: () {
                         setState(() {
                           newTask.remindTime = null;
-                          if (newTask.repeatFrequency != '') {
-                            newTask.repeatFrequency = '';
+                          if (newTask.repeatFrequency != null) {
+                            newTask.repeatFrequency = null;
                           }
                         });
                       },
@@ -222,13 +247,14 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                       themeColor: widget.themeColor,
                       icon: Icons.repeat_outlined,
                       text: 'Repeat',
-                      isHighLighted: (newTask.repeatFrequency != ''),
+                      isHighLighted: (newTask.repeatFrequency != null),
                       onTap: () async {
-                        String? result =
+                        (int, Frequency)? result =
                             await showCustomRepeatTimeDialog(context);
                         if (result != null) {
                           setState(() {
-                            newTask.repeatFrequency = result;
+                            newTask.frequencyMultiplier = result.$1;
+                            newTask.repeatFrequency = result.$2;
                             newTask.remindTime ??= DateTime(
                               DateTime.now().year,
                               DateTime.now().month,
@@ -240,7 +266,8 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                       },
                       onTapDisable: () {
                         setState(() {
-                          newTask.repeatFrequency = '';
+                          newTask.repeatFrequency = null;
+                          newTask.frequencyMultiplier = 1;
                         });
                       },
                     ),

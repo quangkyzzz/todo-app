@@ -36,7 +36,7 @@ class TaskListItem extends StatelessWidget {
         (task.stepList.isEmpty) &&
         (task.dueDate == null) &&
         (task.remindTime == null) &&
-        (task.repeatFrequency == '') &&
+        (task.repeatFrequency == null) &&
         (task.filePath.isEmpty) &&
         (task.note == ''));
     return Container(
@@ -181,7 +181,7 @@ class TaskListItem extends StatelessWidget {
                             }
                           }),
                           Builder(builder: (context) {
-                            if (task.repeatFrequency != '') {
+                            if (task.repeatFrequency != null) {
                               bool tempFirstIcon = isFirstIcon;
                               isFirstIcon = false;
                               return ItemBottomIcon(
