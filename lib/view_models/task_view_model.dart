@@ -9,11 +9,6 @@ class TaskViewModel extends ChangeNotifier {
   bool isLoadingFile = false;
   TaskViewModel({required this.currentTask});
 
-  void updateTask({required updatedTask}) {
-    currentTask = updatedTask;
-    notifyListeners();
-  }
-
   void updateTaskTitle({required String newTitle}) {
     currentTask.title = newTitle;
     notifyListeners();
@@ -56,6 +51,16 @@ class TaskViewModel extends ChangeNotifier {
 
   void updateNote({required String newNote}) {
     currentTask.note = newNote;
+    notifyListeners();
+  }
+
+  void addFile({required List<String> filePath}) {
+    currentTask.filePath.addAll(filePath);
+    notifyListeners();
+  }
+
+  void removeFile({required String removeFile}) {
+    currentTask.filePath.remove(removeFile);
     notifyListeners();
   }
 

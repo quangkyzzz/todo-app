@@ -380,11 +380,7 @@ class TaskPage extends StatelessWidget {
                             await OpenFilex.open(path);
                           },
                           onClose: () {
-                            Task updatedTask =
-                                context.read<TaskViewModel>().currentTask;
-                            updatedTask.filePath.remove(path);
-                            readTaskViewModel.updateTask(
-                                updatedTask: updatedTask);
+                            readTaskViewModel.removeFile(removeFile: path);
                           },
                         );
                       },
@@ -401,16 +397,15 @@ class TaskPage extends StatelessWidget {
                 icon: Icons.attach_file_outlined,
                 text: 'Add file',
                 onTap: ({bool isDisable = false}) async {
-                  Task updatedTask = context.read<TaskViewModel>().currentTask;
                   readTaskViewModel.changeLoadingFileStatusToTrue();
                   FilePickerResult? result =
                       await FilePicker.platform.pickFiles(
                     allowMultiple: true,
                   );
                   if (result != null) {
-                    updatedTask.filePath
-                        .addAll(result.files.map((file) => file.path!));
-                    readTaskViewModel.updateTask(updatedTask: updatedTask);
+                    readTaskViewModel.addFile(
+                      filePath: result.files.map((file) => file.path!).toList(),
+                    );
                   }
                   readTaskViewModel.changeLoadingFileStatusToFalse();
                 },
