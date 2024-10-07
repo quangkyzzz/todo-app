@@ -34,6 +34,11 @@ class TaskViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updateDueDate({required DateTime? newDueDate}) {
+    currentTask.dueDate = newDueDate;
+    notifyListeners();
+  }
+
   void updateRepeatFrequency({required Frequency? newRepeatFrequency}) {
     currentTask.repeatFrequency = newRepeatFrequency;
     notifyListeners();
@@ -44,12 +49,22 @@ class TaskViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updateIsOnMyDay({required bool isOnMyDay}) {
+    currentTask.isOnMyDay = isOnMyDay;
+    notifyListeners();
+  }
+
   void updateNote({required String newNote}) {
     currentTask.note = newNote;
     notifyListeners();
   }
 
-  void addStep({required TaskStep newStep}) {
+  void addStep({required String stepName, required bool isCompleted}) {
+    TaskStep newStep = TaskStep(
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      stepName: stepName,
+      isCompleted: isCompleted,
+    );
     currentTask.stepList.add(newStep);
     notifyListeners();
   }

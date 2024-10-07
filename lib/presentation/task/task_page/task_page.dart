@@ -4,7 +4,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../models/settings.dart';
-import '../../../models/task_step.dart';
 import '../../../provider/settings_provider.dart';
 import '../../../service/background_service.dart';
 import '../../../ultility/enum.dart';
@@ -214,12 +213,10 @@ class TaskPage extends StatelessWidget {
                   IconButton(
                     onPressed: () {
                       if (_stepController.text != '') {
-                        TaskStep newStep = TaskStep(
-                          id: DateTime.now().millisecondsSinceEpoch.toString(),
+                        readTaskViewModel.addStep(
                           stepName: _stepController.text,
                           isCompleted: false,
                         );
-                        readTaskViewModel.addStep(newStep: newStep);
                         _stepController.clear();
                       } else {
                         FocusScope.of(context).unfocus();
@@ -239,18 +236,10 @@ class TaskPage extends StatelessWidget {
                       style: MyTheme.itemSmallTextStyle,
                       onSubmitted: (String value) {
                         if (value != '') {
-                          TaskStep newStep = TaskStep(
-                            id: DateTime.now()
-                                .millisecondsSinceEpoch
-                                .toString(),
+                          readTaskViewModel.addStep(
                             stepName: value,
                             isCompleted: false,
                           );
-                          Task updatedTask =
-                              context.read<TaskViewModel>().currentTask;
-                          updatedTask.stepList.add(newStep);
-                          readTaskViewModel.updateTask(
-                              updatedTask: updatedTask);
                           _stepController.clear();
                         } else {
                           FocusScope.of(context).unfocus();
@@ -268,9 +257,9 @@ class TaskPage extends StatelessWidget {
                 icon: Icons.wb_sunny_outlined,
                 text: 'Add to My Day',
                 onTap: ({bool isDisable = false}) {
-                  Task updatedTask = context.read<TaskViewModel>().currentTask;
-                  updatedTask.isOnMyDay = !updatedTask.isOnMyDay;
-                  readTaskViewModel.updateTask(updatedTask: updatedTask);
+                  Task currentTask = context.read<TaskViewModel>().currentTask;
+                  readTaskViewModel.updateIsOnMyDay(
+                      isOnMyDay: !currentTask.isOnMyDay);
                 },
                 activeText: 'Added to My Day',
               ),
@@ -327,8 +316,6 @@ class TaskPage extends StatelessWidget {
                   onTap: ({bool isDisable = false}) async {
                     Settings settings =
                         context.read<SettingsProvider>().settings;
-                    Task updatedTask =
-                        context.read<TaskViewModel>().currentTask;
                     if (!isDisable) {
                       DateTime? newDueDate = await showDatePicker(
                         context: context,
@@ -337,7 +324,7 @@ class TaskPage extends StatelessWidget {
                         lastDate: DateTime(2050),
                       );
                       if (newDueDate != null) {
-                        updatedTask.dueDate = newDueDate;
+                        readTaskViewModel.updateDueDate(newDueDate: newDueDate);
                         DateTime today = DateTime(
                           DateTime.now().year,
                           DateTime.now().month,
@@ -345,13 +332,12 @@ class TaskPage extends StatelessWidget {
                         );
                         if ((newDueDate.isAtSameMomentAs(today)) &&
                             (settings.isShowDueToday)) {
-                          updatedTask.isOnMyDay = true;
+                          readTaskViewModel.updateIsOnMyDay(isOnMyDay: true);
                         }
                       }
                     } else {
-                      updatedTask.dueDate = null;
+                      readTaskViewModel.updateDueDate(newDueDate: null);
                     }
-                    readTaskViewModel.updateTask(updatedTask: updatedTask);
                   },
                   activeText: 'Due $dueActiveText',
                 );
