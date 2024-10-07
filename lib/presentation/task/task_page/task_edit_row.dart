@@ -24,11 +24,9 @@ class TaskEditRow extends StatelessWidget {
             value: watchCurrentTask.isCompleted,
             shape: const CircleBorder(),
             onChanged: (bool? value) {
-              Task updatedTask = context.read<TaskViewModel>().currentTask;
-              updatedTask.isCompleted = value!;
               context
                   .read<TaskViewModel>()
-                  .updateTask(updatedTask: updatedTask);
+                  .updateIsCompleted(isCompleted: value!);
             },
           ),
         ),
@@ -41,30 +39,23 @@ class TaskEditRow extends StatelessWidget {
                 offset: textEditingController.text.length,
               )),
             onSubmitted: (String value) {
-              Task updatedTask = context.read<TaskViewModel>().currentTask;
-              updatedTask.title = value;
-              context
-                  .read<TaskViewModel>()
-                  .updateTask(updatedTask: updatedTask);
+              context.read<TaskViewModel>().updateTaskTitle(newTitle: value);
             },
             onTapOutside: (event) {
               FocusScope.of(context).unfocus();
-              Task updatedTask = context.read<TaskViewModel>().currentTask;
-              updatedTask.title = textEditingController.text;
               context
                   .read<TaskViewModel>()
-                  .updateTask(updatedTask: updatedTask);
+                  .updateTaskTitle(newTitle: textEditingController.text);
             },
           ),
         ),
         const SizedBox(width: 12),
         GestureDetector(
           onTap: () {
-            Task updatedTask = context.read<TaskViewModel>().currentTask;
-
-            updatedTask.isImportant =
-                !context.read<TaskViewModel>().currentTask.isImportant;
-            context.read<TaskViewModel>().updateTask(updatedTask: updatedTask);
+            context.read<TaskViewModel>().updateIsImportant(
+                  isImportant:
+                      !context.read<TaskViewModel>().currentTask.isImportant,
+                );
           },
           child: (watchCurrentTask.isImportant)
               ? Transform.scale(

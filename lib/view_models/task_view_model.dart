@@ -12,6 +12,21 @@ class TaskViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updateTaskTitle({required String newTitle}) {
+    currentTask.title = newTitle;
+    notifyListeners();
+  }
+
+  void updateIsCompleted({required bool isCompleted}) {
+    currentTask.isCompleted = isCompleted;
+    notifyListeners();
+  }
+
+  void updateIsImportant({required bool isImportant}) {
+    currentTask.isImportant = isImportant;
+    notifyListeners();
+  }
+
   void updateNote({required String newNote}) {
     currentTask.note = newNote;
     notifyListeners();
