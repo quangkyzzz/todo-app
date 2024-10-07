@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../models/task.dart';
-
 import '../../../themes.dart';
 import '../../../view_models/task_view_model.dart';
 
@@ -23,11 +21,9 @@ class NoteEditPage extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              Task updatedTask = context.read<TaskViewModel>().currentTask;
-              updatedTask.note = controller.text;
-              context.read<TaskViewModel>().updateTask(
-                    updatedTask: updatedTask,
-                  );
+              context
+                  .read<TaskViewModel>()
+                  .updateNote(newNote: controller.text);
               if (context.mounted) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(

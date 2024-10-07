@@ -12,6 +12,11 @@ class TaskViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updateNote({required String newNote}) {
+    currentTask.note = newNote;
+    notifyListeners();
+  }
+
   void deleteTask() {
     if (currentTask.remindTime != null) {
       BackGroundService.cancelTaskByID(id: currentTask.id);
