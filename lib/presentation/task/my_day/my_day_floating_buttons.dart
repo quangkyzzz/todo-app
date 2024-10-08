@@ -5,7 +5,7 @@ import '../../../models/task.dart';
 import '../../../view_models/task_list_view_model.dart';
 import '../../items/task_list_item.dart';
 import '../../../themes.dart';
-import '../../components/add_floating_button.dart';
+import '../../components/add_task_floating_button.dart';
 
 class MyDayFloatingButtons extends StatelessWidget {
   final Color themeColor;
@@ -178,7 +178,7 @@ class MyDayFloatingButtons extends StatelessWidget {
           ),
         ),
         const Spacer(flex: 1),
-        AddFloatingButton(
+        AddTaskFloatingButton(
           taskList: taskList,
           isAddToMyDay: true,
           themeColor: themeColor,

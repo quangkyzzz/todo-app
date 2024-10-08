@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../models/task_list.dart';
 import '../../../view_models/task_list_view_model.dart';
-import '../../components/add_floating_button.dart';
+import '../../components/add_task_floating_button.dart';
 import '../../lists/completed_list.dart';
 import '../../lists/incomplete_list.dart';
 import '../../components/task_list_popup_menu.dart';
@@ -77,7 +77,7 @@ class TaskListPage extends StatelessWidget {
               },
             ),
           ),
-          floatingActionButton: AddFloatingButton(
+          floatingActionButton: AddTaskFloatingButton(
             taskList: currentTaskList,
             themeColor: currentTaskList.themeColor,
           ),

@@ -3,7 +3,6 @@ import '../models/settings.dart';
 import '../models/task_list.dart';
 import '../models/task.dart';
 import '../models/task_step.dart';
-import '../service/background_service.dart';
 import '../ultility/enum.dart';
 import '../ultility/general_ultility.dart';
 
@@ -895,19 +894,5 @@ class TaskListViewModel extends ChangeNotifier {
       }
     }
     return result;
-  }
-
-  void deleteTask({
-    required String taskID,
-  }) {
-    currentTaskList.tasks.removeWhere((element) {
-      if ((element.id == taskID) && (element.remindTime != null)) {
-        // ignore: discarded_futures
-        BackGroundService.cancelTaskByID(id: taskID);
-      }
-      return (element.id == taskID);
-    });
-
-    notifyListeners();
   }
 }

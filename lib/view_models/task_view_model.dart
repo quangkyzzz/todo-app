@@ -95,15 +95,15 @@ class TaskViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void changeLoadingFileStatus({required bool isLoading}) {
+    isLoadingFile = isLoading;
+    notifyListeners();
+  }
+
   void deleteTask() {
     if (currentTask.remindTime != null) {
       BackGroundService.cancelTaskByID(id: currentTask.id);
     }
-    notifyListeners();
-  }
-
-  void changeLoadingFileStatus({required bool isLoading}) {
-    isLoadingFile = isLoading;
     notifyListeners();
   }
 }

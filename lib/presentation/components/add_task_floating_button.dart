@@ -3,13 +3,13 @@ import '../../models/task_list.dart';
 import '../../themes.dart';
 import 'add_task_bottom_sheet.dart';
 
-class AddFloatingButton extends StatelessWidget {
+class AddTaskFloatingButton extends StatelessWidget {
   final Color themeColor;
   final TaskList taskList;
   final bool isAddToImportant;
   final bool isAddToMyDay;
 
-  const AddFloatingButton({
+  const AddTaskFloatingButton({
     super.key,
     required this.taskList,
     required this.themeColor,

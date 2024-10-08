@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../models/task_list.dart';
 import '../../../view_models/task_list_view_model.dart';
-import '../../components/add_floating_button.dart';
+import '../../components/add_task_floating_button.dart';
 import '../../items/task_list_item.dart';
 import '../../components/task_list_popup_menu.dart';
 
@@ -83,7 +83,7 @@ class _TaskListPageState extends State<ImportantPage> {
               },
             ),
           ),
-          floatingActionButton: AddFloatingButton(
+          floatingActionButton: AddTaskFloatingButton(
             taskList: importantTaskList,
             isAddToImportant: true,
             themeColor: importantTaskList.themeColor,

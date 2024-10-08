@@ -4,6 +4,14 @@ Future<DateTime?> showDateTimePicker({
   required BuildContext context,
   required DateTime? initialDate,
 }) async {
+  if ((initialDate != null) && (initialDate.isBefore(DateTime.now()))) {
+    initialDate = DateTime(
+      DateTime.now().year,
+      DateTime.now().month,
+      DateTime.now().day,
+      9,
+    );
+  }
   final DateTime? selectedDate = await showDatePicker(
     context: context,
     initialDate: initialDate ??

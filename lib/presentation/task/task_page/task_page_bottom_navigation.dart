@@ -26,10 +26,6 @@ class TaskPageBottomNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TaskViewModel taskViewModel =
-        Provider.of<TaskViewModel>(context, listen: false);
-    SettingsProvider settingsProvider =
-        Provider.of<SettingsProvider>(context, listen: false);
     Duration diffTime = DateTime.now().difference(task.createDate);
     return Container(
       padding: const EdgeInsets.only(left: 8, right: 8, bottom: 12),
@@ -55,7 +51,10 @@ class TaskPageBottomNavigation extends StatelessWidget {
           const Spacer(),
           IconButton(
             onPressed: () async {
-              if (settingsProvider.settings.isConfirmBeforeDelete) {
+              if (context
+                  .read<SettingsProvider>()
+                  .settings
+                  .isConfirmBeforeDelete) {
                 bool isDelete = await showAlertDialog(
                   context,
                   'Are you sure?',
@@ -63,13 +62,13 @@ class TaskPageBottomNavigation extends StatelessWidget {
                 );
                 if (!context.mounted) return;
                 if (isDelete) {
-                  taskViewModel.deleteTask();
+                  context.read<TaskViewModel>().deleteTask();
                   if (context.mounted) {
                     Navigator.pop(context);
                   }
                 }
               } else {
-                taskViewModel.deleteTask();
+                context.read<TaskViewModel>().deleteTask();
                 Navigator.pop(context);
               }
             },

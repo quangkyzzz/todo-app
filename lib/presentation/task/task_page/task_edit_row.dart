@@ -12,7 +12,7 @@ class TaskEditRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Task watchCurrentTask = context.watch<TaskViewModel>().currentTask;
-    TextEditingController textEditingController = TextEditingController(
+    TextEditingController controller = TextEditingController(
       text: context.read<TaskViewModel>().currentTask.title,
     );
     return Row(
@@ -34,9 +34,9 @@ class TaskEditRow extends StatelessWidget {
           child: TextField(
             decoration: const InputDecoration(border: InputBorder.none),
             style: MyTheme.titleTextStyle,
-            controller: textEditingController
+            controller: controller
               ..selection = TextSelection.fromPosition(TextPosition(
-                offset: textEditingController.text.length,
+                offset: controller.text.length,
               )),
             onSubmitted: (String value) {
               context.read<TaskViewModel>().updateTaskTitle(newTitle: value);
@@ -45,7 +45,7 @@ class TaskEditRow extends StatelessWidget {
               FocusScope.of(context).unfocus();
               context
                   .read<TaskViewModel>()
-                  .updateTaskTitle(newTitle: textEditingController.text);
+                  .updateTaskTitle(newTitle: controller.text);
             },
           ),
         ),
