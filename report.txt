@@ -1,12 +1,9 @@
-Báo cáo 7/10
+Báo cáo 8/10
 Đã làm:
-    -   Sửa backGround service.
-    -   Sửa logic triển khai hàm update task và update taskList trong các view.
-    -   Lược bỏ các biến không cần thiết trong màn.
+    -   Tách các hàm update task và update taskList thành các hàm riêng biệt.
+    -   Chỉnh sửa frequency và sortType thành các enum.
+    -   Sửa vài lỗi logic
 Đang làm:
-    -   Sửa hàm update task và update taskList thành các hàm riêng biệt.
+    -   Rà soát các lỗi
 Dự định làm:
-    -   Chuyển frequency thành enum.
-    -   Rà soát lại các lỗi.
-
-//about: update isCompleted inside taskList or task view model
+    -   Dựa vào review để tiếp tục chỉnh sửa.
