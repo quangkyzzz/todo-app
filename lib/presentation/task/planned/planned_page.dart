@@ -22,12 +22,6 @@ class _PlannedPageState extends State<PlannedPage> {
   late TaskList plannedTaskList;
   late List<Task> displayList;
 
-  void onPlannedStateChange(int value) {
-    setState(() {
-      plannedState = value;
-    });
-  }
-
   @override
   void initState() {
     listPopupMennu = [
@@ -35,42 +29,54 @@ class _PlannedPageState extends State<PlannedPage> {
         'text': 'Overdue',
         'icon': Icons.event_busy_outlined,
         'onTap': () {
-          onPlannedStateChange(0);
+          setState(() {
+            plannedState = 0;
+          });
         }
       },
       {
         'text': 'Today',
         'icon': Icons.today_outlined,
         'onTap': () {
-          onPlannedStateChange(1);
+          setState(() {
+            plannedState = 1;
+          });
         }
       },
       {
         'text': 'Tomorrow',
         'icon': Icons.event_outlined,
         'onTap': () {
-          onPlannedStateChange(2);
+          setState(() {
+            plannedState = 2;
+          });
         }
       },
       {
         'text': 'This week',
         'icon': Icons.date_range_outlined,
         'onTap': () {
-          onPlannedStateChange(3);
+          setState(() {
+            plannedState = 3;
+          });
         }
       },
       {
         'text': 'Later',
         'icon': Icons.calendar_month_outlined,
         'onTap': () {
-          onPlannedStateChange(4);
+          setState(() {
+            plannedState = 4;
+          });
         }
       },
       {
         'text': 'All planned',
         'icon': Icons.event_note_outlined,
         'onTap': () {
-          onPlannedStateChange(5);
+          setState(() {
+            plannedState = 5;
+          });
         }
       },
     ];

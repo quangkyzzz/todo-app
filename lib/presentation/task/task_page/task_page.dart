@@ -34,21 +34,34 @@ class TaskPage extends StatelessWidget {
 
   Future<void> onTapRepeat(BuildContext context,
       {bool isDisable = false}) async {
+    DateTime defaultDay = DateTime(
+      DateTime.now().year,
+      DateTime.now().month,
+      DateTime.now().day,
+      9,
+    );
+    DateTime? currentRemindTime =
+        context.read<TaskViewModel>().currentTask.remindTime;
     RenderBox box = popupKey.currentContext!.findRenderObject() as RenderBox;
     Offset possition = box.localToGlobal(Offset.zero);
     if (!isDisable) {
       await showMenu(
         context: context,
-        position: RelativeRect.fromLTRB(
-          possition.dx,
-          possition.dy,
-          0,
-          0,
-        ),
+        position: RelativeRect.fromLTRB(possition.dx, possition.dy, 0, 0),
         items: [
           PopupMenuItem(
             onTap: () {
-              onCompleteSetRepeat(context, Frequency.day);
+              if (currentRemindTime == null) {
+                context.read<TaskViewModel>().updateRemindTime(
+                      newRemindTime: defaultDay,
+                    );
+              }
+              context.read<TaskViewModel>().updateRepeatFrequency(
+                    newRepeatFrequency: Frequency.day,
+                  );
+              context.read<TaskViewModel>().updateFrequencyMultiplier(
+                    newFrequencyMultiplier: 1,
+                  );
             },
             child: const CustomPopupItem(
               text: 'Daily',
@@ -57,7 +70,17 @@ class TaskPage extends StatelessWidget {
           ),
           PopupMenuItem(
             onTap: () {
-              onCompleteSetRepeat(context, Frequency.weekday);
+              if (currentRemindTime == null) {
+                context.read<TaskViewModel>().updateRemindTime(
+                      newRemindTime: defaultDay,
+                    );
+              }
+              context.read<TaskViewModel>().updateRepeatFrequency(
+                    newRepeatFrequency: Frequency.weekday,
+                  );
+              context.read<TaskViewModel>().updateFrequencyMultiplier(
+                    newFrequencyMultiplier: 1,
+                  );
             },
             child: const CustomPopupItem(
               text: 'Weekdays',
@@ -66,7 +89,17 @@ class TaskPage extends StatelessWidget {
           ),
           PopupMenuItem(
             onTap: () {
-              onCompleteSetRepeat(context, Frequency.week);
+              if (currentRemindTime == null) {
+                context.read<TaskViewModel>().updateRemindTime(
+                      newRemindTime: defaultDay,
+                    );
+              }
+              context.read<TaskViewModel>().updateRepeatFrequency(
+                    newRepeatFrequency: Frequency.week,
+                  );
+              context.read<TaskViewModel>().updateFrequencyMultiplier(
+                    newFrequencyMultiplier: 1,
+                  );
             },
             child: const CustomPopupItem(
               text: 'Weekly',
@@ -75,7 +108,17 @@ class TaskPage extends StatelessWidget {
           ),
           PopupMenuItem(
             onTap: () {
-              onCompleteSetRepeat(context, Frequency.month);
+              if (currentRemindTime == null) {
+                context.read<TaskViewModel>().updateRemindTime(
+                      newRemindTime: defaultDay,
+                    );
+              }
+              context.read<TaskViewModel>().updateRepeatFrequency(
+                    newRepeatFrequency: Frequency.month,
+                  );
+              context.read<TaskViewModel>().updateFrequencyMultiplier(
+                    newFrequencyMultiplier: 1,
+                  );
             },
             child: const CustomPopupItem(
               text: 'Monthly',
@@ -84,7 +127,17 @@ class TaskPage extends StatelessWidget {
           ),
           PopupMenuItem(
             onTap: () {
-              onCompleteSetRepeat(context, Frequency.year);
+              if (currentRemindTime == null) {
+                context.read<TaskViewModel>().updateRemindTime(
+                      newRemindTime: defaultDay,
+                    );
+              }
+              context.read<TaskViewModel>().updateRepeatFrequency(
+                    newRepeatFrequency: Frequency.year,
+                  );
+              context.read<TaskViewModel>().updateFrequencyMultiplier(
+                    newFrequencyMultiplier: 1,
+                  );
             },
             child: const CustomPopupItem(
               text: 'Yearly',
@@ -97,11 +150,23 @@ class TaskPage extends StatelessWidget {
                   await showCustomRepeatTimeDialog(context);
               if (!context.mounted) return;
               if (result != null) {
-                onCompleteSetRepeat(
-                  context,
-                  result.$2,
-                  frequencyMultiplier: result.$1,
-                );
+                if (context.read<TaskViewModel>().currentTask.remindTime ==
+                    null) {
+                  context.read<TaskViewModel>().updateRemindTime(
+                        newRemindTime: DateTime(
+                          DateTime.now().year,
+                          DateTime.now().month,
+                          DateTime.now().day,
+                          9,
+                        ),
+                      );
+                }
+                context.read<TaskViewModel>().updateRepeatFrequency(
+                      newRepeatFrequency: result.$2,
+                    );
+                context.read<TaskViewModel>().updateFrequencyMultiplier(
+                      newFrequencyMultiplier: result.$1,
+                    );
               }
             },
             child: const CustomPopupItem(
@@ -119,29 +184,6 @@ class TaskPage extends StatelessWidget {
           .read<TaskViewModel>()
           .updateFrequencyMultiplier(newFrequencyMultiplier: 1);
     }
-  }
-
-  void onCompleteSetRepeat(
-    BuildContext context,
-    Frequency frequency, {
-    int frequencyMultiplier = 1,
-  }) {
-    if (context.read<TaskViewModel>().currentTask.remindTime == null) {
-      context.read<TaskViewModel>().updateRemindTime(
-            newRemindTime: DateTime(
-              DateTime.now().year,
-              DateTime.now().month,
-              DateTime.now().day,
-              9,
-            ),
-          );
-    }
-    context.read<TaskViewModel>().updateRepeatFrequency(
-          newRepeatFrequency: frequency,
-        );
-    context.read<TaskViewModel>().updateFrequencyMultiplier(
-          newFrequencyMultiplier: frequencyMultiplier,
-        );
   }
 
   @override
