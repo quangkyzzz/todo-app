@@ -1,9 +1,9 @@
-Báo cáo 8/10
+Báo cáo 10/10
 Đã làm:
-    -   Tách các hàm update task và update taskList thành các hàm riêng biệt.
-    -   Chỉnh sửa frequency và sortType thành các enum.
-    -   Sửa vài lỗi logic
+    -   Sửa lỗi chức năng lặp lại nhắc hẹn
+    -   Chỉnh sửa nhỏ về cấu trúc code.
+    -   Tìm hiểu kĩ hơn về nguyên lý SOLID
 Đang làm:
-    -   Rà soát các lỗi
+    -   Chỉnh sửa code để áp dụng các nguyên lý SOLID
 Dự định làm:
     -   Dựa vào review để tiếp tục chỉnh sửa.
