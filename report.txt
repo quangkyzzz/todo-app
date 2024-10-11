@@ -1,9 +1,6 @@
-Báo cáo 10/10
+Báo cáo 11/10
 Đã làm:
-    -   Sửa lỗi chức năng lặp lại nhắc hẹn
-    -   Chỉnh sửa nhỏ về cấu trúc code.
-    -   Tìm hiểu kĩ hơn về nguyên lý SOLID
-Đang làm:
-    -   Chỉnh sửa code để áp dụng các nguyên lý SOLID
+    -   Tiếp tục tìm hiểu về nguyên lý SOLID 
+    -   Chỉnh sửa các hàm callBack đặt ngoài build
 Dự định làm:
     -   Dựa vào review để tiếp tục chỉnh sửa.
