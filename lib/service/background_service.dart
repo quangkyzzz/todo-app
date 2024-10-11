@@ -1,7 +1,7 @@
 // ignore_for_file: discarded_futures
 
-import '../models/enum.dart';
-import 'notification_service.dart';
+import 'package:todo_app/models/enum.dart';
+import 'package:todo_app/service/notification_service.dart';
 import 'package:workmanager/workmanager.dart';
 
 @pragma('vm:entry-point')

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../app_configs.dart';
-import '../../themes.dart';
-import '../../routes.dart';
-import '../../view_models/user_view_model.dart';
+import 'package:todo_app/app_configs.dart';
+import 'package:todo_app/themes.dart';
+import 'package:todo_app/routes.dart';
+import 'package:todo_app/view_models/user_view_model.dart';
 
 class UserProfilePage extends StatefulWidget {
   const UserProfilePage({super.key});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../models/group.dart';
-import '../../models/task_list.dart';
-import '../../themes.dart';
+import 'package:todo_app/models/group.dart';
+import 'package:todo_app/models/task_list.dart';
+import 'package:todo_app/themes.dart';
 
 class HomeItem extends StatelessWidget {
   final TaskList taskList;

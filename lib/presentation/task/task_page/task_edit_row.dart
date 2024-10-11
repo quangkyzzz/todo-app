@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../models/task.dart';
-import '../../../themes.dart';
-import '../../../view_models/task_view_model.dart';
+import 'package:todo_app/models/task.dart';
+import 'package:todo_app/themes.dart';
+import 'package:todo_app/view_models/task_view_model.dart';
 
 class TaskEditRow extends StatelessWidget {
   const TaskEditRow({

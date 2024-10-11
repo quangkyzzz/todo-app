@@ -3,12 +3,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import '../../../models/task_list.dart';
-import '../../../view_models/task_list_view_model.dart';
-import '../../lists/completed_list.dart';
-import '../../lists/incomplete_list.dart';
-import 'my_day_floating_buttons.dart';
-import '../../components/task_list_popup_menu.dart';
+import 'package:todo_app/models/task_list.dart';
+import 'package:todo_app/view_models/task_list_view_model.dart';
+import 'package:todo_app/presentation/lists/completed_list.dart';
+import 'package:todo_app/presentation/lists/incomplete_list.dart';
+import 'package:todo_app/presentation/task/my_day/my_day_floating_buttons.dart';
+import 'package:todo_app/presentation/components/task_list_popup_menu.dart';
 
 class MyDayPage extends StatefulWidget {
   const MyDayPage({super.key});

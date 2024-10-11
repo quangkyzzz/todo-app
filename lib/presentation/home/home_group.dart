@@ -1,15 +1,14 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../models/group.dart';
-import '../../models/task_list.dart';
-import '../../view_models/group_view_model.dart';
-
-import '../components/show_text_edit_dialog.dart';
-import '../../themes.dart';
-import '../../routes.dart';
-import 'home_item.dart';
-import '../items/popup_item.dart';
+import 'package:todo_app/models/group.dart';
+import 'package:todo_app/models/task_list.dart';
+import 'package:todo_app/view_models/group_view_model.dart';
+import 'package:todo_app/presentation/components/show_text_edit_dialog.dart';
+import 'package:todo_app/themes.dart';
+import 'package:todo_app/routes.dart';
+import 'package:todo_app/presentation/home/home_item.dart';
+import 'package:todo_app/presentation/items/popup_item.dart';
 
 class HomeGroup extends StatefulWidget {
   final Group group;

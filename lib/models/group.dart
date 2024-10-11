@@ -1,5 +1,5 @@
 import 'dart:core';
-import 'task_list.dart';
+import 'package:todo_app/models/task_list.dart';
 
 class Group {
   final String id;

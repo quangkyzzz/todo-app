@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../models/settings.dart';
-import '../../provider/settings_provider.dart';
-import '../../themes.dart';
+import 'package:todo_app/models/settings.dart';
+import 'package:todo_app/provider/settings_provider.dart';
+import 'package:todo_app/themes.dart';
 
 class SettingsList extends StatefulWidget {
   const SettingsList({super.key});

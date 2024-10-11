@@ -2,14 +2,14 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../models/settings.dart';
-import '../../provider/settings_provider.dart';
-import '../../themes.dart';
-import '../../routes.dart';
-import '../../models/task.dart';
+import 'package:todo_app/models/settings.dart';
+import 'package:todo_app/provider/settings_provider.dart';
+import 'package:todo_app/themes.dart';
+import 'package:todo_app/routes.dart';
+import 'package:todo_app/models/task.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
-import '../../view_models/task_list_view_model.dart';
+import 'package:todo_app/view_models/task_list_view_model.dart';
 
 class TaskListItem extends StatelessWidget {
   final Task task;

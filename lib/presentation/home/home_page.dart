@@ -2,16 +2,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../models/group.dart';
-import '../../models/task_list.dart';
-import '../../ultility/task_list_ultility.dart';
-import '../../view_models/group_view_model.dart';
-import 'home_appbar.dart';
-import '../../themes.dart';
-import '../../routes.dart';
-import 'home_group.dart';
-import 'home_item.dart';
-import 'home_bottom_navigation_bar.dart';
+import 'package:todo_app/models/group.dart';
+import 'package:todo_app/models/task_list.dart';
+import 'package:todo_app/ultility/task_list_ultility.dart';
+import 'package:todo_app/view_models/group_view_model.dart';
+import 'package:todo_app/presentation/home/home_appbar.dart';
+import 'package:todo_app/themes.dart';
+import 'package:todo_app/routes.dart';
+import 'package:todo_app/presentation/home/home_group.dart';
+import 'package:todo_app/presentation/home/home_item.dart';
+import 'package:todo_app/presentation/home/home_bottom_navigation_bar.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

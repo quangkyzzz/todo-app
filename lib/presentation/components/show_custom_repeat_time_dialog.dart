@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../themes.dart';
-import '../../models/enum.dart';
+import 'package:todo_app/themes.dart';
+import 'package:todo_app/models/enum.dart';
 
 Future<(int, Frequency)?> showCustomRepeatTimeDialog(BuildContext context) {
   return showDialog<(int, Frequency)>(

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../models/settings.dart';
-import '../models/task_list.dart';
-import '../models/task.dart';
-import '../models/task_step.dart';
-import '../models/enum.dart';
-import '../ultility/general_ultility.dart';
+import 'package:todo_app/models/settings.dart';
+import 'package:todo_app/models/task_list.dart';
+import 'package:todo_app/models/task.dart';
+import 'package:todo_app/models/task_step.dart';
+import 'package:todo_app/models/enum.dart';
+import 'package:todo_app/ultility/general_ultility.dart';
 
 class TaskListViewModel extends ChangeNotifier {
   TaskList currentTaskList;

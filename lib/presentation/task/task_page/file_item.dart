@@ -2,10 +2,9 @@
 
 import 'dart:io';
 import 'package:flutter/material.dart';
-import '../../../themes.dart';
+import 'package:todo_app/themes.dart';
 import 'package:path/path.dart' as path;
-
-import '../../../ultility/general_ultility.dart';
+import 'package:todo_app/ultility/general_ultility.dart';
 
 class FileItem extends StatelessWidget {
   final String filePath;

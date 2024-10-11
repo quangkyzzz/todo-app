@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../models/task.dart';
-import '../models/task_step.dart';
-import '../models/enum.dart';
+import 'package:todo_app/models/task.dart';
+import 'package:todo_app/models/task_step.dart';
+import 'package:todo_app/models/enum.dart';
 
 class TaskViewModel extends ChangeNotifier {
   Task currentTask;

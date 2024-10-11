@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../models/task_list.dart';
-import '../../../models/task.dart';
-import '../../../view_models/task_list_view_model.dart';
-import '../../items/task_list_item.dart';
-import '../../../themes.dart';
-import '../../components/add_task_floating_button.dart';
+import 'package:todo_app/models/task_list.dart';
+import 'package:todo_app/models/task.dart';
+import 'package:todo_app/view_models/task_list_view_model.dart';
+import 'package:todo_app/presentation/items/task_list_item.dart';
+import 'package:todo_app/themes.dart';
+import 'package:todo_app/presentation/components/add_task_floating_button.dart';
 
 class MyDayFloatingButtons extends StatelessWidget {
   final Color themeColor;

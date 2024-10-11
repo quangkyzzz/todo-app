@@ -1,11 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../provider/auth_provider.dart';
-import '../widgets/auth_field.dart';
-import '../widgets/rounded_small_button.dart';
-import '../../routes.dart';
-import '../../themes.dart';
+import 'package:todo_app/provider/auth_provider.dart';
+import 'package:todo_app/presentation/widgets/auth_field.dart';
+import 'package:todo_app/presentation/widgets/rounded_small_button.dart';
+import 'package:todo_app/routes.dart';
+import 'package:todo_app/themes.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

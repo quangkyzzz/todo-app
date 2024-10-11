@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../themes.dart';
+import 'package:todo_app/themes.dart';
 
 Future<dynamic> showAlertDialog(
   BuildContext context,

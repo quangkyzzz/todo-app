@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'provider/auth_provider.dart';
-import 'provider/settings_provider.dart';
-import 'service/background_service.dart';
-import 'service/notification_service.dart';
-import 'themes.dart';
-import 'routes.dart';
+import 'package:todo_app/provider/auth_provider.dart';
+import 'package:todo_app/provider/settings_provider.dart';
+import 'package:todo_app/service/background_service.dart';
+import 'package:todo_app/service/notification_service.dart';
+import 'package:todo_app/themes.dart';
+import 'package:todo_app/routes.dart';
 import 'package:workmanager/workmanager.dart';
 
 void main() async {

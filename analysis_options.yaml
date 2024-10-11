@@ -22,7 +22,6 @@ linter:
   # producing the lint.
   rules:
      - discarded_futures
-     - prefer_relative_imports
      - avoid_init_to_null
      - prefer_collection_literals
      - prefer_is_not_empty

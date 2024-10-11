@@ -2,10 +2,10 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../models/task_list.dart';
-import '../../themes.dart';
-import '../../view_models/task_list_view_model.dart';
-import '../widgets/custom_outlined_button.dart';
+import 'package:todo_app/models/task_list.dart';
+import 'package:todo_app/themes.dart';
+import 'package:todo_app/view_models/task_list_view_model.dart';
+import 'package:todo_app/presentation/widgets/custom_outlined_button.dart';
 
 class ChangeThemeBottomSheet extends StatefulWidget {
   const ChangeThemeBottomSheet({

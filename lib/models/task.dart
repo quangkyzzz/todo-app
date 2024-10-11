@@ -1,6 +1,6 @@
 import 'dart:core';
-import 'enum.dart';
-import 'task_step.dart';
+import 'package:todo_app/models/enum.dart';
+import 'package:todo_app/models/task_step.dart';
 
 class Task {
   final String id;

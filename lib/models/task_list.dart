@@ -1,8 +1,8 @@
 import 'dart:core';
 import 'package:flutter/material.dart';
-import 'enum.dart';
-import 'task.dart';
-import '../themes.dart';
+import 'package:todo_app/models/enum.dart';
+import 'package:todo_app/models/task.dart';
+import 'package:todo_app/themes.dart';
 
 class TaskList {
   final String id;

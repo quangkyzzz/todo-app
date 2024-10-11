@@ -1,7 +1,7 @@
 // ignore_for_file: sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
-import '../../themes.dart';
+import 'package:todo_app/themes.dart';
 
 class CustomPopupItem extends StatelessWidget {
   final String text;

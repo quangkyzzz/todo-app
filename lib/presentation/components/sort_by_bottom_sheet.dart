@@ -2,10 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../models/enum.dart';
-import '../../view_models/task_list_view_model.dart';
-import '../items/popup_item.dart';
-import '../../themes.dart';
+import 'package:todo_app/models/enum.dart';
+import 'package:todo_app/view_models/task_list_view_model.dart';
+import 'package:todo_app/presentation/items/popup_item.dart';
+import 'package:todo_app/themes.dart';
 
 class SortByBottomSheet extends StatelessWidget {
   const SortByBottomSheet({
