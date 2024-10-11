@@ -19,7 +19,6 @@ class PlannedPage extends StatefulWidget {
 class _PlannedPageState extends State<PlannedPage> {
   late List<Map<String, dynamic>> listPopupMennu;
   int plannedState = 5;
-  late TaskList plannedTaskList;
   late List<Task> displayList;
 
   @override
@@ -86,7 +85,8 @@ class _PlannedPageState extends State<PlannedPage> {
 
   @override
   Widget build(BuildContext context) {
-    plannedTaskList = context.watch<TaskListViewModel>().currentTaskList;
+    TaskList plannedTaskList =
+        context.watch<TaskListViewModel>().currentTaskList;
     switch (plannedState) {
       case 0:
         displayList =

@@ -18,7 +18,6 @@ class MyDayPage extends StatefulWidget {
 }
 
 class _MyDayPageState extends State<MyDayPage> {
-  late TaskList myDayTaskList;
   @override
   void initState() {
     context.read<TaskListViewModel>().getOnMyDayTask();
@@ -27,7 +26,7 @@ class _MyDayPageState extends State<MyDayPage> {
 
   @override
   Widget build(BuildContext context) {
-    myDayTaskList = context.watch<TaskListViewModel>().currentTaskList;
+    TaskList myDayTaskList = context.watch<TaskListViewModel>().currentTaskList;
     return Stack(
       fit: StackFit.expand,
       children: [

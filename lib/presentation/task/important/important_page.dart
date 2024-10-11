@@ -17,8 +17,6 @@ class ImportantPage extends StatefulWidget {
 }
 
 class _TaskListPageState extends State<ImportantPage> {
-  late TaskList importantTaskList;
-
   @override
   void initState() {
     context.read<TaskListViewModel>().getImportantTask();
@@ -27,7 +25,8 @@ class _TaskListPageState extends State<ImportantPage> {
 
   @override
   Widget build(BuildContext context) {
-    importantTaskList = context.watch<TaskListViewModel>().currentTaskList;
+    TaskList importantTaskList =
+        context.watch<TaskListViewModel>().currentTaskList;
     return Stack(
       fit: StackFit.expand,
       children: [
