@@ -50,7 +50,6 @@ class _CompletedListState extends State<CompletedList> {
             itemBuilder: (BuildContext _, int index) {
               Task task = completedList[index];
               return TaskListItem(
-                mContext: context,
                 task: task,
                 themeColor: watchCurrentTasklist.themeColor,
               );

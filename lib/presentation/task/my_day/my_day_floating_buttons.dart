@@ -72,7 +72,6 @@ class MyDayFloatingButtons extends StatelessWidget {
                                   itemBuilder: (BuildContext ____, int index) {
                                     Task task = listRecentTask[index];
                                     return TaskListItem(
-                                      mContext: context,
                                       task: task,
                                       themeColor: themeColor,
                                       havePlusIcon: true,
@@ -110,7 +109,6 @@ class MyDayFloatingButtons extends StatelessWidget {
                                   itemBuilder: (BuildContext ____, int index) {
                                     Task task = listOlderSuggetTask[index];
                                     return TaskListItem(
-                                      mContext: context,
                                       task: task,
                                       themeColor: themeColor,
                                       havePlusIcon: true,

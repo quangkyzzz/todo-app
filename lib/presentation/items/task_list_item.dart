@@ -12,7 +12,6 @@ import 'package:intl/intl.dart';
 import '../../view_models/task_list_view_model.dart';
 
 class TaskListItem extends StatelessWidget {
-  final BuildContext mContext;
   final Task task;
   final Color themeColor;
   final bool havePlusIcon;
@@ -24,7 +23,6 @@ class TaskListItem extends StatelessWidget {
     required this.themeColor,
     this.havePlusIcon = false,
     this.onTapPlus,
-    required this.mContext,
   });
 
   @override

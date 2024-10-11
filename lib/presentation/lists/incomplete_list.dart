@@ -22,7 +22,6 @@ class IncompleteList extends StatelessWidget {
       itemBuilder: (BuildContext _, int index) {
         Task task = incompleteList[index];
         return TaskListItem(
-          mContext: context,
           task: task,
           themeColor:
               context.watch<TaskListViewModel>().currentTaskList.themeColor,

@@ -159,7 +159,6 @@ class _SearchPageState extends State<SearchPage> {
                         if (isHideCompletedTask) {
                           if (!task.isCompleted) {
                             return TaskListItem(
-                              mContext: context,
                               task: task,
                               themeColor: MyTheme.blueColor,
                             );
@@ -168,7 +167,6 @@ class _SearchPageState extends State<SearchPage> {
                           }
                         } else {
                           return TaskListItem(
-                            mContext: context,
                             task: task,
                             themeColor: MyTheme.blueColor,
                           );

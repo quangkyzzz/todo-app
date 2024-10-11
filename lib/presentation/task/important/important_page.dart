@@ -76,7 +76,6 @@ class _TaskListPageState extends State<ImportantPage> {
               itemCount: importantTaskList.tasks.length,
               itemBuilder: (BuildContext _, int index) {
                 return TaskListItem(
-                  mContext: context,
                   task: importantTaskList.tasks[index],
                   themeColor: importantTaskList.themeColor,
                 );
