@@ -22,20 +22,6 @@ class _SearchPageState extends State<SearchPage> {
   String searchName = '';
   late TextEditingController _controller;
 
-  void onSearchChange(String value) {
-    setState(() {
-      searchName = value;
-    });
-  }
-
-  void onSpeechToTextResult(SpeechRecognitionResult result) {
-    setState(() {
-      isSpeechEnable = false;
-      _controller.text = result.recognizedWords;
-      onSearchChange(_controller.text);
-    });
-  }
-
   @override
   void initState() {
     context.read<TaskListViewModel>().getAllTask();
@@ -64,7 +50,11 @@ class _SearchPageState extends State<SearchPage> {
             controller: _controller,
             style: MyTheme.itemTextStyle,
             decoration: const InputDecoration(hintText: 'Enter task name'),
-            onChanged: onSearchChange,
+            onChanged: (String value) {
+              setState(() {
+                searchName = value;
+              });
+            },
           ),
         ),
         actions: [
@@ -81,7 +71,15 @@ class _SearchPageState extends State<SearchPage> {
                       listenMode: ListenMode.search,
                       cancelOnError: 1,
                     ),
-                    onResult: onSpeechToTextResult,
+                    onResult: (SpeechRecognitionResult result) {
+                      setState(() {
+                        isSpeechEnable = false;
+                        _controller.text = result.recognizedWords;
+                        setState(() {
+                          searchName = _controller.text;
+                        });
+                      });
+                    },
                     listenFor: const Duration(seconds: 5),
                   );
                   Future.delayed(const Duration(seconds: 5), () {

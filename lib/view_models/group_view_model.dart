@@ -69,7 +69,7 @@ class GroupViewModel extends ChangeNotifier {
         ),
         TaskList(id: '3', title: 'Important', themeColor: MyTheme.pinkColor),
         TaskList(id: '4', title: 'Planned', themeColor: MyTheme.redColor),
-        TaskList(id: '7', title: 'Search task list'),
+        TaskList(id: '5', title: 'Search task list'),
         TaskList(
           id: '222',
           title: 'personal list 1',
