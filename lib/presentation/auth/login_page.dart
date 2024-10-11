@@ -18,10 +18,6 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  void onLogIn() {
-    Provider.of<AuthProvider>(context, listen: false).login();
-  }
-
   @override
   void dispose() {
     emailController.dispose();
@@ -58,7 +54,9 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 10),
                 RoundedSmallButton(
-                  onTap: onLogIn,
+                  onTap: () {
+                    Provider.of<AuthProvider>(context, listen: false).login();
+                  },
                   label: 'Login',
                   textColor: MyTheme.blackColor,
                   backGroundColor: MyTheme.whiteColor,

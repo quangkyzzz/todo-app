@@ -15,21 +15,6 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  void onSignUp() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        backgroundColor: MyTheme.backgroundGreyColor,
-        content: Text(
-          'Account created success! Please login',
-          style: MyTheme.itemSmallTextStyle,
-        ),
-        duration: Duration(seconds: 2),
-      ),
-    );
-
-    Navigator.pop(context);
-  }
-
   @override
   void dispose() {
     emailController.dispose();
@@ -66,7 +51,20 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 const SizedBox(height: 10),
                 RoundedSmallButton(
-                  onTap: onSignUp,
+                  onTap: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        backgroundColor: MyTheme.backgroundGreyColor,
+                        content: Text(
+                          'Account created success! Please login',
+                          style: MyTheme.itemSmallTextStyle,
+                        ),
+                        duration: Duration(seconds: 2),
+                      ),
+                    );
+
+                    Navigator.pop(context);
+                  },
                   label: 'Sign Up',
                   textColor: MyTheme.blackColor,
                   backGroundColor: MyTheme.whiteColor,

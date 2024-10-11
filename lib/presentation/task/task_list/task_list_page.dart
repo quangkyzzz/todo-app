@@ -71,8 +71,8 @@ class TaskListPage extends StatelessWidget {
                       (taskList.sortByType != null)
                           ? const ChangeSortTypeButton()
                           : const SizedBox(),
-                      IncompleteList(taskList: taskList),
-                      CompletedList(taskList: taskList)
+                      const IncompleteList(),
+                      const CompletedList()
                     ]);
               },
             ),

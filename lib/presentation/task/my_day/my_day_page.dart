@@ -82,10 +82,10 @@ class _MyDayPageState extends State<MyDayPage> {
               )
             ],
           ),
-          body: SingleChildScrollView(
+          body: const SingleChildScrollView(
             child: Column(children: [
-              IncompleteList(taskList: myDayTaskList),
-              CompletedList(taskList: myDayTaskList),
+              IncompleteList(),
+              CompletedList(),
             ]),
           ),
           floatingActionButton: MyDayFloatingButtons(

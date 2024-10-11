@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
-import '../../models/task_list.dart';
+import 'package:provider/provider.dart';
 import '../../models/task.dart';
+import '../../view_models/task_list_view_model.dart';
 import '../items/task_list_item.dart';
 
 class IncompleteList extends StatelessWidget {
-  final TaskList taskList;
-  const IncompleteList({super.key, required this.taskList});
+  const IncompleteList({super.key});
 
   @override
   Widget build(BuildContext context) {
-    List<Task> incompleteList =
-        taskList.tasks.where((element) => (!element.isCompleted)).toList();
+    List<Task> incompleteList = context
+        .watch<TaskListViewModel>()
+        .currentTaskList
+        .tasks
+        .where((element) => (!element.isCompleted))
+        .toList();
     return ListView.builder(
       shrinkWrap: true,
       physics: const ClampingScrollPhysics(),
@@ -20,7 +24,8 @@ class IncompleteList extends StatelessWidget {
         return TaskListItem(
           mContext: context,
           task: task,
-          themeColor: taskList.themeColor,
+          themeColor:
+              context.watch<TaskListViewModel>().currentTaskList.themeColor,
         );
       },
     );

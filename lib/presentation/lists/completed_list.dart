@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import '../../models/task_list.dart';
+import 'package:provider/provider.dart';
 import '../../models/task.dart';
+import '../../models/task_list.dart';
+import '../../view_models/task_list_view_model.dart';
 import '../items/task_list_item.dart';
 
 class CompletedList extends StatefulWidget {
-  final TaskList taskList;
   const CompletedList({
     super.key,
-    required this.taskList,
   });
 
   @override
@@ -16,26 +16,13 @@ class CompletedList extends StatefulWidget {
 
 class _CompletedListState extends State<CompletedList> {
   bool isExpanded = true;
-  late List<Task> completedList;
-
-  @override
-  void initState() {
-    completedList = widget.taskList.tasks
-        .where((element) => (element.isCompleted))
-        .toList();
-    super.initState();
-  }
-
-  @override
-  void didUpdateWidget(covariant CompletedList oldWidget) {
-    completedList = widget.taskList.tasks
-        .where((element) => (element.isCompleted))
-        .toList();
-    super.didUpdateWidget(oldWidget);
-  }
-
   @override
   Widget build(BuildContext context) {
+    TaskList watchCurrentTasklist =
+        context.watch<TaskListViewModel>().currentTaskList;
+    List<Task> completedList = watchCurrentTasklist.tasks
+        .where((element) => (element.isCompleted))
+        .toList();
     if (completedList.isEmpty) {
       return const SizedBox();
     } else {
@@ -45,7 +32,7 @@ class _CompletedListState extends State<CompletedList> {
           'Completed ${completedList.length}',
           style: TextStyle(
             fontSize: 18,
-            color: widget.taskList.themeColor,
+            color: watchCurrentTasklist.themeColor,
           ),
         ),
         onExpansionChanged: (bool expanded) {
@@ -65,7 +52,7 @@ class _CompletedListState extends State<CompletedList> {
               return TaskListItem(
                 mContext: context,
                 task: task,
-                themeColor: widget.taskList.themeColor,
+                themeColor: watchCurrentTasklist.themeColor,
               );
             },
           )
