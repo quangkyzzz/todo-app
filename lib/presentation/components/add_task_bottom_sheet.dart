@@ -8,7 +8,7 @@ import '../../models/task_list.dart';
 import '../../provider/settings_provider.dart';
 import '../../service/background_service.dart';
 import '../../themes.dart';
-import '../../ultility/enum.dart';
+import '../../models/enum.dart';
 import '../../view_models/task_list_view_model.dart';
 import 'package:flutter/material.dart';
 import 'custom_task_button.dart';
@@ -61,11 +61,24 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
         DateFormat('E, MMM d').format(newTask.dueDate ?? DateTime(2000));
     String remindHightLightText = DateFormat('h:mm a, MMM d')
         .format(newTask.remindTime ?? DateTime(2000));
-    String repeatHighLightText =
-        (newTask.repeatFrequency ?? Frequency.day).value.toLowerCase();
+    String repeatHighLightText = '';
+    switch (newTask.repeatFrequency) {
+      case Frequency.day:
+        repeatHighLightText = 'day';
+      case Frequency.weekday:
+        repeatHighLightText = 'weekday';
+      case Frequency.week:
+        repeatHighLightText = 'week';
+      case Frequency.month:
+        repeatHighLightText = 'month';
+      case Frequency.year:
+        repeatHighLightText = 'year';
+      case null:
+        repeatHighLightText = '';
+    }
     if (newTask.frequencyMultiplier > 1) {
-      repeatHighLightText =
-          '${newTask.frequencyMultiplier} ${repeatHighLightText}s';
+      repeatHighLightText = '${newTask.frequencyMultiplier} '
+          '${repeatHighLightText}s';
     }
     return Padding(
       padding:
@@ -126,6 +139,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                           isImportant: newTask.isImportant,
                           remindTime: newTask.remindTime,
                           repeatFrequency: newTask.repeatFrequency,
+                          frequencyMultiplier: newTask.frequencyMultiplier,
                         );
                         if (newTask.remindTime != null) {
                           if (newTask.repeatFrequency == null) {

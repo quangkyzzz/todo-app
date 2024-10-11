@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../ultility/enum.dart';
+import '../../models/enum.dart';
 import '../../view_models/task_list_view_model.dart';
 import '../items/popup_item.dart';
 import '../../themes.dart';

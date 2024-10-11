@@ -1,5 +1,5 @@
 import 'dart:core';
-import '../ultility/enum.dart';
+import 'enum.dart';
 import 'task_step.dart';
 
 class Task {

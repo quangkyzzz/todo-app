@@ -3,7 +3,7 @@ import '../models/settings.dart';
 import '../models/task_list.dart';
 import '../models/task.dart';
 import '../models/task_step.dart';
-import '../ultility/enum.dart';
+import '../models/enum.dart';
 import '../ultility/general_ultility.dart';
 
 class TaskListViewModel extends ChangeNotifier {
@@ -139,6 +139,7 @@ class TaskListViewModel extends ChangeNotifier {
     DateTime? dueDate,
     DateTime? remindTime,
     Frequency? repeatFrequency,
+    int? frequencyMultiplier,
   }) {
     Task task = Task(
       id: id,
@@ -152,6 +153,7 @@ class TaskListViewModel extends ChangeNotifier {
       dueDate: dueDate,
       remindTime: remindTime,
       repeatFrequency: repeatFrequency,
+      frequencyMultiplier: frequencyMultiplier ?? 1,
     );
     if (settings.isAddNewTaskOnTop) {
       currentTaskList.tasks.insert(0, task);

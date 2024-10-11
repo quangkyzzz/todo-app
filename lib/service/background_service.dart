@@ -1,6 +1,6 @@
 // ignore_for_file: discarded_futures
 
-import '../ultility/enum.dart';
+import '../models/enum.dart';
 import 'notification_service.dart';
 import 'package:workmanager/workmanager.dart';
 

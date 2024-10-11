@@ -66,14 +66,15 @@ class TaskListPage extends StatelessWidget {
               builder: (context, taskListViewModel, child) {
                 TaskList taskList = taskListViewModel.currentTaskList;
                 return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      (taskList.sortByType != null)
-                          ? const ChangeSortTypeButton()
-                          : const SizedBox(),
-                      const IncompleteList(),
-                      const CompletedList()
-                    ]);
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    (taskList.sortByType != null)
+                        ? const ChangeSortTypeButton()
+                        : const SizedBox(),
+                    const IncompleteList(),
+                    const CompletedList()
+                  ],
+                );
               },
             ),
           ),

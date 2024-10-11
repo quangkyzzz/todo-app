@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../models/task_list.dart';
 import '../../../provider/settings_provider.dart';
-import '../../../ultility/enum.dart';
+import '../../../models/enum.dart';
 import '../../../view_models/task_list_view_model.dart';
 
 class ChangeSortTypeButton extends StatelessWidget {
@@ -14,6 +14,21 @@ class ChangeSortTypeButton extends StatelessWidget {
   Widget build(BuildContext context) {
     TaskList watchCurrentTaskList =
         context.watch<TaskListViewModel>().currentTaskList;
+    String sortByText = '';
+    switch (watchCurrentTaskList.sortByType) {
+      case SortType.important:
+        sortByText = 'important';
+      case SortType.dueDate:
+        sortByText = 'due date';
+      case SortType.myDay:
+        sortByText = 'my day';
+      case SortType.alphabetically:
+        sortByText = 'alphabetically';
+      case SortType.createDate:
+        sortByText = 'create date';
+      case null:
+        sortByText = '';
+    }
     return Row(
       children: [
         TextButton(
@@ -31,8 +46,7 @@ class ChangeSortTypeButton extends StatelessWidget {
           child: Row(
             children: [
               Text(
-                'Sort by '
-                '${watchCurrentTaskList.sortByType!.value}',
+                'Sort by $sortByText',
                 style: TextStyle(color: watchCurrentTaskList.themeColor),
               ),
               (watchCurrentTaskList.isAscending)

@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import '../../../models/settings.dart';
 import '../../../provider/settings_provider.dart';
 import '../../../service/background_service.dart';
-import '../../../ultility/enum.dart';
+import '../../../models/enum.dart';
 import '../../../view_models/task_view_model.dart';
 import '../../components/show_custom_repeat_time_dialog.dart';
 import '../../components/show_date_time_picker.dart';
@@ -389,7 +389,7 @@ class TaskPage extends StatelessWidget {
               Builder(builder: (context) {
                 String repeatActiveText =
                     (watchCurrentTask.repeatFrequency ?? Frequency.day)
-                        .value
+                        .name
                         .toLowerCase();
                 if (watchCurrentTask.frequencyMultiplier > 1) {
                   repeatActiveText =

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/task.dart';
 import '../models/task_step.dart';
-import '../service/background_service.dart';
-import '../ultility/enum.dart';
+import '../models/enum.dart';
 
 class TaskViewModel extends ChangeNotifier {
   Task currentTask;
@@ -101,9 +100,6 @@ class TaskViewModel extends ChangeNotifier {
   }
 
   void deleteTask() {
-    if (currentTask.remindTime != null) {
-      BackGroundService.cancelTaskByID(id: currentTask.id);
-    }
     notifyListeners();
   }
 }

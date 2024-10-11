@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../themes.dart';
-import '../../ultility/enum.dart';
+import '../../models/enum.dart';
 
 Future<(int, Frequency)?> showCustomRepeatTimeDialog(BuildContext context) {
   return showDialog<(int, Frequency)>(
@@ -69,7 +69,7 @@ Future<(int, Frequency)?> showCustomRepeatTimeDialog(BuildContext context) {
                   itemBuilder: (BuildContext context) {
                     return listPopUpMennu.map((item) {
                       return PopupMenuItem(
-                        child: Text(item.value),
+                        child: Text(item.name),
                         onTap: () {
                           setState(() {
                             selectedFrequency = item;
@@ -78,7 +78,7 @@ Future<(int, Frequency)?> showCustomRepeatTimeDialog(BuildContext context) {
                       );
                     }).toList();
                   },
-                  child: Text(selectedFrequency.value),
+                  child: Text(selectedFrequency.name),
                 ),
               )
             ],
