@@ -1,6 +1,11 @@
-Báo cáo 11/10
+Báo cáo 12/10
 Đã làm:
-    -   Tiếp tục tìm hiểu về nguyên lý SOLID 
-    -   Chỉnh sửa các hàm callBack đặt ngoài build
+    -   Loại bỏ các biến thừa và những setState không cần thiết trong taskListItem
+    -   Chỉnh sửa nhỏ trong trang my day, planned, important.
+    -   Sửa enum và vị trí của file enum.
+    -   Sửa cách import trong các file.
+Đang làm:
+    -   Sửa lỗi giao diện.
 Dự định làm:
-    -   Dựa vào review để tiếp tục chỉnh sửa.
+    -   Sửa lỗi chức năng.
+    -   Thay thế provider bằng shared preference để triển khai các settings
