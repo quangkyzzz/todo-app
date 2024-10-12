@@ -106,19 +106,22 @@ class TaskListItem extends StatelessWidget {
                       const SizedBox(width: 8),
                     ],
                   )
-                : Checkbox(
-                    checkColor: (themeColor == MyTheme.whiteColor)
-                        ? MyTheme.blackColor
-                        : null,
-                    activeColor: themeColor,
-                    tristate: false,
-                    shape: const CircleBorder(),
-                    value: task.isCompleted,
-                    onChanged: (bool? value) {
-                      context
-                          .read<TaskListViewModel>()
-                          .updateIsCompleted(task: task, isCompleted: value!);
-                    },
+                : Transform.scale(
+                    scale: 1.3,
+                    child: Checkbox(
+                      checkColor: (themeColor == MyTheme.whiteColor)
+                          ? MyTheme.blackColor
+                          : null,
+                      activeColor: themeColor,
+                      tristate: false,
+                      shape: const CircleBorder(),
+                      value: task.isCompleted,
+                      onChanged: (bool? value) {
+                        context
+                            .read<TaskListViewModel>()
+                            .updateIsCompleted(task: task, isCompleted: value!);
+                      },
+                    ),
                   ),
             (isAllBottomIconNull)
                 ? Column(
@@ -271,6 +274,7 @@ class TaskListItem extends StatelessWidget {
               shape: const CircleBorder(),
               child: (!havePlusIcon)
                   ? IconButton(
+                      iconSize: 32,
                       onPressed: () {
                         Settings settings =
                             context.read<SettingsProvider>().settings;
