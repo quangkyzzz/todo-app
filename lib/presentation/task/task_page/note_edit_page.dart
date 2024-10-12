@@ -48,6 +48,7 @@ class NoteEditPage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: TextField(
+          autofocus: true,
           controller: controller,
           maxLines: null,
           keyboardType: TextInputType.multiline,
