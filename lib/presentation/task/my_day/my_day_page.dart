@@ -83,7 +83,7 @@ class _MyDayPageState extends State<MyDayPage> {
           ),
           body: const SingleChildScrollView(
             child: Column(children: [
-              IncompleteList(),
+              IncompleteList(isReorderState: false),
               CompletedList(),
             ]),
           ),

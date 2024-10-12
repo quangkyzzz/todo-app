@@ -77,6 +77,7 @@ class _TaskListPageState extends State<ImportantPage> {
                 return TaskListItem(
                   task: importantTaskList.tasks[index],
                   themeColor: importantTaskList.themeColor,
+                  isReorderState: false,
                 );
               },
             ),

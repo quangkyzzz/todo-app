@@ -16,10 +16,12 @@ import 'package:todo_app/presentation/components/sort_by_bottom_sheet.dart';
 class TaskListPopupMenu extends StatelessWidget {
   final List<Map<String, dynamic>>? customListPopupMenuItem;
   final List<String> toRemove;
+  final Function? reorderCallBack;
   const TaskListPopupMenu({
     super.key,
     this.toRemove = const [],
     this.customListPopupMenuItem,
+    this.reorderCallBack,
   });
 
   void onTapRenameList(BuildContext context, TaskList taskList) async {
@@ -56,10 +58,11 @@ class TaskListPopupMenu extends StatelessWidget {
   }
 
   Future<void> onTapReorder(BuildContext context, TaskList taskList) async {
-    await Navigator.of(context).pushNamed(
-      reorderRoute,
-      arguments: taskList,
-    );
+    reorderCallBack!();
+    // await Navigator.of(context).pushNamed(
+    //   reorderRoute,
+    //   arguments: taskList,
+    // );
   }
 
   Future<void> onTapAddShortcut(BuildContext context, TaskList taskList) async {

@@ -16,6 +16,7 @@ class TaskListItem extends StatelessWidget {
   final Color themeColor;
   final bool havePlusIcon;
   final Function()? onTapPlus;
+  final bool isReorderState;
 
   const TaskListItem({
     super.key,
@@ -23,6 +24,7 @@ class TaskListItem extends StatelessWidget {
     required this.themeColor,
     this.havePlusIcon = false,
     this.onTapPlus,
+    required this.isReorderState,
   });
 
   @override
@@ -60,20 +62,38 @@ class TaskListItem extends StatelessWidget {
         },
         child: Row(
           children: [
-            Checkbox(
-              checkColor: (themeColor == MyTheme.whiteColor)
-                  ? MyTheme.blackColor
-                  : null,
-              activeColor: themeColor,
-              tristate: false,
-              shape: const CircleBorder(),
-              value: task.isCompleted,
-              onChanged: (bool? value) {
-                context
-                    .read<TaskListViewModel>()
-                    .updateIsCompleted(task: task, isCompleted: value!);
-              },
-            ),
+            isReorderState
+                ? Row(
+                    children: [
+                      IconButton(
+                        padding: EdgeInsets.zero,
+                        visualDensity: const VisualDensity(horizontal: -4),
+                        onPressed: () {},
+                        icon: const Icon(Icons.keyboard_arrow_down_outlined),
+                      ),
+                      IconButton(
+                        padding: EdgeInsets.zero,
+                        visualDensity: const VisualDensity(horizontal: -4),
+                        onPressed: () {},
+                        icon: const Icon(Icons.keyboard_arrow_up_outlined),
+                      ),
+                      const SizedBox(width: 8),
+                    ],
+                  )
+                : Checkbox(
+                    checkColor: (themeColor == MyTheme.whiteColor)
+                        ? MyTheme.blackColor
+                        : null,
+                    activeColor: themeColor,
+                    tristate: false,
+                    shape: const CircleBorder(),
+                    value: task.isCompleted,
+                    onChanged: (bool? value) {
+                      context
+                          .read<TaskListViewModel>()
+                          .updateIsCompleted(task: task, isCompleted: value!);
+                    },
+                  ),
             (isAllBottomIconNull)
                 ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,

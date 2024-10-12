@@ -198,6 +198,7 @@ class _PlannedPageState extends State<PlannedPage> {
                   itemCount: displayList.length,
                   itemBuilder: (BuildContext _, int index) {
                     return TaskListItem(
+                      isReorderState: false,
                       task: displayList[index],
                       themeColor: plannedTaskList.themeColor,
                     );

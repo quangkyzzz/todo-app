@@ -5,7 +5,8 @@ import 'package:todo_app/view_models/task_list_view_model.dart';
 import 'package:todo_app/presentation/items/task_list_item.dart';
 
 class IncompleteList extends StatelessWidget {
-  const IncompleteList({super.key});
+  final bool isReorderState;
+  const IncompleteList({super.key, required this.isReorderState});
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +23,7 @@ class IncompleteList extends StatelessWidget {
       itemBuilder: (BuildContext _, int index) {
         Task task = incompleteList[index];
         return TaskListItem(
+          isReorderState: isReorderState,
           task: task,
           themeColor:
               context.watch<TaskListViewModel>().currentTaskList.themeColor,

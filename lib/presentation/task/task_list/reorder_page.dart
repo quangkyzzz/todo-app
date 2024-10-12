@@ -41,6 +41,7 @@ class _ReorderPageState extends State<ReorderPage> {
                 .tasks
                 .map((item) {
               return TaskListItem(
+                isReorderState: false,
                 key: Key(item.id),
                 task: item,
                 themeColor: context
