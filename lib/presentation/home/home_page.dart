@@ -13,6 +13,13 @@ import 'package:todo_app/presentation/home/home_group.dart';
 import 'package:todo_app/presentation/home/home_item.dart';
 import 'package:todo_app/presentation/home/home_bottom_navigation_bar.dart';
 
+//TODO: fix reorder page
+//TODO: remove search indicate all
+//TODO: delete empty function at taskListPopUpMenu
+//TODO: add background image for login
+//TODO: fix auto remind time in the past
+//TODO: fix note auto focus
+//TODO: implement setting with shareFreference
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 

@@ -885,6 +885,7 @@ class TaskListViewModel extends ChangeNotifier {
   }) {
     searchName = searchName.toLowerCase();
     List<Task> result = [];
+    if (searchName == '') return result;
     for (var task in currentTaskList.tasks) {
       if (isHideCompleted) {
         if ((task.title.toLowerCase().contains(searchName)) &&

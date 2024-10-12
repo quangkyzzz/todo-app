@@ -141,14 +141,15 @@ class _SearchPageState extends State<SearchPage> {
               padding: const EdgeInsets.only(top: 16),
               child: Builder(
                 builder: (_) {
-                  if (searchResult.isEmpty) {
+                  double screenHeight = MediaQuery.of(context).size.height;
+                  if ((searchResult.isEmpty) && (searchName != '')) {
                     return const Center(
                       child: Text(
                         'No match result!',
                         style: MyTheme.itemTextStyle,
                       ),
                     );
-                  } else {
+                  } else if (searchResult.isNotEmpty) {
                     return ListView.builder(
                       shrinkWrap: true,
                       physics: const ClampingScrollPhysics(),
@@ -171,6 +172,20 @@ class _SearchPageState extends State<SearchPage> {
                           );
                         }
                       },
+                    );
+                  } else {
+                    return Center(
+                      child: Column(
+                        children: [
+                          SizedBox(height: screenHeight / 4),
+                          Image.asset('assets/backgrounds/bg_search.png'),
+                          const SizedBox(height: 18),
+                          const Text(
+                            'What would you like to find?',
+                            style: MyTheme.itemSmallGreyTextStyle,
+                          )
+                        ],
+                      ),
                     );
                   }
                 },

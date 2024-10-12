@@ -74,9 +74,12 @@ class _HomeGroupState extends State<HomeGroup> {
                   );
                 },
               )
-            : const Text(
-                'This group is empty',
-                style: MyTheme.itemSmallGreyTextStyle,
+            : const Padding(
+                padding: EdgeInsets.only(top: 6, bottom: 24),
+                child: Text(
+                  'This group is empty',
+                  style: MyTheme.itemSmallGreyTextStyle,
+                ),
               ),
       ],
     );
