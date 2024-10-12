@@ -9,7 +9,6 @@ import 'package:todo_app/presentation/task/important/important_page.dart';
 import 'package:todo_app/presentation/task/my_day/my_day_page.dart';
 import 'package:todo_app/presentation/task/planned/planned_page.dart';
 import 'package:todo_app/presentation/search/search_page.dart';
-import 'package:todo_app/presentation/task/task_list/reorder_page.dart';
 import 'package:todo_app/presentation/task/task_page/note_edit_page.dart';
 import 'package:todo_app/presentation/task/task_list/task_list_page.dart';
 import 'package:todo_app/presentation/task/task_page/task_page.dart';
@@ -32,7 +31,6 @@ const plannedRoute = '/home/planned';
 const myDayRoute = '/home/my_day';
 const importantRoute = '/home/important';
 const settingsRoute = '/home/user_profile/settings';
-const reorderRoute = '/home/task_list/reorder';
 const taskRoute = '/task_list/task';
 const noteEditRoute = '/task/note_edit';
 
@@ -145,18 +143,6 @@ var allRoute = {
         ChangeNotifierProvider(create: (context) => UserViewModel()),
       ],
       builder: (context, child) => const SettingsPage(),
-    );
-  },
-  reorderRoute: (context) {
-    TaskList taskList =
-        (ModalRoute.of(context)?.settings.arguments as TaskList).copyWith();
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => TaskListViewModel(currentTaskList: taskList),
-        ),
-      ],
-      builder: (context, child) => const ReorderPage(),
     );
   },
   taskRoute: (context) {
