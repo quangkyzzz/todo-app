@@ -208,12 +208,6 @@ class TaskListPopupMenu extends StatelessWidget {
         'onTap': onTapReorder,
       },
       {
-        'value': 'add_shortcut',
-        'text': 'Add shortcut',
-        'icon': Icons.add_to_home_screen_outlined,
-        'onTap': onTapAddShortcut,
-      },
-      {
         'value': 'change_theme',
         'text': 'Change theme',
         'icon': Icons.palette_outlined,
@@ -226,22 +220,10 @@ class TaskListPopupMenu extends StatelessWidget {
         'onTap': onTapHideCompletedTasks,
       },
       {
-        'value': 'send_a_copy',
-        'text': 'Send a copy',
-        'icon': Icons.share_outlined,
-        'onTap': onTapSendCopy,
-      },
-      {
         'value': 'duplicate_list',
         'text': 'Duplicate list',
         'icon': Icons.copy,
         'onTap': onTapDuplicateList,
-      },
-      {
-        'value': 'print_list',
-        'text': 'Print list',
-        'icon': Icons.print_outlined,
-        'onTap': onTapPrintList,
       },
       {
         'value': 'delete_list',
