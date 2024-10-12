@@ -17,6 +17,8 @@ class TaskListItem extends StatelessWidget {
   final bool havePlusIcon;
   final Function()? onTapPlus;
   final bool isReorderState;
+  final bool isFirstItem;
+  final bool isLastItem;
 
   const TaskListItem({
     super.key,
@@ -25,6 +27,8 @@ class TaskListItem extends StatelessWidget {
     this.havePlusIcon = false,
     this.onTapPlus,
     required this.isReorderState,
+    this.isFirstItem = false,
+    this.isLastItem = false,
   });
 
   @override
@@ -65,17 +69,39 @@ class TaskListItem extends StatelessWidget {
             isReorderState
                 ? Row(
                     children: [
-                      IconButton(
-                        padding: EdgeInsets.zero,
-                        visualDensity: const VisualDensity(horizontal: -4),
-                        onPressed: () {},
-                        icon: const Icon(Icons.keyboard_arrow_down_outlined),
+                      Material(
+                        color: Colors.transparent,
+                        child: IconButton(
+                          color: isLastItem
+                              ? MyTheme.greyColor
+                              : MyTheme.whiteColor,
+                          padding: EdgeInsets.zero,
+                          visualDensity: const VisualDensity(horizontal: -4),
+                          onPressed: () {
+                            if (isLastItem) return;
+                            context
+                                .read<TaskListViewModel>()
+                                .reorderTaskDown(movedTask: task);
+                          },
+                          icon: const Icon(Icons.keyboard_arrow_down_outlined),
+                        ),
                       ),
-                      IconButton(
-                        padding: EdgeInsets.zero,
-                        visualDensity: const VisualDensity(horizontal: -4),
-                        onPressed: () {},
-                        icon: const Icon(Icons.keyboard_arrow_up_outlined),
+                      Material(
+                        color: Colors.transparent,
+                        child: IconButton(
+                          color: isFirstItem
+                              ? MyTheme.greyColor
+                              : MyTheme.whiteColor,
+                          padding: EdgeInsets.zero,
+                          visualDensity: const VisualDensity(horizontal: -4),
+                          onPressed: () {
+                            if (isFirstItem) return;
+                            context
+                                .read<TaskListViewModel>()
+                                .reorderTaskUp(movedTask: task);
+                          },
+                          icon: const Icon(Icons.keyboard_arrow_up_outlined),
+                        ),
                       ),
                       const SizedBox(width: 8),
                     ],

@@ -14,7 +14,6 @@ import 'package:todo_app/presentation/home/home_item.dart';
 import 'package:todo_app/presentation/home/home_bottom_navigation_bar.dart';
 
 //TODO: fix reorder page
-//TODO: fix note auto focus
 //TODO: implement setting with shareFreference
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

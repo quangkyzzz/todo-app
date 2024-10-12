@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_app/models/settings.dart';
 import 'package:todo_app/models/task_list.dart';
@@ -161,6 +162,32 @@ class TaskListViewModel extends ChangeNotifier {
       currentTaskList.tasks.add(task);
     }
 
+    notifyListeners();
+  }
+
+  void reorderTaskUp({required movedTask}) {
+    int indexMovedTask = currentTaskList.tasks.indexOf(movedTask);
+    int indexDestinyTask = 0;
+    for (var i = indexMovedTask - 1; i >= 0; i--) {
+      if (!currentTaskList.tasks[i].isCompleted) {
+        indexDestinyTask = i;
+        break;
+      }
+    }
+    currentTaskList.tasks.swap(indexMovedTask, indexDestinyTask);
+    notifyListeners();
+  }
+
+  void reorderTaskDown({required movedTask}) {
+    int indexMovedTask = currentTaskList.tasks.indexOf(movedTask);
+    int indexDestinyTask = 0;
+    for (var i = indexMovedTask + 1; i < currentTaskList.tasks.length; i++) {
+      if (!currentTaskList.tasks[i].isCompleted) {
+        indexDestinyTask = i;
+        break;
+      }
+    }
+    currentTaskList.tasks.swap(indexMovedTask, indexDestinyTask);
     notifyListeners();
   }
 

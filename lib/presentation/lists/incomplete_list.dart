@@ -22,7 +22,13 @@ class IncompleteList extends StatelessWidget {
       itemCount: incompleteList.length,
       itemBuilder: (BuildContext _, int index) {
         Task task = incompleteList[index];
+        bool isFirstItem = false;
+        bool isLastItem = false;
+        if (index == 0) isFirstItem = true;
+        if (index == incompleteList.length - 1) isLastItem = true;
         return TaskListItem(
+          isFirstItem: isFirstItem,
+          isLastItem: isLastItem,
           isReorderState: isReorderState,
           task: task,
           themeColor:

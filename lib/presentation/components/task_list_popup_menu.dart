@@ -7,7 +7,6 @@ import 'package:todo_app/provider/settings_provider.dart';
 import 'package:todo_app/view_models/task_list_view_model.dart';
 import 'package:todo_app/presentation/components/show_alert_dialog.dart';
 import 'package:todo_app/presentation/components/show_text_edit_dialog.dart';
-import 'package:todo_app/routes.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/presentation/items/popup_item.dart';
 import 'package:todo_app/presentation/components/change_theme_bottom_sheet.dart';
@@ -59,10 +58,6 @@ class TaskListPopupMenu extends StatelessWidget {
 
   Future<void> onTapReorder(BuildContext context, TaskList taskList) async {
     reorderCallBack!();
-    // await Navigator.of(context).pushNamed(
-    //   reorderRoute,
-    //   arguments: taskList,
-    // );
   }
 
   Future<void> onTapAddShortcut(BuildContext context, TaskList taskList) async {
@@ -206,7 +201,7 @@ class TaskListPopupMenu extends StatelessWidget {
       },
       {
         'value': 'reorder',
-        'text': 'Reorder',
+        'text': 'Reorder tasks',
         'icon': Icons.swap_vert,
         'onTap': onTapReorder,
       },

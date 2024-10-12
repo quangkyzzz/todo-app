@@ -6,8 +6,11 @@ import 'package:todo_app/view_models/task_list_view_model.dart';
 import 'package:todo_app/presentation/items/task_list_item.dart';
 
 class CompletedList extends StatefulWidget {
+  final bool isReorderState;
+
   const CompletedList({
     super.key,
+    required this.isReorderState,
   });
 
   @override
@@ -16,6 +19,7 @@ class CompletedList extends StatefulWidget {
 
 class _CompletedListState extends State<CompletedList> {
   bool isExpanded = true;
+
   @override
   Widget build(BuildContext context) {
     TaskList watchCurrentTasklist =
@@ -26,37 +30,41 @@ class _CompletedListState extends State<CompletedList> {
     if (completedList.isEmpty) {
       return const SizedBox();
     } else {
-      return ExpansionTile(
-        initiallyExpanded: true,
-        title: Text(
-          'Completed ${completedList.length}',
-          style: TextStyle(
-            fontSize: 18,
-            color: watchCurrentTasklist.themeColor,
+      return IgnorePointer(
+        ignoring: widget.isReorderState,
+        child: ExpansionTile(
+          maintainState: true,
+          initiallyExpanded: isExpanded,
+          onExpansionChanged: (bool expaned) {
+            setState(() {
+              isExpanded = expaned;
+            });
+          },
+          title: Text(
+            'Completed ${completedList.length}',
+            style: TextStyle(
+              fontSize: 18,
+              color: watchCurrentTasklist.themeColor,
+            ),
           ),
+          trailing:
+              Icon(isExpanded ? Icons.expand_more : Icons.keyboard_arrow_left),
+          children: [
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const ClampingScrollPhysics(),
+              itemCount: completedList.length,
+              itemBuilder: (BuildContext _, int index) {
+                Task task = completedList[index];
+                return TaskListItem(
+                  isReorderState: false,
+                  task: task,
+                  themeColor: watchCurrentTasklist.themeColor,
+                );
+              },
+            )
+          ],
         ),
-        onExpansionChanged: (bool expanded) {
-          setState(() {
-            isExpanded = expanded;
-          });
-        },
-        trailing:
-            Icon(isExpanded ? Icons.expand_more : Icons.keyboard_arrow_left),
-        children: [
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const ClampingScrollPhysics(),
-            itemCount: completedList.length,
-            itemBuilder: (BuildContext _, int index) {
-              Task task = completedList[index];
-              return TaskListItem(
-                isReorderState: false,
-                task: task,
-                themeColor: watchCurrentTasklist.themeColor,
-              );
-            },
-          )
-        ],
       );
     }
   }

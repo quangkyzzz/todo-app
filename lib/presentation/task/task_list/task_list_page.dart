@@ -21,6 +21,7 @@ class TaskListPage extends StatefulWidget {
 
 class _TaskListPageState extends State<TaskListPage> {
   bool isReorderState = false;
+
   @override
   Widget build(BuildContext context) {
     TaskList currentTaskList =
@@ -69,7 +70,7 @@ class _TaskListPageState extends State<TaskListPage> {
                           icon: const Icon(Icons.close),
                         ),
                         const Text(
-                          'Reorder',
+                          'Reorder tasks',
                           style: MyTheme.titleTextStyle,
                         )
                       ],
@@ -122,7 +123,9 @@ class _TaskListPageState extends State<TaskListPage> {
                       IncompleteList(
                         isReorderState: isReorderState,
                       ),
-                      const CompletedList()
+                      CompletedList(
+                        isReorderState: isReorderState,
+                      )
                     ],
                   );
                 },
