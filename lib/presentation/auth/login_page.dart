@@ -41,6 +41,12 @@ class _LoginPageState extends State<LoginPage> {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               children: [
+                const Text(
+                  'Welcome to Todo app!',
+                  style: MyTheme.titleTextStyle,
+                ),
+                const SizedBox(height: 24),
+                Image.asset('assets/backgrounds/bg_login_signup.png'),
                 AuthField(
                   controller: emailController,
                   hintText: 'Email',

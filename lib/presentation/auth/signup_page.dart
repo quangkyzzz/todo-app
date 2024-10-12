@@ -38,6 +38,11 @@ class _SignUpPageState extends State<SignUpPage> {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               children: [
+                const Text(
+                  'Create your new account here:',
+                  style: MyTheme.titleTextStyle,
+                ),
+                const SizedBox(height: 24),
                 AuthField(
                   controller: emailController,
                   hintText: 'Email',
