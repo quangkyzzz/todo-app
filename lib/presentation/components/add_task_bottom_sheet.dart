@@ -273,7 +273,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                               DateTime.now().year,
                               DateTime.now().month,
                               DateTime.now().day,
-                              9,
+                              DateTime.now().hour + 1,
                             );
                           });
                         }

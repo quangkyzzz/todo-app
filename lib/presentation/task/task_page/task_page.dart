@@ -34,12 +34,6 @@ class TaskPage extends StatelessWidget {
 
   Future<void> onTapRepeat(BuildContext context,
       {bool isDisable = false}) async {
-    DateTime defaultDay = DateTime(
-      DateTime.now().year,
-      DateTime.now().month,
-      DateTime.now().day,
-      9,
-    );
     DateTime? currentRemindTime =
         context.read<TaskViewModel>().currentTask.remindTime;
     RenderBox box = popupKey.currentContext!.findRenderObject() as RenderBox;
@@ -51,6 +45,15 @@ class TaskPage extends StatelessWidget {
         items: [
           PopupMenuItem(
             onTap: () {
+              DateTime defaultDay = DateTime(
+                DateTime.now().year,
+                DateTime.now().month,
+                DateTime.now().day,
+                9,
+              );
+              if (defaultDay.isBefore(DateTime.now())) {
+                defaultDay = defaultDay.add(const Duration(days: 1));
+              }
               if (currentRemindTime == null) {
                 context.read<TaskViewModel>().updateRemindTime(
                       newRemindTime: defaultDay,
@@ -70,6 +73,19 @@ class TaskPage extends StatelessWidget {
           ),
           PopupMenuItem(
             onTap: () {
+              DateTime defaultDay = DateTime(
+                DateTime.now().year,
+                DateTime.now().month,
+                DateTime.now().day,
+                9,
+              );
+              if (defaultDay.isBefore(DateTime.now())) {
+                defaultDay = defaultDay.add(const Duration(days: 1));
+              }
+              if (defaultDay.weekday > 5) {
+                defaultDay =
+                    defaultDay.add(Duration(days: 8 - defaultDay.weekday));
+              }
               if (currentRemindTime == null) {
                 context.read<TaskViewModel>().updateRemindTime(
                       newRemindTime: defaultDay,
@@ -89,6 +105,15 @@ class TaskPage extends StatelessWidget {
           ),
           PopupMenuItem(
             onTap: () {
+              DateTime defaultDay = DateTime(
+                DateTime.now().year,
+                DateTime.now().month,
+                DateTime.now().day,
+                9,
+              );
+              if (defaultDay.isBefore(DateTime.now())) {
+                defaultDay = defaultDay.add(const Duration(days: 7));
+              }
               if (currentRemindTime == null) {
                 context.read<TaskViewModel>().updateRemindTime(
                       newRemindTime: defaultDay,
@@ -108,6 +133,20 @@ class TaskPage extends StatelessWidget {
           ),
           PopupMenuItem(
             onTap: () {
+              DateTime defaultDay = DateTime(
+                DateTime.now().year,
+                DateTime.now().month,
+                DateTime.now().day,
+                9,
+              );
+              if (defaultDay.isBefore(DateTime.now())) {
+                defaultDay = DateTime(
+                  defaultDay.year,
+                  defaultDay.month + 1,
+                  defaultDay.day,
+                  defaultDay.hour,
+                );
+              }
               if (currentRemindTime == null) {
                 context.read<TaskViewModel>().updateRemindTime(
                       newRemindTime: defaultDay,
@@ -127,6 +166,20 @@ class TaskPage extends StatelessWidget {
           ),
           PopupMenuItem(
             onTap: () {
+              DateTime defaultDay = DateTime(
+                DateTime.now().year,
+                DateTime.now().month,
+                DateTime.now().day,
+                9,
+              );
+              if (defaultDay.isBefore(DateTime.now())) {
+                defaultDay = DateTime(
+                  defaultDay.year + 1,
+                  defaultDay.month,
+                  defaultDay.day,
+                  defaultDay.hour,
+                );
+              }
               if (currentRemindTime == null) {
                 context.read<TaskViewModel>().updateRemindTime(
                       newRemindTime: defaultDay,
@@ -152,13 +205,15 @@ class TaskPage extends StatelessWidget {
               if (result != null) {
                 if (context.read<TaskViewModel>().currentTask.remindTime ==
                     null) {
+                  DateTime defaultDay = DateTime(
+                    DateTime.now().year,
+                    DateTime.now().month,
+                    DateTime.now().day,
+                    DateTime.now().hour + 1,
+                  );
+
                   context.read<TaskViewModel>().updateRemindTime(
-                        newRemindTime: DateTime(
-                          DateTime.now().year,
-                          DateTime.now().month,
-                          DateTime.now().day,
-                          9,
-                        ),
+                        newRemindTime: defaultDay,
                       );
                 }
                 context.read<TaskViewModel>().updateRepeatFrequency(
