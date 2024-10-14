@@ -4,8 +4,11 @@ Báo cáo 12/10
     -   Chỉnh sửa nhỏ trong trang my day, planned, important.
     -   Sửa enum và vị trí của file enum.
     -   Sửa cách import trong các file.
+Báo cáo 14/10
+Đã làm:
+    -   Sửa các lỗi giao diện được chỉ ra
+    -   Sửa các lỗi chức năng được chỉ ra
 Đang làm:
-    -   Sửa lỗi giao diện.
+    -   Thay thế setting provider bằng shared preference
 Dự định làm:
-    -   Sửa lỗi chức năng.
-    -   Thay thế provider bằng shared preference để triển khai các settings
+    -   Tìm hiểu và triển khai firebase realtime db.
