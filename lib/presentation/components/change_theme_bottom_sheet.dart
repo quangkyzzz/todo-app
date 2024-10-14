@@ -198,6 +198,7 @@ class SelectColorButton extends StatelessWidget {
     return OutlinedButton(
       onPressed: onTap,
       style: OutlinedButton.styleFrom(
+        padding: EdgeInsets.zero,
         fixedSize: const Size(50, 50),
         backgroundColor: color,
         shape: const CircleBorder(),

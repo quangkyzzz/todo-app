@@ -42,7 +42,7 @@ class TaskListPopupMenu extends StatelessWidget {
   Future<void> onTapSortBy(BuildContext context, TaskList taskList) async {
     double screenHeight = MediaQuery.of(context).size.height;
     await showModalBottomSheet(
-      constraints: BoxConstraints(maxHeight: screenHeight * 0.35),
+      constraints: BoxConstraints(maxHeight: screenHeight * 0.36),
       isDismissible: true,
       enableDrag: true,
       context: context,
@@ -58,22 +58,6 @@ class TaskListPopupMenu extends StatelessWidget {
 
   Future<void> onTapReorder(BuildContext context, TaskList taskList) async {
     reorderCallBack!();
-  }
-
-  Future<void> onTapAddShortcut(BuildContext context, TaskList taskList) async {
-    await showModalBottomSheet(
-      isDismissible: true,
-      enableDrag: true,
-      context: context,
-      showDragHandle: true,
-      builder: (BuildContext context) {
-        return NormalBottomSheet(
-          title: 'Add to Home screen?',
-          acceptText: 'Add',
-          onAccept: () {},
-        );
-      },
-    );
   }
 
   Future<void> onTapChangeTheme(BuildContext context, TaskList taskList) async {
@@ -102,22 +86,6 @@ class TaskListPopupMenu extends StatelessWidget {
         return NormalBottomSheet(
           title: 'Hide completed tasks?',
           acceptText: 'Yes',
-          onAccept: () {},
-        );
-      },
-    );
-  }
-
-  Future<void> onTapSendCopy(BuildContext context, TaskList taskList) async {
-    await showModalBottomSheet(
-      isDismissible: true,
-      enableDrag: true,
-      context: context,
-      showDragHandle: true,
-      builder: (BuildContext context) {
-        return NormalBottomSheet(
-          title: 'Send a copy?',
-          acceptText: 'Send',
           onAccept: () {},
         );
       },

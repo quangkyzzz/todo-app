@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:todo_app/models/settings.dart';
-import 'package:todo_app/provider/settings_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_app/themes.dart';
 
 class SettingsList extends StatefulWidget {
@@ -12,14 +10,13 @@ class SettingsList extends StatefulWidget {
 }
 
 class _SettingsListState extends State<SettingsList> {
-  late SettingsProvider settingsProvider;
-  late Settings settings;
+  bool isInitPref = true;
+  late final SharedPreferencesWithCache prefWithCache;
   late bool isAddNewTaskOnTop;
   late bool isMoveStarTaskToTop;
   late bool isPlaySoundOnComplete;
   late bool isConfirmBeforeDelete;
   late bool isShowDueToday;
-
   late List<Map<String, dynamic>> listSettingItem = [
     {
       'text': 'Add new tasks on top',
@@ -28,6 +25,7 @@ class _SettingsListState extends State<SettingsList> {
         setState(() {
           isAddNewTaskOnTop = changeValue;
         });
+        prefWithCache.setBool('isAddNewTaskOnTop', changeValue);
       },
     },
     {
@@ -37,6 +35,7 @@ class _SettingsListState extends State<SettingsList> {
         setState(() {
           isMoveStarTaskToTop = changeValue;
         });
+        prefWithCache.setBool('isMoveStarTaskToTop', changeValue);
       },
     },
     {
@@ -46,6 +45,7 @@ class _SettingsListState extends State<SettingsList> {
         setState(() {
           isPlaySoundOnComplete = changeValue;
         });
+        prefWithCache.setBool('isPlaySoundOnComplete', changeValue);
       },
     },
     {
@@ -55,6 +55,7 @@ class _SettingsListState extends State<SettingsList> {
         setState(() {
           isConfirmBeforeDelete = changeValue;
         });
+        prefWithCache.setBool('isConfirmBeforeDelete', changeValue);
       },
     },
     {
@@ -64,53 +65,53 @@ class _SettingsListState extends State<SettingsList> {
         setState(() {
           isShowDueToday = changeValue;
         });
+        prefWithCache.setBool('isShowDueToday', changeValue);
       },
     },
   ];
+  void initPref() async {
+    prefWithCache = await SharedPreferencesWithCache.create(
+      cacheOptions: const SharedPreferencesWithCacheOptions(),
+    );
+    setState(() {
+      isInitPref = false;
+    });
+    isAddNewTaskOnTop = prefWithCache.getBool('isAddNewTaskOnTop') ?? true;
+    isMoveStarTaskToTop = prefWithCache.getBool('isMoveStarTaskToTop') ?? true;
+    isPlaySoundOnComplete =
+        prefWithCache.getBool('isPlaySoundOnComplete') ?? true;
+    isConfirmBeforeDelete =
+        prefWithCache.getBool('isConfirmBeforeDelete') ?? true;
+    isShowDueToday = prefWithCache.getBool('isShowDueToday') ?? true;
+  }
 
   @override
   void initState() {
-    settingsProvider = Provider.of<SettingsProvider>(context, listen: false);
-    settings = settingsProvider.settings;
-    isAddNewTaskOnTop = settings.isAddNewTaskOnTop;
-    isMoveStarTaskToTop = settings.isMoveStarTaskToTop;
-    isPlaySoundOnComplete = settings.isPlaySoundOnComplete;
-    isConfirmBeforeDelete = settings.isConfirmBeforeDelete;
-    isShowDueToday = settings.isShowDueToday;
+    initPref();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        settingsProvider.updateSettingWith(
-          isAddNewTaskOnTop: isAddNewTaskOnTop,
-          isMoveStarTaskToTop: isMoveStarTaskToTop,
-          isPlaySoundOnComplete: isPlaySoundOnComplete,
-          isConfirmBeforeDelete: isConfirmBeforeDelete,
-          isShowDueToday: isShowDueToday,
-        );
-        return true;
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: listSettingItem.map((item) {
-            return SettingsItem(
-              isActive: item['isActive'],
-              text: item['text'],
-              onChange: (bool changeValue) {
-                setState(() {
-                  item['isActive'] = changeValue;
-                });
-                item['onChange'](changeValue);
-              },
-            );
-          }).toList(),
-        ),
-      ),
-    );
+    return (isInitPref)
+        ? const CircularProgressIndicator()
+        : Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: listSettingItem.map((item) {
+                return SettingsItem(
+                  isActive: item['isActive'],
+                  text: item['text'],
+                  onChange: (bool changeValue) {
+                    setState(() {
+                      item['isActive'] = changeValue;
+                    });
+                    item['onChange'](changeValue);
+                  },
+                );
+              }).toList(),
+            ),
+          );
   }
 }
 
