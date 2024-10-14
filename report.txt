@@ -8,6 +8,8 @@ Báo cáo 14/10
 Đã làm:
     -   Sửa các lỗi giao diện được chỉ ra
     -   Sửa các lỗi chức năng được chỉ ra
+    -   Thay đổi cơ chế của chức năng reorder task.
+    -   Sửa các lỗi phát sinh.
 Đang làm:
     -   Thay thế setting provider bằng shared preference
 Dự định làm:
