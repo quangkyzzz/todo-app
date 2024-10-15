@@ -1,6 +1,5 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:todo_app/models/settings.dart';
 import 'package:todo_app/models/task_list.dart';
 import 'package:todo_app/models/task.dart';
 import 'package:todo_app/models/task_step.dart';
@@ -43,9 +42,9 @@ class TaskListViewModel extends ChangeNotifier {
   void updateIsImportant({
     required Task task,
     required bool isImportant,
-    required Settings settings,
+    required bool isMoveStarTaskToTop,
   }) {
-    if ((settings.isMoveStarTaskToTop) && (isImportant)) {
+    if ((isMoveStarTaskToTop) && (isImportant)) {
       currentTaskList.tasks.remove(task);
       currentTaskList.tasks.insert(0, task);
     }
@@ -134,7 +133,7 @@ class TaskListViewModel extends ChangeNotifier {
     required String id,
     required String taskName,
     required bool isCompleted,
-    required Settings settings,
+    required bool isAddNewTaskOnTop,
     bool isOnMyDay = false,
     bool isImportant = false,
     DateTime? dueDate,
@@ -156,7 +155,7 @@ class TaskListViewModel extends ChangeNotifier {
       repeatFrequency: repeatFrequency,
       frequencyMultiplier: frequencyMultiplier ?? 1,
     );
-    if (settings.isAddNewTaskOnTop) {
+    if (isAddNewTaskOnTop) {
       currentTaskList.tasks.insert(0, task);
     } else {
       currentTaskList.tasks.add(task);

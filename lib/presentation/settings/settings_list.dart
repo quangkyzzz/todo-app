@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:todo_app/service/shared_preference_with_cache_service.dart';
+import 'package:todo_app/service/settings_service.dart';
 import 'package:todo_app/themes.dart';
 
 class SettingsList extends StatefulWidget {
@@ -11,7 +11,7 @@ class SettingsList extends StatefulWidget {
 }
 
 class _SettingsListState extends State<SettingsList> {
-  SharedPreferencesWithCache pref = SharedPreferenceWithCacheService.pref;
+  SharedPreferencesWithCache pref = SettingsService.pref;
   late bool isAddNewTaskOnTop;
   late bool isMoveStarTaskToTop;
   late bool isPlaySoundOnComplete;

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/provider/auth_provider.dart';
-import 'package:todo_app/provider/settings_provider.dart';
 import 'package:todo_app/service/background_service.dart';
 import 'package:todo_app/service/notification_service.dart';
 import 'package:todo_app/themes.dart';
@@ -22,7 +21,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => SettingsProvider()),
         ChangeNotifierProvider(create: (context) => AuthProvider()),
       ],
       builder: (context, child) {

@@ -2,11 +2,11 @@ import 'dart:async';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart' hide TextDirection;
 import 'package:provider/provider.dart';
-import 'package:todo_app/models/settings.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_app/models/task.dart';
 import 'package:todo_app/models/task_list.dart';
-import 'package:todo_app/provider/settings_provider.dart';
 import 'package:todo_app/service/background_service.dart';
+import 'package:todo_app/service/settings_service.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/models/enum.dart';
 import 'package:todo_app/view_models/task_list_view_model.dart';
@@ -38,11 +38,13 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
   final TextEditingController _controller = TextEditingController();
   bool isChecked = false;
   late Task newTask;
-  late final Settings settings;
+  late bool isPlaySoundOnComplete;
+  late bool isAddNewTaskOnTop;
+  late bool isShowDueToday;
   @override
   void initState() {
+    SharedPreferencesWithCache pref = SettingsService.pref;
     unawaited(initializeDateFormatting());
-    settings = widget.mContext.read<SettingsProvider>().settings;
     newTask = Task(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       taskListID: widget.taskList.id,
@@ -52,6 +54,9 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
       isOnMyDay: widget.isAddToMyDay,
       createDate: DateTime.now(),
     );
+    isPlaySoundOnComplete = pref.getBool('isPlaySoundOnComplete') ?? true;
+    isAddNewTaskOnTop = pref.getBool('isAddNewTaskOnTop') ?? true;
+    isShowDueToday = pref.getBool('isShowDueToday') ?? true;
     super.initState();
   }
 
@@ -131,7 +136,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                           listen: false,
                         ).createNewTask(
                           id: newTask.id,
-                          settings: settings,
+                          isAddNewTaskOnTop: isAddNewTaskOnTop,
                           taskName: _controller.text,
                           isCompleted: isChecked,
                           dueDate: newTask.dueDate,
@@ -147,7 +152,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                               taskID: newTask.id,
                               taskTitle: _controller.text,
                               taskListTitle: widget.taskList.title,
-                              isPlaySound: settings.isPlaySoundOnComplete,
+                              isPlaySound: isPlaySoundOnComplete,
                               remindTime: newTask.remindTime!,
                             );
                           } else {
@@ -158,7 +163,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                               remindTime: newTask.remindTime!,
                               frequency: newTask.repeatFrequency!,
                               frequencyMultiplier: newTask.frequencyMultiplier,
-                              isPlaySound: settings.isPlaySoundOnComplete,
+                              isPlaySound: isPlaySoundOnComplete,
                             );
                           }
                         }
@@ -214,7 +219,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                             DateTime.now().month,
                             DateTime.now().day,
                           );
-                          if ((settings.isShowDueToday) &&
+                          if ((isShowDueToday) &&
                               (newTask.dueDate!.isAtSameMomentAs(today)) &&
                               (!newTask.isOnMyDay)) {
                             newTask.isOnMyDay = true;

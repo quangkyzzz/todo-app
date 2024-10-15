@@ -1,6 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SharedPreferenceWithCacheService {
+class SettingsService {
   static late SharedPreferencesWithCache pref;
   Future<void> init() async {
     pref = await SharedPreferencesWithCache.create(

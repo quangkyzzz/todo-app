@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/provider/settings_provider.dart';
+import 'package:todo_app/service/settings_service.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/models/task.dart';
 import 'package:todo_app/view_models/task_view_model.dart';
@@ -51,10 +51,9 @@ class TaskPageBottomNavigation extends StatelessWidget {
           const Spacer(),
           IconButton(
             onPressed: () async {
-              if (context
-                  .read<SettingsProvider>()
-                  .settings
-                  .isConfirmBeforeDelete) {
+              bool isConfirmBeforeDelete =
+                  SettingsService.pref.getBool('isConfirmBeforeDelete') ?? true;
+              if (isConfirmBeforeDelete) {
                 bool isDelete = await showAlertDialog(
                   context,
                   'Are you sure?',

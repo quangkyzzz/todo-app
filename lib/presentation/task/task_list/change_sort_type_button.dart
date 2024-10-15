@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/models/task_list.dart';
-import 'package:todo_app/provider/settings_provider.dart';
 import 'package:todo_app/models/enum.dart';
+import 'package:todo_app/service/settings_service.dart';
 import 'package:todo_app/view_models/task_list_view_model.dart';
 
 class ChangeSortTypeButton extends StatelessWidget {
@@ -60,14 +60,11 @@ class ChangeSortTypeButton extends StatelessWidget {
         const Spacer(),
         IconButton(
           onPressed: () {
+            bool isAddNewTaskOnTop =
+                SettingsService.pref.getBool('isAddNewTaskOnTop') ?? true;
             context.read<TaskListViewModel>().sortTaskListBy(
                   sortType: SortType.createDate,
-                  isAscending: (context
-                          .read<SettingsProvider>()
-                          .settings
-                          .isAddNewTaskOnTop)
-                      ? false
-                      : true,
+                  isAscending: (isAddNewTaskOnTop) ? false : true,
                 );
             context.read<TaskListViewModel>().updateSortType(newSortType: null);
           },

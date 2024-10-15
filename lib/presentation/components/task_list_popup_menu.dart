@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/models/task_list.dart';
-import 'package:todo_app/provider/settings_provider.dart';
+import 'package:todo_app/service/settings_service.dart';
 import 'package:todo_app/view_models/task_list_view_model.dart';
 import 'package:todo_app/presentation/components/show_alert_dialog.dart';
 import 'package:todo_app/presentation/components/show_text_edit_dialog.dart';
@@ -16,6 +16,7 @@ class TaskListPopupMenu extends StatelessWidget {
   final List<Map<String, dynamic>>? customListPopupMenuItem;
   final List<String> toRemove;
   final Function? reorderCallBack;
+
   const TaskListPopupMenu({
     super.key,
     this.toRemove = const [],
@@ -137,7 +138,9 @@ class TaskListPopupMenu extends StatelessWidget {
   }
 
   void onTapDeleteList(BuildContext context, TaskList taskList) async {
-    if (context.read<SettingsProvider>().settings.isConfirmBeforeDelete) {
+    bool isConfirmBeforeDelete =
+        SettingsService.pref.getBool('isConfirmBeforeDelete') ?? true;
+    if (isConfirmBeforeDelete) {
       bool isDelete = await showAlertDialog(
         context,
         'Are you sure?',
