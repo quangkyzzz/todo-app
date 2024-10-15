@@ -1,6 +1,7 @@
 Báo cáo 15/10
 Đã làm :
     -   Tìm hiểu và cài đặt shared preference vào setting page, home page.
+    -   Lược bỏ các biến thừa liên quan đến setting.
 Đang làm:
     -   Cài đặt setting vào các trang còn lại.
 Dự định làm:
