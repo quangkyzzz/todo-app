@@ -1,16 +1,7 @@
-Báo cáo 14/10
-Đã làm (Thứ 6, 11/10):
-    -   Loại bỏ các biến thừa và những setState không cần thiết trong taskListItem
-    -   Chỉnh sửa nhỏ trong trang my day, planned, important.
-    -   Sửa enum và vị trí của file enum.
-    -   Sửa cách import trong các file.
-
-Đã làm (Thứ 7, 12/10):
-    -   Sửa các lỗi giao diện được chỉ ra
-    -   Sửa các lỗi chức năng được chỉ ra
-    -   Thay đổi cơ chế của chức năng reorder task.
-    -   Sửa các lỗi phát sinh.
+Báo cáo 15/10
+Đã làm :
+    -   Tìm hiểu và cài đặt shared preference vào setting page, home page.
 Đang làm:
-    -   Thay thế setting provider bằng shared preference
+    -   Cài đặt setting vào các trang còn lại.
 Dự định làm:
     -   Tìm hiểu và triển khai firebase realtime db.
