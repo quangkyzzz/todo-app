@@ -2,11 +2,10 @@ import 'dart:async';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart' hide TextDirection;
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_app/models/task.dart';
 import 'package:todo_app/models/task_list.dart';
 import 'package:todo_app/service/background_service.dart';
-import 'package:todo_app/service/settings_service.dart';
+import 'package:todo_app/models/settings_shared_preference.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/models/enum.dart';
 import 'package:todo_app/view_models/task_list_view_model.dart';
@@ -43,7 +42,6 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
   late bool isShowDueToday;
   @override
   void initState() {
-    SharedPreferencesWithCache pref = SettingsService.pref;
     unawaited(initializeDateFormatting());
     newTask = Task(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
@@ -54,9 +52,9 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
       isOnMyDay: widget.isAddToMyDay,
       createDate: DateTime.now(),
     );
-    isPlaySoundOnComplete = pref.getBool('isPlaySoundOnComplete') ?? true;
-    isAddNewTaskOnTop = pref.getBool('isAddNewTaskOnTop') ?? true;
-    isShowDueToday = pref.getBool('isShowDueToday') ?? true;
+    isPlaySoundOnComplete = SettingsSharedPreference.getIsPlaySoundOnComplete();
+    isAddNewTaskOnTop = SettingsSharedPreference.getIsAddNewTaskOnTop();
+    isShowDueToday = SettingsSharedPreference.getIsShowDueToday();
     super.initState();
   }
 

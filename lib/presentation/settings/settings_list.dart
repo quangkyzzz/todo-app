@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:todo_app/service/settings_service.dart';
+import 'package:todo_app/models/settings_shared_preference.dart';
 import 'package:todo_app/themes.dart';
 
 class SettingsList extends StatefulWidget {
@@ -11,7 +10,6 @@ class SettingsList extends StatefulWidget {
 }
 
 class _SettingsListState extends State<SettingsList> {
-  SharedPreferencesWithCache pref = SettingsService.pref;
   late bool isAddNewTaskOnTop;
   late bool isMoveStarTaskToTop;
   late bool isPlaySoundOnComplete;
@@ -25,7 +23,7 @@ class _SettingsListState extends State<SettingsList> {
         setState(() {
           isAddNewTaskOnTop = changeValue;
         });
-        pref.setBool('isAddNewTaskOnTop', changeValue);
+        SettingsSharedPreference.setIsAddNewTaskOnTop(changeValue);
       },
     },
     {
@@ -35,7 +33,7 @@ class _SettingsListState extends State<SettingsList> {
         setState(() {
           isMoveStarTaskToTop = changeValue;
         });
-        pref.setBool('isMoveStarTaskToTop', changeValue);
+        SettingsSharedPreference.setIsMoveStarTaskToTop(changeValue);
       },
     },
     {
@@ -45,7 +43,7 @@ class _SettingsListState extends State<SettingsList> {
         setState(() {
           isPlaySoundOnComplete = changeValue;
         });
-        pref.setBool('isPlaySoundOnComplete', changeValue);
+        SettingsSharedPreference.setIsPlaySoundOnComplete(changeValue);
       },
     },
     {
@@ -55,7 +53,7 @@ class _SettingsListState extends State<SettingsList> {
         setState(() {
           isConfirmBeforeDelete = changeValue;
         });
-        pref.setBool('isConfirmBeforeDelete', changeValue);
+        SettingsSharedPreference.setIsConfirmBeforeDelete(changeValue);
       },
     },
     {
@@ -65,18 +63,18 @@ class _SettingsListState extends State<SettingsList> {
         setState(() {
           isShowDueToday = changeValue;
         });
-        pref.setBool('isShowDueToday', changeValue);
+        SettingsSharedPreference.setIsShowDueToday(changeValue);
       },
     },
   ];
 
   @override
   void initState() {
-    isAddNewTaskOnTop = pref.getBool('isAddNewTaskOnTop') ?? true;
-    isMoveStarTaskToTop = pref.getBool('isMoveStarTaskToTop') ?? true;
-    isPlaySoundOnComplete = pref.getBool('isPlaySoundOnComplete') ?? true;
-    isConfirmBeforeDelete = pref.getBool('isConfirmBeforeDelete') ?? true;
-    isShowDueToday = pref.getBool('isShowDueToday') ?? true;
+    isAddNewTaskOnTop = SettingsSharedPreference.getIsAddNewTaskOnTop();
+    isMoveStarTaskToTop = SettingsSharedPreference.getIsMoveStarTaskToTop();
+    isPlaySoundOnComplete = SettingsSharedPreference.getIsPlaySoundOnComplete();
+    isConfirmBeforeDelete = SettingsSharedPreference.getIsConfirmBeforeDelete();
+    isShowDueToday = SettingsSharedPreference.getIsShowDueToday();
     super.initState();
   }
 

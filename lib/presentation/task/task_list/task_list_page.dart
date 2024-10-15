@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/models/enum.dart';
 import 'package:todo_app/models/task_list.dart';
-import 'package:todo_app/service/settings_service.dart';
+import 'package:todo_app/models/settings_shared_preference.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/view_models/task_list_view_model.dart';
 import 'package:todo_app/presentation/components/add_task_floating_button.dart';
@@ -98,16 +98,14 @@ class _TaskListPageState extends State<TaskListPage> {
                     actions: [
                       TaskListPopupMenu(
                         reorderCallBack: () {
-                          bool isAddNewTaskOnTop = SettingsService.pref
-                                  .getBool('isAddNewTaskOnTop') ??
-                              true;
                           context.read<TaskListViewModel>().updateSortType(
                                 newSortType: null,
                                 isAscending: true,
                               );
                           context.read<TaskListViewModel>().sortTaskListBy(
                                 sortType: SortType.createDate,
-                                isAscending: (isAddNewTaskOnTop) ? false : true,
+                                isAscending: !SettingsSharedPreference
+                                    .getIsAddNewTaskOnTop(),
                               );
                           setState(() {
                             isReorderState = true;

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/service/background_service.dart';
 import 'package:todo_app/models/enum.dart';
-import 'package:todo_app/service/settings_service.dart';
+import 'package:todo_app/models/settings_shared_preference.dart';
 import 'package:todo_app/view_models/task_view_model.dart';
 import 'package:todo_app/presentation/components/show_custom_repeat_time_dialog.dart';
 import 'package:todo_app/presentation/components/show_date_time_picker.dart';
@@ -249,8 +249,7 @@ class TaskPage extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async {
         Task currentTask = context.read<TaskViewModel>().currentTask;
-        bool isPlaySoundOnComplete =
-            SettingsService.pref.getBool('isPlaySoundOnComplete') ?? true;
+
         BackGroundService.cancelTaskByID(id: currentTask.id);
         if (currentTask.remindTime != null) {
           if (currentTask.repeatFrequency != null) {
@@ -261,14 +260,14 @@ class TaskPage extends StatelessWidget {
               remindTime: currentTask.remindTime!,
               frequency: currentTask.repeatFrequency!,
               frequencyMultiplier: currentTask.frequencyMultiplier,
-              isPlaySound: isPlaySoundOnComplete,
+              isPlaySound: SettingsSharedPreference.getIsPlaySoundOnComplete(),
             );
           } else {
             BackGroundService.executeScheduleBackGroundTask(
               taskTitle: currentTask.title,
               taskID: currentTask.id,
               taskListTitle: currentTaskListName,
-              isPlaySound: isPlaySoundOnComplete,
+              isPlaySound: SettingsSharedPreference.getIsPlaySoundOnComplete(),
               remindTime: currentTask.remindTime!,
             );
           }
@@ -411,8 +410,6 @@ class TaskPage extends StatelessWidget {
                   icon: Icons.calendar_today_outlined,
                   text: 'Add due date',
                   onTap: ({bool isDisable = false}) async {
-                    bool isShowDueToday =
-                        SettingsService.pref.getBool('isShowDueToday') ?? true;
                     if (!isDisable) {
                       DateTime? newDueDate = await showDatePicker(
                         context: context,
@@ -428,7 +425,7 @@ class TaskPage extends StatelessWidget {
                           DateTime.now().day,
                         );
                         if ((newDueDate.isAtSameMomentAs(today)) &&
-                            (isShowDueToday)) {
+                            (SettingsSharedPreference.getIsShowDueToday())) {
                           readTaskViewModel.updateIsOnMyDay(isOnMyDay: true);
                         }
                       }

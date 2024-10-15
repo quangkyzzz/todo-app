@@ -2,7 +2,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/service/settings_service.dart';
+import 'package:todo_app/models/settings_shared_preference.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/routes.dart';
 import 'package:todo_app/models/task.dart';
@@ -275,13 +275,12 @@ class TaskListItem extends StatelessWidget {
                   ? IconButton(
                       iconSize: 32,
                       onPressed: () {
-                        bool isMoveStarTaskToTop = SettingsService.pref
-                                .getBool('isMoveStarTaskToTop') ??
-                            true;
                         context.read<TaskListViewModel>().updateIsImportant(
-                            task: task,
-                            isImportant: !task.isImportant,
-                            isMoveStarTaskToTop: isMoveStarTaskToTop);
+                              task: task,
+                              isImportant: !task.isImportant,
+                              isMoveStarTaskToTop: SettingsSharedPreference
+                                  .getIsMoveStarTaskToTop(),
+                            );
                       },
                       icon: (task.isImportant)
                           ? Icon(

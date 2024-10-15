@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/models/group.dart';
 import 'package:todo_app/models/task_list.dart';
-import 'package:todo_app/service/settings_service.dart';
+import 'package:todo_app/models/settings_shared_preference.dart';
 import 'package:todo_app/ultility/task_list_ultility.dart';
 import 'package:todo_app/view_models/group_view_model.dart';
 import 'package:todo_app/presentation/home/home_appbar.dart';
@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
   bool isLoadingPref = true;
 
   void initPref() async {
-    await SettingsService().init();
+    await SettingsSharedPreference.init();
     setState(() {
       isLoadingPref = false;
     });

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/service/settings_service.dart';
+import 'package:todo_app/service/background_service.dart';
+import 'package:todo_app/models/settings_shared_preference.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/models/task.dart';
 import 'package:todo_app/view_models/task_view_model.dart';
@@ -51,9 +52,7 @@ class TaskPageBottomNavigation extends StatelessWidget {
           const Spacer(),
           IconButton(
             onPressed: () async {
-              bool isConfirmBeforeDelete =
-                  SettingsService.pref.getBool('isConfirmBeforeDelete') ?? true;
-              if (isConfirmBeforeDelete) {
+              if (SettingsSharedPreference.getIsConfirmBeforeDelete()) {
                 bool isDelete = await showAlertDialog(
                   context,
                   'Are you sure?',
@@ -65,9 +64,11 @@ class TaskPageBottomNavigation extends StatelessWidget {
                   if (context.mounted) {
                     Navigator.pop(context);
                   }
+                  BackGroundService.cancelTaskByID(id: task.id);
                 }
               } else {
                 context.read<TaskViewModel>().deleteTask();
+                BackGroundService.cancelTaskByID(id: task.id);
                 Navigator.pop(context);
               }
             },
