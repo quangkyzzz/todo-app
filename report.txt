@@ -1,8 +1,9 @@
 Báo cáo 15/10
 Đã làm :
-    -   Tìm hiểu và cài đặt shared preference vào setting page, home page.
+    -   Tìm hiểu và cài đặt shared preference vào project.
     -   Lược bỏ các biến thừa liên quan đến setting.
+    -   Cài đặt setting vào các màn liên quan.
 Đang làm:
-    -   Cài đặt setting vào các trang còn lại.
+    -   Tìm hiểu và cài đặt firebase realtime db vào project
 Dự định làm:
-    -   Tìm hiểu và triển khai firebase realtime db.
+    -   Triển khai firebase realtime db.
