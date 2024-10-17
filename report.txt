@@ -1,9 +1,9 @@
-Báo cáo 15/10
+Báo cáo 17/10
 Đã làm :
-    -   Tìm hiểu và cài đặt shared preference vào project.
-    -   Lược bỏ các biến thừa liên quan đến setting.
-    -   Cài đặt setting vào các màn liên quan.
+    -   Sửa cấu trúc settings page.
+    -   Cài đặt firebase realtime db vào project phụ.
+    -   Sửa cách sử dụng setting shared preference ở các màn.
 Đang làm:
-    -   Tìm hiểu và cài đặt firebase realtime db vào project
+    -   Sửa setting shared preference theo singleton pattern.
 Dự định làm:
-    -   Triển khai firebase realtime db.
+    -   Triển khai firebase realtime db trong project phụ.
