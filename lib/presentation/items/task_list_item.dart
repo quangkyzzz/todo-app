@@ -49,7 +49,7 @@ class TaskListItem extends StatelessWidget {
       ),
       height: 60,
       margin: const EdgeInsets.only(bottom: 3),
-      padding: const EdgeInsets.symmetric(horizontal: 8),
+      padding: const EdgeInsets.only(left: 8, right: 8),
       child: InkWell(
         onTap: () async {
           await Navigator.of(context).pushNamed(
@@ -137,7 +137,7 @@ class TaskListItem extends StatelessWidget {
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 4),
                       SizedBox(
                         width: screenWidth * 0.65,
                         child: Text(
@@ -265,6 +265,7 @@ class TaskListItem extends StatelessWidget {
                           }),
                         ],
                       ),
+                      const SizedBox(height: 4),
                     ],
                   ),
             const Spacer(),
