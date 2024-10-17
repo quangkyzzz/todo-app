@@ -52,9 +52,10 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
       isOnMyDay: widget.isAddToMyDay,
       createDate: DateTime.now(),
     );
-    isPlaySoundOnComplete = SettingsSharedPreference.getIsPlaySoundOnComplete();
-    isAddNewTaskOnTop = SettingsSharedPreference.getIsAddNewTaskOnTop();
-    isShowDueToday = SettingsSharedPreference.getIsShowDueToday();
+    isPlaySoundOnComplete =
+        SettingsSharedPreference().getIsPlaySoundOnComplete();
+    isAddNewTaskOnTop = SettingsSharedPreference().getIsAddNewTaskOnTop();
+    isShowDueToday = SettingsSharedPreference().getIsShowDueToday();
     super.initState();
   }
 

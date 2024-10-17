@@ -138,7 +138,7 @@ class TaskListPopupMenu extends StatelessWidget {
   }
 
   void onTapDeleteList(BuildContext context, TaskList taskList) async {
-    if (SettingsSharedPreference.getIsConfirmBeforeDelete()) {
+    if (SettingsSharedPreference().getIsConfirmBeforeDelete()) {
       bool isDelete = await showAlertDialog(
         context,
         'Are you sure?',

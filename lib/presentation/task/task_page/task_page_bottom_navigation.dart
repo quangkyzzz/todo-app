@@ -52,7 +52,7 @@ class TaskPageBottomNavigation extends StatelessWidget {
           const Spacer(),
           IconButton(
             onPressed: () async {
-              if (SettingsSharedPreference.getIsConfirmBeforeDelete()) {
+              if (SettingsSharedPreference().getIsConfirmBeforeDelete()) {
                 bool isDelete = await showAlertDialog(
                   context,
                   'Are you sure?',

@@ -1,51 +1,62 @@
+// ignore_for_file: discarded_futures
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsSharedPreference {
-  static late SharedPreferencesWithCache pref;
+  late final SharedPreferencesWithCache pref;
+  SettingsSharedPreference._internalConstructor() {
+    _initPref();
+  }
+  static final SettingsSharedPreference _settingSharedPreference =
+      SettingsSharedPreference._internalConstructor();
 
-  static Future<void> init() async {
+  factory SettingsSharedPreference() {
+    return _settingSharedPreference;
+  }
+
+  Future<void> _initPref() async {
     pref = await SharedPreferencesWithCache.create(
       cacheOptions: const SharedPreferencesWithCacheOptions(),
     );
   }
 
-  static bool getIsAddNewTaskOnTop() {
+  bool getIsAddNewTaskOnTop() {
     return pref.getBool('isAddNewTaskOnTop') ?? true;
   }
 
-  static bool getIsMoveStarTaskToTop() {
+  bool getIsMoveStarTaskToTop() {
     return pref.getBool('isMoveStarTaskToTop') ?? true;
   }
 
-  static bool getIsPlaySoundOnComplete() {
+  bool getIsPlaySoundOnComplete() {
     return pref.getBool('isPlaySoundOnComplete') ?? true;
   }
 
-  static bool getIsConfirmBeforeDelete() {
+  bool getIsConfirmBeforeDelete() {
     return pref.getBool('isConfirmBeforeDelete') ?? true;
   }
 
-  static bool getIsShowDueToday() {
+  bool getIsShowDueToday() {
     return pref.getBool('isShowDueToday') ?? true;
   }
 
-  static void setIsAddNewTaskOnTop(bool value) async {
+  void setIsAddNewTaskOnTop(bool value) async {
     pref.setBool('isAddNewTaskOnTop', value);
   }
 
-  static void setIsMoveStarTaskToTop(bool value) async {
+  void setIsMoveStarTaskToTop(bool value) async {
     pref.setBool('isMoveStarTaskToTop', value);
   }
 
-  static void setIsPlaySoundOnComplete(bool value) async {
+  void setIsPlaySoundOnComplete(bool value) async {
     pref.setBool('isPlaySoundOnComplete', value);
   }
 
-  static void setIsConfirmBeforeDelete(bool value) async {
+  void setIsConfirmBeforeDelete(bool value) async {
     pref.setBool('isConfirmBeforeDelete', value);
   }
 
-  static void setIsShowDueToday(bool value) async {
+  void setIsShowDueToday(bool value) async {
     pref.setBool('isShowDueToday', value);
   }
 }

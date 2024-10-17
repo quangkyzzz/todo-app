@@ -260,14 +260,16 @@ class TaskPage extends StatelessWidget {
               remindTime: currentTask.remindTime!,
               frequency: currentTask.repeatFrequency!,
               frequencyMultiplier: currentTask.frequencyMultiplier,
-              isPlaySound: SettingsSharedPreference.getIsPlaySoundOnComplete(),
+              isPlaySound:
+                  SettingsSharedPreference().getIsPlaySoundOnComplete(),
             );
           } else {
             BackGroundService.executeScheduleBackGroundTask(
               taskTitle: currentTask.title,
               taskID: currentTask.id,
               taskListTitle: currentTaskListName,
-              isPlaySound: SettingsSharedPreference.getIsPlaySoundOnComplete(),
+              isPlaySound:
+                  SettingsSharedPreference().getIsPlaySoundOnComplete(),
               remindTime: currentTask.remindTime!,
             );
           }
@@ -425,7 +427,7 @@ class TaskPage extends StatelessWidget {
                           DateTime.now().day,
                         );
                         if ((newDueDate.isAtSameMomentAs(today)) &&
-                            (SettingsSharedPreference.getIsShowDueToday())) {
+                            (SettingsSharedPreference().getIsShowDueToday())) {
                           readTaskViewModel.updateIsOnMyDay(isOnMyDay: true);
                         }
                       }

@@ -104,7 +104,7 @@ class _TaskListPageState extends State<TaskListPage> {
                               );
                           context.read<TaskListViewModel>().sortTaskListBy(
                                 sortType: SortType.createDate,
-                                isAscending: !SettingsSharedPreference
+                                isAscending: !SettingsSharedPreference()
                                     .getIsAddNewTaskOnTop(),
                               );
                           setState(() {

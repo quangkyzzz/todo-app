@@ -278,7 +278,7 @@ class TaskListItem extends StatelessWidget {
                         context.read<TaskListViewModel>().updateIsImportant(
                               task: task,
                               isImportant: !task.isImportant,
-                              isMoveStarTaskToTop: SettingsSharedPreference
+                              isMoveStarTaskToTop: SettingsSharedPreference()
                                   .getIsMoveStarTaskToTop(),
                             );
                       },

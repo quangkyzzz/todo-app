@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/models/settings_shared_preference.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/view_models/group_view_model.dart';
 import 'package:todo_app/presentation/components/show_text_edit_dialog.dart';
@@ -13,6 +14,9 @@ class HomePageBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SettingsSharedPreference settingsSharedPreference =
+        SettingsSharedPreference();
+    settingsSharedPreference.toString();
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return Padding(

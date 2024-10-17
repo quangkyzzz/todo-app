@@ -63,7 +63,7 @@ class ChangeSortTypeButton extends StatelessWidget {
             context.read<TaskListViewModel>().sortTaskListBy(
                   sortType: SortType.createDate,
                   isAscending:
-                      (!SettingsSharedPreference.getIsAddNewTaskOnTop()),
+                      (!SettingsSharedPreference().getIsAddNewTaskOnTop()),
                 );
             context.read<TaskListViewModel>().updateSortType(newSortType: null);
           },
