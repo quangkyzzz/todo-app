@@ -31,57 +31,60 @@ class _HomeGroupState extends State<HomeGroup> {
 
   @override
   Widget build(BuildContext context) {
-    return ExpansionTile(
-      title: Text(
-        widget.group.groupName,
-        style: MyTheme.itemTextStyle,
-      ),
-      tilePadding: const EdgeInsets.only(left: 8),
-      childrenPadding: const EdgeInsets.only(left: 18),
-      onExpansionChanged: (bool expanded) {
-        setState(() {
-          isExpanded = expanded;
-        });
-      },
-      trailing: HomeGroupTrailing(
-        isExpanded: isExpanded,
-        context: context,
-        group: widget.group,
-      ),
-      children: [
-        (widget.group.taskLists.isNotEmpty)
-            ? ListView.builder(
-                shrinkWrap: true,
-                physics: const ClampingScrollPhysics(),
-                itemCount: widget.group.taskLists.length,
-                itemBuilder: (BuildContext context, int index) {
-                  TaskList item = widget.group.taskLists[index];
-                  int endNumber = 0;
-                  for (var element in item.tasks) {
-                    if (!element.isCompleted) endNumber++;
-                  }
-                  return HomeItem(
-                    group: widget.group,
-                    taskList: item,
-                    icon: Icons.list_outlined,
-                    endNumber: endNumber,
-                    onTap: () async {
-                      await Navigator.of(context).pushNamed(
-                        taskListRoute,
-                        arguments: item,
-                      );
-                    },
-                  );
-                },
-              )
-            : const Padding(
-                padding: EdgeInsets.only(top: 6, bottom: 24),
-                child: Text(
-                  'This group is empty',
-                  style: MyTheme.itemSmallGreyTextStyle,
+    return Theme(
+      data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+      child: ExpansionTile(
+        title: Text(
+          widget.group.groupName,
+          style: MyTheme.itemTextStyle,
+        ),
+        tilePadding: const EdgeInsets.only(left: 8),
+        childrenPadding: const EdgeInsets.only(left: 18),
+        onExpansionChanged: (bool expanded) {
+          setState(() {
+            isExpanded = expanded;
+          });
+        },
+        trailing: HomeGroupTrailing(
+          isExpanded: isExpanded,
+          context: context,
+          group: widget.group,
+        ),
+        children: [
+          (widget.group.taskLists.isNotEmpty)
+              ? ListView.builder(
+                  shrinkWrap: true,
+                  physics: const ClampingScrollPhysics(),
+                  itemCount: widget.group.taskLists.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    TaskList item = widget.group.taskLists[index];
+                    int endNumber = 0;
+                    for (var element in item.tasks) {
+                      if (!element.isCompleted) endNumber++;
+                    }
+                    return HomeItem(
+                      group: widget.group,
+                      taskList: item,
+                      icon: Icons.list_outlined,
+                      endNumber: endNumber,
+                      onTap: () async {
+                        await Navigator.of(context).pushNamed(
+                          taskListRoute,
+                          arguments: item,
+                        );
+                      },
+                    );
+                  },
+                )
+              : const Padding(
+                  padding: EdgeInsets.only(top: 6, bottom: 24),
+                  child: Text(
+                    'This group is empty',
+                    style: MyTheme.itemSmallGreyTextStyle,
+                  ),
                 ),
-              ),
-      ],
+        ],
+      ),
     );
   }
 }

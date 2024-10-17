@@ -32,38 +32,41 @@ class _CompletedListState extends State<CompletedList> {
     } else {
       return IgnorePointer(
         ignoring: widget.isReorderState,
-        child: ExpansionTile(
-          maintainState: true,
-          initiallyExpanded: isExpanded,
-          onExpansionChanged: (bool expaned) {
-            setState(() {
-              isExpanded = expaned;
-            });
-          },
-          title: Text(
-            'Completed ${completedList.length}',
-            style: TextStyle(
-              fontSize: 18,
-              color: watchCurrentTasklist.themeColor,
+        child: Theme(
+          data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+          child: ExpansionTile(
+            maintainState: true,
+            initiallyExpanded: isExpanded,
+            onExpansionChanged: (bool expaned) {
+              setState(() {
+                isExpanded = expaned;
+              });
+            },
+            title: Text(
+              'Completed ${completedList.length}',
+              style: TextStyle(
+                fontSize: 18,
+                color: watchCurrentTasklist.themeColor,
+              ),
             ),
+            trailing: Icon(
+                isExpanded ? Icons.expand_more : Icons.keyboard_arrow_left),
+            children: [
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const ClampingScrollPhysics(),
+                itemCount: completedList.length,
+                itemBuilder: (BuildContext _, int index) {
+                  Task task = completedList[index];
+                  return TaskListItem(
+                    isReorderState: false,
+                    task: task,
+                    themeColor: watchCurrentTasklist.themeColor,
+                  );
+                },
+              )
+            ],
           ),
-          trailing:
-              Icon(isExpanded ? Icons.expand_more : Icons.keyboard_arrow_left),
-          children: [
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const ClampingScrollPhysics(),
-              itemCount: completedList.length,
-              itemBuilder: (BuildContext _, int index) {
-                Task task = completedList[index];
-                return TaskListItem(
-                  isReorderState: false,
-                  task: task,
-                  themeColor: watchCurrentTasklist.themeColor,
-                );
-              },
-            )
-          ],
         ),
       );
     }
