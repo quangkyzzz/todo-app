@@ -2,7 +2,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/models/settings_shared_preference.dart';
+import 'package:todo_app/data/settings_shared_preference.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/routes.dart';
 import 'package:todo_app/models/task.dart';
@@ -278,7 +278,8 @@ class TaskListItem extends StatelessWidget {
                         context.read<TaskListViewModel>().updateIsImportant(
                               task: task,
                               isImportant: !task.isImportant,
-                              isMoveStarTaskToTop: SettingsSharedPreference()
+                              isMoveStarTaskToTop: SettingsSharedPreference
+                                  .getInstance
                                   .getIsMoveStarTaskToTop(),
                             );
                       },

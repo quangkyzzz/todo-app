@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/models/settings_shared_preference.dart';
+import 'package:todo_app/data/settings_shared_preference.dart';
 import 'package:todo_app/themes.dart';
 
 class SettingsList extends StatefulWidget {
@@ -18,13 +18,15 @@ class _SettingsListState extends State<SettingsList> {
 
   @override
   void initState() {
-    isAddNewTaskOnTop = SettingsSharedPreference().getIsAddNewTaskOnTop();
-    isMoveStarTaskToTop = SettingsSharedPreference().getIsMoveStarTaskToTop();
+    isAddNewTaskOnTop =
+        SettingsSharedPreference.getInstance.getIsAddNewTaskOnTop();
+    isMoveStarTaskToTop =
+        SettingsSharedPreference.getInstance.getIsMoveStarTaskToTop();
     isPlaySoundOnComplete =
-        SettingsSharedPreference().getIsPlaySoundOnComplete();
+        SettingsSharedPreference.getInstance.getIsPlaySoundOnComplete();
     isConfirmBeforeDelete =
-        SettingsSharedPreference().getIsConfirmBeforeDelete();
-    isShowDueToday = SettingsSharedPreference().getIsShowDueToday();
+        SettingsSharedPreference.getInstance.getIsConfirmBeforeDelete();
+    isShowDueToday = SettingsSharedPreference.getInstance.getIsShowDueToday();
     super.initState();
   }
 
@@ -40,7 +42,8 @@ class _SettingsListState extends State<SettingsList> {
             setState(() {
               isAddNewTaskOnTop = changeValue;
             });
-            SettingsSharedPreference().setIsAddNewTaskOnTop(changeValue);
+            SettingsSharedPreference.getInstance
+                .setIsAddNewTaskOnTop(changeValue);
           },
         ),
         SettingsItem(
@@ -50,7 +53,8 @@ class _SettingsListState extends State<SettingsList> {
             setState(() {
               isMoveStarTaskToTop = changeValue;
             });
-            SettingsSharedPreference().setIsMoveStarTaskToTop(changeValue);
+            SettingsSharedPreference.getInstance
+                .setIsMoveStarTaskToTop(changeValue);
           },
         ),
         SettingsItem(
@@ -60,7 +64,8 @@ class _SettingsListState extends State<SettingsList> {
             setState(() {
               isPlaySoundOnComplete = changeValue;
             });
-            SettingsSharedPreference().setIsPlaySoundOnComplete(changeValue);
+            SettingsSharedPreference.getInstance
+                .setIsPlaySoundOnComplete(changeValue);
           },
         ),
         SettingsItem(
@@ -70,7 +75,8 @@ class _SettingsListState extends State<SettingsList> {
             setState(() {
               isConfirmBeforeDelete = changeValue;
             });
-            SettingsSharedPreference().setIsConfirmBeforeDelete(changeValue);
+            SettingsSharedPreference.getInstance
+                .setIsConfirmBeforeDelete(changeValue);
           },
         ),
         SettingsItem(
@@ -80,7 +86,7 @@ class _SettingsListState extends State<SettingsList> {
             setState(() {
               isShowDueToday = changeValue;
             });
-            SettingsSharedPreference().setIsShowDueToday(changeValue);
+            SettingsSharedPreference.getInstance.setIsShowDueToday(changeValue);
           },
         ),
       ]),

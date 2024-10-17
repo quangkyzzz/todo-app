@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/service/background_service.dart';
 import 'package:todo_app/models/enum.dart';
-import 'package:todo_app/models/settings_shared_preference.dart';
+import 'package:todo_app/data/settings_shared_preference.dart';
 import 'package:todo_app/view_models/task_view_model.dart';
 import 'package:todo_app/presentation/components/show_custom_repeat_time_dialog.dart';
 import 'package:todo_app/presentation/components/show_date_time_picker.dart';
@@ -260,16 +260,16 @@ class TaskPage extends StatelessWidget {
               remindTime: currentTask.remindTime!,
               frequency: currentTask.repeatFrequency!,
               frequencyMultiplier: currentTask.frequencyMultiplier,
-              isPlaySound:
-                  SettingsSharedPreference().getIsPlaySoundOnComplete(),
+              isPlaySound: SettingsSharedPreference.getInstance
+                  .getIsPlaySoundOnComplete(),
             );
           } else {
             BackGroundService.executeScheduleBackGroundTask(
               taskTitle: currentTask.title,
               taskID: currentTask.id,
               taskListTitle: currentTaskListName,
-              isPlaySound:
-                  SettingsSharedPreference().getIsPlaySoundOnComplete(),
+              isPlaySound: SettingsSharedPreference.getInstance
+                  .getIsPlaySoundOnComplete(),
               remindTime: currentTask.remindTime!,
             );
           }
@@ -427,7 +427,8 @@ class TaskPage extends StatelessWidget {
                           DateTime.now().day,
                         );
                         if ((newDueDate.isAtSameMomentAs(today)) &&
-                            (SettingsSharedPreference().getIsShowDueToday())) {
+                            (SettingsSharedPreference.getInstance
+                                .getIsShowDueToday())) {
                           readTaskViewModel.updateIsOnMyDay(isOnMyDay: true);
                         }
                       }

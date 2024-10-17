@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/models/task.dart';
 import 'package:todo_app/models/task_list.dart';
 import 'package:todo_app/service/background_service.dart';
-import 'package:todo_app/models/settings_shared_preference.dart';
+import 'package:todo_app/data/settings_shared_preference.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/models/enum.dart';
 import 'package:todo_app/view_models/task_list_view_model.dart';
@@ -53,9 +53,10 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
       createDate: DateTime.now(),
     );
     isPlaySoundOnComplete =
-        SettingsSharedPreference().getIsPlaySoundOnComplete();
-    isAddNewTaskOnTop = SettingsSharedPreference().getIsAddNewTaskOnTop();
-    isShowDueToday = SettingsSharedPreference().getIsShowDueToday();
+        SettingsSharedPreference.getInstance.getIsPlaySoundOnComplete();
+    isAddNewTaskOnTop =
+        SettingsSharedPreference.getInstance.getIsAddNewTaskOnTop();
+    isShowDueToday = SettingsSharedPreference.getInstance.getIsShowDueToday();
     super.initState();
   }
 

@@ -10,9 +10,7 @@ class SettingsSharedPreference {
   static final SettingsSharedPreference _settingSharedPreference =
       SettingsSharedPreference._internalConstructor();
 
-  factory SettingsSharedPreference() {
-    return _settingSharedPreference;
-  }
+  static SettingsSharedPreference get getInstance => _settingSharedPreference;
 
   Future<void> _initPref() async {
     pref = await SharedPreferencesWithCache.create(
