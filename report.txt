@@ -4,4 +4,4 @@ Báo cáo 24/10
 Đang làm:
     -   Cài đặt firebase realtime db vào project chính.
 Dự định làm:
-    -   Triển khai các chức năng tạo, đọc, sửa, xóa trong project chính.
+    -   Triển khai các chức năng tạo, đọc, sửa, xóa trong project chính.ss
