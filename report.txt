@@ -3,6 +3,5 @@ Báo cáo 24/10
     -   Triển khai các chức năng tạo, đọc, sửa, xóa trong firebase realtime db trong project phụ.
 Đang làm:
     -   Cài đặt firebase realtime db vào project chính.
-    change
 Dự định làm:
     -   Triển khai các chức năng tạo, đọc, sửa, xóa trong project chính.
