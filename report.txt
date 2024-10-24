@@ -1,9 +1,7 @@
-Báo cáo 21/10
+Báo cáo 24/10
 Đã làm :
-    -   Sửa các triển khai singleton của setting shared preference.
-    -   Sửa vài lỗi giao diện nhỏ.
-    -   Tìm hiểu về cách đọc, ghi trong firebase realtime db.
+    -   Triển khai các chức năng tạo, đọc, sửa, xóa trong firebase realtime db trong project phụ.
 Đang làm:
-    -   Triển khai các chức năng đọc, ghi trong firebase realtime db trong project phụ.
+    -   Cài đặt firebase realtime db vào project chính.
 Dự định làm:
-    -   Tìm hiểu và triển khai chức năng update dữ liệu trong project phụ.
+    -   Triển khai các chức năng tạo, đọc, sửa, xóa trong project chính.
