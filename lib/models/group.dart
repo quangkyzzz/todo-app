@@ -1,6 +1,7 @@
 import 'dart:core';
 import 'package:todo_app/models/task_list.dart';
 
+//TODO: fix all to map function
 class Group {
   final String id;
   String groupName;

@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/data/firebase_db.dart';
 import 'package:todo_app/models/group.dart';
 import 'package:todo_app/models/task_list.dart';
 import 'package:todo_app/ultility/task_list_ultility.dart';
@@ -24,7 +23,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    FirebaseDb().init();
     return Scaffold(
       appBar: HomeAppBar(context: context).appBar(),
       body: SingleChildScrollView(
