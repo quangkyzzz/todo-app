@@ -1,7 +1,10 @@
-Báo cáo 24/10
+Báo cáo 25/10
 Đã làm :
-    -   Triển khai các chức năng tạo, đọc, sửa, xóa trong firebase realtime db trong project phụ.
+    -   Cài đặt firebase db.
+    -   Tạo các class group database.
+    -   Triển khai các hàm tạo, xóa group trong db.
 Đang làm:
-    -   Cài đặt firebase realtime db vào project chính.
+    -   Triển khai hàm lấy dữ liệu group từ db.
 Dự định làm:
-    -   Triển khai các chức năng tạo, đọc, sửa, xóa trong project chính.ss
+    -   Triển khai các hàm update các thông tin group trong db.
+    -   Lấy dữ liệu từ class group database truyền vào groupViewModel.
