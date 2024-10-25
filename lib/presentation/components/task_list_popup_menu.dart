@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/models/task_list.dart';
-import 'package:todo_app/data/settings_shared_preference.dart';
+import 'package:todo_app/data_source/settings_shared_preference.dart';
 import 'package:todo_app/view_models/task_list_view_model.dart';
 import 'package:todo_app/presentation/components/show_alert_dialog.dart';
 import 'package:todo_app/presentation/components/show_text_edit_dialog.dart';

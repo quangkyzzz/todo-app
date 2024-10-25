@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:todo_app/data/group_data_source/group_database_provider.dart';
+import 'package:todo_app/data_source/group_data_source/group_database_provider.dart';
 import 'package:todo_app/models/group.dart';
 import 'package:todo_app/models/task_list.dart';
 
