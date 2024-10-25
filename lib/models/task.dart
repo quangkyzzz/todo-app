@@ -112,18 +112,28 @@ class Task {
     result.addAll({'isImportant': isImportant});
     result.addAll({'isOnMyDay': isOnMyDay});
     result.addAll({'createDate': createDate});
-    result.addAll({'stepList': stepList});
     result.addAll({'dueDate': dueDate});
     result.addAll({'remindTime': remindTime});
     result.addAll({'repeatFreaquency': repeatFrequency});
     result.addAll({'frequencyMultiplier': frequencyMultiplier});
     result.addAll({'filePath': filePath});
     result.addAll({'note': note});
+    Map<String, dynamic> stepListMap = {};
+    for (TaskStep taskStep in stepList) {
+      stepListMap.addAll({taskStep.id: taskStep.toMap()});
+    }
+    result.addAll({'stepList': stepListMap});
 
     return result;
   }
 
   factory Task.fromMap(Map<String, dynamic> map) {
+    List<TaskStep> stepList = [];
+    if (map['stepList'] != null) {
+      for (var pair in map['stepList']) {
+        stepList.add(TaskStep.fromMap(pair.value.first));
+      }
+    }
     return Task(
       id: map['id'] ?? DateTime.now().millisecondsSinceEpoch.toString(),
       taskListID:
@@ -133,7 +143,7 @@ class Task {
       isImportant: map['isImportant'] ?? false,
       isOnMyDay: map['isOnMyDay'] ?? false,
       createDate: map['createDate'] ?? DateTime.now(),
-      stepList: map['stepList'] ?? [],
+      stepList: stepList,
       dueDate: map['dueDate'],
       remindTime: map['remindTime'],
       repeatFrequency: map['repeatFrequency'],

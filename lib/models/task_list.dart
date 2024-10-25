@@ -75,12 +75,22 @@ class TaskList {
     result.addAll({'sortByType': sortByType});
     result.addAll({'isAscending': isAscending});
     result.addAll({'themeColor': themeColor});
-    result.addAll({'taskList': tasks});
+    Map<String, dynamic> tasksMap = {};
+    for (Task task in tasks) {
+      tasksMap.addAll({task.id: task.toMap()});
+    }
+    result.addAll({'tasks': tasksMap});
 
     return result;
   }
 
   factory TaskList.fromMap(Map<String, dynamic> map) {
+    List<Task> tasks = [];
+    if (map['tasks'] != null) {
+      for (Map<String, dynamic> pair in map['tasks']) {
+        tasks.add(Task.fromMap(pair.values.first));
+      }
+    }
     return TaskList(
       id: map['id'] ?? '-1',
       title: map['title'] ?? 'Untitle list',
@@ -89,7 +99,7 @@ class TaskList {
       sortByType: map['sortByType'],
       isAscending: map['isAscending'] ?? true,
       themeColor: map['themeColor'] ?? MyTheme.blueColor,
-      tasks: map['taskList'] ?? [],
+      tasks: tasks,
     );
   }
 }
