@@ -3,8 +3,8 @@ import 'package:todo_app/models/task_list.dart';
 
 //TODO: fix function to future
 abstract class GroupDatabaseProvider {
-  List<Group>? getAllGroup();
-  Group? getGroupByID({required String groupID});
+  List<Group> listenAllGroup({required Function onGroupUpdate});
+  Future<Group?> getGroupByID({required String groupID});
   void createGroup({required Group newGroup});
   void deleteGroup({required String groupID});
   void renameGroup({

@@ -32,12 +32,12 @@ class GroupDatabaseService implements GroupDatabaseProvider {
   }
 
   @override
-  List<Group>? getAllGroup() {
-    return provider.getAllGroup();
+  List<Group> listenAllGroup({required Function onGroupUpdate}) {
+    return provider.listenAllGroup(onGroupUpdate: onGroupUpdate);
   }
 
   @override
-  Group? getGroupByID({required String groupID}) {
+  Future<Group?> getGroupByID({required String groupID}) async {
     return provider.getGroupByID(groupID: groupID);
   }
 
