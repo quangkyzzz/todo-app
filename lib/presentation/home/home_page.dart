@@ -3,7 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/models/group.dart';
+import 'package:todo_app/models/task.dart';
 import 'package:todo_app/models/task_list.dart';
+import 'package:todo_app/models/task_step.dart';
 import 'package:todo_app/ultility/task_list_ultility.dart';
 import 'package:todo_app/view_models/group_view_model.dart';
 import 'package:todo_app/presentation/home/home_appbar.dart';
@@ -138,6 +140,169 @@ class _HomePageState extends State<HomePage> {
             }),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          TaskList testTaskList = TaskList(
+            id: '1',
+            title: 'Tasks',
+            tasks: [
+              Task(
+                id: '2',
+                taskListID: '1',
+                title: 'few day',
+                isCompleted: false,
+                isImportant: true,
+                isOnMyDay: true,
+                createDate: DateTime(2024, 6, 2),
+                dueDate: DateTime(2024, 6, 2),
+              ),
+              Task(
+                id: '1',
+                taskListID: '1',
+                title: 'Tasks',
+                isCompleted: false,
+                isImportant: false,
+                isOnMyDay: false,
+                createDate: DateTime(2024, 6, 9),
+                stepList: [
+                  TaskStep(
+                    id: '1',
+                    stepName: 'step 1',
+                    isCompleted: false,
+                  ),
+                  TaskStep(
+                    id: '2',
+                    stepName: 'step 2',
+                    isCompleted: true,
+                  ),
+                ],
+                note: 'note',
+              ),
+              Task(
+                id: '66',
+                taskListID: '1',
+                title: 'No step',
+                isCompleted: false,
+                isImportant: false,
+                isOnMyDay: true,
+                remindTime: DateTime(2024, 9, 1),
+                createDate: DateTime(2024, 6, 2),
+                dueDate: DateTime(2024, 6, 2),
+              ),
+            ],
+          );
+          Task testTask = Task(
+            id: '1',
+            taskListID: '1',
+            title: 'Tasks',
+            isCompleted: false,
+            isImportant: false,
+            isOnMyDay: false,
+            createDate: DateTime(2024, 6, 9),
+            stepList: [
+              TaskStep(
+                id: '1',
+                stepName: 'step 1',
+                isCompleted: false,
+              ),
+              TaskStep(
+                id: '2',
+                stepName: 'step 2',
+                isCompleted: true,
+              ),
+            ],
+            note: 'note',
+          );
+          Group testGroup = Group(
+            id: '111',
+            groupName: 'my group 1',
+            taskLists: [
+              TaskList(
+                id: '333',
+                title: 'group 1 list 1',
+                tasks: [
+                  Task(
+                      id: '6',
+                      taskListID: '333',
+                      title: 'due today',
+                      isCompleted: false,
+                      isImportant: false,
+                      isOnMyDay: false,
+                      createDate: DateTime.now(),
+                      dueDate: DateTime.now(),
+                      stepList: [
+                        TaskStep(id: '2', stepName: 'test', isCompleted: true),
+                        TaskStep(
+                          id: '3',
+                          stepName: 'test2',
+                          isCompleted: false,
+                        ),
+                        TaskStep(id: '4', stepName: 'test3', isCompleted: true),
+                      ]),
+                  Task(
+                    id: '7',
+                    taskListID: '333',
+                    title: 'due tomorrow',
+                    isCompleted: false,
+                    isImportant: false,
+                    isOnMyDay: false,
+                    createDate: DateTime.now(),
+                    dueDate: DateTime.now().add(const Duration(days: 1)),
+                  ),
+                  Task(
+                    id: '8',
+                    taskListID: '333',
+                    title: 'due next week',
+                    isCompleted: false,
+                    isImportant: false,
+                    isOnMyDay: false,
+                    createDate: DateTime.now(),
+                    dueDate: DateTime.now().add(const Duration(days: 7)),
+                  ),
+                ],
+              ),
+              TaskList(
+                id: '444',
+                title: 'group 1 list 2',
+                tasks: [
+                  Task(
+                    id: '9',
+                    taskListID: '444',
+                    title: 'due next month',
+                    isCompleted: false,
+                    isImportant: false,
+                    isOnMyDay: false,
+                    createDate: DateTime.now(),
+                    dueDate: DateTime.now().add(const Duration(days: 31)),
+                  ),
+                  Task(
+                    id: '10',
+                    taskListID: '444',
+                    title: 'due next 2 day',
+                    isCompleted: false,
+                    isImportant: false,
+                    isOnMyDay: false,
+                    createDate: DateTime.now(),
+                    dueDate: DateTime.now().add(const Duration(days: 2)),
+                  ),
+                  Task(
+                    id: '11',
+                    taskListID: '444',
+                    title: 'due next 3 day',
+                    isCompleted: false,
+                    isImportant: false,
+                    isOnMyDay: false,
+                    createDate: DateTime.now(),
+                    dueDate: DateTime.now().add(const Duration(days: 3)),
+                  ),
+                ],
+              ),
+            ],
+          );
+          print(testGroup.toMap());
+        },
+        child: Icon(Icons.abc),
       ),
       bottomNavigationBar: HomePageBottomNavigationBar(),
     );

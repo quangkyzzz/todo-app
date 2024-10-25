@@ -72,9 +72,9 @@ class TaskList {
     result.addAll({'title': title});
     result.addAll({'backgroundImage': backgroundImage});
     result.addAll({'defaultImage': defaultImage});
-    result.addAll({'sortByType': sortByType});
+    result.addAll({'sortByType': sortByType?.name});
     result.addAll({'isAscending': isAscending});
-    result.addAll({'themeColor': themeColor});
+    result.addAll({'themeColor': themeColor.value});
     Map<String, dynamic> tasksMap = {};
     for (Task task in tasks) {
       tasksMap.addAll({task.id: task.toMap()});
@@ -92,13 +92,15 @@ class TaskList {
       }
     }
     return TaskList(
-      id: map['id'] ?? '-1',
+      id: map['id'] ?? DateTime.now().millisecondsSinceEpoch.toString(),
       title: map['title'] ?? 'Untitle list',
       backgroundImage: map['backgroundImage'],
       defaultImage: map['defaultImage'],
-      sortByType: map['sortByType'],
+      sortByType: (map['sortByType'] == null)
+          ? null
+          : SortType.values.byName(map['sortByType']),
       isAscending: map['isAscending'] ?? true,
-      themeColor: map['themeColor'] ?? MyTheme.blueColor,
+      themeColor: Color(map['themeColor'] ?? MyTheme.blueColor.value),
       tasks: tasks,
     );
   }

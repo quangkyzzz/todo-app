@@ -111,10 +111,10 @@ class Task {
     result.addAll({'isCompleted': isCompleted});
     result.addAll({'isImportant': isImportant});
     result.addAll({'isOnMyDay': isOnMyDay});
-    result.addAll({'createDate': createDate});
-    result.addAll({'dueDate': dueDate});
-    result.addAll({'remindTime': remindTime});
-    result.addAll({'repeatFreaquency': repeatFrequency});
+    result.addAll({'createDate': createDate.toString()});
+    result.addAll({'dueDate': dueDate?.toString()});
+    result.addAll({'remindTime': remindTime?.toString()});
+    result.addAll({'repeatFreaquency': repeatFrequency?.name});
     result.addAll({'frequencyMultiplier': frequencyMultiplier});
     result.addAll({'filePath': filePath});
     result.addAll({'note': note});
@@ -136,18 +136,19 @@ class Task {
     }
     return Task(
       id: map['id'] ?? DateTime.now().millisecondsSinceEpoch.toString(),
-      taskListID:
-          map['taskListID'] ?? DateTime.now().millisecondsSinceEpoch.toString(),
+      taskListID: map['taskListID'] ?? '1',
       title: map['title'] ?? 'Unknown title',
       isCompleted: map['isCompleted'] ?? false,
       isImportant: map['isImportant'] ?? false,
       isOnMyDay: map['isOnMyDay'] ?? false,
-      createDate: map['createDate'] ?? DateTime.now(),
+      createDate: DateTime.tryParse(map['createDate']),
       stepList: stepList,
-      dueDate: map['dueDate'],
-      remindTime: map['remindTime'],
-      repeatFrequency: map['repeatFrequency'],
-      frequencyMultiplier: map['frequencyMultiplier'],
+      dueDate: DateTime.tryParse(map['dueDate']),
+      remindTime: DateTime.tryParse(map['remindTime']),
+      repeatFrequency: (map['repeatFrequency'] == null)
+          ? null
+          : Frequency.values.byName(map['repeatFrequency']),
+      frequencyMultiplier: map['frequencyMultiplier'] ?? 1,
       filePath: map['filePath'] ?? [],
       note: map['note'] ?? '',
     );

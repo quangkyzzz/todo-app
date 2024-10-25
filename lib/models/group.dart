@@ -2,6 +2,7 @@ import 'dart:core';
 import 'package:todo_app/models/task_list.dart';
 
 //TODO: fix all to map function
+//TODO: fix type of color, datetime,...
 class Group {
   final String id;
   String groupName;
@@ -46,7 +47,7 @@ class Group {
       }
     }
     return Group(
-      id: map['id'] ?? '-1',
+      id: map['id'] ?? DateTime.now().millisecondsSinceEpoch.toString(),
       groupName: map['groupName'] ?? 'Untitle group',
       taskLists: taskLists,
     );
