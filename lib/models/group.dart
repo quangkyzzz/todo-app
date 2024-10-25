@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_function_literals_in_foreach_calls
+
 import 'dart:core';
 import 'package:todo_app/models/task_list.dart';
 
@@ -42,9 +44,9 @@ class Group {
   factory Group.fromMap(Map<String, dynamic> map) {
     List<TaskList> taskLists = [];
     if (map['taskLists'] != null) {
-      for (var value in (map['taskLists'] as Map<String, dynamic>).values) {
-        taskLists.add(TaskList.fromMap(value));
-      }
+      (map['taskLists'] as Map<String, dynamic>).values.forEach((element) {
+        taskLists.add(TaskList.fromMap(element));
+      });
     }
     return Group(
       id: map['id'] ?? DateTime.now().millisecondsSinceEpoch.toString(),

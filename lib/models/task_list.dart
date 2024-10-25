@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_function_literals_in_foreach_calls
+
 import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:todo_app/models/enum.dart';
@@ -87,9 +89,9 @@ class TaskList {
   factory TaskList.fromMap(Map<String, dynamic> map) {
     List<Task> tasks = [];
     if (map['tasks'] != null) {
-      for (Map<String, dynamic> pair in map['tasks']) {
-        tasks.add(Task.fromMap(pair.values.first));
-      }
+      (map['tasks'] as Map<String, dynamic>).values.forEach((element) {
+        tasks.add(Task.fromMap(element));
+      });
     }
     return TaskList(
       id: map['id'] ?? DateTime.now().millisecondsSinceEpoch.toString(),

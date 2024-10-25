@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_function_literals_in_foreach_calls
+
 import 'dart:core';
 import 'package:todo_app/models/enum.dart';
 import 'package:todo_app/models/task_step.dart';
@@ -114,7 +116,7 @@ class Task {
     result.addAll({'createDate': createDate.toString()});
     result.addAll({'dueDate': dueDate?.toString()});
     result.addAll({'remindTime': remindTime?.toString()});
-    result.addAll({'repeatFreaquency': repeatFrequency?.name});
+    result.addAll({'repeatFrequency': repeatFrequency?.name});
     result.addAll({'frequencyMultiplier': frequencyMultiplier});
     result.addAll({'filePath': filePath});
     result.addAll({'note': note});
@@ -130,9 +132,9 @@ class Task {
   factory Task.fromMap(Map<String, dynamic> map) {
     List<TaskStep> stepList = [];
     if (map['stepList'] != null) {
-      for (var pair in map['stepList']) {
-        stepList.add(TaskStep.fromMap(pair.value.first));
-      }
+      (map['stepList'] as Map<String, dynamic>).values.forEach((element) {
+        stepList.add(TaskStep.fromMap(element));
+      });
     }
     return Task(
       id: map['id'] ?? DateTime.now().millisecondsSinceEpoch.toString(),
@@ -141,10 +143,10 @@ class Task {
       isCompleted: map['isCompleted'] ?? false,
       isImportant: map['isImportant'] ?? false,
       isOnMyDay: map['isOnMyDay'] ?? false,
-      createDate: DateTime.tryParse(map['createDate']),
+      createDate: DateTime.tryParse(map['createDate'] ?? ''),
       stepList: stepList,
-      dueDate: DateTime.tryParse(map['dueDate']),
-      remindTime: DateTime.tryParse(map['remindTime']),
+      dueDate: DateTime.tryParse(map['dueDate'] ?? ''),
+      remindTime: DateTime.tryParse(map['remindTime'] ?? ''),
       repeatFrequency: (map['repeatFrequency'] == null)
           ? null
           : Frequency.values.byName(map['repeatFrequency']),

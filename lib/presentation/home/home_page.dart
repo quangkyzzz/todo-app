@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/models/enum.dart';
 import 'package:todo_app/models/group.dart';
 import 'package:todo_app/models/task.dart';
 import 'package:todo_app/models/task_list.dart';
@@ -143,9 +144,10 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          TaskList testTaskList = TaskList(
+          TaskList testTaskListInput = TaskList(
             id: '1',
             title: 'Tasks',
+            sortByType: SortType.createDate,
             tasks: [
               Task(
                 id: '2',
@@ -192,10 +194,12 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           );
-          Task testTask = Task(
+          Task testTaskInput = Task(
             id: '1',
             taskListID: '1',
             title: 'Tasks',
+            remindTime: DateTime.now(),
+            repeatFrequency: Frequency.month,
             isCompleted: false,
             isImportant: false,
             isOnMyDay: false,
@@ -214,7 +218,7 @@ class _HomePageState extends State<HomePage> {
             ],
             note: 'note',
           );
-          Group testGroup = Group(
+          Group testGroupInput = Group(
             id: '111',
             groupName: 'my group 1',
             taskLists: [
@@ -300,7 +304,11 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           );
-          print(testGroup.toMap());
+          TaskList testTaskListOutput =
+              TaskList.fromMap(testTaskListInput.toMap());
+          Task testTaskOutput = Task.fromMap(testTaskInput.toMap());
+          Group groupOutput = Group.fromMap(testGroupInput.toMap());
+          print(groupOutput);
         },
         child: Icon(Icons.abc),
       ),
