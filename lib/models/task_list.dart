@@ -86,10 +86,10 @@ class TaskList {
     return result;
   }
 
-  factory TaskList.fromMap(Map<String, dynamic> map) {
+  factory TaskList.fromMap(Map map) {
     List<Task> tasks = [];
     if (map['tasks'] != null) {
-      (map['tasks'] as Map<String, dynamic>).values.forEach((element) {
+      (map['tasks'] as Map).values.forEach((element) {
         tasks.add(Task.fromMap(element));
       });
     }

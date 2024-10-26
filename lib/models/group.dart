@@ -41,10 +41,10 @@ class Group {
     return result;
   }
 
-  factory Group.fromMap(Map<String, dynamic> map) {
+  factory Group.fromMap(Map map) {
     List<TaskList> taskLists = [];
     if (map['taskLists'] != null) {
-      (map['taskLists'] as Map<String, dynamic>).values.forEach((element) {
+      (map['taskLists'] as Map).values.forEach((element) {
         taskLists.add(TaskList.fromMap(element));
       });
     }

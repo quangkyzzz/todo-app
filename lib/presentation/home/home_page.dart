@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/data_source/group_data_source/group_database_service.dart';
 import 'package:todo_app/models/enum.dart';
 import 'package:todo_app/models/group.dart';
 import 'package:todo_app/models/task.dart';
@@ -143,8 +144,8 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          TaskList testTaskListInput = TaskList(
+        onPressed: () async {
+          TaskList taskListInput = TaskList(
             id: '1',
             title: 'Tasks',
             sortByType: SortType.createDate,
@@ -194,7 +195,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           );
-          Task testTaskInput = Task(
+          Task taskInput = Task(
             id: '1',
             taskListID: '1',
             title: 'Tasks',
@@ -218,7 +219,7 @@ class _HomePageState extends State<HomePage> {
             ],
             note: 'note',
           );
-          Group testGroupInput = Group(
+          Group groupInput = Group(
             id: '111',
             groupName: 'my group 1',
             taskLists: [
@@ -236,13 +237,15 @@ class _HomePageState extends State<HomePage> {
                       createDate: DateTime.now(),
                       dueDate: DateTime.now(),
                       stepList: [
-                        TaskStep(id: '2', stepName: 'test', isCompleted: true),
                         TaskStep(
-                          id: '3',
+                            id: 'id2', stepName: 'test', isCompleted: true),
+                        TaskStep(
+                          id: 'id3',
                           stepName: 'test2',
                           isCompleted: false,
                         ),
-                        TaskStep(id: '4', stepName: 'test3', isCompleted: true),
+                        TaskStep(
+                            id: 'id4', stepName: 'test3', isCompleted: true),
                       ]),
                   Task(
                     id: '7',
@@ -304,11 +307,13 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           );
-          TaskList testTaskListOutput =
-              TaskList.fromMap(testTaskListInput.toMap());
-          Task testTaskOutput = Task.fromMap(testTaskInput.toMap());
-          Group groupOutput = Group.fromMap(testGroupInput.toMap());
-          print(groupOutput);
+          // TaskList taskListOutput = TaskList.fromMap(taskListInput.toMap());
+          // Task taskOutput = Task.fromMap(taskInput.toMap());
+          // Group groupOutput = Group.fromMap(groupInput.toMap());
+          var result = await GroupDatabaseService.firebase()
+              .getGroupByID(groupID: '111');
+          print(result);
+          //GroupDatabaseService.firebase().createGroup(newGroup: groupInput);
         },
         child: Icon(Icons.abc),
       ),

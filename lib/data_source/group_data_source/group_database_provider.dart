@@ -1,7 +1,6 @@
 import 'package:todo_app/models/group.dart';
 import 'package:todo_app/models/task_list.dart';
 
-//TODO: fix function to future
 abstract class GroupDatabaseProvider {
   List<Group> listenAllGroup({required Function onGroupUpdate});
   Future<Group?> getGroupByID({required String groupID});
@@ -11,12 +10,12 @@ abstract class GroupDatabaseProvider {
     required String groupID,
     required String newName,
   });
-  Future<void> addMultipleTaskListToGroup({
+  void addMultipleTaskListToGroup({
     required String groupID,
     required List<TaskList> addedTaskLists,
   });
   void removeTaskListFromGroup({
     required String groupID,
-    required List<TaskList> removedTaskLists,
+    required List<String> removedTaskListsID,
   });
 }

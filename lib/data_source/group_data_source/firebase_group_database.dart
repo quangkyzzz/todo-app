@@ -26,7 +26,7 @@ class FirebaseGroupDatabase implements GroupDatabaseProvider {
       await groupsRef
           .child(groupID)
           .child('taskLists')
-          .set({taskList.id: taskList.toMap()});
+          .update({taskList.id: taskList.toMap()});
     }
   }
 
@@ -55,10 +55,15 @@ class FirebaseGroupDatabase implements GroupDatabaseProvider {
   @override
   Future<Group?> getGroupByID({required String groupID}) async {
     Group? result;
-    Map<String, dynamic> resultMap;
+    Map<String, dynamic> resultMap = {};
     final DataSnapshot snapshot = await groupsRef.child(groupID).get();
     if (snapshot.exists) {
-      resultMap = snapshot.value as Map<String, dynamic>;
+      var snapshotValue = snapshot.value! as Map;
+      snapshotValue.forEach((key, value) {
+        resultMap.addAll({
+          key.toString(): value,
+        });
+      });
       result = Group.fromMap(resultMap);
     }
     return result;
@@ -67,10 +72,10 @@ class FirebaseGroupDatabase implements GroupDatabaseProvider {
   @override
   void removeTaskListFromGroup({
     required String groupID,
-    required List<TaskList> removedTaskLists,
+    required List<String> removedTaskListsID,
   }) async {
-    for (TaskList taskList in removedTaskLists) {
-      await groupsRef.child(groupID).child('taskLists/${taskList.id}').remove();
+    for (String taskListID in removedTaskListsID) {
+      await groupsRef.child(groupID).child('taskLists/$taskListID').remove();
     }
   }
 

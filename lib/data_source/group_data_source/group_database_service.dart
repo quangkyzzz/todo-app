@@ -11,11 +11,11 @@ class GroupDatabaseService implements GroupDatabaseProvider {
   }
 
   @override
-  Future<void> addMultipleTaskListToGroup({
+  void addMultipleTaskListToGroup({
     required String groupID,
     required List<TaskList> addedTaskLists,
-  }) async {
-    await provider.addMultipleTaskListToGroup(
+  }) {
+    provider.addMultipleTaskListToGroup(
       groupID: groupID,
       addedTaskLists: addedTaskLists,
     );
@@ -44,11 +44,11 @@ class GroupDatabaseService implements GroupDatabaseProvider {
   @override
   void removeTaskListFromGroup({
     required String groupID,
-    required List<TaskList> removedTaskLists,
+    required List<String> removedTaskListsID,
   }) {
     provider.removeTaskListFromGroup(
       groupID: groupID,
-      removedTaskLists: removedTaskLists,
+      removedTaskListsID: removedTaskListsID,
     );
   }
 

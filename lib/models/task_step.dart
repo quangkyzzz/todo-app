@@ -40,7 +40,7 @@ class TaskStep {
     return result;
   }
 
-  factory TaskStep.fromMap(Map<String, dynamic> map) {
+  factory TaskStep.fromMap(Map map) {
     return TaskStep(
       id: map['id'] ?? '-1',
       stepName: map['stepName'] ?? 'Unknown name',
