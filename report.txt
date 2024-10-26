@@ -2,7 +2,8 @@ Báo cáo 26/10
 Đã làm :
     -   Triển khai các hàm đọc, update dữ liệu group từ db.
     -   Tạo các hàm chuyển đổi dữ liệu trước khi đưa lên database
-Đang làm:
     -   Tạo các hàm chuyển đổi dữ liệu sau khi lấy từ database
-Dự định làm:
+Đang làm:
     -   Lấy dữ liệu từ class group database truyền vào groupViewModel.
+Dự định làm:
+    -   Tạo các class data source cho các model còn lại.
