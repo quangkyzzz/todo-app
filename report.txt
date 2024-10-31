@@ -1,9 +1,9 @@
 Báo cáo 26/10
 Đã làm :
-    -   Triển khai các hàm đọc, update dữ liệu group từ db.
-    -   Tạo các hàm chuyển đổi dữ liệu trước khi đưa lên database
-    -   Tạo các hàm chuyển đổi dữ liệu sau khi lấy từ database
+    -   Chỉnh sửa groupViewModel để nhận dữ liệu từ firebase.
+    -   Chỉnh sửa các hàm chuyển đổi dữ liệu nhận về từ firebase.
 Đang làm:
-    -   Lấy dữ liệu từ class group database truyền vào groupViewModel.
+    -   Test và sửa lỗi nhân dữ liệu từ firebase.
 Dự định làm:
-    -   Tạo các class data source cho các model còn lại.
+    -   Tạo các class data source cho taskList model.
+    -   Chỉnh sửa taskListViewModel để nhận dữ liệu từ firebase.
