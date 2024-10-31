@@ -1,8 +1,12 @@
+import 'dart:async';
 import 'package:todo_app/models/group.dart';
 import 'package:todo_app/models/task_list.dart';
 
 abstract class GroupDatabaseProvider {
-  List<Group> listenAllGroup({required Function onGroupUpdate});
+  void listenAllGroup({
+    required Function onGroupUpdate,
+    required Function onBeginUpdate,
+  });
   Future<Group?> getGroupByID({required String groupID});
   void createGroup({required Group newGroup});
   void deleteGroup({required String groupID});

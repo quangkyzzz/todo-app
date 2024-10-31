@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:todo_app/data_source/group_data_source/firebase_group_database.dart';
 import 'package:todo_app/data_source/group_data_source/group_database_provider.dart';
 import 'package:todo_app/models/group.dart';
@@ -32,8 +33,14 @@ class GroupDatabaseService implements GroupDatabaseProvider {
   }
 
   @override
-  List<Group> listenAllGroup({required Function onGroupUpdate}) {
-    return provider.listenAllGroup(onGroupUpdate: onGroupUpdate);
+  void listenAllGroup({
+    required Function onGroupUpdate,
+    required Function onBeginUpdate,
+  }) {
+    provider.listenAllGroup(
+      onGroupUpdate: onGroupUpdate,
+      onBeginUpdate: onBeginUpdate,
+    );
   }
 
   @override

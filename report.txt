@@ -1,4 +1,4 @@
-Báo cáo 26/10
+Báo cáo 31/10
 Đã làm :
     -   Chỉnh sửa groupViewModel để nhận dữ liệu từ firebase.
     -   Chỉnh sửa các hàm chuyển đổi dữ liệu nhận về từ firebase.

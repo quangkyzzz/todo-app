@@ -1,3 +1,7 @@
+// ignore_for_file: avoid_function_literals_in_foreach_calls
+
+import 'dart:async';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:todo_app/data_source/group_data_source/group_database_provider.dart';
@@ -40,16 +44,22 @@ class FirebaseGroupDatabase implements GroupDatabaseProvider {
     await groupsRef.child(groupID).remove();
   }
 
-  //TODO: test this
   @override
-  List<Group> listenAllGroup({required Function onGroupUpdate}) {
-    List<Group> data = [];
-    groupsRef.onValue.listen((DatabaseEvent event) {
-      final dataMap = event.snapshot.value as Map<String, dynamic>;
-      data.add(Group.fromMap(dataMap));
-      onGroupUpdate(data);
-    });
-    return data;
+  void listenAllGroup({
+    required Function onGroupUpdate,
+    required Function onBeginUpdate,
+  }) {
+    groupsRef.onValue.listen(
+      (DatabaseEvent event) {
+        onBeginUpdate();
+        List<Group> updateData = [];
+        final dataMap = event.snapshot.value as Map;
+        dataMap.values.forEach((element) {
+          updateData.add(Group.fromMap(element));
+        });
+        onGroupUpdate(updateData);
+      },
+    );
   }
 
   @override
