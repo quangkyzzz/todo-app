@@ -1,7 +1,5 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls
-
 import 'dart:async';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:todo_app/data_source/group_data_source/group_database_provider.dart';
@@ -28,20 +26,20 @@ class FirebaseGroupDatabase implements GroupDatabaseProvider {
   }) async {
     for (TaskList taskList in addedTaskLists) {
       await groupsRef
-          .child(groupID)
+          .child('id$groupID')
           .child('taskLists')
-          .update({taskList.id: taskList.toMap()});
+          .update({'id${taskList.id}': taskList.toMap()});
     }
   }
 
   @override
   void createGroup({required Group newGroup}) async {
-    await groupsRef.child(newGroup.id).set(newGroup.toMap());
+    await groupsRef.child('id${newGroup.id}').set(newGroup.toMap());
   }
 
   @override
   void deleteGroup({required String groupID}) async {
-    await groupsRef.child(groupID).remove();
+    await groupsRef.child('id$groupID').remove();
   }
 
   @override
@@ -66,7 +64,7 @@ class FirebaseGroupDatabase implements GroupDatabaseProvider {
   Future<Group?> getGroupByID({required String groupID}) async {
     Group? result;
     Map<String, dynamic> resultMap = {};
-    final DataSnapshot snapshot = await groupsRef.child(groupID).get();
+    final DataSnapshot snapshot = await groupsRef.child('id$groupID').get();
     if (snapshot.exists) {
       var snapshotValue = snapshot.value! as Map;
       snapshotValue.forEach((key, value) {
@@ -85,7 +83,10 @@ class FirebaseGroupDatabase implements GroupDatabaseProvider {
     required List<String> removedTaskListsID,
   }) async {
     for (String taskListID in removedTaskListsID) {
-      await groupsRef.child(groupID).child('taskLists/$taskListID').remove();
+      await groupsRef
+          .child('id$groupID')
+          .child('taskLists/id$taskListID')
+          .remove();
     }
   }
 
@@ -94,6 +95,6 @@ class FirebaseGroupDatabase implements GroupDatabaseProvider {
     required String groupID,
     required String newName,
   }) async {
-    await groupsRef.child(groupID).update({'groupName': newName});
+    await groupsRef.child('id$groupID').update({'groupName': newName});
   }
 }

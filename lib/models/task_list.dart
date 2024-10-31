@@ -79,7 +79,7 @@ class TaskList {
     result.addAll({'themeColor': themeColor.value});
     Map<String, dynamic> tasksMap = {};
     for (Task task in tasks) {
-      tasksMap.addAll({task.id: task.toMap()});
+      tasksMap.addAll({'id${task.id}': task.toMap()});
     }
     result.addAll({'tasks': tasksMap});
 

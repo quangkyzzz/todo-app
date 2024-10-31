@@ -122,7 +122,7 @@ class Task {
     result.addAll({'note': note});
     Map<String, dynamic> stepListMap = {};
     for (TaskStep taskStep in stepList) {
-      stepListMap.addAll({taskStep.id: taskStep.toMap()});
+      stepListMap.addAll({'id${taskStep.id}': taskStep.toMap()});
     }
     result.addAll({'stepList': stepListMap});
 

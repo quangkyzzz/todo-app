@@ -33,7 +33,7 @@ class Group {
     result.addAll({'groupName': groupName});
     Map<String, dynamic> taskListsMap = {};
     for (TaskList taskList in taskLists) {
-      taskListsMap.addAll({taskList.id: taskList.toMap()});
+      taskListsMap.addAll({'id${taskList.id}': taskList.toMap()});
     }
     result.addAll({'taskLists': taskListsMap});
     return result;
