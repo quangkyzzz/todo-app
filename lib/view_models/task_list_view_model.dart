@@ -924,4 +924,6 @@ class TaskListViewModel extends ChangeNotifier {
     }
     return result;
   }
+
+  void deleteTask() {}
 }
