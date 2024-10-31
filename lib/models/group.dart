@@ -3,8 +3,6 @@
 import 'dart:core';
 import 'package:todo_app/models/task_list.dart';
 
-//TODO: fix all to map function
-//TODO: fix type of color, datetime,...
 class Group {
   final String id;
   String groupName;
