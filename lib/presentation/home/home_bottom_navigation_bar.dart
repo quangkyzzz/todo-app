@@ -37,7 +37,7 @@ class HomePageBottomNavigationBar extends StatelessWidget {
                 if (!context.mounted) return;
                 if (title != null) {
                   Provider.of<GroupViewModel>(context, listen: false)
-                      .addTaskListToDefaultGroup(name: title);
+                      .createNewTaskListToDefaultGroup(name: title);
                 }
               },
               child: const Row(

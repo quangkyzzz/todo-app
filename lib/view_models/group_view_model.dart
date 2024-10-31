@@ -30,34 +30,43 @@ class GroupViewModel extends ChangeNotifier {
   }
 
   void createGroup(String name) {
-    groups.add(Group(
+    Group newGroup = Group(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       groupName: name,
-    ));
+    );
+    //groups.add(newGroup);
+    GroupDatabaseService.firebase().createGroup(newGroup: newGroup);
     notifyListeners();
   }
 
-  void addTaskListToDefaultGroup({
+  void createNewTaskListToDefaultGroup({
     required String name,
   }) {
     TaskList newTaskList = TaskList(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       title: name,
     );
-    groups[0].taskLists.add(newTaskList);
+    GroupDatabaseService.firebase().addMultipleTaskListToGroup(
+      groupID: '1',
+      addedTaskLists: [newTaskList],
+    );
     notifyListeners();
   }
 
   void deleteGroup(Group group) {
-    groups[0].taskLists.addAll(group.taskLists);
-    groups.remove(group);
+    GroupDatabaseService.firebase().addMultipleTaskListToGroup(
+      groupID: '1',
+      addedTaskLists: group.taskLists,
+    );
+    GroupDatabaseService.firebase().deleteGroup(groupID: group.id);
     notifyListeners();
   }
 
   void renameGroup(Group group, String newName) {
-    groups.firstWhere((element) => (element.id == group.id)).groupName =
-        newName;
-
+    GroupDatabaseService.firebase().renameGroup(
+      groupID: group.id,
+      newName: newName,
+    );
     notifyListeners();
   }
 
@@ -65,10 +74,20 @@ class GroupViewModel extends ChangeNotifier {
     required Group group,
     required List<TaskList> movedTaskLists,
   }) {
+    List<String> movedTaskListsID = [];
     for (var taskList in movedTaskLists) {
-      readGroupByID(group.id).taskLists.add(taskList);
-      readGroupByID('1').taskLists.remove(taskList);
+      //readGroupByID(group.id).taskLists.add(taskList);
+      //readGroupByID('1').taskLists.remove(taskList);
+      movedTaskListsID.add(taskList.id);
     }
+    GroupDatabaseService.firebase().addMultipleTaskListToGroup(
+      groupID: group.id,
+      addedTaskLists: movedTaskLists,
+    );
+    GroupDatabaseService.firebase().removeTaskListFromGroup(
+      groupID: '1',
+      removedTaskListsID: movedTaskListsID,
+    );
 
     notifyListeners();
   }
@@ -77,10 +96,20 @@ class GroupViewModel extends ChangeNotifier {
     Group group,
     List<TaskList> removedTaskLists,
   ) {
+    List<String> removedTaskListsID = [];
     for (var taskList in removedTaskLists) {
-      readGroupByID(group.id).taskLists.remove(taskList);
-      readGroupByID('1').taskLists.add(taskList);
+      // readGroupByID(group.id).taskLists.remove(taskList);
+      // readGroupByID('1').taskLists.add(taskList);
+      removedTaskListsID.add(taskList.id);
     }
+    GroupDatabaseService.firebase().addMultipleTaskListToGroup(
+      groupID: '1',
+      addedTaskLists: removedTaskLists,
+    );
+    GroupDatabaseService.firebase().removeTaskListFromGroup(
+      groupID: group.id,
+      removedTaskListsID: removedTaskListsID,
+    );
 
     notifyListeners();
   }
