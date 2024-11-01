@@ -118,14 +118,17 @@ class Task {
     result.addAll({'remindTime': remindTime?.toString()});
     result.addAll({'repeatFrequency': repeatFrequency?.name});
     result.addAll({'frequencyMultiplier': frequencyMultiplier});
-    result.addAll({'filePath': filePath});
     result.addAll({'note': note});
     Map<String, dynamic> stepListMap = {};
     for (TaskStep taskStep in stepList) {
       stepListMap.addAll({'id${taskStep.id}': taskStep.toMap()});
     }
     result.addAll({'stepList': stepListMap});
-
+    Map<String, dynamic> filePathMap = {};
+    for (String file in filePath) {
+      filePathMap.addAll({'id${file.hashCode}': file});
+    }
+    result.addAll({'filePath': filePathMap});
     return result;
   }
 
