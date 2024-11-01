@@ -8,7 +8,7 @@ class GroupDatabaseService implements GroupDatabaseProvider {
   final GroupDatabaseProvider provider;
   GroupDatabaseService(this.provider);
   factory GroupDatabaseService.firebase() {
-    return GroupDatabaseService(FirebaseGroupDatabase());
+    return GroupDatabaseService(FirebaseGroupDatabase.initRef());
   }
 
   @override

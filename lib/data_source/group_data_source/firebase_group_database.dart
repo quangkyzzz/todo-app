@@ -7,16 +7,15 @@ import 'package:todo_app/models/group.dart';
 import 'package:todo_app/models/task_list.dart';
 
 class FirebaseGroupDatabase implements GroupDatabaseProvider {
-  late DatabaseReference groupsRef;
-  late DatabaseReference taskListsRef;
-  FirebaseGroupDatabase() {
+  DatabaseReference groupsRef;
+  FirebaseGroupDatabase(this.groupsRef);
+  factory FirebaseGroupDatabase.initRef() {
     final FirebaseDatabase database = FirebaseDatabase.instanceFor(
       app: Firebase.app(),
       databaseURL:
           "https://demoz-6f2fd-default-rtdb.asia-southeast1.firebasedatabase.app",
     );
-    groupsRef = database.ref('groups');
-    taskListsRef = database.ref('taskLists');
+    return FirebaseGroupDatabase(database.ref('groups'));
   }
 
   @override
