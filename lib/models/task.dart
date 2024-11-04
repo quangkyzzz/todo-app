@@ -143,6 +143,9 @@ class Task {
       (map['stepList'] as Map).values.forEach((element) {
         stepList.add(TaskStep.fromMap(element));
       });
+      stepList.sort((a, b) {
+        return int.parse(a.id).compareTo(int.parse(b.id));
+      });
     }
     List<String> filePaths = [];
     if (map['filePath'] != null) {
