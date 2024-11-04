@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:todo_app/data_source/group_data_source/group_database_service.dart';
 import 'package:todo_app/data_source/task_data_source/task_database_service.dart';
 import 'package:todo_app/data_source/task_list_data_source/task_list_database_service.dart';
 import 'package:todo_app/models/task_list.dart';
@@ -465,6 +466,24 @@ class TaskListViewModel extends ChangeNotifier {
       }
     }
     return result;
+  }
+
+  void duplicateTaskList() {
+    List<Task> newTasks = [];
+    for (Task task in currentTaskList.tasks) {
+      newTasks.add(
+        task.copyWith(id: DateTime.now().millisecondsSinceEpoch.toString()),
+      );
+    }
+    TaskList newTaskList = currentTaskList.copyWith(
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      title: '${currentTaskList.title} copy',
+      tasks: newTasks,
+    );
+    GroupDatabaseService.firebase().addMultipleTaskListToGroup(
+      groupID: '1',
+      addedTaskLists: [newTaskList],
+    );
   }
 
   void deleteTaskList() {

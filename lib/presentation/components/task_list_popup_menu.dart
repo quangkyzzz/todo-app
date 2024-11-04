@@ -106,6 +106,7 @@ class TaskListPopupMenu extends StatelessWidget {
           acceptText: 'Yes',
           onAccept: () {
             Navigator.of(context).pop();
+            context.read<TaskListViewModel>().duplicateTaskList();
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                 content: Text(
