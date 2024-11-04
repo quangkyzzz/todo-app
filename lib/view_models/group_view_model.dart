@@ -6,21 +6,18 @@ import 'package:todo_app/models/task_list.dart';
 class GroupViewModel extends ChangeNotifier {
   List<Group> groups = [];
   bool isGroupsLoading = true;
-  void onBeginUpdate() {
-    isGroupsLoading = true;
-    notifyListeners();
-  }
-
-  void onGroupUpdate(var data) async {
-    groups = data;
-    isGroupsLoading = false;
-    notifyListeners();
-  }
 
   GroupViewModel() {
     GroupDatabaseService.firebase().listenAllGroup(
-      onGroupUpdate: onGroupUpdate,
-      onBeginUpdate: onBeginUpdate,
+      onGroupUpdate: (var data) {
+        groups = data;
+        isGroupsLoading = false;
+        notifyListeners();
+      },
+      onBeginUpdate: () {
+        isGroupsLoading = true;
+        notifyListeners();
+      },
     );
     notifyListeners();
   }
