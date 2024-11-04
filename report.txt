@@ -1,9 +1,8 @@
-Báo cáo 1/11
+Báo cáo 4/11
 Đã làm :
-    -   Sửa lỗi nhận dữ liệu từ firebase.
-    -   Sửa các hàm chuyển đổi dữ liệu.
-    -   Triển khai firebase db trong toàn bộ các hàm của groupViewModel.
+    -   Sửa các hàm chuyển đổi dữ liệu trước khi đưa lên db.
+    -   Tạo các database class đối với taskList và task model.
 Đang làm:
-    -   Tạo các class database cho taskList model.
+    -   Triển khai firebase db trong taskListViewModel.
 Dự định làm:
-    -   Triển khai firebase db trong các hàm của taskListViewModel.
+    -   Triển khai firebase db trong taskListViewModel.
