@@ -12,6 +12,16 @@ class TaskListViewModel extends ChangeNotifier {
     required this.currentTaskList,
   });
 
+  void updateTaskListToDatabase() {}
+
+  void reloadTaskList() async {
+    currentTaskList = await TaskListDatabaseService.firebase().getTaskListByID(
+      groupID: currentTaskList.groupID,
+      taskListID: currentTaskList.id,
+    );
+    notifyListeners();
+  }
+
   void renameList({
     required String newName,
   }) {
@@ -24,7 +34,6 @@ class TaskListViewModel extends ChangeNotifier {
       groupID: groupID,
       taskListID: taskListID,
     );
-
     return result;
   }
 

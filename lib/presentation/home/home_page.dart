@@ -46,7 +46,8 @@ class _HomePageState extends State<HomePage> {
                         myDayRoute,
                         arguments: context
                             .read<GroupViewModel>()
-                            .groups[0]
+                            .groups
+                            .firstWhere((element) => element.id == '1')
                             .taskLists
                             .firstWhere((element) => element.id == '2'),
                       );

@@ -66,7 +66,7 @@ class TaskListItem extends StatelessWidget {
               const SnackBar(
                 backgroundColor: MyTheme.backgroundGreyColor,
                 content: Text(
-                  'Can not find this task list information!',
+                  'Can not get data!',
                   style: MyTheme.itemSmallTextStyle,
                 ),
                 duration: Duration(seconds: 1),
