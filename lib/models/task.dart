@@ -6,6 +6,7 @@ import 'package:todo_app/models/task_step.dart';
 
 class Task {
   final String id;
+  String groupID;
   String title;
   String taskListID;
   bool isCompleted;
@@ -22,6 +23,7 @@ class Task {
 
   Task({
     String? id,
+    required this.groupID,
     required this.taskListID,
     required this.title,
     required this.isCompleted,
@@ -56,6 +58,7 @@ class Task {
 
   Task copyWith({
     String? id,
+    String? groupID,
     String? taskListID,
     String? title,
     bool? isCompleted,
@@ -88,6 +91,7 @@ class Task {
     }
     return Task(
       id: id ?? this.id,
+      groupID: groupID ?? this.groupID,
       taskListID: taskListID ?? this.taskListID,
       title: title ?? this.title,
       isCompleted: isCompleted ?? this.isCompleted,
@@ -108,6 +112,7 @@ class Task {
     final result = <String, dynamic>{};
 
     result.addAll({'id': id});
+    result.addAll({'groupID': groupID});
     result.addAll({'taskListID': taskListID});
     result.addAll({'title': title});
     result.addAll({'isCompleted': isCompleted});
@@ -141,6 +146,7 @@ class Task {
     }
     return Task(
       id: map['id'] ?? DateTime.now().millisecondsSinceEpoch.toString(),
+      groupID: map['groupID'] ?? '1',
       taskListID: map['taskListID'] ?? '1',
       title: map['title'] ?? 'Unknown title',
       isCompleted: map['isCompleted'] ?? false,

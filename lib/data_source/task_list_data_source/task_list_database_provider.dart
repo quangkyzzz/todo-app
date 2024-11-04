@@ -4,7 +4,7 @@ import 'package:todo_app/models/task.dart';
 import 'package:todo_app/models/task_list.dart';
 
 abstract class TaskListDatabaseProvider {
-  Future<TaskList?> getTaskListByID({
+  Future<TaskList> getTaskListByID({
     required String groupID,
     required String taskListID,
   });

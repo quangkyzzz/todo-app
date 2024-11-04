@@ -44,6 +44,7 @@ class GroupViewModel extends ChangeNotifier {
   }) {
     TaskList newTaskList = TaskList(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
+      groupID: '1',
       title: name,
     );
     GroupDatabaseService.firebase().addMultipleTaskListToGroup(
@@ -78,6 +79,9 @@ class GroupViewModel extends ChangeNotifier {
     for (var taskList in movedTaskLists) {
       //readGroupByID(group.id).taskLists.add(taskList);
       //readGroupByID('1').taskLists.remove(taskList);
+      for (var task in taskList.tasks) {
+        task.groupID = group.id;
+      }
       movedTaskListsID.add(taskList.id);
     }
     GroupDatabaseService.firebase().addMultipleTaskListToGroup(
@@ -100,6 +104,9 @@ class GroupViewModel extends ChangeNotifier {
     for (var taskList in removedTaskLists) {
       // readGroupByID(group.id).taskLists.remove(taskList);
       // readGroupByID('1').taskLists.add(taskList);
+      for (var task in taskList.tasks) {
+        task.groupID = '1';
+      }
       removedTaskListsID.add(taskList.id);
     }
     GroupDatabaseService.firebase().addMultipleTaskListToGroup(

@@ -45,6 +45,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
     unawaited(initializeDateFormatting());
     newTask = Task(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
+      groupID: widget.taskList.groupID,
       taskListID: widget.taskList.id,
       title: '',
       isCompleted: isChecked,
@@ -175,6 +176,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                                 .millisecondsSinceEpoch
                                 .toString(),
                             taskListID: widget.taskList.id,
+                            groupID: widget.taskList.groupID,
                             title: '',
                             isCompleted: isChecked,
                             isImportant: widget.isAddToImportant,

@@ -8,6 +8,7 @@ import 'package:todo_app/themes.dart';
 
 class TaskList {
   final String id;
+  String groupID;
   String title;
   String? backgroundImage;
   int defaultImage;
@@ -19,6 +20,7 @@ class TaskList {
   TaskList({
     required this.id,
     required this.title,
+    required this.groupID,
     this.backgroundImage,
     this.defaultImage = -1,
     this.themeColor = MyTheme.blueColor,
@@ -29,6 +31,7 @@ class TaskList {
 
   TaskList copyWith({
     String? id,
+    String? groupID,
     String? title,
     String? backgroundImage,
     int? defaultImage,
@@ -47,6 +50,7 @@ class TaskList {
     }
     return TaskList(
       id: id ?? this.id,
+      groupID: groupID ?? this.groupID,
       title: title ?? this.title,
       backgroundImage: backgroundImage ?? this.backgroundImage,
       defaultImage: defaultImage ?? this.defaultImage,
@@ -58,6 +62,7 @@ class TaskList {
   }
 
   void copyFrom({required TaskList copyTaskList}) {
+    groupID = copyTaskList.groupID;
     title = copyTaskList.title;
     backgroundImage = copyTaskList.backgroundImage;
     defaultImage = copyTaskList.defaultImage;
@@ -71,6 +76,7 @@ class TaskList {
     final result = <String, dynamic>{};
 
     result.addAll({'id': id});
+    result.addAll({'groupID': groupID});
     result.addAll({'title': title});
     result.addAll({'backgroundImage': backgroundImage});
     result.addAll({'defaultImage': defaultImage});
@@ -95,6 +101,7 @@ class TaskList {
     }
     return TaskList(
       id: map['id'] ?? DateTime.now().millisecondsSinceEpoch.toString(),
+      groupID: map['groupID'] ?? '1',
       title: map['title'] ?? 'Untitle list',
       backgroundImage: map['backgroundImage'],
       defaultImage: map['defaultImage'],

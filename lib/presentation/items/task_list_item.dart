@@ -52,14 +52,35 @@ class TaskListItem extends StatelessWidget {
       padding: const EdgeInsets.only(left: 8, right: 8),
       child: InkWell(
         onTap: () async {
+          String taskListTitle = '';
+          try {
+            taskListTitle =
+                (await context.read<TaskListViewModel>().getTaskListByID(
+                          task.taskListID,
+                          task.groupID,
+                        ))
+                    .title;
+          } catch (e) {
+            if (!context.mounted) return;
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                backgroundColor: MyTheme.backgroundGreyColor,
+                content: Text(
+                  'Can not find this task list information!',
+                  style: MyTheme.itemSmallTextStyle,
+                ),
+                duration: Duration(seconds: 1),
+              ),
+            );
+            return;
+          }
+
+          if (!context.mounted) return;
           await Navigator.of(context).pushNamed(
             taskRoute,
             arguments: {
               'task': task,
-              'taskListName': context
-                  .read<TaskListViewModel>()
-                  .getTaskListByID(task.taskListID)
-                  .title,
+              'taskListName': taskListTitle,
             },
           );
         },
