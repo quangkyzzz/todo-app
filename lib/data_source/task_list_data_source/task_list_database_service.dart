@@ -25,6 +25,22 @@ class TaskListDatabaseService implements TaskListDatabaseProvider {
   }
 
   @override
+  void updateTaskListToDatabase({
+    required String groupID,
+    required TaskList updatedTaskList,
+  }) {
+    provider.updateTaskListToDatabase(
+      groupID: groupID,
+      updatedTaskList: updatedTaskList,
+    );
+  }
+
+  @override
+  void deleteTaskList({required String groupID, required String taskListID}) {
+    provider.deleteTaskList(groupID: groupID, taskListID: taskListID);
+  }
+
+  @override
   void addMultipleTask({
     required String groupID,
     required String taskListID,

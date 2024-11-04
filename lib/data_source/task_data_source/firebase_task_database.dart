@@ -1,9 +1,13 @@
+// ignore_for_file: avoid_function_literals_in_foreach_calls
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:todo_app/data_source/task_data_source/task_database_provider.dart';
 import 'package:todo_app/exception/data_exception.dart';
 import 'package:todo_app/models/enum.dart';
+import 'package:todo_app/models/group.dart';
 import 'package:todo_app/models/task.dart';
+import 'package:todo_app/models/task_list.dart';
 import 'package:todo_app/models/task_step.dart';
 
 class FirebaseTaskDatabase implements TaskDatabaseProvider {
@@ -16,6 +20,27 @@ class FirebaseTaskDatabase implements TaskDatabaseProvider {
           "https://demoz-6f2fd-default-rtdb.asia-southeast1.firebasedatabase.app",
     );
     return FirebaseTaskDatabase(database.ref('groups'));
+  }
+
+  @override
+  Future<List<Task>> getAllTask() async {
+    List<Task> allTask = [];
+    List<Group> allGroup = [];
+    DataSnapshot snapshot = await ref.get();
+    if (snapshot.exists) {
+      var snapshotMap = snapshot.value as Map;
+      snapshotMap.values.forEach((element) {
+        allGroup.add(Group.fromMap(element));
+      });
+      for (Group group in allGroup) {
+        for (TaskList taskList in group.taskLists) {
+          allTask.addAll(taskList.tasks);
+        }
+      }
+      return allTask;
+    } else {
+      throw DataDoesNotExist();
+    }
   }
 
   @override

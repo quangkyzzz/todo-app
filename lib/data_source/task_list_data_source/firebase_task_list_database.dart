@@ -38,6 +38,24 @@ class FirebaseTaskListDatabase implements TaskListDatabaseProvider {
   }
 
   @override
+  void updateTaskListToDatabase({
+    required String groupID,
+    required TaskList updatedTaskList,
+  }) async {
+    await ref
+        .child('id$groupID/taskLists/id${updatedTaskList.id}')
+        .set(updatedTaskList.toMap());
+  }
+
+  @override
+  void deleteTaskList({
+    required String groupID,
+    required String taskListID,
+  }) async {
+    await ref.child('id$groupID/taskLists/id$taskListID').remove();
+  }
+
+  @override
   void addMultipleTask({
     required String groupID,
     required String taskListID,

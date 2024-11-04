@@ -35,6 +35,8 @@ class _TaskListPageState extends State<TaskListPage> {
             isReorderState = false;
           });
           return false;
+        } else {
+          context.read<TaskListViewModel>().updateTaskListToDatabase();
         }
         return true;
       },

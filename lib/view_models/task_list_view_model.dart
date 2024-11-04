@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:todo_app/data_source/task_data_source/task_database_service.dart';
 import 'package:todo_app/data_source/task_list_data_source/task_list_database_service.dart';
 import 'package:todo_app/models/task_list.dart';
 import 'package:todo_app/models/task.dart';
@@ -10,9 +11,27 @@ class TaskListViewModel extends ChangeNotifier {
   TaskList currentTaskList;
   TaskListViewModel({
     required this.currentTaskList,
-  });
+  }) {
+    sortTaskListBy(
+      sortType: currentTaskList.sortByType ?? SortType.createDate,
+      isAscending: true,
+    );
+  }
 
-  void updateTaskListToDatabase() {}
+  Future<TaskList> getTaskListByID(String taskListID, String groupID) async {
+    TaskList result = await TaskListDatabaseService.firebase().getTaskListByID(
+      groupID: groupID,
+      taskListID: taskListID,
+    );
+    return result;
+  }
+
+  void updateTaskListToDatabase() async {
+    TaskListDatabaseService.firebase().updateTaskListToDatabase(
+      groupID: currentTaskList.groupID,
+      updatedTaskList: currentTaskList,
+    );
+  }
 
   void reloadTaskList() async {
     currentTaskList = await TaskListDatabaseService.firebase().getTaskListByID(
@@ -29,14 +48,6 @@ class TaskListViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<TaskList> getTaskListByID(String taskListID, String groupID) async {
-    TaskList result = await TaskListDatabaseService.firebase().getTaskListByID(
-      groupID: groupID,
-      taskListID: taskListID,
-    );
-    return result;
-  }
-
   void updateSortType({
     SortType? newSortType,
     bool isAscending = true,
@@ -50,6 +61,12 @@ class TaskListViewModel extends ChangeNotifier {
     currentTaskList.tasks
         .firstWhere((element) => element.id == task.id)
         .isCompleted = isCompleted;
+    TaskDatabaseService.firebase().updateIsCompleted(
+      groupID: task.groupID,
+      taskListID: task.taskListID,
+      taskID: task.id,
+      isCompleted: isCompleted,
+    );
     notifyListeners();
   }
 
@@ -65,6 +82,12 @@ class TaskListViewModel extends ChangeNotifier {
     currentTaskList.tasks
         .firstWhere((element) => element.id == task.id)
         .isImportant = isImportant;
+    TaskDatabaseService.firebase().updateIsImportant(
+      groupID: task.groupID,
+      taskListID: task.taskListID,
+      taskID: task.id,
+      isImportant: isImportant,
+    );
     notifyListeners();
   }
 
@@ -175,7 +198,11 @@ class TaskListViewModel extends ChangeNotifier {
     } else {
       currentTaskList.tasks.add(task);
     }
-
+    TaskListDatabaseService.firebase().addMultipleTask(
+      groupID: task.groupID,
+      taskListID: task.taskListID,
+      addTasks: [task],
+    );
     notifyListeners();
   }
 
@@ -413,20 +440,8 @@ class TaskListViewModel extends ChangeNotifier {
     return result;
   }
 
-  void getAllTask() {
-    List<Task> allTask = [
-      Task(
-        id: '2',
-        title: 'few day',
-        groupID: '1',
-        taskListID: '1',
-        isCompleted: false,
-        isImportant: true,
-        isOnMyDay: true,
-        createDate: DateTime(2024, 6, 2),
-        dueDate: DateTime(2024, 6, 2),
-      ),
-    ];
+  void getAllTask() async {
+    List<Task> allTask = await TaskDatabaseService.firebase().getAllTask();
     currentTaskList.tasks = allTask;
   }
 
@@ -450,5 +465,10 @@ class TaskListViewModel extends ChangeNotifier {
     return result;
   }
 
-  void deleteTaskLists() {}
+  void deleteTaskList() {
+    TaskListDatabaseService.firebase().deleteTaskList(
+      groupID: currentTaskList.groupID,
+      taskListID: currentTaskList.id,
+    );
+  }
 }

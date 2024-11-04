@@ -146,6 +146,7 @@ class TaskListPopupMenu extends StatelessWidget {
       );
       if (!context.mounted) return;
       if (isDelete) {
+        context.read<TaskListViewModel>().deleteTaskList();
         Navigator.pop(context);
       }
     } else {

@@ -9,6 +9,8 @@ abstract class TaskDatabaseProvider {
     required String taskID,
   });
 
+  Future<List<Task>> getAllTask();
+
   void createNewTask({
     required String groupID,
     required String taskListID,

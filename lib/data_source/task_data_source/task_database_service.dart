@@ -12,6 +12,11 @@ class TaskDatabaseService implements TaskDatabaseProvider {
   }
 
   @override
+  Future<List<Task>> getAllTask() async {
+    return provider.getAllTask();
+  }
+
+  @override
   void addFile({
     required String groupID,
     required String taskListID,

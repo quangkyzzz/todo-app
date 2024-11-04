@@ -9,6 +9,16 @@ abstract class TaskListDatabaseProvider {
     required String taskListID,
   });
 
+  void updateTaskListToDatabase({
+    required String groupID,
+    required TaskList updatedTaskList,
+  });
+
+  void deleteTaskList({
+    required String groupID,
+    required String taskListID,
+  });
+
   void renameTaskList({
     required String groupID,
     required String taskListID,
