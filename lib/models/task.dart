@@ -144,6 +144,12 @@ class Task {
         stepList.add(TaskStep.fromMap(element));
       });
     }
+    List<String> filePaths = [];
+    if (map['filePath'] != null) {
+      (map['filePath'] as Map).values.forEach((element) {
+        filePaths.add(element);
+      });
+    }
     return Task(
       id: map['id'] ?? DateTime.now().millisecondsSinceEpoch.toString(),
       groupID: map['groupID'] ?? '1',
@@ -160,7 +166,7 @@ class Task {
           ? null
           : Frequency.values.byName(map['repeatFrequency']),
       frequencyMultiplier: map['frequencyMultiplier'] ?? 1,
-      filePath: map['filePath'] ?? [],
+      filePath: filePaths,
       note: map['note'] ?? '',
     );
   }

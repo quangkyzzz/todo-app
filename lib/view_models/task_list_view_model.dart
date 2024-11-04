@@ -12,10 +12,12 @@ class TaskListViewModel extends ChangeNotifier {
   TaskListViewModel({
     required this.currentTaskList,
   }) {
-    sortTaskListBy(
-      sortType: currentTaskList.sortByType ?? SortType.createDate,
-      isAscending: true,
-    );
+    if (currentTaskList.sortByType != null) {
+      sortTaskListBy(
+        sortType: currentTaskList.sortByType!,
+        isAscending: currentTaskList.isAscending,
+      );
+    }
   }
 
   Future<TaskList> getTaskListByID(String taskListID, String groupID) async {
