@@ -17,6 +17,7 @@ class FirebaseTaskDatabase implements TaskDatabaseProvider {
     return FirebaseTaskDatabase(database.ref('groups'));
   }
 
+  //TODO: fix this to throw exception
   @override
   Future<Task?> getTaskByID({
     required String groupID,

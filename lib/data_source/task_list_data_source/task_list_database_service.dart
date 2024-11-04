@@ -14,7 +14,7 @@ class TaskListDatabaseService implements TaskListDatabaseProvider {
   }
 
   @override
-  Future<TaskList?> getTaskListByID({
+  Future<TaskList> getTaskListByID({
     required String groupID,
     required String taskListID,
   }) async {

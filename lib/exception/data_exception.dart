@@ -1,0 +1,1 @@
+class DataDoesNotExist implements Exception {}

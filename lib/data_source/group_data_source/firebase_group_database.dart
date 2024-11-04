@@ -59,6 +59,7 @@ class FirebaseGroupDatabase implements GroupDatabaseProvider {
     );
   }
 
+//TODO: fix this to throw exception
   @override
   Future<Group?> getGroupByID({required String groupID}) async {
     Group? result;

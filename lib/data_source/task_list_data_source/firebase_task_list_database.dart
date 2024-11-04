@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:todo_app/data_source/task_list_data_source/task_list_database_provider.dart';
+import 'package:todo_app/exception/data_exception.dart';
 import 'package:todo_app/models/enum.dart';
 import 'package:todo_app/models/task.dart';
 import 'package:todo_app/models/task_list.dart';
@@ -20,18 +21,20 @@ class FirebaseTaskListDatabase implements TaskListDatabaseProvider {
   }
 
   @override
-  Future<TaskList?> getTaskListByID({
+  Future<TaskList> getTaskListByID({
     required String groupID,
     required String taskListID,
   }) async {
-    TaskList? result;
+    TaskList result;
     DataSnapshot snapshot =
         await ref.child('id$groupID/taskLists/id$taskListID').get();
     if (snapshot.exists) {
       Map resultMap = snapshot.value as Map;
       result = TaskList.fromMap(resultMap);
+      return result;
+    } else {
+      throw DataDoesNotExist();
     }
-    return result;
   }
 
   @override
