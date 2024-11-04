@@ -470,16 +470,22 @@ class TaskListViewModel extends ChangeNotifier {
 
   void duplicateTaskList() {
     List<Task> newTasks = [];
+    String newTaskListID = DateTime.now().millisecondsSinceEpoch.toString();
     for (Task task in currentTaskList.tasks) {
-      newTasks.add(
-        task.copyWith(id: DateTime.now().millisecondsSinceEpoch.toString()),
+      Task newTask = task.copyWith(
+        id: (DateTime.now().millisecondsSinceEpoch +
+                currentTaskList.tasks.indexOf(task))
+            .toString(),
+        groupID: '1',
+        taskListID: newTaskListID,
       );
+      newTasks.add(newTask);
     }
     TaskList newTaskList = currentTaskList.copyWith(
-      id: DateTime.now().millisecondsSinceEpoch.toString(),
-      title: '${currentTaskList.title} copy',
-      tasks: newTasks,
-    );
+        id: newTaskListID,
+        title: '${currentTaskList.title} copy',
+        tasks: newTasks,
+        groupID: '1');
     GroupDatabaseService.firebase().addMultipleTaskListToGroup(
       groupID: '1',
       addedTaskLists: [newTaskList],
