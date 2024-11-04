@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:todo_app/data_source/group_data_source/group_database_provider.dart';
+import 'package:todo_app/exception/data_exception.dart';
 import 'package:todo_app/models/group.dart';
 import 'package:todo_app/models/task_list.dart';
 
@@ -59,10 +60,9 @@ class FirebaseGroupDatabase implements GroupDatabaseProvider {
     );
   }
 
-//TODO: fix this to throw exception
   @override
-  Future<Group?> getGroupByID({required String groupID}) async {
-    Group? result;
+  Future<Group> getGroupByID({required String groupID}) async {
+    Group result;
     Map<String, dynamic> resultMap = {};
     final DataSnapshot snapshot = await groupsRef.child('id$groupID').get();
     if (snapshot.exists) {
@@ -73,8 +73,10 @@ class FirebaseGroupDatabase implements GroupDatabaseProvider {
         });
       });
       result = Group.fromMap(resultMap);
+      return result;
+    } else {
+      throw DataDoesNotExist();
     }
-    return result;
   }
 
   @override

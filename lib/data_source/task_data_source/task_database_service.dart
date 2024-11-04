@@ -83,7 +83,7 @@ class TaskDatabaseService implements TaskDatabaseProvider {
   }
 
   @override
-  Future<Task?> getTaskByID({
+  Future<Task> getTaskByID({
     required String groupID,
     required String taskListID,
     required String taskID,

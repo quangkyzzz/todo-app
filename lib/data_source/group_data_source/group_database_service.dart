@@ -44,7 +44,7 @@ class GroupDatabaseService implements GroupDatabaseProvider {
   }
 
   @override
-  Future<Group?> getGroupByID({required String groupID}) async {
+  Future<Group> getGroupByID({required String groupID}) async {
     return provider.getGroupByID(groupID: groupID);
   }
 

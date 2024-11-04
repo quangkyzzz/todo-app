@@ -7,7 +7,7 @@ abstract class GroupDatabaseProvider {
     required Function onGroupUpdate,
     required Function onBeginUpdate,
   });
-  Future<Group?> getGroupByID({required String groupID});
+  Future<Group> getGroupByID({required String groupID});
   void createGroup({required Group newGroup});
   void deleteGroup({required String groupID});
   void renameGroup({
