@@ -10,6 +10,7 @@ import 'package:todo_app/ultility/general_ultility.dart';
 
 class TaskListViewModel extends ChangeNotifier {
   TaskList currentTaskList;
+  bool isLoading = false;
   TaskListViewModel({
     required this.currentTaskList,
   }) {
@@ -36,11 +37,18 @@ class TaskListViewModel extends ChangeNotifier {
     );
   }
 
+  void startReloadTaskList() {
+    isLoading = true;
+    notifyListeners();
+  }
+
   void reloadTaskList() async {
+    startReloadTaskList();
     currentTaskList = await TaskListDatabaseService.firebase().getTaskListByID(
       groupID: currentTaskList.groupID,
       taskListID: currentTaskList.id,
     );
+    isLoading = false;
     notifyListeners();
   }
 
@@ -235,38 +243,18 @@ class TaskListViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void getOnMyDayTask() {
-    List<Task> result = [
-      Task(
-        id: '2',
-        groupID: '1',
-        taskListID: '1',
-        title: 'few day',
-        isCompleted: false,
-        isImportant: true,
-        isOnMyDay: true,
-        createDate: DateTime(2024, 6, 2),
-        dueDate: DateTime(2024, 6, 2),
-      ),
-    ];
-
+  void getOnMyDayTask() async {
+    List<Task> allTask = await TaskDatabaseService.firebase().getAllTask();
+    List<Task> result = [];
+    for (Task task in allTask) {
+      if (task.isOnMyDay) result.add(task);
+    }
     currentTaskList.tasks = result;
+    notifyListeners();
   }
 
-  List<Task> readRecentNotInMyDayTask() {
-    List<Task> allTask = [
-      Task(
-        id: '2',
-        title: 'few day',
-        groupID: '1',
-        taskListID: '1',
-        isCompleted: false,
-        isImportant: true,
-        isOnMyDay: true,
-        createDate: DateTime(2024, 6, 2),
-        dueDate: DateTime(2024, 6, 2),
-      ),
-    ];
+  Future<List<Task>> readRecentNotInMyDayTask() async {
+    List<Task> allTask = await TaskDatabaseService.firebase().getAllTask();
     List<Task> result = [];
     for (var task in allTask) {
       DateTime createDate = DateTime(
@@ -286,20 +274,8 @@ class TaskListViewModel extends ChangeNotifier {
     return result;
   }
 
-  List<Task> readOlderNotInMyDayTask() {
-    List<Task> allTask = [
-      Task(
-        id: '2',
-        title: 'few day',
-        groupID: '1',
-        taskListID: '1',
-        isCompleted: false,
-        isImportant: true,
-        isOnMyDay: true,
-        createDate: DateTime(2024, 6, 2),
-        dueDate: DateTime(2024, 6, 2),
-      ),
-    ];
+  Future<List<Task>> readOlderNotInMyDayTask() async {
+    List<Task> allTask = await TaskDatabaseService.firebase().getAllTask();
     List<Task> result = [];
     for (var pair in allTask) {
       DateTime createDate = DateTime(
@@ -319,38 +295,26 @@ class TaskListViewModel extends ChangeNotifier {
     return result;
   }
 
-  void getImportantTask() {
-    List<Task> result = [
-      Task(
-        id: '2',
-        taskListID: '1',
-        groupID: '1',
-        title: 'few day',
-        isCompleted: false,
-        isImportant: true,
-        isOnMyDay: true,
-        createDate: DateTime(2024, 6, 2),
-        dueDate: DateTime(2024, 6, 2),
-      ),
-    ];
+  void getImportantTask() async {
+    List<Task> allTask = await TaskDatabaseService.firebase().getAllTask();
+    List<Task> result = [];
+
+    for (Task task in allTask) {
+      if (task.isImportant) result.add(task);
+    }
     currentTaskList.tasks = result;
+    notifyListeners();
   }
 
-  void getPlannedTask() {
-    List<Task> result = [
-      Task(
-        id: '2',
-        taskListID: '1',
-        groupID: '1',
-        title: 'few day',
-        isCompleted: false,
-        isImportant: true,
-        isOnMyDay: true,
-        createDate: DateTime(2024, 6, 2),
-        dueDate: DateTime(2024, 6, 2),
-      ),
-    ];
+  void getPlannedTask() async {
+    List<Task> allTask = await TaskDatabaseService.firebase().getAllTask();
+    List<Task> result = [];
+
+    for (Task task in allTask) {
+      if (task.dueDate != null) result.add(task);
+    }
     currentTaskList.tasks = result;
+    notifyListeners();
   }
 
   List<Task> readPlannedOverdueTask() {
@@ -446,6 +410,7 @@ class TaskListViewModel extends ChangeNotifier {
   void getAllTask() async {
     List<Task> allTask = await TaskDatabaseService.firebase().getAllTask();
     currentTaskList.tasks = allTask;
+    notifyListeners();
   }
 
   List<Task> searchTaskByName({

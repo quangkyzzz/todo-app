@@ -7,6 +7,8 @@ import 'package:todo_app/presentation/items/task_list_item.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/presentation/components/add_task_floating_button.dart';
 
+//TODO: fix add task to my day
+
 class MyDayFloatingButtons extends StatelessWidget {
   final Color themeColor;
   final TaskList taskList;
@@ -14,14 +16,15 @@ class MyDayFloatingButtons extends StatelessWidget {
       {super.key, required this.taskList, required this.themeColor});
 
   Future<void> onSuggestionsTap(BuildContext context, Color themeColor) async {
+    final taskListViewModel = context.read<TaskListViewModel>();
+    List<Task> listRecentTask =
+        await taskListViewModel.readRecentNotInMyDayTask();
+    List<Task> listOlderSuggetTask =
+        await taskListViewModel.readOlderNotInMyDayTask();
+    if (!context.mounted) return;
     await showModalBottomSheet(
       context: context,
       builder: (BuildContext _) {
-        final taskListViewModel = context.read<TaskListViewModel>();
-        List<Task> listRecentTask =
-            taskListViewModel.readRecentNotInMyDayTask();
-        List<Task> listOlderSuggetTask =
-            taskListViewModel.readOlderNotInMyDayTask();
         return DraggableScrollableSheet(
           snap: true,
           minChildSize: 0.1,

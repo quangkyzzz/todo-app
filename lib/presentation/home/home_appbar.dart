@@ -57,7 +57,12 @@ class HomeAppBar {
           onPressed: () async {
             await Navigator.of(context).pushNamed(
               searchRoute,
-              arguments: context.read<GroupViewModel>().groups[0].taskLists[4],
+              arguments: context
+                  .read<GroupViewModel>()
+                  .groups
+                  .firstWhere((element) => element.id == '1')
+                  .taskLists
+                  .firstWhere((elemment) => elemment.id == '5'),
             );
           },
           icon: const Icon(
