@@ -52,7 +52,7 @@ class StepItem extends StatelessWidget {
           return [
             PopupMenuItem(
               onTap: () {
-                context.read<TaskViewModel>().deleteStep(stepID: step.id);
+                context.read<TaskViewModel>().promoteToTask(promoteStep: step);
               },
               child: const CustomPopupItem(
                 text: 'Promote to task',

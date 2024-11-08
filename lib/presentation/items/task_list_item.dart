@@ -82,7 +82,10 @@ class TaskListItem extends StatelessWidget {
               'task': task,
               'taskListName': taskListTitle,
             },
-          );
+          ).then((value) {
+            if (!context.mounted) return;
+            context.read<TaskListViewModel>().reloadTaskList();
+          });
         },
         child: Row(
           children: [

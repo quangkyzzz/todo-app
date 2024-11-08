@@ -176,7 +176,7 @@ class FirebaseTaskDatabase implements TaskDatabaseProvider {
       required DateTime? remindTime}) async {
     await ref
         .child('id$groupID/taskLists/id$taskListID/tasks/id$taskID')
-        .update({'remindTime': remindTime});
+        .update({'remindTime': remindTime?.toString()});
   }
 
   @override
@@ -241,7 +241,7 @@ class FirebaseTaskDatabase implements TaskDatabaseProvider {
   }) async {
     await ref
         .child('id$groupID/taskLists/id$taskListID/tasks/id$taskID/stepList/')
-        .child('is$stepID')
+        .child('id$stepID')
         .remove();
   }
 
