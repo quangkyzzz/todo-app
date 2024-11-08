@@ -142,23 +142,24 @@ class TaskListItem extends StatelessWidget {
                       const SizedBox(width: 8),
                     ],
                   )
-                : Transform.scale(
-                    scale: 1.3,
-                    child: Checkbox(
-                      checkColor: (themeColor == MyTheme.whiteColor)
-                          ? MyTheme.blackColor
-                          : null,
-                      activeColor: themeColor,
-                      tristate: false,
-                      shape: const CircleBorder(),
-                      value: task.isCompleted,
-                      onChanged: (bool? value) {
-                        context
-                            .read<TaskListViewModel>()
-                            .updateIsCompleted(task: task, isCompleted: value!);
-                      },
-                    ),
-                  ),
+                : (onTapPlus != null)
+                    ? const SizedBox(width: 18)
+                    : Transform.scale(
+                        scale: 1.3,
+                        child: Checkbox(
+                          checkColor: (themeColor == MyTheme.whiteColor)
+                              ? MyTheme.blackColor
+                              : null,
+                          activeColor: themeColor,
+                          tristate: false,
+                          shape: const CircleBorder(),
+                          value: task.isCompleted,
+                          onChanged: (bool? value) {
+                            context.read<TaskListViewModel>().updateIsCompleted(
+                                task: task, isCompleted: value!);
+                          },
+                        ),
+                      ),
             (isAllBottomIconNull)
                 ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,

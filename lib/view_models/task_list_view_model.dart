@@ -187,6 +187,17 @@ class TaskListViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void addTaskToMyDay({required Task task}) {
+    TaskDatabaseService.firebase().updateIsOnMyDay(
+      groupID: task.groupID,
+      taskListID: task.taskListID,
+      taskID: task.id,
+      isOnMyDay: true,
+    );
+    addMultipleTask(tasks: [task]);
+    notifyListeners();
+  }
+
   void addMultipleTask({required List<Task> tasks}) {
     currentTaskList.tasks.addAll(tasks);
     notifyListeners();
@@ -282,7 +293,7 @@ class TaskListViewModel extends ChangeNotifier {
         DateTime.now().month,
         DateTime.now().day,
       );
-      if ((createDate == today) && (!task.isOnMyDay)) {
+      if ((createDate == today) && (!task.isOnMyDay) && (!task.isCompleted)) {
         result.add(task);
       }
     }
@@ -292,19 +303,21 @@ class TaskListViewModel extends ChangeNotifier {
   Future<List<Task>> readOlderNotInMyDayTask() async {
     List<Task> allTask = await TaskDatabaseService.firebase().getAllTask();
     List<Task> result = [];
-    for (var pair in allTask) {
+    for (var task in allTask) {
       DateTime createDate = DateTime(
-        pair.createDate.year,
-        pair.createDate.month,
-        pair.createDate.day,
+        task.createDate.year,
+        task.createDate.month,
+        task.createDate.day,
       );
       DateTime today = DateTime(
         DateTime.now().year,
         DateTime.now().month,
         DateTime.now().day,
       );
-      if ((!pair.isOnMyDay) && (createDate.isBefore(today))) {
-        result.add(pair);
+      if ((!task.isOnMyDay) &&
+          (createDate.isBefore(today)) &&
+          (!task.isCompleted)) {
+        result.add(task);
       }
     }
     return result;

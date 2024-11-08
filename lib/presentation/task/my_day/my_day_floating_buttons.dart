@@ -90,9 +90,9 @@ class MyDayFloatingButtons extends StatelessWidget {
 
                                         context
                                             .read<TaskListViewModel>()
-                                            .addMultipleTask(
-                                          tasks: [updateTask],
-                                        );
+                                            .addTaskToMyDay(
+                                              task: updateTask,
+                                            );
                                       },
                                     );
                                   },
@@ -128,8 +128,9 @@ class MyDayFloatingButtons extends StatelessWidget {
 
                                         context
                                             .read<TaskListViewModel>()
-                                            .addMultipleTask(
-                                                tasks: [updateTask]);
+                                            .addTaskToMyDay(
+                                              task: updateTask,
+                                            );
                                       },
                                     );
                                   },
