@@ -1,8 +1,7 @@
-Báo cáo 4/11
+Báo cáo 8/11
 Đã làm :
-    -   Sửa các hàm chuyển đổi dữ liệu trước khi đưa lên db.
-    -   Tạo các database class đối với taskList và task model.
+    -   Triển khai firebase db trong taskListViewModel.
 Đang làm:
-    -   Triển khai firebase db trong taskListViewModel.
+    -   Triển khai firebase db trong taskViewModel.
 Dự định làm:
-    -   Triển khai firebase db trong taskListViewModel.
+    -   Dựa vào review để chỉnh sửa.
