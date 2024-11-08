@@ -3,7 +3,6 @@
 import 'dart:core';
 import 'package:todo_app/models/task_list.dart';
 
-//TODO: fix position after get all
 class Group {
   final String id;
   String groupName;

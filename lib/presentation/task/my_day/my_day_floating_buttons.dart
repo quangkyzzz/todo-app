@@ -7,8 +7,6 @@ import 'package:todo_app/presentation/items/task_list_item.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/presentation/components/add_task_floating_button.dart';
 
-//TODO: fix add task to my day
-
 class MyDayFloatingButtons extends StatelessWidget {
   final Color themeColor;
   final TaskList taskList;
