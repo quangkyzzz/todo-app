@@ -585,7 +585,20 @@ class AddAndEditNoteButton extends StatelessWidget {
                     .whenComplete(
                   () {
                     if (!context.mounted) return;
-                    context.read<TaskViewModel>().reloadTask();
+                    try {
+                      context.read<TaskViewModel>().reloadTask();
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          backgroundColor: MyTheme.backgroundGreyColor,
+                          content: Text(
+                            'Can not get data!',
+                            style: MyTheme.itemSmallTextStyle,
+                          ),
+                          duration: Duration(seconds: 1),
+                        ),
+                      );
+                    }
                   },
                 );
               },
@@ -619,7 +632,20 @@ class AddAndEditNoteButton extends StatelessWidget {
                     .whenComplete(
                   () {
                     if (!context.mounted) return;
-                    context.read<TaskViewModel>().reloadTask();
+                    try {
+                      context.read<TaskViewModel>().reloadTask();
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          backgroundColor: MyTheme.backgroundGreyColor,
+                          content: Text(
+                            'Can not get data!',
+                            style: MyTheme.itemSmallTextStyle,
+                          ),
+                          duration: Duration(seconds: 1),
+                        ),
+                      );
+                    }
                   },
                 );
               },

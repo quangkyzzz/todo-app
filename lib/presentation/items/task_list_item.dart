@@ -84,7 +84,20 @@ class TaskListItem extends StatelessWidget {
             },
           ).then((value) {
             if (!context.mounted) return;
-            context.read<TaskListViewModel>().reloadTaskList();
+            try {
+              context.read<TaskListViewModel>().reloadTaskList();
+            } catch (e) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  backgroundColor: MyTheme.backgroundGreyColor,
+                  content: Text(
+                    'Can not get data!',
+                    style: MyTheme.itemSmallTextStyle,
+                  ),
+                  duration: Duration(seconds: 1),
+                ),
+              );
+            }
           });
         },
         child: Row(
