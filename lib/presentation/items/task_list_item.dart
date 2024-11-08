@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/data_source/settings_shared_preference.dart';
+import 'package:todo_app/exception/data_exception.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/routes.dart';
 import 'package:todo_app/models/task.dart';
@@ -60,7 +61,7 @@ class TaskListItem extends StatelessWidget {
                           task.groupID,
                         ))
                     .title;
-          } catch (e) {
+          } on DataDoesNotExist {
             if (!context.mounted) return;
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
@@ -86,7 +87,7 @@ class TaskListItem extends StatelessWidget {
             if (!context.mounted) return;
             try {
               context.read<TaskListViewModel>().reloadTaskList();
-            } catch (e) {
+            } on DataDoesNotExist {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
                   backgroundColor: MyTheme.backgroundGreyColor,

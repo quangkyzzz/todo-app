@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/exception/data_exception.dart';
 import 'package:todo_app/service/background_service.dart';
 import 'package:todo_app/models/enum.dart';
 import 'package:todo_app/data_source/settings_shared_preference.dart';
@@ -587,7 +588,7 @@ class AddAndEditNoteButton extends StatelessWidget {
                     if (!context.mounted) return;
                     try {
                       context.read<TaskViewModel>().reloadTask();
-                    } catch (e) {
+                    } on DataDoesNotExist {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           backgroundColor: MyTheme.backgroundGreyColor,
@@ -634,7 +635,7 @@ class AddAndEditNoteButton extends StatelessWidget {
                     if (!context.mounted) return;
                     try {
                       context.read<TaskViewModel>().reloadTask();
-                    } catch (e) {
+                    } on DataDoesNotExist {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           backgroundColor: MyTheme.backgroundGreyColor,
