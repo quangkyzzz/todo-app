@@ -44,10 +44,22 @@ class TaskListViewModel extends ChangeNotifier {
 
   void reloadTaskList() async {
     startReloadTaskList();
-    currentTaskList = await TaskListDatabaseService.firebase().getTaskListByID(
-      groupID: currentTaskList.groupID,
-      taskListID: currentTaskList.id,
-    );
+    switch (currentTaskList.id) {
+      case '2':
+        getOnMyDayTask();
+      case '3':
+        getImportantTask();
+      case '4':
+        getPlannedTask();
+      case '5':
+        getAllTask();
+      default:
+        currentTaskList =
+            await TaskListDatabaseService.firebase().getTaskListByID(
+          groupID: currentTaskList.groupID,
+          taskListID: currentTaskList.id,
+        );
+    }
     isLoading = false;
     notifyListeners();
   }
@@ -99,6 +111,9 @@ class TaskListViewModel extends ChangeNotifier {
       taskID: task.id,
       isImportant: isImportant,
     );
+    if (currentTaskList.id == '3') {
+      reloadTaskList();
+    }
     notifyListeners();
   }
 
