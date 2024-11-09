@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/data_source/task_data_source/task_database_service.dart';
-import 'package:todo_app/data_source/task_list_data_source/task_list_database_service.dart';
+import 'package:todo_app/data/task_data_source/task_database_service.dart';
+import 'package:todo_app/data/task_list_data_source/task_list_database_service.dart';
 import 'package:todo_app/models/task.dart';
 import 'package:todo_app/models/task_step.dart';
 import 'package:todo_app/models/enum.dart';

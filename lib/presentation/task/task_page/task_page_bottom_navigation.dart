@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/service/background_service.dart';
-import 'package:todo_app/data_source/settings_shared_preference.dart';
+import 'package:todo_app/data/settings_shared_preference.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/models/task.dart';
 import 'package:todo_app/view_models/task_view_model.dart';

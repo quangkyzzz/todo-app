@@ -1,7 +1,7 @@
 import 'dart:ui';
 
-import 'package:todo_app/data_source/task_list_data_source/firebase_task_list_database.dart';
-import 'package:todo_app/data_source/task_list_data_source/task_list_database_provider.dart';
+import 'package:todo_app/data/task_list_data_source/firebase_task_list_database.dart';
+import 'package:todo_app/data/task_list_data_source/task_list_database_provider.dart';
 import 'package:todo_app/models/enum.dart';
 import 'package:todo_app/models/task.dart';
 import 'package:todo_app/models/task_list.dart';

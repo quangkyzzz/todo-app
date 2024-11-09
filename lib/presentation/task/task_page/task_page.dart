@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/exception/data_exception.dart';
 import 'package:todo_app/service/background_service.dart';
 import 'package:todo_app/models/enum.dart';
-import 'package:todo_app/data_source/settings_shared_preference.dart';
+import 'package:todo_app/data/settings_shared_preference.dart';
 import 'package:todo_app/view_models/task_view_model.dart';
 import 'package:todo_app/presentation/components/show_custom_repeat_time_dialog.dart';
 import 'package:todo_app/presentation/components/show_date_time_picker.dart';

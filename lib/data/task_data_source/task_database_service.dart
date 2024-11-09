@@ -1,5 +1,5 @@
-import 'package:todo_app/data_source/task_data_source/firebase_task_database.dart';
-import 'package:todo_app/data_source/task_data_source/task_database_provider.dart';
+import 'package:todo_app/data/task_data_source/firebase_task_database.dart';
+import 'package:todo_app/data/task_data_source/task_database_provider.dart';
 import 'package:todo_app/models/enum.dart';
 import 'package:todo_app/models/task.dart';
 import 'package:todo_app/models/task_step.dart';
