@@ -1,7 +1,8 @@
-Báo cáo 8/11
+Báo cáo 9/11
 Đã làm :
-    -   Triển khai firebase db trong taskListViewModel.
-Đang làm:
     -   Triển khai firebase db trong taskViewModel.
+    -   Sửa các lỗi trong các database class.
+Đang làm:
+    -   Rà soát lại code.
 Dự định làm:
-    -   Dựa vào review để chỉnh sửa.
+    -   Tìm hiểu về flutter animation.
