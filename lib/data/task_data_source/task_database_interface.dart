@@ -2,7 +2,7 @@ import 'package:todo_app/models/enum.dart';
 import 'package:todo_app/models/task.dart';
 import 'package:todo_app/models/task_step.dart';
 
-abstract class TaskDatabaseProvider {
+abstract class TaskDatabaseInterface {
   Future<Task> getTaskByID({
     required String groupID,
     required String taskListID,

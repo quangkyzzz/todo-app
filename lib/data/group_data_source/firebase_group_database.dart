@@ -2,12 +2,13 @@
 import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:todo_app/data/group_data_source/group_database_provider.dart';
+import 'package:todo_app/data/group_data_source/group_database_interface.dart';
 import 'package:todo_app/exception/data_exception.dart';
 import 'package:todo_app/models/group.dart';
 import 'package:todo_app/models/task_list.dart';
 
-class FirebaseGroupDatabase implements GroupDatabaseProvider {
+//TODO: fix repeat code at init firebase.
+class FirebaseGroupDatabase implements GroupDatabaseInterface {
   DatabaseReference groupsRef;
   FirebaseGroupDatabase(this.groupsRef);
   factory FirebaseGroupDatabase.initRef() {

@@ -8,7 +8,7 @@ import 'package:todo_app/models/enum.dart';
 import 'package:todo_app/models/task.dart';
 import 'package:todo_app/models/task_list.dart';
 
-class FirebaseTaskListDatabase implements TaskListDatabaseProvider {
+class FirebaseTaskListDatabase implements TaskListDatabaseInterface {
   DatabaseReference ref;
   FirebaseTaskListDatabase(this.ref);
   factory FirebaseTaskListDatabase.initRef() {

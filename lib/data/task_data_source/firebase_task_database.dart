@@ -10,7 +10,7 @@ import 'package:todo_app/models/task.dart';
 import 'package:todo_app/models/task_list.dart';
 import 'package:todo_app/models/task_step.dart';
 
-class FirebaseTaskDatabase implements TaskDatabaseProvider {
+class FirebaseTaskDatabase implements TaskDatabaseInterface {
   DatabaseReference ref;
   FirebaseTaskDatabase(this.ref);
   factory FirebaseTaskDatabase.initRef() {

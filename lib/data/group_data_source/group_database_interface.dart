@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:todo_app/models/group.dart';
 import 'package:todo_app/models/task_list.dart';
 
-abstract class GroupDatabaseProvider {
+abstract class GroupDatabaseInterface {
   void listenAllGroup({
     required Function onGroupUpdate,
     required Function onBeginUpdate,

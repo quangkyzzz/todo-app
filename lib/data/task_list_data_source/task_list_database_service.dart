@@ -6,8 +6,8 @@ import 'package:todo_app/models/enum.dart';
 import 'package:todo_app/models/task.dart';
 import 'package:todo_app/models/task_list.dart';
 
-class TaskListDatabaseService implements TaskListDatabaseProvider {
-  final TaskListDatabaseProvider provider;
+class TaskListDatabaseService implements TaskListDatabaseInterface {
+  final TaskListDatabaseInterface provider;
   TaskListDatabaseService(this.provider);
   factory TaskListDatabaseService.firebase() {
     return TaskListDatabaseService(FirebaseTaskListDatabase.initRef());
