@@ -2,13 +2,13 @@
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:todo_app/data/task_data_source/task_database_interface.dart';
+import 'package:todo_app/model/data/task_data_source/task_database_interface.dart';
 import 'package:todo_app/exception/data_exception.dart';
-import 'package:todo_app/models/enum.dart';
-import 'package:todo_app/models/group.dart';
-import 'package:todo_app/models/task.dart';
-import 'package:todo_app/models/task_list.dart';
-import 'package:todo_app/models/task_step.dart';
+import 'package:todo_app/model/entity/enum.dart';
+import 'package:todo_app/model/entity/group.dart';
+import 'package:todo_app/model/entity/task.dart';
+import 'package:todo_app/model/entity/task_list.dart';
+import 'package:todo_app/model/entity/task_step.dart';
 
 class FirebaseTaskDatabase implements TaskDatabaseInterface {
   DatabaseReference ref;

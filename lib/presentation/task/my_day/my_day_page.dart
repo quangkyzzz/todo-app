@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/models/task_list.dart';
+import 'package:todo_app/model/entity/task_list.dart';
 import 'package:todo_app/view_models/task_list_view_model.dart';
 import 'package:todo_app/presentation/lists/completed_list.dart';
 import 'package:todo_app/presentation/lists/incomplete_list.dart';

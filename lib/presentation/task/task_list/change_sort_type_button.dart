@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/models/task_list.dart';
-import 'package:todo_app/models/enum.dart';
-import 'package:todo_app/data/settings_shared_preference.dart';
+import 'package:todo_app/model/entity/task_list.dart';
+import 'package:todo_app/model/entity/enum.dart';
+import 'package:todo_app/model/data/settings_shared_preference.dart';
 import 'package:todo_app/view_models/task_list_view_model.dart';
 
 class ChangeSortTypeButton extends StatelessWidget {

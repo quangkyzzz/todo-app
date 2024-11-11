@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/data/group_data_source/group_data_source.dart';
-import 'package:todo_app/models/group.dart';
-import 'package:todo_app/models/task_list.dart';
+import 'package:todo_app/model/data/group_data_source/group_data_source.dart';
+import 'package:todo_app/model/entity/group.dart';
+import 'package:todo_app/model/entity/task_list.dart';
 
 class GroupViewModel extends ChangeNotifier {
   List<Group> groups = [];

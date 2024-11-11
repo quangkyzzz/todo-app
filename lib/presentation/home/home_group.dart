@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/models/group.dart';
-import 'package:todo_app/models/task_list.dart';
+import 'package:todo_app/model/entity/group.dart';
+import 'package:todo_app/model/entity/task_list.dart';
 import 'package:todo_app/view_models/group_view_model.dart';
 import 'package:todo_app/presentation/components/show_text_edit_dialog.dart';
 import 'package:todo_app/themes.dart';

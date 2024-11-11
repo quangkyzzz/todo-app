@@ -1,7 +1,7 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls
 
 import 'dart:core';
-import 'package:todo_app/models/task_list.dart';
+import 'package:todo_app/model/entity/task_list.dart';
 
 class Group {
   final String id;

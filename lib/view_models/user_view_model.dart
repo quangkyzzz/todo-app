@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/models/user.dart';
+import 'package:todo_app/model/entity/user.dart';
 
 class UserViewModel extends ChangeNotifier {
   User currentUser = User(

@@ -1,11 +1,11 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:todo_app/data/group_data_source/group_data_source.dart';
-import 'package:todo_app/data/task_data_source/task_data_source.dart';
-import 'package:todo_app/data/task_list_data_source/task_list_data_source.dart';
-import 'package:todo_app/models/task_list.dart';
-import 'package:todo_app/models/task.dart';
-import 'package:todo_app/models/enum.dart';
+import 'package:todo_app/model/data/group_data_source/group_data_source.dart';
+import 'package:todo_app/model/data/task_data_source/task_data_source.dart';
+import 'package:todo_app/model/data/task_list_data_source/task_list_data_source.dart';
+import 'package:todo_app/model/entity/task_list.dart';
+import 'package:todo_app/model/entity/task.dart';
+import 'package:todo_app/model/entity/enum.dart';
 import 'package:todo_app/ultility/general_ultility.dart';
 
 class TaskListViewModel extends ChangeNotifier {

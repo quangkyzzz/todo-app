@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/models/task.dart';
+import 'package:todo_app/model/entity/task.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/view_models/task_view_model.dart';
 

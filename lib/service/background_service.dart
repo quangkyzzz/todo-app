@@ -1,6 +1,6 @@
 // ignore_for_file: discarded_futures
 
-import 'package:todo_app/models/enum.dart';
+import 'package:todo_app/model/entity/enum.dart';
 import 'package:todo_app/service/notification_service.dart';
 import 'package:workmanager/workmanager.dart';
 

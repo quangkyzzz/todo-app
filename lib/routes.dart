@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/models/task_list.dart';
+import 'package:todo_app/model/entity/task_list.dart';
 import 'package:todo_app/presentation/auth/signup_page.dart';
 import 'package:todo_app/presentation/home/home_page.dart';
 import 'package:todo_app/presentation/auth/login_page.dart';
-import 'package:todo_app/models/task.dart';
+import 'package:todo_app/model/entity/task.dart';
 import 'package:todo_app/presentation/task/important/important_page.dart';
 import 'package:todo_app/presentation/task/my_day/my_day_page.dart';
 import 'package:todo_app/presentation/task/planned/planned_page.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/models/enum.dart';
-import 'package:todo_app/models/task.dart';
-import 'package:todo_app/models/task_list.dart';
+import 'package:todo_app/model/entity/enum.dart';
+import 'package:todo_app/model/entity/task.dart';
+import 'package:todo_app/model/entity/task_list.dart';
 
 abstract class TaskListDatabaseInterface {
   Future<TaskList> getTaskListByID({

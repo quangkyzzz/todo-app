@@ -1,4 +1,4 @@
-import 'package:todo_app/models/task_list.dart';
+import 'package:todo_app/model/entity/task_list.dart';
 
 class TaskListUltility {
   static int countIncompletedTaskByID({required TaskList taskList}) {

@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'package:todo_app/models/group.dart';
-import 'package:todo_app/models/task_list.dart';
+import 'package:todo_app/model/entity/group.dart';
+import 'package:todo_app/model/entity/task_list.dart';
 
 abstract class GroupDatabaseInterface {
   void listenAllGroup({

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/data/task_data_source/task_data_source.dart';
-import 'package:todo_app/data/task_list_data_source/task_list_data_source.dart';
-import 'package:todo_app/models/task.dart';
-import 'package:todo_app/models/task_step.dart';
-import 'package:todo_app/models/enum.dart';
+import 'package:todo_app/model/data/task_data_source/task_data_source.dart';
+import 'package:todo_app/model/data/task_list_data_source/task_list_data_source.dart';
+import 'package:todo_app/model/entity/task.dart';
+import 'package:todo_app/model/entity/task_step.dart';
+import 'package:todo_app/model/entity/enum.dart';
 
 class TaskViewModel extends ChangeNotifier {
   Task currentTask;

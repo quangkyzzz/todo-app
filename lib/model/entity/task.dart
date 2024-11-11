@@ -1,8 +1,8 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls
 
 import 'dart:core';
-import 'package:todo_app/models/enum.dart';
-import 'package:todo_app/models/task_step.dart';
+import 'package:todo_app/model/entity/enum.dart';
+import 'package:todo_app/model/entity/task_step.dart';
 
 class Task {
   final String id;
