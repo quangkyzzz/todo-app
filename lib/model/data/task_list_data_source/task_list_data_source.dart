@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:todo_app/model/data/task_list_data_source/firebase_task_list_database.dart';
 import 'package:todo_app/model/data/task_list_data_source/task_list_database_interface.dart';
 import 'package:todo_app/model/entity/enum.dart';
@@ -10,7 +9,7 @@ class TaskListDataSource implements TaskListDatabaseInterface {
   final TaskListDatabaseInterface provider;
   TaskListDataSource(this.provider);
   factory TaskListDataSource.firebase() {
-    return TaskListDataSource(FirebaseTaskListDatabase.initRef());
+    return TaskListDataSource(FirebaseTaskListDatabase());
   }
 
   @override

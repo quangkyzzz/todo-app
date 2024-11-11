@@ -37,13 +37,13 @@ class TaskListViewModel extends ChangeNotifier {
     );
   }
 
-  void startReloadTaskList() {
+  void beginLoad() {
     isLoading = true;
     notifyListeners();
   }
 
   void reloadTaskList() async {
-    startReloadTaskList();
+    beginLoad();
     switch (currentTaskList.id) {
       case '2':
         getOnMyDayTask();

@@ -8,7 +8,7 @@ class TaskDataSource implements TaskDatabaseInterface {
   TaskDatabaseInterface provider;
   TaskDataSource(this.provider);
   factory TaskDataSource.firebase() {
-    return TaskDataSource(FirebaseTaskDatabase.initRef());
+    return TaskDataSource(FirebaseTaskDatabase());
   }
 
   @override

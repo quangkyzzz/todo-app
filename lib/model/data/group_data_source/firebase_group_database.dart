@@ -1,25 +1,15 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls
 import 'dart:async';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:todo_app/model/data/firebase_reference.dart';
 import 'package:todo_app/model/data/group_data_source/group_database_interface.dart';
 import 'package:todo_app/exception/data_exception.dart';
 import 'package:todo_app/model/entity/group.dart';
 import 'package:todo_app/model/entity/task_list.dart';
 
 //TODO: fix repeat code at init firebase.
-//TODO: fix folder location
 class FirebaseGroupDatabase implements GroupDatabaseInterface {
-  DatabaseReference groupsRef;
-  FirebaseGroupDatabase(this.groupsRef);
-  factory FirebaseGroupDatabase.initRef() {
-    final FirebaseDatabase database = FirebaseDatabase.instanceFor(
-      app: Firebase.app(),
-      databaseURL:
-          "https://demoz-6f2fd-default-rtdb.asia-southeast1.firebasedatabase.app",
-    );
-    return FirebaseGroupDatabase(database.ref('groups'));
-  }
+  DatabaseReference groupsRef = FirebaseReference.getInstance.ref;
 
   @override
   Future<void> addMultipleTaskListToGroup({

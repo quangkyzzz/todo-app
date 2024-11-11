@@ -1,7 +1,6 @@
 import 'dart:ui';
-
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:todo_app/model/data/firebase_reference.dart';
 import 'package:todo_app/model/data/task_list_data_source/task_list_database_interface.dart';
 import 'package:todo_app/exception/data_exception.dart';
 import 'package:todo_app/model/entity/enum.dart';
@@ -9,16 +8,7 @@ import 'package:todo_app/model/entity/task.dart';
 import 'package:todo_app/model/entity/task_list.dart';
 
 class FirebaseTaskListDatabase implements TaskListDatabaseInterface {
-  DatabaseReference ref;
-  FirebaseTaskListDatabase(this.ref);
-  factory FirebaseTaskListDatabase.initRef() {
-    final FirebaseDatabase database = FirebaseDatabase.instanceFor(
-      app: Firebase.app(),
-      databaseURL:
-          "https://demoz-6f2fd-default-rtdb.asia-southeast1.firebasedatabase.app",
-    );
-    return FirebaseTaskListDatabase(database.ref('groups'));
-  }
+  DatabaseReference ref = FirebaseReference.getInstance.ref;
 
   @override
   Future<TaskList> getTaskListByID({

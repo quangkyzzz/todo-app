@@ -8,7 +8,7 @@ class GroupDataSource implements GroupDatabaseInterface {
   final GroupDatabaseInterface provider;
   GroupDataSource(this.provider);
   factory GroupDataSource.firebase() {
-    return GroupDataSource(FirebaseGroupDatabase.initRef());
+    return GroupDataSource(FirebaseGroupDatabase());
   }
 
   @override
