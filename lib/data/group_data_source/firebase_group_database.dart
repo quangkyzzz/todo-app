@@ -8,6 +8,7 @@ import 'package:todo_app/models/group.dart';
 import 'package:todo_app/models/task_list.dart';
 
 //TODO: fix repeat code at init firebase.
+//TODO: fix folder location
 class FirebaseGroupDatabase implements GroupDatabaseInterface {
   DatabaseReference groupsRef;
   FirebaseGroupDatabase(this.groupsRef);

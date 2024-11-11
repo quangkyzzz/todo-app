@@ -2,7 +2,7 @@
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:todo_app/data/task_data_source/task_database_provider.dart';
+import 'package:todo_app/data/task_data_source/task_database_interface.dart';
 import 'package:todo_app/exception/data_exception.dart';
 import 'package:todo_app/models/enum.dart';
 import 'package:todo_app/models/group.dart';

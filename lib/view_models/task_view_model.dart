@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/data/task_data_source/task_database_service.dart';
-import 'package:todo_app/data/task_list_data_source/task_list_database_service.dart';
+import 'package:todo_app/data/task_data_source/task_data_source.dart';
+import 'package:todo_app/data/task_list_data_source/task_list_data_source.dart';
 import 'package:todo_app/models/task.dart';
 import 'package:todo_app/models/task_step.dart';
 import 'package:todo_app/models/enum.dart';
@@ -18,7 +18,7 @@ class TaskViewModel extends ChangeNotifier {
 
   void reloadTask() async {
     beginLoad();
-    currentTask = await TaskDatabaseService.firebase().getTaskByID(
+    currentTask = await TaskDataSource.firebase().getTaskByID(
       groupID: currentTask.groupID,
       taskListID: currentTask.taskListID,
       taskID: currentTask.id,
@@ -29,7 +29,7 @@ class TaskViewModel extends ChangeNotifier {
 
   void updateTaskTitle({required String newTitle}) {
     currentTask.title = newTitle;
-    TaskDatabaseService.firebase().updateTaskTitle(
+    TaskDataSource.firebase().updateTaskTitle(
       groupID: currentTask.groupID,
       taskListID: currentTask.taskListID,
       taskID: currentTask.id,
@@ -40,7 +40,7 @@ class TaskViewModel extends ChangeNotifier {
 
   void updateIsCompleted({required bool isCompleted}) {
     currentTask.isCompleted = isCompleted;
-    TaskDatabaseService.firebase().updateIsCompleted(
+    TaskDataSource.firebase().updateIsCompleted(
         groupID: currentTask.groupID,
         taskListID: currentTask.taskListID,
         taskID: currentTask.id,
@@ -50,7 +50,7 @@ class TaskViewModel extends ChangeNotifier {
 
   void updateIsImportant({required bool isImportant}) {
     currentTask.isImportant = isImportant;
-    TaskDatabaseService.firebase().updateIsImportant(
+    TaskDataSource.firebase().updateIsImportant(
       groupID: currentTask.groupID,
       taskListID: currentTask.taskListID,
       taskID: currentTask.id,
@@ -61,7 +61,7 @@ class TaskViewModel extends ChangeNotifier {
 
   void updateRemindTime({required DateTime? newRemindTime}) {
     currentTask.remindTime = newRemindTime;
-    TaskDatabaseService.firebase().updateRemindTime(
+    TaskDataSource.firebase().updateRemindTime(
       groupID: currentTask.groupID,
       taskListID: currentTask.taskListID,
       taskID: currentTask.id,
@@ -72,7 +72,7 @@ class TaskViewModel extends ChangeNotifier {
 
   void updateDueDate({required DateTime? newDueDate}) {
     currentTask.dueDate = newDueDate;
-    TaskDatabaseService.firebase().updateDueDate(
+    TaskDataSource.firebase().updateDueDate(
       groupID: currentTask.groupID,
       taskListID: currentTask.taskListID,
       taskID: currentTask.id,
@@ -83,7 +83,7 @@ class TaskViewModel extends ChangeNotifier {
 
   void updateRepeatFrequency({required Frequency? newRepeatFrequency}) {
     currentTask.repeatFrequency = newRepeatFrequency;
-    TaskDatabaseService.firebase().updateRepeatFrequency(
+    TaskDataSource.firebase().updateRepeatFrequency(
       groupID: currentTask.groupID,
       taskListID: currentTask.taskListID,
       taskID: currentTask.id,
@@ -94,7 +94,7 @@ class TaskViewModel extends ChangeNotifier {
 
   void updateFrequencyMultiplier({required int newFrequencyMultiplier}) {
     currentTask.frequencyMultiplier = newFrequencyMultiplier;
-    TaskDatabaseService.firebase().updateFrequencyMultiplier(
+    TaskDataSource.firebase().updateFrequencyMultiplier(
       groupID: currentTask.groupID,
       taskListID: currentTask.taskListID,
       taskID: currentTask.id,
@@ -105,7 +105,7 @@ class TaskViewModel extends ChangeNotifier {
 
   void updateIsOnMyDay({required bool isOnMyDay}) {
     currentTask.isOnMyDay = isOnMyDay;
-    TaskDatabaseService.firebase().updateIsOnMyDay(
+    TaskDataSource.firebase().updateIsOnMyDay(
       groupID: currentTask.groupID,
       taskListID: currentTask.taskListID,
       taskID: currentTask.id,
@@ -116,7 +116,7 @@ class TaskViewModel extends ChangeNotifier {
 
   void updateNote({required String newNote}) {
     currentTask.note = newNote;
-    TaskDatabaseService.firebase().updateNote(
+    TaskDataSource.firebase().updateNote(
       groupID: currentTask.groupID,
       taskListID: currentTask.taskListID,
       taskID: currentTask.id,
@@ -127,7 +127,7 @@ class TaskViewModel extends ChangeNotifier {
 
   void addFile({required List<String> filePath}) {
     currentTask.filePath.addAll(filePath);
-    TaskDatabaseService.firebase().addFile(
+    TaskDataSource.firebase().addFile(
       groupID: currentTask.groupID,
       taskListID: currentTask.taskListID,
       taskID: currentTask.id,
@@ -138,7 +138,7 @@ class TaskViewModel extends ChangeNotifier {
 
   void removeFile({required String removeFile}) {
     currentTask.filePath.remove(removeFile);
-    TaskDatabaseService.firebase().removeFile(
+    TaskDataSource.firebase().removeFile(
       groupID: currentTask.groupID,
       taskListID: currentTask.taskListID,
       taskID: currentTask.id,
@@ -154,7 +154,7 @@ class TaskViewModel extends ChangeNotifier {
       isCompleted: isCompleted,
     );
     currentTask.stepList.add(newStep);
-    TaskDatabaseService.firebase().addStep(
+    TaskDataSource.firebase().addStep(
       groupID: currentTask.groupID,
       taskListID: currentTask.taskListID,
       taskID: currentTask.id,
@@ -168,7 +168,7 @@ class TaskViewModel extends ChangeNotifier {
     currentTask.stepList
         .firstWhere((element) => element.id == stepID)
         .stepName = newName;
-    TaskDatabaseService.firebase().updateStepName(
+    TaskDataSource.firebase().updateStepName(
       groupID: currentTask.groupID,
       taskListID: currentTask.taskListID,
       taskID: currentTask.id,
@@ -182,7 +182,7 @@ class TaskViewModel extends ChangeNotifier {
     currentTask.stepList
         .firstWhere((element) => element.id == stepID)
         .isCompleted = isCompleted;
-    TaskDatabaseService.firebase().updateStepIsCompleted(
+    TaskDataSource.firebase().updateStepIsCompleted(
       groupID: currentTask.groupID,
       taskListID: currentTask.taskListID,
       taskID: currentTask.id,
@@ -195,7 +195,7 @@ class TaskViewModel extends ChangeNotifier {
 
   void deleteStep({required String stepID}) {
     currentTask.stepList.removeWhere((element) => element.id == stepID);
-    TaskDatabaseService.firebase().deleteStep(
+    TaskDataSource.firebase().deleteStep(
       groupID: currentTask.groupID,
       taskListID: currentTask.taskListID,
       taskID: currentTask.id,
@@ -214,7 +214,7 @@ class TaskViewModel extends ChangeNotifier {
       isImportant: false,
       isOnMyDay: false,
     );
-    TaskListDatabaseService.firebase().addMultipleTask(
+    TaskListDataSource.firebase().addMultipleTask(
       groupID: currentTask.groupID,
       taskListID: currentTask.taskListID,
       addTasks: [newTask],
@@ -227,7 +227,7 @@ class TaskViewModel extends ChangeNotifier {
   }
 
   void deleteTask() {
-    TaskDatabaseService.firebase().deleteTask(
+    TaskDataSource.firebase().deleteTask(
       groupID: currentTask.groupID,
       taskListID: currentTask.taskListID,
       taskID: currentTask.id,
