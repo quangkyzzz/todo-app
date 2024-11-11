@@ -31,7 +31,6 @@ class GroupViewModel extends ChangeNotifier {
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       groupName: name,
     );
-    //groups.add(newGroup);
     GroupDataSource.firebase().createGroup(newGroup: newGroup);
     notifyListeners();
   }
@@ -71,8 +70,6 @@ class GroupViewModel extends ChangeNotifier {
   }) {
     List<String> movedTaskListsID = [];
     for (var taskList in movedTaskLists) {
-      //readGroupByID(group.id).taskLists.add(taskList);
-      //readGroupByID('1').taskLists.remove(taskList);
       taskList.groupID = group.id;
       for (var task in taskList.tasks) {
         task.groupID = group.id;
@@ -97,8 +94,6 @@ class GroupViewModel extends ChangeNotifier {
   ) {
     List<String> removedTaskListsID = [];
     for (var taskList in removedTaskLists) {
-      // readGroupByID(group.id).taskLists.remove(taskList);
-      // readGroupByID('1').taskLists.add(taskList);
       taskList.groupID = '1';
       for (var task in taskList.tasks) {
         task.groupID = '1';

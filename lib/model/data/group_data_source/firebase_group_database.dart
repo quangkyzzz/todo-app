@@ -7,7 +7,6 @@ import 'package:todo_app/exception/data_exception.dart';
 import 'package:todo_app/model/entity/group.dart';
 import 'package:todo_app/model/entity/task_list.dart';
 
-//TODO: fix repeat code at init firebase.
 class FirebaseGroupDatabase implements GroupDatabaseInterface {
   DatabaseReference groupsRef = FirebaseReference.getInstance.ref;
 
