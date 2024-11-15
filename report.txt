@@ -1,12 +1,8 @@
-Báo cáo 9/11
+Báo cáo 15/11
 Đã làm :
-    -   Triển khai firebase db trong taskViewModel.
-    -   Sửa lỗi trong các database class.
-Báo cáo 11/11
-Đã làm:
-    -   Rà soát lại code.
-    -   Tìm hiểu cơ bản về flutter animation.
-Đang làm:   
+    -   Sửa cấu trúc thư mục database class
     -   Sửa các database class
+Đang làm:   
+    -   Tìm hiểu flutter animation
 Dự định làm:
     -   Dựa vào review và tiếp tục chỉnh sửa.
