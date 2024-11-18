@@ -1,8 +1,7 @@
-Báo cáo 15/11
+Báo cáo 18/11
 Đã làm :
-    -   Sửa cấu trúc thư mục database class
-    -   Sửa các database class
+    -   Tìm hiều flutter animation
 Đang làm:   
-    -   Tìm hiểu flutter animation
+    -   Làm ví dụ về flutter animation
 Dự định làm:
     -   Dựa vào review và tiếp tục chỉnh sửa.
