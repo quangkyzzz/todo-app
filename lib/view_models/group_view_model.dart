@@ -7,8 +7,7 @@ class GroupViewModel extends ChangeNotifier {
   List<Group> groups = [];
   bool isGroupsLoading = true;
 
-  GroupViewModel() {
-    //TODO: fix get data at view not in contructor
+  void startListenData() {
     GroupDataInterface.firebase().listenAllGroup(
       onGroupUpdate: (var data) {
         groups = data;
@@ -20,7 +19,6 @@ class GroupViewModel extends ChangeNotifier {
         notifyListeners();
       },
     );
-    notifyListeners();
   }
 
   Group readGroupByID(String groupID) {

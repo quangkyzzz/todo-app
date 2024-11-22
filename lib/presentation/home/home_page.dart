@@ -22,6 +22,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
+  void initState() {
+    context.read<GroupViewModel>().startListenData();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return context.watch<GroupViewModel>().isGroupsLoading
         ? Center(child: CircularProgressIndicator())
