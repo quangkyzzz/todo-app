@@ -1,7 +1,7 @@
-Báo cáo 18/11
+Báo cáo 22/11
 Đã làm :
-    -   Tìm hiều flutter animation
+    -   Làm ví dụ về các widget implicit animation.
 Đang làm:   
-    -   Làm ví dụ về flutter animation
+    -   Chỉnh sửa cấu trúc của các database class.
 Dự định làm:
-    -   Dựa vào review và tiếp tục chỉnh sửa.
+    -   Sửa cách truyền dữ liệu vào taskList và task view model.
