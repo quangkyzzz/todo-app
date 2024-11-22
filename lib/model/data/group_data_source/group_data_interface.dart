@@ -1,14 +1,14 @@
 import 'dart:async';
 import 'package:todo_app/model/data/group_data_source/firebase_group_database.dart';
-import 'package:todo_app/model/data/group_data_source/group_database_interface.dart';
+import 'package:todo_app/model/data/group_data_source/group_database_abstract.dart';
 import 'package:todo_app/model/entity/group.dart';
 import 'package:todo_app/model/entity/task_list.dart';
 
-class GroupDataSource implements GroupDatabaseInterface {
-  final GroupDatabaseInterface provider;
-  GroupDataSource(this.provider);
-  factory GroupDataSource.firebase() {
-    return GroupDataSource(FirebaseGroupDatabase());
+class GroupDataInterface implements GroupDatabaseAbstract {
+  final GroupDatabaseAbstract provider;
+  GroupDataInterface(this.provider);
+  factory GroupDataInterface.firebase() {
+    return GroupDataInterface(FirebaseGroupDatabase());
   }
 
   @override

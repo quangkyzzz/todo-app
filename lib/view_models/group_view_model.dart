@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/model/data/group_data_source/group_data_source.dart';
+import 'package:todo_app/model/data/group_data_source/group_data_interface.dart';
 import 'package:todo_app/model/entity/group.dart';
 import 'package:todo_app/model/entity/task_list.dart';
 
@@ -8,7 +8,8 @@ class GroupViewModel extends ChangeNotifier {
   bool isGroupsLoading = true;
 
   GroupViewModel() {
-    GroupDataSource.firebase().listenAllGroup(
+    //TODO: fix get data at view not in contructor
+    GroupDataInterface.firebase().listenAllGroup(
       onGroupUpdate: (var data) {
         groups = data;
         isGroupsLoading = false;
@@ -31,7 +32,7 @@ class GroupViewModel extends ChangeNotifier {
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       groupName: name,
     );
-    GroupDataSource.firebase().createGroup(newGroup: newGroup);
+    GroupDataInterface.firebase().createGroup(newGroup: newGroup);
     notifyListeners();
   }
 
@@ -43,7 +44,7 @@ class GroupViewModel extends ChangeNotifier {
       groupID: '1',
       title: name,
     );
-    GroupDataSource.firebase().addMultipleTaskListToGroup(
+    GroupDataInterface.firebase().addMultipleTaskListToGroup(
       groupID: '1',
       addedTaskLists: [newTaskList],
     );
@@ -52,12 +53,12 @@ class GroupViewModel extends ChangeNotifier {
 
   void deleteGroup(Group group) {
     deleteMultipleTaskListFromGroup(group, group.taskLists);
-    GroupDataSource.firebase().deleteGroup(groupID: group.id);
+    GroupDataInterface.firebase().deleteGroup(groupID: group.id);
     notifyListeners();
   }
 
   void renameGroup(Group group, String newName) {
-    GroupDataSource.firebase().renameGroup(
+    GroupDataInterface.firebase().renameGroup(
       groupID: group.id,
       newName: newName,
     );
@@ -76,11 +77,11 @@ class GroupViewModel extends ChangeNotifier {
       }
       movedTaskListsID.add(taskList.id);
     }
-    GroupDataSource.firebase().addMultipleTaskListToGroup(
+    GroupDataInterface.firebase().addMultipleTaskListToGroup(
       groupID: group.id,
       addedTaskLists: movedTaskLists,
     );
-    GroupDataSource.firebase().removeTaskListFromGroup(
+    GroupDataInterface.firebase().removeTaskListFromGroup(
       groupID: '1',
       removedTaskListsID: movedTaskListsID,
     );
@@ -100,11 +101,11 @@ class GroupViewModel extends ChangeNotifier {
       }
       removedTaskListsID.add(taskList.id);
     }
-    GroupDataSource.firebase().addMultipleTaskListToGroup(
+    GroupDataInterface.firebase().addMultipleTaskListToGroup(
       groupID: '1',
       addedTaskLists: removedTaskLists,
     );
-    GroupDataSource.firebase().removeTaskListFromGroup(
+    GroupDataInterface.firebase().removeTaskListFromGroup(
       groupID: group.id,
       removedTaskListsID: removedTaskListsID,
     );

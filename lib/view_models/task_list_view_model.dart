@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:todo_app/model/data/group_data_source/group_data_source.dart';
+import 'package:todo_app/model/data/group_data_source/group_data_interface.dart';
 import 'package:todo_app/model/data/task_data_source/task_data_source.dart';
 import 'package:todo_app/model/data/task_list_data_source/task_list_data_source.dart';
 import 'package:todo_app/model/entity/task_list.dart';
@@ -8,6 +8,7 @@ import 'package:todo_app/model/entity/task.dart';
 import 'package:todo_app/model/entity/enum.dart';
 import 'package:todo_app/ultility/general_ultility.dart';
 
+//TODO: fix get data from data not from other view
 class TaskListViewModel extends ChangeNotifier {
   TaskList currentTaskList;
   bool isLoading = false;
@@ -478,7 +479,7 @@ class TaskListViewModel extends ChangeNotifier {
         title: '${currentTaskList.title} copy',
         tasks: newTasks,
         groupID: '1');
-    GroupDataSource.firebase().addMultipleTaskListToGroup(
+    GroupDataInterface.firebase().addMultipleTaskListToGroup(
       groupID: '1',
       addedTaskLists: [newTaskList],
     );
