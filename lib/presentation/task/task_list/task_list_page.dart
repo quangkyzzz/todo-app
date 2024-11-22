@@ -25,140 +25,143 @@ class _TaskListPageState extends State<TaskListPage> {
   bool isReorderState = false;
 
   @override
+  void initState() {
+    context.read<TaskListViewModel>().initCurrentTaskList();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    TaskList currentTaskList =
-        context.watch<TaskListViewModel>().currentTaskList;
-    return context.watch<TaskListViewModel>().isLoading
-        ? const Center(child: CircularProgressIndicator())
-        : WillPopScope(
-            onWillPop: () async {
-              if (isReorderState) {
-                setState(() {
-                  isReorderState = false;
-                });
-                return false;
-              } else {
-                context.read<TaskListViewModel>().updateTaskListToDatabase();
-              }
-              return true;
-            },
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                if ((currentTaskList.backgroundImage != null))
-                  if (currentTaskList.defaultImage == -1)
-                    Image.file(
-                      File(currentTaskList.backgroundImage!),
-                      fit: BoxFit.fitHeight,
-                    )
-                  else
-                    Image.asset(
-                      currentTaskList.backgroundImage!,
-                      fit: BoxFit.fitHeight,
-                    )
-                else
-                  const SizedBox(),
-                Scaffold(
-                  backgroundColor: Colors.transparent,
-                  appBar: isReorderState
-                      ? AppBar(
-                          titleSpacing: 0,
-                          automaticallyImplyLeading: false,
-                          backgroundColor: Colors.transparent,
-                          title: Row(
-                            children: [
-                              IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    isReorderState = false;
-                                  });
-                                },
-                                icon: const Icon(Icons.close),
-                              ),
-                              const Text(
-                                'Reorder tasks',
-                                style: MyTheme.titleTextStyle,
-                              )
-                            ],
+    if (context.watch<TaskListViewModel>().isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    } else {
+      TaskList currentTaskList =
+          context.watch<TaskListViewModel>().currentTaskList;
+      return WillPopScope(
+        onWillPop: () async {
+          if (isReorderState) {
+            setState(() {
+              isReorderState = false;
+            });
+            return false;
+          } else {
+            context.read<TaskListViewModel>().updateTaskListToDatabase();
+          }
+          return true;
+        },
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            if ((currentTaskList.backgroundImage != null))
+              if (currentTaskList.defaultImage == -1)
+                Image.file(
+                  File(currentTaskList.backgroundImage!),
+                  fit: BoxFit.fitHeight,
+                )
+              else
+                Image.asset(
+                  currentTaskList.backgroundImage!,
+                  fit: BoxFit.fitHeight,
+                )
+            else
+              const SizedBox(),
+            Scaffold(
+              backgroundColor: Colors.transparent,
+              appBar: isReorderState
+                  ? AppBar(
+                      titleSpacing: 0,
+                      automaticallyImplyLeading: false,
+                      backgroundColor: Colors.transparent,
+                      title: Row(
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              setState(() {
+                                isReorderState = false;
+                              });
+                            },
+                            icon: const Icon(Icons.close),
                           ),
-                        )
-                      : AppBar(
-                          backgroundColor: Colors.transparent,
-                          iconTheme: IconThemeData(
-                              color: context
-                                  .watch<TaskListViewModel>()
-                                  .currentTaskList
-                                  .themeColor),
-                          title: Consumer<TaskListViewModel>(
-                              builder: (context, taskListViewModel, child) {
-                            return Text(
-                              taskListViewModel.currentTaskList.title,
-                              style: TextStyle(
-                                fontSize: 24,
-                                color: taskListViewModel
-                                    .currentTaskList.themeColor,
-                              ),
-                            );
-                          }),
-                          actions: [
-                            TaskListPopupMenu(
-                              reorderCallBack: () {
-                                context
-                                    .read<TaskListViewModel>()
-                                    .updateSortType(
-                                      newSortType: null,
-                                      isAscending: true,
-                                    );
-                                context
-                                    .read<TaskListViewModel>()
-                                    .sortTaskListBy(
-                                      sortType: SortType.createDate,
-                                      isAscending: !SettingsSharedPreference
-                                          .getInstance
-                                          .getIsAddNewTaskOnTop(),
-                                    );
-                                setState(() {
-                                  isReorderState = true;
-                                });
-                              },
-                              toRemove: (currentTaskList.id == '1')
-                                  ? ([
-                                      'rename_list',
-                                      'hide_completed_tasks',
-                                      'delete_list'
-                                    ])
-                                  : (['hide_completed_tasks']),
-                            )
-                          ],
-                        ),
-                  body: SingleChildScrollView(
-                    child: Consumer<TaskListViewModel>(
-                      builder: (context, taskListViewModel, child) {
-                        TaskList taskList = taskListViewModel.currentTaskList;
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            (taskList.sortByType != null)
-                                ? const ChangeSortTypeButton()
-                                : const SizedBox(),
-                            IncompleteList(
-                              isReorderState: isReorderState,
-                            ),
-                            CompletedList(
-                              isReorderState: isReorderState,
-                            )
-                          ],
+                          const Text(
+                            'Reorder tasks',
+                            style: MyTheme.titleTextStyle,
+                          )
+                        ],
+                      ),
+                    )
+                  : AppBar(
+                      backgroundColor: Colors.transparent,
+                      iconTheme: IconThemeData(
+                          color: context
+                              .watch<TaskListViewModel>()
+                              .currentTaskList
+                              .themeColor),
+                      title: Consumer<TaskListViewModel>(
+                          builder: (context, taskListViewModel, child) {
+                        return Text(
+                          taskListViewModel.currentTaskList.title,
+                          style: TextStyle(
+                            fontSize: 24,
+                            color: taskListViewModel.currentTaskList.themeColor,
+                          ),
                         );
-                      },
+                      }),
+                      actions: [
+                        TaskListPopupMenu(
+                          reorderCallBack: () {
+                            context.read<TaskListViewModel>().updateSortType(
+                                  newSortType: null,
+                                  isAscending: true,
+                                );
+                            context.read<TaskListViewModel>().sortTaskListBy(
+                                  sortType: SortType.createDate,
+                                  isAscending: !SettingsSharedPreference
+                                      .getInstance
+                                      .getIsAddNewTaskOnTop(),
+                                );
+                            setState(() {
+                              isReorderState = true;
+                            });
+                          },
+                          toRemove: (currentTaskList.id == '1')
+                              ? ([
+                                  'rename_list',
+                                  'hide_completed_tasks',
+                                  'delete_list'
+                                ])
+                              : (['hide_completed_tasks']),
+                        )
+                      ],
                     ),
-                  ),
-                  floatingActionButton: AddTaskFloatingButton(
-                    taskList: currentTaskList,
-                    themeColor: currentTaskList.themeColor,
-                  ),
+              body: SingleChildScrollView(
+                child: Consumer<TaskListViewModel>(
+                  builder: (context, taskListViewModel, child) {
+                    TaskList taskList = taskListViewModel.currentTaskList;
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        (taskList.sortByType != null)
+                            ? const ChangeSortTypeButton()
+                            : const SizedBox(),
+                        IncompleteList(
+                          isReorderState: isReorderState,
+                        ),
+                        CompletedList(
+                          isReorderState: isReorderState,
+                        )
+                      ],
+                    );
+                  },
                 ),
-              ],
+              ),
+              floatingActionButton: AddTaskFloatingButton(
+                taskList: currentTaskList,
+                themeColor: currentTaskList.themeColor,
+              ),
             ),
-          );
+          ],
+        ),
+      );
+    }
   }
 }

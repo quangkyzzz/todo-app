@@ -10,17 +10,28 @@ import 'package:todo_app/ultility/general_ultility.dart';
 
 //TODO: fix get data from data not from other view
 class TaskListViewModel extends ChangeNotifier {
-  TaskList currentTaskList;
-  bool isLoading = false;
+  String currentTaskListID;
+  String currentTaskListGroupID;
+  late TaskList currentTaskList;
+  bool isLoading = true;
   TaskListViewModel({
-    required this.currentTaskList,
-  }) {
+    required this.currentTaskListID,
+    required this.currentTaskListGroupID,
+  });
+
+  void initCurrentTaskList() async {
+    currentTaskList = await TaskListDataSource.firebase().getTaskListByID(
+      groupID: currentTaskListGroupID,
+      taskListID: currentTaskListID,
+    );
     if (currentTaskList.sortByType != null) {
       sortTaskListBy(
         sortType: currentTaskList.sortByType!,
         isAscending: currentTaskList.isAscending,
       );
     }
+    isLoading = false;
+    notifyListeners();
   }
 
   Future<TaskList> getTaskListByID(String taskListID, String groupID) async {

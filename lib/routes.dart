@@ -60,10 +60,15 @@ var allRoute = {
   taskListRoute: (context) {
     TaskList taskList =
         (ModalRoute.of(context)?.settings.arguments as TaskList).copyWith();
+    String taskListID = taskList.id;
+    String groupID = taskList.groupID;
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => TaskListViewModel(currentTaskList: taskList),
+          create: (context) => TaskListViewModel(
+            currentTaskListID: taskListID,
+            currentTaskListGroupID: groupID,
+          ),
         ),
       ],
       builder: (context, child) {
@@ -84,10 +89,15 @@ var allRoute = {
   myDayRoute: (context) {
     TaskList taskList =
         (ModalRoute.of(context)?.settings.arguments as TaskList).copyWith();
+    String taskListID = taskList.id;
+    String groupID = taskList.groupID;
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(
-            create: (context) => TaskListViewModel(currentTaskList: taskList),
+            create: (context) => TaskListViewModel(
+              currentTaskListID: taskListID,
+              currentTaskListGroupID: groupID,
+            ),
           ),
         ],
         builder: (context, child) {
@@ -97,10 +107,15 @@ var allRoute = {
   importantRoute: (context) {
     TaskList taskList =
         (ModalRoute.of(context)?.settings.arguments as TaskList).copyWith();
+    String taskListID = taskList.id;
+    String groupID = taskList.groupID;
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => TaskListViewModel(currentTaskList: taskList),
+          create: (context) => TaskListViewModel(
+            currentTaskListID: taskListID,
+            currentTaskListGroupID: groupID,
+          ),
         ),
       ],
       builder: (context, child) {
@@ -111,10 +126,15 @@ var allRoute = {
   plannedRoute: (context) {
     TaskList taskList =
         (ModalRoute.of(context)?.settings.arguments as TaskList).copyWith();
+    String taskListID = taskList.id;
+    String groupID = taskList.groupID;
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => TaskListViewModel(currentTaskList: taskList),
+          create: (context) => TaskListViewModel(
+            currentTaskListID: taskListID,
+            currentTaskListGroupID: groupID,
+          ),
         ),
       ],
       builder: (context, child) {
@@ -125,11 +145,15 @@ var allRoute = {
   searchRoute: (context) {
     TaskList taskList =
         (ModalRoute.of(context)?.settings.arguments as TaskList).copyWith();
-
+    String taskListID = taskList.id;
+    String groupID = taskList.groupID;
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => TaskListViewModel(currentTaskList: taskList),
+          create: (context) => TaskListViewModel(
+            currentTaskListID: taskListID,
+            currentTaskListGroupID: groupID,
+          ),
         ),
       ],
       builder: (context, child) {
