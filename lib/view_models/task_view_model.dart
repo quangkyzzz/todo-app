@@ -6,18 +6,32 @@ import 'package:todo_app/model/entity/task_step.dart';
 import 'package:todo_app/model/entity/enum.dart';
 
 class TaskViewModel extends ChangeNotifier {
-  Task currentTask;
-  bool isLoadingFile = false;
-  bool isLoadingTask = false;
-  TaskViewModel({required this.currentTask});
+  late Task currentTask;
+  String currentTaskID;
+  String taskListID;
+  String groupID;
 
-  void beginLoad() {
-    isLoadingTask = true;
+  bool isLoadingFile = false;
+  bool isLoadingTask = true;
+  TaskViewModel({
+    required this.currentTaskID,
+    required this.taskListID,
+    required this.groupID,
+  });
+
+  void initCurrentTask() async {
+    currentTask = await TaskDataSource.firebase().getTaskByID(
+      groupID: groupID,
+      taskListID: taskListID,
+      taskID: currentTaskID,
+    );
+    isLoadingTask = false;
     notifyListeners();
   }
 
   void reloadTask() async {
-    beginLoad();
+    isLoadingTask = true;
+    notifyListeners();
     currentTask = await TaskDataSource.firebase().getTaskByID(
       groupID: currentTask.groupID,
       taskListID: currentTask.taskListID,

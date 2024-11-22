@@ -9,6 +9,7 @@ import 'package:todo_app/model/entity/enum.dart';
 import 'package:todo_app/ultility/general_ultility.dart';
 
 //TODO: fix get data from data not from other view
+//TODO: continue to fix get data at special tasklist and task page
 class TaskListViewModel extends ChangeNotifier {
   String currentTaskListID;
   String currentTaskListGroupID;

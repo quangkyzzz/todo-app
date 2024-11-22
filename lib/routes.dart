@@ -174,11 +174,14 @@ var allRoute = {
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
     Task task = arg['task'].copyWith();
     String taskListName = arg['taskListName'];
-
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(
-            create: (context) => TaskViewModel(currentTask: task),
+            create: (context) => TaskViewModel(
+              currentTaskID: task.id,
+              taskListID: task.taskListID,
+              groupID: task.groupID,
+            ),
           ),
         ],
         builder: (context, child) {
@@ -189,11 +192,14 @@ var allRoute = {
   },
   noteEditRoute: (context) {
     Task task = (ModalRoute.of(context)?.settings.arguments as Task).copyWith();
-
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => TaskViewModel(currentTask: task),
+          create: (context) => TaskViewModel(
+            currentTaskID: task.id,
+            taskListID: task.taskListID,
+            groupID: task.groupID,
+          ),
         )
       ],
       builder: (context, child) => const NoteEditPage(),
