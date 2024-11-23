@@ -228,10 +228,10 @@ class TaskViewModel extends ChangeNotifier {
       isImportant: false,
       isOnMyDay: false,
     );
-    TaskListDataRepository.initDataSource().addMultipleTask(
+    TaskDataRepository.initDataSource().createNewTask(
       groupID: currentTask.groupID,
       taskListID: currentTask.taskListID,
-      addTasks: [newTask],
+      newTask: newTask,
     );
   }
 
