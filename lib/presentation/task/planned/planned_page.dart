@@ -85,130 +85,138 @@ class _PlannedPageState extends State<PlannedPage> {
 
   @override
   Widget build(BuildContext context) {
-    TaskList plannedTaskList =
-        context.watch<TaskListViewModel>().currentTaskList;
-    switch (plannedState) {
-      case 0:
-        displayList =
-            context.watch<TaskListViewModel>().readPlannedOverdueTask();
-      case 1:
-        displayList = context.watch<TaskListViewModel>().readPlannedTodayTask();
-      case 2:
-        displayList =
-            context.watch<TaskListViewModel>().readPlannedTomorrowTask();
-      case 3:
-        displayList =
-            context.watch<TaskListViewModel>().readPlannedThisWeekTask();
-      case 4:
-        displayList = context.watch<TaskListViewModel>().readPlannedLaterTask();
-      case 5:
-        displayList = context.watch<TaskListViewModel>().currentTaskList.tasks;
-    }
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        if (plannedTaskList.backgroundImage != null)
-          (plannedTaskList.defaultImage == -1)
-              ? Image.file(
-                  File(plannedTaskList.backgroundImage!),
-                  fit: BoxFit.fitHeight,
-                )
-              : Image.asset(
-                  plannedTaskList.backgroundImage!,
-                  fit: BoxFit.fitHeight,
-                )
-        else
-          const SizedBox(),
-        Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: AppBar(
+    if (context.watch<TaskListViewModel>().isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    } else {
+      TaskList plannedTaskList =
+          context.watch<TaskListViewModel>().currentTaskList;
+      switch (plannedState) {
+        case 0:
+          displayList =
+              context.watch<TaskListViewModel>().readPlannedOverdueTask();
+        case 1:
+          displayList =
+              context.watch<TaskListViewModel>().readPlannedTodayTask();
+        case 2:
+          displayList =
+              context.watch<TaskListViewModel>().readPlannedTomorrowTask();
+        case 3:
+          displayList =
+              context.watch<TaskListViewModel>().readPlannedThisWeekTask();
+        case 4:
+          displayList =
+              context.watch<TaskListViewModel>().readPlannedLaterTask();
+        case 5:
+          displayList =
+              context.watch<TaskListViewModel>().currentTaskList.tasks;
+      }
+      return Stack(
+        fit: StackFit.expand,
+        children: [
+          if (plannedTaskList.backgroundImage != null)
+            (plannedTaskList.defaultImage == -1)
+                ? Image.file(
+                    File(plannedTaskList.backgroundImage!),
+                    fit: BoxFit.fitHeight,
+                  )
+                : Image.asset(
+                    plannedTaskList.backgroundImage!,
+                    fit: BoxFit.fitHeight,
+                  )
+          else
+            const SizedBox(),
+          Scaffold(
             backgroundColor: Colors.transparent,
-            iconTheme: IconThemeData(color: plannedTaskList.themeColor),
-            title: Text(
-              'Planned',
-              style: TextStyle(
-                fontSize: 24,
-                color: plannedTaskList.themeColor,
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              iconTheme: IconThemeData(color: plannedTaskList.themeColor),
+              title: Text(
+                'Planned',
+                style: TextStyle(
+                  fontSize: 24,
+                  color: plannedTaskList.themeColor,
+                ),
               ),
-            ),
-            actions: const [
-              TaskListPopupMenu(
-                toRemove: [
-                  'sort_by',
-                  'reorder',
-                  'turn_on_suggestions',
-                  'duplicate_list',
-                  'delete_list',
-                  'rename_list',
-                  'hide_completed_tasks'
-                ],
-              )
-            ],
-          ),
-          body: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 48),
-                /////////////
-                //popup menu
-                PopupMenuButton(
-                  offset: const Offset(0, 48),
-                  itemBuilder: (BuildContext context) {
-                    return listPopupMennu.map((item) {
-                      return PopupMenuItem(
-                        onTap: item['onTap'],
-                        child: CustomPopupItem(
-                          text: item['text'],
-                          icon: item['icon'],
-                        ),
-                      );
-                    }).toList();
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: MyTheme.backgroundGreyColor,
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          listPopupMennu[plannedState]['icon'],
-                          size: 32,
-                          color: plannedTaskList.themeColor,
-                        ),
-                        const SizedBox(width: 8),
-                        Text(
-                          listPopupMennu[plannedState]['text'],
-                          style: TextStyle(
-                              fontSize: 18, color: plannedTaskList.themeColor),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 18),
-
-                //task list
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: const ClampingScrollPhysics(),
-                  itemCount: displayList.length,
-                  itemBuilder: (BuildContext _, int index) {
-                    return TaskListItem(
-                      isReorderState: false,
-                      task: displayList[index],
-                      themeColor: plannedTaskList.themeColor,
-                    );
-                  },
-                ),
+              actions: const [
+                TaskListPopupMenu(
+                  toRemove: [
+                    'sort_by',
+                    'reorder',
+                    'turn_on_suggestions',
+                    'duplicate_list',
+                    'delete_list',
+                    'rename_list',
+                    'hide_completed_tasks'
+                  ],
+                )
               ],
             ),
+            body: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 48),
+                  /////////////
+                  //popup menu
+                  PopupMenuButton(
+                    offset: const Offset(0, 48),
+                    itemBuilder: (BuildContext context) {
+                      return listPopupMennu.map((item) {
+                        return PopupMenuItem(
+                          onTap: item['onTap'],
+                          child: CustomPopupItem(
+                            text: item['text'],
+                            icon: item['icon'],
+                          ),
+                        );
+                      }).toList();
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: MyTheme.backgroundGreyColor,
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            listPopupMennu[plannedState]['icon'],
+                            size: 32,
+                            color: plannedTaskList.themeColor,
+                          ),
+                          const SizedBox(width: 8),
+                          Text(
+                            listPopupMennu[plannedState]['text'],
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: plannedTaskList.themeColor),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 18),
+
+                  //task list
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
+                    itemCount: displayList.length,
+                    itemBuilder: (BuildContext _, int index) {
+                      return TaskListItem(
+                        isReorderState: false,
+                        task: displayList[index],
+                        themeColor: plannedTaskList.themeColor,
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
           ),
-        ),
-      ],
-    );
+        ],
+      );
+    }
   }
 }

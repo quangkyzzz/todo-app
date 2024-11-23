@@ -25,70 +25,74 @@ class _TaskListPageState extends State<ImportantPage> {
 
   @override
   Widget build(BuildContext context) {
-    TaskList importantTaskList =
-        context.watch<TaskListViewModel>().currentTaskList;
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        if (importantTaskList.backgroundImage != null)
-          (importantTaskList.defaultImage == -1)
-              ? Image.file(
-                  File(importantTaskList.backgroundImage!),
-                  fit: BoxFit.fitHeight,
-                )
-              : Image.asset(
-                  importantTaskList.backgroundImage!,
-                  fit: BoxFit.fitHeight,
-                )
-        else
-          const SizedBox(),
-        Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: AppBar(
+    if (context.watch<TaskListViewModel>().isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    } else {
+      TaskList importantTaskList =
+          context.watch<TaskListViewModel>().currentTaskList;
+      return Stack(
+        fit: StackFit.expand,
+        children: [
+          if (importantTaskList.backgroundImage != null)
+            (importantTaskList.defaultImage == -1)
+                ? Image.file(
+                    File(importantTaskList.backgroundImage!),
+                    fit: BoxFit.fitHeight,
+                  )
+                : Image.asset(
+                    importantTaskList.backgroundImage!,
+                    fit: BoxFit.fitHeight,
+                  )
+          else
+            const SizedBox(),
+          Scaffold(
             backgroundColor: Colors.transparent,
-            iconTheme: IconThemeData(color: importantTaskList.themeColor),
-            title: Text(
-              'Important',
-              style: TextStyle(
-                fontSize: 24,
-                color: importantTaskList.themeColor,
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              iconTheme: IconThemeData(color: importantTaskList.themeColor),
+              title: Text(
+                'Important',
+                style: TextStyle(
+                  fontSize: 24,
+                  color: importantTaskList.themeColor,
+                ),
+              ),
+              actions: const [
+                TaskListPopupMenu(
+                  toRemove: [
+                    'sort_by',
+                    'rename_list',
+                    'reorder',
+                    'hide_completed_tasks',
+                    'duplicate_list',
+                    'delete_list',
+                    'turn_on_suggestions',
+                  ],
+                )
+              ],
+            ),
+            body: SingleChildScrollView(
+              child: ListView.builder(
+                shrinkWrap: true,
+                physics: const ClampingScrollPhysics(),
+                itemCount: importantTaskList.tasks.length,
+                itemBuilder: (BuildContext _, int index) {
+                  return TaskListItem(
+                    task: importantTaskList.tasks[index],
+                    themeColor: importantTaskList.themeColor,
+                    isReorderState: false,
+                  );
+                },
               ),
             ),
-            actions: const [
-              TaskListPopupMenu(
-                toRemove: [
-                  'sort_by',
-                  'rename_list',
-                  'reorder',
-                  'hide_completed_tasks',
-                  'duplicate_list',
-                  'delete_list',
-                  'turn_on_suggestions',
-                ],
-              )
-            ],
-          ),
-          body: SingleChildScrollView(
-            child: ListView.builder(
-              shrinkWrap: true,
-              physics: const ClampingScrollPhysics(),
-              itemCount: importantTaskList.tasks.length,
-              itemBuilder: (BuildContext _, int index) {
-                return TaskListItem(
-                  task: importantTaskList.tasks[index],
-                  themeColor: importantTaskList.themeColor,
-                  isReorderState: false,
-                );
-              },
+            floatingActionButton: AddTaskFloatingButton(
+              taskList: importantTaskList,
+              isAddToImportant: true,
+              themeColor: importantTaskList.themeColor,
             ),
           ),
-          floatingActionButton: AddTaskFloatingButton(
-            taskList: importantTaskList,
-            isAddToImportant: true,
-            themeColor: importantTaskList.themeColor,
-          ),
-        ),
-      ],
-    );
+        ],
+      );
+    }
   }
 }

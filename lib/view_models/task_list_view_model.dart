@@ -8,8 +8,6 @@ import 'package:todo_app/model/entity/task.dart';
 import 'package:todo_app/model/entity/enum.dart';
 import 'package:todo_app/ultility/general_ultility.dart';
 
-//TODO: fix get data from data not from other view
-//TODO: continue to fix get data at special tasklist and task page
 class TaskListViewModel extends ChangeNotifier {
   String currentTaskListID;
   String currentTaskListGroupID;
@@ -65,7 +63,7 @@ class TaskListViewModel extends ChangeNotifier {
       case '4':
         getPlannedTask();
       case '5':
-        getAllTask();
+        getSearchTaskList();
       default:
         currentTaskList = await TaskListDataSource.firebase().getTaskListByID(
           groupID: currentTaskList.groupID,
@@ -124,7 +122,9 @@ class TaskListViewModel extends ChangeNotifier {
       isImportant: isImportant,
     );
     if (currentTaskList.id == '3') {
-      reloadTaskList();
+      if (!isImportant) {
+        currentTaskList.tasks.remove(task);
+      }
     }
     notifyListeners();
   }
@@ -287,7 +287,10 @@ class TaskListViewModel extends ChangeNotifier {
     for (Task task in allTask) {
       if (task.isOnMyDay) result.add(task);
     }
+    currentTaskList = await TaskListDataSource.firebase()
+        .getTaskListByID(groupID: '1', taskListID: '2');
     currentTaskList.tasks = result;
+    isLoading = false;
     notifyListeners();
   }
 
@@ -342,7 +345,10 @@ class TaskListViewModel extends ChangeNotifier {
     for (Task task in allTask) {
       if (task.isImportant) result.add(task);
     }
+    currentTaskList = await TaskListDataSource.firebase()
+        .getTaskListByID(groupID: '1', taskListID: '3');
     currentTaskList.tasks = result;
+    isLoading = false;
     notifyListeners();
   }
 
@@ -353,7 +359,10 @@ class TaskListViewModel extends ChangeNotifier {
     for (Task task in allTask) {
       if (task.dueDate != null) result.add(task);
     }
+    currentTaskList = await TaskListDataSource.firebase()
+        .getTaskListByID(groupID: '1', taskListID: '4');
     currentTaskList.tasks = result;
+    isLoading = false;
     notifyListeners();
   }
 
@@ -447,8 +456,10 @@ class TaskListViewModel extends ChangeNotifier {
     return result;
   }
 
-  void getAllTask() async {
+  void getSearchTaskList() async {
     List<Task> allTask = await TaskDataSource.firebase().getAllTask();
+    currentTaskList = await TaskListDataSource.firebase()
+        .getTaskListByID(groupID: '1', taskListID: '5');
     currentTaskList.tasks = allTask;
     notifyListeners();
   }

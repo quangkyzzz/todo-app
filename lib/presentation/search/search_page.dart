@@ -24,7 +24,7 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   void initState() {
-    context.read<TaskListViewModel>().getAllTask();
+    context.read<TaskListViewModel>().getSearchTaskList();
     // ignore: discarded_futures
     speechToText.initialize();
     _controller = TextEditingController();
