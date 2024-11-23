@@ -1,7 +1,9 @@
-Báo cáo 22/11
+Báo cáo 23/11
 Đã làm :
-    -   Làm ví dụ về các widget implicit animation.
+    -   Sửa cấu trúc database class.
+    -   Sửa lỗi khởi tạo data trong contructor của groupViewModel.
+    -   Sửa cách truyền dữ liệu vào taskListViewModel.
 Đang làm:   
-    -   Chỉnh sửa cấu trúc của các database class.
+    -   Sửa cách truyền dữ liệu vào taskViewModel.
 Dự định làm:
-    -   Sửa cách truyền dữ liệu vào taskList và task view model.
+    -   Dựa vào review và tiếp tục chỉnh sửa.
