@@ -5,15 +5,21 @@ import 'package:todo_app/model/entity/enum.dart';
 import 'package:todo_app/model/entity/task.dart';
 import 'package:todo_app/model/entity/task_list.dart';
 
-class TaskListDataInterface implements TaskListDataTemplate {
-  final TaskListDataTemplate provider = FirebaseTaskListDatabase();
+class TaskListDataRepository implements TaskListDataTemplate {
+  final TaskListDataTemplate dataSource;
+  TaskListDataRepository._internalConstructor(this.dataSource);
+  factory TaskListDataRepository.initDataSource() {
+    return TaskListDataRepository._internalConstructor(
+      FirebaseTaskListDatabase(),
+    );
+  }
 
   @override
   Future<TaskList> getTaskListByID({
     required String groupID,
     required String taskListID,
   }) async {
-    return await provider.getTaskListByID(
+    return await dataSource.getTaskListByID(
       taskListID: taskListID,
       groupID: groupID,
     );
@@ -24,7 +30,7 @@ class TaskListDataInterface implements TaskListDataTemplate {
     required String groupID,
     required TaskList updatedTaskList,
   }) {
-    provider.updateTaskListToDatabase(
+    dataSource.updateTaskListToDatabase(
       groupID: groupID,
       updatedTaskList: updatedTaskList,
     );
@@ -32,7 +38,7 @@ class TaskListDataInterface implements TaskListDataTemplate {
 
   @override
   void deleteTaskList({required String groupID, required String taskListID}) {
-    provider.deleteTaskList(groupID: groupID, taskListID: taskListID);
+    dataSource.deleteTaskList(groupID: groupID, taskListID: taskListID);
   }
 
   @override
@@ -41,7 +47,7 @@ class TaskListDataInterface implements TaskListDataTemplate {
     required String taskListID,
     required List<Task> addTasks,
   }) {
-    provider.addMultipleTask(
+    dataSource.addMultipleTask(
       groupID: groupID,
       taskListID: taskListID,
       addTasks: addTasks,
@@ -54,7 +60,7 @@ class TaskListDataInterface implements TaskListDataTemplate {
     required String taskListID,
     required List<String> deleteTaskIDs,
   }) {
-    provider.deleteMultipleTask(
+    dataSource.deleteMultipleTask(
       groupID: groupID,
       taskListID: taskListID,
       deleteTaskIDs: deleteTaskIDs,
@@ -67,7 +73,7 @@ class TaskListDataInterface implements TaskListDataTemplate {
     required String taskListID,
     required String newName,
   }) {
-    provider.renameTaskList(
+    dataSource.renameTaskList(
       groupID: groupID,
       taskListID: taskListID,
       newName: newName,
@@ -81,7 +87,7 @@ class TaskListDataInterface implements TaskListDataTemplate {
     required String? backGroundImage,
     required int defaultImage,
   }) {
-    provider.updateBackGroundImage(
+    dataSource.updateBackGroundImage(
       groupID: groupID,
       taskListID: taskListID,
       backGroundImage: backGroundImage,
@@ -96,7 +102,7 @@ class TaskListDataInterface implements TaskListDataTemplate {
     required SortType? newSortType,
     bool isAscending = true,
   }) {
-    provider.updateSortType(
+    dataSource.updateSortType(
       taskListID: taskListID,
       groupID: groupID,
       newSortType: newSortType,
@@ -109,7 +115,7 @@ class TaskListDataInterface implements TaskListDataTemplate {
     required String taskListID,
     required Color themeColor,
   }) {
-    provider.updateThemeColor(
+    dataSource.updateThemeColor(
       groupID: groupID,
       taskListID: taskListID,
       themeColor: themeColor,

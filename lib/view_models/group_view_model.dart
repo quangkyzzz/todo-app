@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/model/data/group_data_source/group_data_interface.dart';
+import 'package:todo_app/model/data/group_data_source/group_data_repository.dart';
 import 'package:todo_app/model/entity/group.dart';
 import 'package:todo_app/model/entity/task_list.dart';
 
@@ -8,7 +8,7 @@ class GroupViewModel extends ChangeNotifier {
   bool isGroupsLoading = true;
 
   void startListenData() {
-    GroupDataInterface().listenAllGroup(
+    GroupDataRepository.initDataSource().listenAllGroup(
       onGroupUpdate: (var data) {
         groups = data;
         isGroupsLoading = false;
@@ -30,7 +30,7 @@ class GroupViewModel extends ChangeNotifier {
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       groupName: name,
     );
-    GroupDataInterface().createGroup(newGroup: newGroup);
+    GroupDataRepository.initDataSource().createGroup(newGroup: newGroup);
     notifyListeners();
   }
 
@@ -42,7 +42,7 @@ class GroupViewModel extends ChangeNotifier {
       groupID: '1',
       title: name,
     );
-    GroupDataInterface().addMultipleTaskListToGroup(
+    GroupDataRepository.initDataSource().addMultipleTaskListToGroup(
       groupID: '1',
       addedTaskLists: [newTaskList],
     );
@@ -51,12 +51,12 @@ class GroupViewModel extends ChangeNotifier {
 
   void deleteGroup(Group group) {
     deleteMultipleTaskListFromGroup(group, group.taskLists);
-    GroupDataInterface().deleteGroup(groupID: group.id);
+    GroupDataRepository.initDataSource().deleteGroup(groupID: group.id);
     notifyListeners();
   }
 
   void renameGroup(Group group, String newName) {
-    GroupDataInterface().renameGroup(
+    GroupDataRepository.initDataSource().renameGroup(
       groupID: group.id,
       newName: newName,
     );
@@ -75,11 +75,11 @@ class GroupViewModel extends ChangeNotifier {
       }
       movedTaskListsID.add(taskList.id);
     }
-    GroupDataInterface().addMultipleTaskListToGroup(
+    GroupDataRepository.initDataSource().addMultipleTaskListToGroup(
       groupID: group.id,
       addedTaskLists: movedTaskLists,
     );
-    GroupDataInterface().removeTaskListFromGroup(
+    GroupDataRepository.initDataSource().removeTaskListFromGroup(
       groupID: '1',
       removedTaskListsID: movedTaskListsID,
     );
@@ -99,11 +99,11 @@ class GroupViewModel extends ChangeNotifier {
       }
       removedTaskListsID.add(taskList.id);
     }
-    GroupDataInterface().addMultipleTaskListToGroup(
+    GroupDataRepository.initDataSource().addMultipleTaskListToGroup(
       groupID: '1',
       addedTaskLists: removedTaskLists,
     );
-    GroupDataInterface().removeTaskListFromGroup(
+    GroupDataRepository.initDataSource().removeTaskListFromGroup(
       groupID: group.id,
       removedTaskListsID: removedTaskListsID,
     );

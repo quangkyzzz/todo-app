@@ -4,12 +4,16 @@ import 'package:todo_app/model/entity/enum.dart';
 import 'package:todo_app/model/entity/task.dart';
 import 'package:todo_app/model/entity/task_step.dart';
 
-class TaskDataInterface implements TaskDataTemplate {
-  TaskDataTemplate provider = FirebaseTaskDatabase();
+class TaskDataRepository implements TaskDataTemplate {
+  TaskDataTemplate dataSource;
+  TaskDataRepository._internalConstructor(this.dataSource);
+  factory TaskDataRepository.initDataSource() {
+    return TaskDataRepository._internalConstructor(FirebaseTaskDatabase());
+  }
 
   @override
   Future<List<Task>> getAllTask() async {
-    return provider.getAllTask();
+    return dataSource.getAllTask();
   }
 
   @override
@@ -19,7 +23,7 @@ class TaskDataInterface implements TaskDataTemplate {
     required String taskID,
     required List<String> filePath,
   }) {
-    provider.addFile(
+    dataSource.addFile(
       groupID: groupID,
       taskListID: taskListID,
       taskID: taskID,
@@ -34,7 +38,7 @@ class TaskDataInterface implements TaskDataTemplate {
     required String taskID,
     required TaskStep newStep,
   }) {
-    provider.addStep(
+    dataSource.addStep(
       groupID: groupID,
       taskListID: taskListID,
       taskID: taskID,
@@ -48,7 +52,7 @@ class TaskDataInterface implements TaskDataTemplate {
     required String taskListID,
     required Task newTask,
   }) {
-    provider.createNewTask(
+    dataSource.createNewTask(
       groupID: groupID,
       taskListID: taskListID,
       newTask: newTask,
@@ -62,7 +66,7 @@ class TaskDataInterface implements TaskDataTemplate {
     required String taskID,
     required String stepID,
   }) {
-    provider.deleteStep(
+    dataSource.deleteStep(
       groupID: groupID,
       taskListID: taskListID,
       taskID: taskID,
@@ -76,7 +80,7 @@ class TaskDataInterface implements TaskDataTemplate {
     required String taskListID,
     required String taskID,
   }) {
-    provider.deleteTask(
+    dataSource.deleteTask(
       groupID: groupID,
       taskListID: taskListID,
       taskID: taskID,
@@ -89,7 +93,7 @@ class TaskDataInterface implements TaskDataTemplate {
     required String taskListID,
     required String taskID,
   }) async {
-    return await provider.getTaskByID(
+    return await dataSource.getTaskByID(
       groupID: groupID,
       taskListID: taskListID,
       taskID: taskID,
@@ -103,7 +107,7 @@ class TaskDataInterface implements TaskDataTemplate {
     required String taskID,
     required String filePath,
   }) {
-    provider.removeFile(
+    dataSource.removeFile(
       groupID: groupID,
       taskListID: taskListID,
       taskID: taskID,
@@ -118,7 +122,7 @@ class TaskDataInterface implements TaskDataTemplate {
     required String taskID,
     required DateTime? dueDate,
   }) {
-    provider.updateDueDate(
+    dataSource.updateDueDate(
       groupID: groupID,
       taskListID: taskListID,
       taskID: taskID,
@@ -133,7 +137,7 @@ class TaskDataInterface implements TaskDataTemplate {
     required String taskID,
     required int frequencyMultiplier,
   }) {
-    provider.updateFrequencyMultiplier(
+    dataSource.updateFrequencyMultiplier(
       groupID: groupID,
       taskListID: taskListID,
       taskID: taskID,
@@ -148,7 +152,7 @@ class TaskDataInterface implements TaskDataTemplate {
     required String taskID,
     required bool isCompleted,
   }) {
-    provider.updateIsCompleted(
+    dataSource.updateIsCompleted(
       groupID: groupID,
       taskListID: taskListID,
       taskID: taskID,
@@ -163,7 +167,7 @@ class TaskDataInterface implements TaskDataTemplate {
     required String taskID,
     required bool isImportant,
   }) {
-    provider.updateIsImportant(
+    dataSource.updateIsImportant(
       groupID: groupID,
       taskListID: taskListID,
       taskID: taskID,
@@ -178,7 +182,7 @@ class TaskDataInterface implements TaskDataTemplate {
     required String taskID,
     required bool isOnMyDay,
   }) {
-    provider.updateIsOnMyDay(
+    dataSource.updateIsOnMyDay(
       groupID: groupID,
       taskListID: taskListID,
       taskID: taskID,
@@ -193,7 +197,7 @@ class TaskDataInterface implements TaskDataTemplate {
     required String taskID,
     required String newNote,
   }) {
-    provider.updateNote(
+    dataSource.updateNote(
       groupID: groupID,
       taskListID: taskListID,
       taskID: taskID,
@@ -208,7 +212,7 @@ class TaskDataInterface implements TaskDataTemplate {
     required String taskID,
     required DateTime? remindTime,
   }) {
-    provider.updateRemindTime(
+    dataSource.updateRemindTime(
       groupID: groupID,
       taskListID: taskListID,
       taskID: taskID,
@@ -223,7 +227,7 @@ class TaskDataInterface implements TaskDataTemplate {
     required String taskID,
     required Frequency? repeatFrequency,
   }) {
-    provider.updateRepeatFrequency(
+    dataSource.updateRepeatFrequency(
       groupID: groupID,
       taskListID: taskListID,
       taskID: taskID,
@@ -239,7 +243,7 @@ class TaskDataInterface implements TaskDataTemplate {
     required String stepID,
     required bool isCompleted,
   }) {
-    provider.updateStepIsCompleted(
+    dataSource.updateStepIsCompleted(
       groupID: groupID,
       taskListID: taskListID,
       taskID: taskID,
@@ -256,7 +260,7 @@ class TaskDataInterface implements TaskDataTemplate {
     required String stepID,
     required String newName,
   }) {
-    provider.updateStepName(
+    dataSource.updateStepName(
       groupID: groupID,
       taskListID: taskListID,
       taskID: taskID,
@@ -272,7 +276,7 @@ class TaskDataInterface implements TaskDataTemplate {
     required String taskID,
     required String newTitle,
   }) {
-    provider.updateTaskTitle(
+    dataSource.updateTaskTitle(
       groupID: groupID,
       taskListID: taskListID,
       taskID: taskID,
