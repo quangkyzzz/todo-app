@@ -3,7 +3,7 @@ import 'package:todo_app/model/entity/group.dart';
 import 'package:todo_app/model/entity/task_list.dart';
 
 //TODO: fix all interface to process all kind all database
-abstract interface class GroupDatabaseAbstract {
+abstract interface class GroupDataTemplate {
   void listenAllGroup({
     required Function onGroupUpdate,
     required Function onBeginUpdate,

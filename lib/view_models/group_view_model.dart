@@ -8,7 +8,7 @@ class GroupViewModel extends ChangeNotifier {
   bool isGroupsLoading = true;
 
   void startListenData() {
-    GroupDataInterface.firebase().listenAllGroup(
+    GroupDataInterface().listenAllGroup(
       onGroupUpdate: (var data) {
         groups = data;
         isGroupsLoading = false;
@@ -30,7 +30,7 @@ class GroupViewModel extends ChangeNotifier {
       id: DateTime.now().millisecondsSinceEpoch.toString(),
       groupName: name,
     );
-    GroupDataInterface.firebase().createGroup(newGroup: newGroup);
+    GroupDataInterface().createGroup(newGroup: newGroup);
     notifyListeners();
   }
 
@@ -42,7 +42,7 @@ class GroupViewModel extends ChangeNotifier {
       groupID: '1',
       title: name,
     );
-    GroupDataInterface.firebase().addMultipleTaskListToGroup(
+    GroupDataInterface().addMultipleTaskListToGroup(
       groupID: '1',
       addedTaskLists: [newTaskList],
     );
@@ -51,12 +51,12 @@ class GroupViewModel extends ChangeNotifier {
 
   void deleteGroup(Group group) {
     deleteMultipleTaskListFromGroup(group, group.taskLists);
-    GroupDataInterface.firebase().deleteGroup(groupID: group.id);
+    GroupDataInterface().deleteGroup(groupID: group.id);
     notifyListeners();
   }
 
   void renameGroup(Group group, String newName) {
-    GroupDataInterface.firebase().renameGroup(
+    GroupDataInterface().renameGroup(
       groupID: group.id,
       newName: newName,
     );
@@ -75,11 +75,11 @@ class GroupViewModel extends ChangeNotifier {
       }
       movedTaskListsID.add(taskList.id);
     }
-    GroupDataInterface.firebase().addMultipleTaskListToGroup(
+    GroupDataInterface().addMultipleTaskListToGroup(
       groupID: group.id,
       addedTaskLists: movedTaskLists,
     );
-    GroupDataInterface.firebase().removeTaskListFromGroup(
+    GroupDataInterface().removeTaskListFromGroup(
       groupID: '1',
       removedTaskListsID: movedTaskListsID,
     );
@@ -99,11 +99,11 @@ class GroupViewModel extends ChangeNotifier {
       }
       removedTaskListsID.add(taskList.id);
     }
-    GroupDataInterface.firebase().addMultipleTaskListToGroup(
+    GroupDataInterface().addMultipleTaskListToGroup(
       groupID: '1',
       addedTaskLists: removedTaskLists,
     );
-    GroupDataInterface.firebase().removeTaskListFromGroup(
+    GroupDataInterface().removeTaskListFromGroup(
       groupID: group.id,
       removedTaskListsID: removedTaskListsID,
     );

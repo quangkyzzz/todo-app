@@ -3,7 +3,7 @@ import 'package:todo_app/model/entity/enum.dart';
 import 'package:todo_app/model/entity/task.dart';
 import 'package:todo_app/model/entity/task_list.dart';
 
-abstract class TaskListDatabaseInterface {
+abstract class TaskListDataTemplate {
   Future<TaskList> getTaskListByID({
     required String groupID,
     required String taskListID,

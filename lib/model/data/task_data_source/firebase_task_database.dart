@@ -1,7 +1,7 @@
 // ignore_for_file: avoid_function_literals_in_foreach_calls
 import 'package:firebase_database/firebase_database.dart';
 import 'package:todo_app/model/data/firebase_reference.dart';
-import 'package:todo_app/model/data/task_data_source/task_database_interface.dart';
+import 'package:todo_app/model/data/task_data_source/task_data_template.dart';
 import 'package:todo_app/exception/data_exception.dart';
 import 'package:todo_app/model/entity/enum.dart';
 import 'package:todo_app/model/entity/group.dart';
@@ -9,7 +9,7 @@ import 'package:todo_app/model/entity/task.dart';
 import 'package:todo_app/model/entity/task_list.dart';
 import 'package:todo_app/model/entity/task_step.dart';
 
-class FirebaseTaskDatabase implements TaskDatabaseInterface {
+class FirebaseTaskDatabase implements TaskDataTemplate {
   DatabaseReference ref = FirebaseReference.getInstance.ref;
 
   @override

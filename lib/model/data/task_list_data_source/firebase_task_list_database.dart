@@ -1,13 +1,13 @@
 import 'dart:ui';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:todo_app/model/data/firebase_reference.dart';
-import 'package:todo_app/model/data/task_list_data_source/task_list_database_interface.dart';
+import 'package:todo_app/model/data/task_list_data_source/task_list_data_template.dart';
 import 'package:todo_app/exception/data_exception.dart';
 import 'package:todo_app/model/entity/enum.dart';
 import 'package:todo_app/model/entity/task.dart';
 import 'package:todo_app/model/entity/task_list.dart';
 
-class FirebaseTaskListDatabase implements TaskListDatabaseInterface {
+class FirebaseTaskListDatabase implements TaskListDataTemplate {
   DatabaseReference ref = FirebaseReference.getInstance.ref;
 
   @override

@@ -1,22 +1,19 @@
 import 'dart:async';
 import 'package:todo_app/model/data/group_data_source/firebase_group_database.dart';
-import 'package:todo_app/model/data/group_data_source/group_database_abstract.dart';
+import 'package:todo_app/model/data/group_data_source/group_data_template.dart';
 import 'package:todo_app/model/entity/group.dart';
 import 'package:todo_app/model/entity/task_list.dart';
 
-class GroupDataInterface implements GroupDatabaseAbstract {
-  final GroupDatabaseAbstract provider;
-  GroupDataInterface(this.provider);
-  factory GroupDataInterface.firebase() {
-    return GroupDataInterface(FirebaseGroupDatabase());
-  }
+class GroupDataInterface implements GroupDataTemplate {
+  GroupDataTemplate dataSource = FirebaseGroupDatabase();
+  GroupDataInterface();
 
   @override
   void addMultipleTaskListToGroup({
     required String groupID,
     required List<TaskList> addedTaskLists,
   }) {
-    provider.addMultipleTaskListToGroup(
+    dataSource.addMultipleTaskListToGroup(
       groupID: groupID,
       addedTaskLists: addedTaskLists,
     );
@@ -24,12 +21,12 @@ class GroupDataInterface implements GroupDatabaseAbstract {
 
   @override
   void createGroup({required Group newGroup}) {
-    provider.createGroup(newGroup: newGroup);
+    dataSource.createGroup(newGroup: newGroup);
   }
 
   @override
   void deleteGroup({required String groupID}) {
-    provider.deleteGroup(groupID: groupID);
+    dataSource.deleteGroup(groupID: groupID);
   }
 
   @override
@@ -37,7 +34,7 @@ class GroupDataInterface implements GroupDatabaseAbstract {
     required Function onGroupUpdate,
     required Function onBeginUpdate,
   }) {
-    provider.listenAllGroup(
+    dataSource.listenAllGroup(
       onGroupUpdate: onGroupUpdate,
       onBeginUpdate: onBeginUpdate,
     );
@@ -45,7 +42,7 @@ class GroupDataInterface implements GroupDatabaseAbstract {
 
   @override
   Future<Group> getGroupByID({required String groupID}) async {
-    return provider.getGroupByID(groupID: groupID);
+    return dataSource.getGroupByID(groupID: groupID);
   }
 
   @override
@@ -53,7 +50,7 @@ class GroupDataInterface implements GroupDatabaseAbstract {
     required String groupID,
     required List<String> removedTaskListsID,
   }) {
-    provider.removeTaskListFromGroup(
+    dataSource.removeTaskListFromGroup(
       groupID: groupID,
       removedTaskListsID: removedTaskListsID,
     );
@@ -61,7 +58,7 @@ class GroupDataInterface implements GroupDatabaseAbstract {
 
   @override
   void renameGroup({required String groupID, required String newName}) {
-    provider.renameGroup(
+    dataSource.renameGroup(
       groupID: groupID,
       newName: newName,
     );

@@ -1,15 +1,11 @@
 import 'package:todo_app/model/data/task_data_source/firebase_task_database.dart';
-import 'package:todo_app/model/data/task_data_source/task_database_interface.dart';
+import 'package:todo_app/model/data/task_data_source/task_data_template.dart';
 import 'package:todo_app/model/entity/enum.dart';
 import 'package:todo_app/model/entity/task.dart';
 import 'package:todo_app/model/entity/task_step.dart';
 
-class TaskDataSource implements TaskDatabaseInterface {
-  TaskDatabaseInterface provider;
-  TaskDataSource(this.provider);
-  factory TaskDataSource.firebase() {
-    return TaskDataSource(FirebaseTaskDatabase());
-  }
+class TaskDataInterface implements TaskDataTemplate {
+  TaskDataTemplate provider = FirebaseTaskDatabase();
 
   @override
   Future<List<Task>> getAllTask() async {

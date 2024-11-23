@@ -1,8 +1,8 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_app/model/data/group_data_source/group_data_interface.dart';
-import 'package:todo_app/model/data/task_data_source/task_data_source.dart';
-import 'package:todo_app/model/data/task_list_data_source/task_list_data_source.dart';
+import 'package:todo_app/model/data/task_data_source/task_data_interface.dart';
+import 'package:todo_app/model/data/task_list_data_source/task_list_data_interface.dart';
 import 'package:todo_app/model/entity/task_list.dart';
 import 'package:todo_app/model/entity/task.dart';
 import 'package:todo_app/model/entity/enum.dart';
@@ -19,7 +19,7 @@ class TaskListViewModel extends ChangeNotifier {
   });
 
   void initCurrentTaskList() async {
-    currentTaskList = await TaskListDataSource.firebase().getTaskListByID(
+    currentTaskList = await TaskListDataInterface().getTaskListByID(
       groupID: currentTaskListGroupID,
       taskListID: currentTaskListID,
     );
@@ -34,7 +34,7 @@ class TaskListViewModel extends ChangeNotifier {
   }
 
   Future<TaskList> getTaskListByID(String taskListID, String groupID) async {
-    TaskList result = await TaskListDataSource.firebase().getTaskListByID(
+    TaskList result = await TaskListDataInterface().getTaskListByID(
       groupID: groupID,
       taskListID: taskListID,
     );
@@ -42,7 +42,7 @@ class TaskListViewModel extends ChangeNotifier {
   }
 
   void updateTaskListToDatabase() async {
-    TaskListDataSource.firebase().updateTaskListToDatabase(
+    TaskListDataInterface().updateTaskListToDatabase(
       groupID: currentTaskList.groupID,
       updatedTaskList: currentTaskList,
     );
@@ -65,7 +65,7 @@ class TaskListViewModel extends ChangeNotifier {
       case '5':
         getSearchTaskList();
       default:
-        currentTaskList = await TaskListDataSource.firebase().getTaskListByID(
+        currentTaskList = await TaskListDataInterface().getTaskListByID(
           groupID: currentTaskList.groupID,
           taskListID: currentTaskList.id,
         );
@@ -94,7 +94,7 @@ class TaskListViewModel extends ChangeNotifier {
     currentTaskList.tasks
         .firstWhere((element) => element.id == task.id)
         .isCompleted = isCompleted;
-    TaskDataSource.firebase().updateIsCompleted(
+    TaskDataInterface().updateIsCompleted(
       groupID: task.groupID,
       taskListID: task.taskListID,
       taskID: task.id,
@@ -115,7 +115,7 @@ class TaskListViewModel extends ChangeNotifier {
     currentTaskList.tasks
         .firstWhere((element) => element.id == task.id)
         .isImportant = isImportant;
-    TaskDataSource.firebase().updateIsImportant(
+    TaskDataInterface().updateIsImportant(
       groupID: task.groupID,
       taskListID: task.taskListID,
       taskID: task.id,
@@ -200,7 +200,7 @@ class TaskListViewModel extends ChangeNotifier {
   }
 
   void addTaskToMyDay({required Task task}) {
-    TaskDataSource.firebase().updateIsOnMyDay(
+    TaskDataInterface().updateIsOnMyDay(
       groupID: task.groupID,
       taskListID: task.taskListID,
       taskID: task.id,
@@ -247,7 +247,7 @@ class TaskListViewModel extends ChangeNotifier {
     } else {
       currentTaskList.tasks.add(task);
     }
-    TaskListDataSource.firebase().addMultipleTask(
+    TaskListDataInterface().addMultipleTask(
       groupID: task.groupID,
       taskListID: task.taskListID,
       addTasks: [task],
@@ -282,12 +282,12 @@ class TaskListViewModel extends ChangeNotifier {
   }
 
   void getOnMyDayTask() async {
-    List<Task> allTask = await TaskDataSource.firebase().getAllTask();
+    List<Task> allTask = await TaskDataInterface().getAllTask();
     List<Task> result = [];
     for (Task task in allTask) {
       if (task.isOnMyDay) result.add(task);
     }
-    currentTaskList = await TaskListDataSource.firebase()
+    currentTaskList = await TaskListDataInterface()
         .getTaskListByID(groupID: '1', taskListID: '2');
     currentTaskList.tasks = result;
     isLoading = false;
@@ -295,7 +295,7 @@ class TaskListViewModel extends ChangeNotifier {
   }
 
   Future<List<Task>> readRecentNotInMyDayTask() async {
-    List<Task> allTask = await TaskDataSource.firebase().getAllTask();
+    List<Task> allTask = await TaskDataInterface().getAllTask();
     List<Task> result = [];
     for (var task in allTask) {
       DateTime createDate = DateTime(
@@ -316,7 +316,7 @@ class TaskListViewModel extends ChangeNotifier {
   }
 
   Future<List<Task>> readOlderNotInMyDayTask() async {
-    List<Task> allTask = await TaskDataSource.firebase().getAllTask();
+    List<Task> allTask = await TaskDataInterface().getAllTask();
     List<Task> result = [];
     for (var task in allTask) {
       DateTime createDate = DateTime(
@@ -339,13 +339,13 @@ class TaskListViewModel extends ChangeNotifier {
   }
 
   void getImportantTask() async {
-    List<Task> allTask = await TaskDataSource.firebase().getAllTask();
+    List<Task> allTask = await TaskDataInterface().getAllTask();
     List<Task> result = [];
 
     for (Task task in allTask) {
       if (task.isImportant) result.add(task);
     }
-    currentTaskList = await TaskListDataSource.firebase()
+    currentTaskList = await TaskListDataInterface()
         .getTaskListByID(groupID: '1', taskListID: '3');
     currentTaskList.tasks = result;
     isLoading = false;
@@ -353,13 +353,13 @@ class TaskListViewModel extends ChangeNotifier {
   }
 
   void getPlannedTask() async {
-    List<Task> allTask = await TaskDataSource.firebase().getAllTask();
+    List<Task> allTask = await TaskDataInterface().getAllTask();
     List<Task> result = [];
 
     for (Task task in allTask) {
       if (task.dueDate != null) result.add(task);
     }
-    currentTaskList = await TaskListDataSource.firebase()
+    currentTaskList = await TaskListDataInterface()
         .getTaskListByID(groupID: '1', taskListID: '4');
     currentTaskList.tasks = result;
     isLoading = false;
@@ -457,8 +457,8 @@ class TaskListViewModel extends ChangeNotifier {
   }
 
   void getSearchTaskList() async {
-    List<Task> allTask = await TaskDataSource.firebase().getAllTask();
-    currentTaskList = await TaskListDataSource.firebase()
+    List<Task> allTask = await TaskDataInterface().getAllTask();
+    currentTaskList = await TaskListDataInterface()
         .getTaskListByID(groupID: '1', taskListID: '5');
     currentTaskList.tasks = allTask;
     notifyListeners();
@@ -502,14 +502,14 @@ class TaskListViewModel extends ChangeNotifier {
         title: '${currentTaskList.title} copy',
         tasks: newTasks,
         groupID: '1');
-    GroupDataInterface.firebase().addMultipleTaskListToGroup(
+    GroupDataInterface().addMultipleTaskListToGroup(
       groupID: '1',
       addedTaskLists: [newTaskList],
     );
   }
 
   void deleteTaskList() {
-    TaskListDataSource.firebase().deleteTaskList(
+    TaskListDataInterface().deleteTaskList(
       groupID: currentTaskList.groupID,
       taskListID: currentTaskList.id,
     );
