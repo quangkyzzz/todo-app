@@ -7,7 +7,6 @@ import 'package:todo_app/model/entity/task.dart';
 import 'package:todo_app/model/entity/enum.dart';
 import 'package:todo_app/ultility/general_ultility.dart';
 
-//TODO: fix using mutiple data source
 class TaskListViewModel extends ChangeNotifier {
   String currentTaskListID;
   String currentTaskListGroupID;
@@ -48,13 +47,9 @@ class TaskListViewModel extends ChangeNotifier {
     );
   }
 
-  void beginLoad() {
+  void reloadTaskList() async {
     isLoading = true;
     notifyListeners();
-  }
-
-  void reloadTaskList() async {
-    beginLoad();
     switch (currentTaskList.id) {
       case '2':
         getOnMyDayTask();
