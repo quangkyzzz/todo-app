@@ -1,9 +1,8 @@
-Báo cáo 23/11
+Báo cáo 25/11
 Đã làm :
-    -   Sửa cấu trúc database class.
-    -   Sửa lỗi khởi tạo data trong contructor của groupViewModel.
-    -   Sửa cách truyền dữ liệu vào taskListViewModel.
+    -   Sửa cách truyền dữ liện vào taskViewModel.
+    -   Sửa cấu trúc của các data class.
 Đang làm:   
-    -   Sửa cách truyền dữ liệu vào taskViewModel.
+    -   Sửa các hàm trong taskListViewModel.
 Dự định làm:
     -   Dựa vào review và tiếp tục chỉnh sửa.
