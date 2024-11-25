@@ -4,11 +4,11 @@ import 'package:todo_app/model/entity/enum.dart';
 import 'package:todo_app/model/entity/task.dart';
 import 'package:todo_app/model/entity/task_step.dart';
 
-class TaskDataRepository implements TaskDataTemplate {
+class TaskRepository implements TaskDataTemplate {
   TaskDataTemplate dataSource;
-  TaskDataRepository._internalConstructor(this.dataSource);
-  factory TaskDataRepository.initDataSource() {
-    return TaskDataRepository._internalConstructor(FirebaseTaskDatabase());
+  TaskRepository._internalConstructor(this.dataSource);
+  factory TaskRepository.initDataSource() {
+    return TaskRepository._internalConstructor(FirebaseTaskDatabase());
   }
 
   @override

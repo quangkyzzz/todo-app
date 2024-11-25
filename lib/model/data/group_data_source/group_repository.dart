@@ -4,11 +4,11 @@ import 'package:todo_app/model/data/group_data_source/group_data_template.dart';
 import 'package:todo_app/model/entity/group.dart';
 import 'package:todo_app/model/entity/task_list.dart';
 
-class GroupDataRepository implements GroupDataTemplate {
+class GroupRepository implements GroupDataTemplate {
   GroupDataTemplate dataSource;
-  GroupDataRepository._internalConstructor(this.dataSource);
-  factory GroupDataRepository.initDataSource() {
-    return GroupDataRepository._internalConstructor(FirebaseGroupDatabase());
+  GroupRepository._internalConstructor(this.dataSource);
+  factory GroupRepository.initDataSource() {
+    return GroupRepository._internalConstructor(FirebaseGroupDatabase());
   }
   @override
   void addMultipleTaskListToGroup({

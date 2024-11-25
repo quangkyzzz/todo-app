@@ -5,11 +5,11 @@ import 'package:todo_app/model/entity/enum.dart';
 import 'package:todo_app/model/entity/task.dart';
 import 'package:todo_app/model/entity/task_list.dart';
 
-class TaskListDataRepository implements TaskListDataTemplate {
+class TaskListRepository implements TaskListDataTemplate {
   final TaskListDataTemplate dataSource;
-  TaskListDataRepository._internalConstructor(this.dataSource);
-  factory TaskListDataRepository.initDataSource() {
-    return TaskListDataRepository._internalConstructor(
+  TaskListRepository._internalConstructor(this.dataSource);
+  factory TaskListRepository.initDataSource() {
+    return TaskListRepository._internalConstructor(
       FirebaseTaskListDatabase(),
     );
   }

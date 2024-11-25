@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_app/model/data/task_data_source/task_data_repository.dart';
+import 'package:todo_app/model/data/task_data_source/task_repository.dart';
 import 'package:todo_app/model/entity/task.dart';
 import 'package:todo_app/model/entity/task_step.dart';
 import 'package:todo_app/model/entity/enum.dart';
@@ -19,7 +19,7 @@ class TaskViewModel extends ChangeNotifier {
   });
 
   void initCurrentTask() async {
-    currentTask = await TaskDataRepository.initDataSource().getTaskByID(
+    currentTask = await TaskRepository.initDataSource().getTaskByID(
       groupID: groupID,
       taskListID: taskListID,
       taskID: currentTaskID,
@@ -31,7 +31,7 @@ class TaskViewModel extends ChangeNotifier {
   void reloadTask() async {
     isLoadingTask = true;
     notifyListeners();
-    currentTask = await TaskDataRepository.initDataSource().getTaskByID(
+    currentTask = await TaskRepository.initDataSource().getTaskByID(
       groupID: currentTask.groupID,
       taskListID: currentTask.taskListID,
       taskID: currentTask.id,
@@ -42,7 +42,7 @@ class TaskViewModel extends ChangeNotifier {
 
   void updateTaskTitle({required String newTitle}) {
     currentTask.title = newTitle;
-    TaskDataRepository.initDataSource().updateTaskTitle(
+    TaskRepository.initDataSource().updateTaskTitle(
       groupID: currentTask.groupID,
       taskListID: currentTask.taskListID,
       taskID: currentTask.id,
@@ -53,7 +53,7 @@ class TaskViewModel extends ChangeNotifier {
 
   void updateIsCompleted({required bool isCompleted}) {
     currentTask.isCompleted = isCompleted;
-    TaskDataRepository.initDataSource().updateIsCompleted(
+    TaskRepository.initDataSource().updateIsCompleted(
         groupID: currentTask.groupID,
         taskListID: currentTask.taskListID,
         taskID: currentTask.id,
@@ -63,7 +63,7 @@ class TaskViewModel extends ChangeNotifier {
 
   void updateIsImportant({required bool isImportant}) {
     currentTask.isImportant = isImportant;
-    TaskDataRepository.initDataSource().updateIsImportant(
+    TaskRepository.initDataSource().updateIsImportant(
       groupID: currentTask.groupID,
       taskListID: currentTask.taskListID,
       taskID: currentTask.id,
@@ -74,7 +74,7 @@ class TaskViewModel extends ChangeNotifier {
 
   void updateRemindTime({required DateTime? newRemindTime}) {
     currentTask.remindTime = newRemindTime;
-    TaskDataRepository.initDataSource().updateRemindTime(
+    TaskRepository.initDataSource().updateRemindTime(
       groupID: currentTask.groupID,
       taskListID: currentTask.taskListID,
       taskID: currentTask.id,
@@ -85,7 +85,7 @@ class TaskViewModel extends ChangeNotifier {
 
   void updateDueDate({required DateTime? newDueDate}) {
     currentTask.dueDate = newDueDate;
-    TaskDataRepository.initDataSource().updateDueDate(
+    TaskRepository.initDataSource().updateDueDate(
       groupID: currentTask.groupID,
       taskListID: currentTask.taskListID,
       taskID: currentTask.id,
@@ -96,7 +96,7 @@ class TaskViewModel extends ChangeNotifier {
 
   void updateRepeatFrequency({required Frequency? newRepeatFrequency}) {
     currentTask.repeatFrequency = newRepeatFrequency;
-    TaskDataRepository.initDataSource().updateRepeatFrequency(
+    TaskRepository.initDataSource().updateRepeatFrequency(
       groupID: currentTask.groupID,
       taskListID: currentTask.taskListID,
       taskID: currentTask.id,
@@ -107,7 +107,7 @@ class TaskViewModel extends ChangeNotifier {
 
   void updateFrequencyMultiplier({required int newFrequencyMultiplier}) {
     currentTask.frequencyMultiplier = newFrequencyMultiplier;
-    TaskDataRepository.initDataSource().updateFrequencyMultiplier(
+    TaskRepository.initDataSource().updateFrequencyMultiplier(
       groupID: currentTask.groupID,
       taskListID: currentTask.taskListID,
       taskID: currentTask.id,
@@ -118,7 +118,7 @@ class TaskViewModel extends ChangeNotifier {
 
   void updateIsOnMyDay({required bool isOnMyDay}) {
     currentTask.isOnMyDay = isOnMyDay;
-    TaskDataRepository.initDataSource().updateIsOnMyDay(
+    TaskRepository.initDataSource().updateIsOnMyDay(
       groupID: currentTask.groupID,
       taskListID: currentTask.taskListID,
       taskID: currentTask.id,
@@ -129,7 +129,7 @@ class TaskViewModel extends ChangeNotifier {
 
   void updateNote({required String newNote}) {
     currentTask.note = newNote;
-    TaskDataRepository.initDataSource().updateNote(
+    TaskRepository.initDataSource().updateNote(
       groupID: currentTask.groupID,
       taskListID: currentTask.taskListID,
       taskID: currentTask.id,
@@ -140,7 +140,7 @@ class TaskViewModel extends ChangeNotifier {
 
   void addFile({required List<String> filePath}) {
     currentTask.filePath.addAll(filePath);
-    TaskDataRepository.initDataSource().addFile(
+    TaskRepository.initDataSource().addFile(
       groupID: currentTask.groupID,
       taskListID: currentTask.taskListID,
       taskID: currentTask.id,
@@ -151,7 +151,7 @@ class TaskViewModel extends ChangeNotifier {
 
   void removeFile({required String removeFile}) {
     currentTask.filePath.remove(removeFile);
-    TaskDataRepository.initDataSource().removeFile(
+    TaskRepository.initDataSource().removeFile(
       groupID: currentTask.groupID,
       taskListID: currentTask.taskListID,
       taskID: currentTask.id,
@@ -167,7 +167,7 @@ class TaskViewModel extends ChangeNotifier {
       isCompleted: isCompleted,
     );
     currentTask.stepList.add(newStep);
-    TaskDataRepository.initDataSource().addStep(
+    TaskRepository.initDataSource().addStep(
       groupID: currentTask.groupID,
       taskListID: currentTask.taskListID,
       taskID: currentTask.id,
@@ -181,7 +181,7 @@ class TaskViewModel extends ChangeNotifier {
     currentTask.stepList
         .firstWhere((element) => element.id == stepID)
         .stepName = newName;
-    TaskDataRepository.initDataSource().updateStepName(
+    TaskRepository.initDataSource().updateStepName(
       groupID: currentTask.groupID,
       taskListID: currentTask.taskListID,
       taskID: currentTask.id,
@@ -195,7 +195,7 @@ class TaskViewModel extends ChangeNotifier {
     currentTask.stepList
         .firstWhere((element) => element.id == stepID)
         .isCompleted = isCompleted;
-    TaskDataRepository.initDataSource().updateStepIsCompleted(
+    TaskRepository.initDataSource().updateStepIsCompleted(
       groupID: currentTask.groupID,
       taskListID: currentTask.taskListID,
       taskID: currentTask.id,
@@ -208,7 +208,7 @@ class TaskViewModel extends ChangeNotifier {
 
   void deleteStep({required String stepID}) {
     currentTask.stepList.removeWhere((element) => element.id == stepID);
-    TaskDataRepository.initDataSource().deleteStep(
+    TaskRepository.initDataSource().deleteStep(
       groupID: currentTask.groupID,
       taskListID: currentTask.taskListID,
       taskID: currentTask.id,
@@ -227,7 +227,7 @@ class TaskViewModel extends ChangeNotifier {
       isImportant: false,
       isOnMyDay: false,
     );
-    TaskDataRepository.initDataSource().createNewTask(
+    TaskRepository.initDataSource().createNewTask(
       groupID: currentTask.groupID,
       taskListID: currentTask.taskListID,
       newTask: newTask,
@@ -240,7 +240,7 @@ class TaskViewModel extends ChangeNotifier {
   }
 
   void deleteTask() {
-    TaskDataRepository.initDataSource().deleteTask(
+    TaskRepository.initDataSource().deleteTask(
       groupID: currentTask.groupID,
       taskListID: currentTask.taskListID,
       taskID: currentTask.id,

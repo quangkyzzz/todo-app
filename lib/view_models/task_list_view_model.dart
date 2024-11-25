@@ -1,8 +1,8 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:todo_app/model/data/group_data_source/group_data_repository.dart';
-import 'package:todo_app/model/data/task_data_source/task_data_repository.dart';
-import 'package:todo_app/model/data/task_list_data_source/task_list_data_repository.dart';
+import 'package:todo_app/model/data/group_data_source/group_repository.dart';
+import 'package:todo_app/model/data/task_data_source/task_repository.dart';
+import 'package:todo_app/model/data/task_list_data_source/task_list_repository.dart';
 import 'package:todo_app/model/entity/task_list.dart';
 import 'package:todo_app/model/entity/task.dart';
 import 'package:todo_app/model/entity/enum.dart';
@@ -20,8 +20,7 @@ class TaskListViewModel extends ChangeNotifier {
   });
 
   void initCurrentTaskList() async {
-    currentTaskList =
-        await TaskListDataRepository.initDataSource().getTaskListByID(
+    currentTaskList = await TaskListRepository.initDataSource().getTaskListByID(
       groupID: currentTaskListGroupID,
       taskListID: currentTaskListID,
     );
@@ -36,8 +35,7 @@ class TaskListViewModel extends ChangeNotifier {
   }
 
   Future<TaskList> getTaskListByID(String taskListID, String groupID) async {
-    TaskList result =
-        await TaskListDataRepository.initDataSource().getTaskListByID(
+    TaskList result = await TaskListRepository.initDataSource().getTaskListByID(
       groupID: groupID,
       taskListID: taskListID,
     );
@@ -45,7 +43,7 @@ class TaskListViewModel extends ChangeNotifier {
   }
 
   void updateTaskListToDatabase() async {
-    TaskListDataRepository.initDataSource().updateTaskListToDatabase(
+    TaskListRepository.initDataSource().updateTaskListToDatabase(
       groupID: currentTaskList.groupID,
       updatedTaskList: currentTaskList,
     );
@@ -69,7 +67,7 @@ class TaskListViewModel extends ChangeNotifier {
         getSearchTaskList();
       default:
         currentTaskList =
-            await TaskListDataRepository.initDataSource().getTaskListByID(
+            await TaskListRepository.initDataSource().getTaskListByID(
           groupID: currentTaskList.groupID,
           taskListID: currentTaskList.id,
         );
@@ -98,7 +96,7 @@ class TaskListViewModel extends ChangeNotifier {
     currentTaskList.tasks
         .firstWhere((element) => element.id == task.id)
         .isCompleted = isCompleted;
-    TaskDataRepository.initDataSource().updateIsCompleted(
+    TaskRepository.initDataSource().updateIsCompleted(
       groupID: task.groupID,
       taskListID: task.taskListID,
       taskID: task.id,
@@ -119,7 +117,7 @@ class TaskListViewModel extends ChangeNotifier {
     currentTaskList.tasks
         .firstWhere((element) => element.id == task.id)
         .isImportant = isImportant;
-    TaskDataRepository.initDataSource().updateIsImportant(
+    TaskRepository.initDataSource().updateIsImportant(
       groupID: task.groupID,
       taskListID: task.taskListID,
       taskID: task.id,
@@ -204,7 +202,7 @@ class TaskListViewModel extends ChangeNotifier {
   }
 
   void addTaskToMyDay({required Task task}) {
-    TaskDataRepository.initDataSource().updateIsOnMyDay(
+    TaskRepository.initDataSource().updateIsOnMyDay(
       groupID: task.groupID,
       taskListID: task.taskListID,
       taskID: task.id,
@@ -251,7 +249,7 @@ class TaskListViewModel extends ChangeNotifier {
     } else {
       currentTaskList.tasks.add(task);
     }
-    TaskListDataRepository.initDataSource().addMultipleTask(
+    TaskListRepository.initDataSource().addMultipleTask(
       groupID: task.groupID,
       taskListID: task.taskListID,
       addTasks: [task],
@@ -286,12 +284,12 @@ class TaskListViewModel extends ChangeNotifier {
   }
 
   void getOnMyDayTask() async {
-    List<Task> allTask = await TaskDataRepository.initDataSource().getAllTask();
+    List<Task> allTask = await TaskRepository.initDataSource().getAllTask();
     List<Task> result = [];
     for (Task task in allTask) {
       if (task.isOnMyDay) result.add(task);
     }
-    currentTaskList = await TaskListDataRepository.initDataSource()
+    currentTaskList = await TaskListRepository.initDataSource()
         .getTaskListByID(groupID: '1', taskListID: '2');
     currentTaskList.tasks = result;
     isLoading = false;
@@ -299,7 +297,7 @@ class TaskListViewModel extends ChangeNotifier {
   }
 
   Future<List<Task>> readRecentNotInMyDayTask() async {
-    List<Task> allTask = await TaskDataRepository.initDataSource().getAllTask();
+    List<Task> allTask = await TaskRepository.initDataSource().getAllTask();
     List<Task> result = [];
     for (var task in allTask) {
       DateTime createDate = DateTime(
@@ -320,7 +318,7 @@ class TaskListViewModel extends ChangeNotifier {
   }
 
   Future<List<Task>> readOlderNotInMyDayTask() async {
-    List<Task> allTask = await TaskDataRepository.initDataSource().getAllTask();
+    List<Task> allTask = await TaskRepository.initDataSource().getAllTask();
     List<Task> result = [];
     for (var task in allTask) {
       DateTime createDate = DateTime(
@@ -343,13 +341,13 @@ class TaskListViewModel extends ChangeNotifier {
   }
 
   void getImportantTask() async {
-    List<Task> allTask = await TaskDataRepository.initDataSource().getAllTask();
+    List<Task> allTask = await TaskRepository.initDataSource().getAllTask();
     List<Task> result = [];
 
     for (Task task in allTask) {
       if (task.isImportant) result.add(task);
     }
-    currentTaskList = await TaskListDataRepository.initDataSource()
+    currentTaskList = await TaskListRepository.initDataSource()
         .getTaskListByID(groupID: '1', taskListID: '3');
     currentTaskList.tasks = result;
     isLoading = false;
@@ -357,13 +355,13 @@ class TaskListViewModel extends ChangeNotifier {
   }
 
   void getPlannedTask() async {
-    List<Task> allTask = await TaskDataRepository.initDataSource().getAllTask();
+    List<Task> allTask = await TaskRepository.initDataSource().getAllTask();
     List<Task> result = [];
 
     for (Task task in allTask) {
       if (task.dueDate != null) result.add(task);
     }
-    currentTaskList = await TaskListDataRepository.initDataSource()
+    currentTaskList = await TaskListRepository.initDataSource()
         .getTaskListByID(groupID: '1', taskListID: '4');
     currentTaskList.tasks = result;
     isLoading = false;
@@ -461,8 +459,8 @@ class TaskListViewModel extends ChangeNotifier {
   }
 
   void getSearchTaskList() async {
-    List<Task> allTask = await TaskDataRepository.initDataSource().getAllTask();
-    currentTaskList = await TaskListDataRepository.initDataSource()
+    List<Task> allTask = await TaskRepository.initDataSource().getAllTask();
+    currentTaskList = await TaskListRepository.initDataSource()
         .getTaskListByID(groupID: '1', taskListID: '5');
     currentTaskList.tasks = allTask;
     notifyListeners();
@@ -506,14 +504,14 @@ class TaskListViewModel extends ChangeNotifier {
         title: '${currentTaskList.title} copy',
         tasks: newTasks,
         groupID: '1');
-    GroupDataRepository.initDataSource().addMultipleTaskListToGroup(
+    GroupRepository.initDataSource().addMultipleTaskListToGroup(
       groupID: '1',
       addedTaskLists: [newTaskList],
     );
   }
 
   void deleteTaskList() {
-    TaskListDataRepository.initDataSource().deleteTaskList(
+    TaskListRepository.initDataSource().deleteTaskList(
       groupID: currentTaskList.groupID,
       taskListID: currentTaskList.id,
     );
