@@ -9,6 +9,8 @@ abstract class TaskListDataTemplate {
     required String taskListID,
   });
 
+  Future<List<Task>> getAllTask();
+
   void updateTaskListToDatabase({
     required String groupID,
     required TaskList updatedTaskList,

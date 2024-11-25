@@ -37,6 +37,11 @@ class TaskListRepository implements TaskListDataTemplate {
   }
 
   @override
+  Future<List<Task>> getAllTask() {
+    return dataSource.getAllTask();
+  }
+
+  @override
   void deleteTaskList({required String groupID, required String taskListID}) {
     dataSource.deleteTaskList(groupID: groupID, taskListID: taskListID);
   }

@@ -51,22 +51,32 @@ class TaskViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateIsCompleted({required bool isCompleted}) {
+  void updateIsCompleted({
+    required bool isCompleted,
+    String? groupID,
+    String? taskListID,
+    String? taskID,
+  }) {
     currentTask.isCompleted = isCompleted;
     TaskRepository.initDataSource().updateIsCompleted(
-        groupID: currentTask.groupID,
-        taskListID: currentTask.taskListID,
-        taskID: currentTask.id,
+        groupID: groupID ?? currentTask.groupID,
+        taskListID: taskListID ?? currentTask.taskListID,
+        taskID: taskID ?? currentTask.id,
         isCompleted: isCompleted);
     notifyListeners();
   }
 
-  void updateIsImportant({required bool isImportant}) {
+  void updateIsImportant({
+    required bool isImportant,
+    String? groupID,
+    String? taskListID,
+    String? taskID,
+  }) {
     currentTask.isImportant = isImportant;
     TaskRepository.initDataSource().updateIsImportant(
-      groupID: currentTask.groupID,
-      taskListID: currentTask.taskListID,
-      taskID: currentTask.id,
+      groupID: groupID ?? currentTask.groupID,
+      taskListID: taskListID ?? currentTask.taskListID,
+      taskID: taskID ?? currentTask.id,
       isImportant: isImportant,
     );
     notifyListeners();
@@ -116,12 +126,17 @@ class TaskViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateIsOnMyDay({required bool isOnMyDay}) {
+  void updateIsOnMyDay({
+    String? taskListID,
+    String? groupID,
+    String? taskID,
+    required bool isOnMyDay,
+  }) {
     currentTask.isOnMyDay = isOnMyDay;
     TaskRepository.initDataSource().updateIsOnMyDay(
-      groupID: currentTask.groupID,
-      taskListID: currentTask.taskListID,
-      taskID: currentTask.id,
+      groupID: groupID ?? currentTask.groupID,
+      taskListID: taskListID ?? currentTask.taskListID,
+      taskID: taskID ?? currentTask.id,
       isOnMyDay: isOnMyDay,
     );
     notifyListeners();

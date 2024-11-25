@@ -1,6 +1,6 @@
 Báo cáo 25/11
 Đã làm :
-    -   Sửa cách truyền dữ liện vào taskViewModel.
+    -   Sửa cách truyền dữ liệu vào taskViewModel.
     -   Sửa cấu trúc của các data class.
 Đang làm:   
     -   Sửa các hàm trong taskListViewModel.

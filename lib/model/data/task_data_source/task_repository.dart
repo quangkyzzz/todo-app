@@ -12,11 +12,6 @@ class TaskRepository implements TaskDataTemplate {
   }
 
   @override
-  Future<List<Task>> getAllTask() async {
-    return dataSource.getAllTask();
-  }
-
-  @override
   void addFile({
     required String groupID,
     required String taskListID,

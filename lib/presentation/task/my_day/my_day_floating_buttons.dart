@@ -6,6 +6,7 @@ import 'package:todo_app/view_models/task_list_view_model.dart';
 import 'package:todo_app/presentation/items/task_list_item.dart';
 import 'package:todo_app/themes.dart';
 import 'package:todo_app/presentation/components/add_task_floating_button.dart';
+import 'package:todo_app/view_models/task_view_model.dart';
 
 class MyDayFloatingButtons extends StatelessWidget {
   final Color themeColor;
@@ -82,15 +83,22 @@ class MyDayFloatingButtons extends StatelessWidget {
                                           listRecentTask.remove(task);
                                         });
 
-                                        Task updateTask = task.copyWith(
-                                          isOnMyDay: true,
-                                        );
+                                        Task updatedTask =
+                                            task.copyWith(isOnMyDay: true);
+                                        context
+                                            .read<TaskViewModel>()
+                                            .updateIsOnMyDay(
+                                              groupID: task.groupID,
+                                              taskListID: task.taskListID,
+                                              taskID: task.id,
+                                              isOnMyDay: true,
+                                            );
 
                                         context
                                             .read<TaskListViewModel>()
-                                            .addTaskToMyDay(
-                                              task: updateTask,
-                                            );
+                                            .addMultipleTask(
+                                          tasks: [updatedTask],
+                                        );
                                       },
                                     );
                                   },
@@ -119,16 +127,22 @@ class MyDayFloatingButtons extends StatelessWidget {
                                         setState(() {
                                           listOlderSuggetTask.remove(task);
                                         });
-
-                                        Task updateTask = task.copyWith(
-                                          isOnMyDay: true,
-                                        );
+                                        Task updatedTask =
+                                            task.copyWith(isOnMyDay: true);
+                                        context
+                                            .read<TaskViewModel>()
+                                            .updateIsOnMyDay(
+                                              isOnMyDay: true,
+                                              groupID: task.groupID,
+                                              taskListID: task.taskListID,
+                                              taskID: task.id,
+                                            );
 
                                         context
                                             .read<TaskListViewModel>()
-                                            .addTaskToMyDay(
-                                              task: updateTask,
-                                            );
+                                            .addMultipleTask(
+                                          tasks: [updatedTask],
+                                        );
                                       },
                                     );
                                   },
@@ -148,44 +162,52 @@ class MyDayFloatingButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const Spacer(flex: 2),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
-          decoration: BoxDecoration(
-            shape: BoxShape.rectangle,
-            borderRadius: BorderRadius.circular(18),
-            color: themeColor,
-          ),
-          child: InkWell(
-            splashColor: MyTheme.blackColor,
-            customBorder: const CircleBorder(),
-            onTap: () async {
-              await onSuggestionsTap(context, themeColor);
-            },
-            child: Ink(
-              decoration: const BoxDecoration(shape: BoxShape.circle),
-              child: Text(
-                'Suggestions',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w400,
-                  color: (themeColor == MyTheme.whiteColor)
-                      ? MyTheme.blackColor
-                      : MyTheme.whiteColor,
+    return ChangeNotifierProvider(
+      create: (context) {
+        return TaskViewModel(currentTaskID: '1', taskListID: '1', groupID: '1');
+      },
+      builder: (context, child) {
+        context.read<TaskViewModel>().initCurrentTask();
+        return Row(
+          children: [
+            const Spacer(flex: 2),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+              decoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(18),
+                color: themeColor,
+              ),
+              child: InkWell(
+                splashColor: MyTheme.blackColor,
+                customBorder: const CircleBorder(),
+                onTap: () async {
+                  await onSuggestionsTap(context, themeColor);
+                },
+                child: Ink(
+                  decoration: const BoxDecoration(shape: BoxShape.circle),
+                  child: Text(
+                    'Suggestions',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w400,
+                      color: (themeColor == MyTheme.whiteColor)
+                          ? MyTheme.blackColor
+                          : MyTheme.whiteColor,
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
-        ),
-        const Spacer(flex: 1),
-        AddTaskFloatingButton(
-          taskList: taskList,
-          isAddToMyDay: true,
-          themeColor: themeColor,
-        ),
-      ],
+            const Spacer(flex: 1),
+            AddTaskFloatingButton(
+              taskList: taskList,
+              isAddToMyDay: true,
+              themeColor: themeColor,
+            ),
+          ],
+        );
+      },
     );
   }
 }

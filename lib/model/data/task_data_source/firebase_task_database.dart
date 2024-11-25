@@ -4,34 +4,11 @@ import 'package:todo_app/model/data/firebase_reference.dart';
 import 'package:todo_app/model/data/task_data_source/task_data_template.dart';
 import 'package:todo_app/exception/data_exception.dart';
 import 'package:todo_app/model/entity/enum.dart';
-import 'package:todo_app/model/entity/group.dart';
 import 'package:todo_app/model/entity/task.dart';
-import 'package:todo_app/model/entity/task_list.dart';
 import 'package:todo_app/model/entity/task_step.dart';
 
 class FirebaseTaskDatabase implements TaskDataTemplate {
   DatabaseReference ref = FirebaseReference.getInstance.ref;
-
-  @override
-  Future<List<Task>> getAllTask() async {
-    List<Task> allTask = [];
-    List<Group> allGroup = [];
-    DataSnapshot snapshot = await ref.get();
-    if (snapshot.exists) {
-      var snapshotMap = snapshot.value as Map;
-      snapshotMap.values.forEach((element) {
-        allGroup.add(Group.fromMap(element));
-      });
-      for (Group group in allGroup) {
-        for (TaskList taskList in group.taskLists) {
-          allTask.addAll(taskList.tasks);
-        }
-      }
-      return allTask;
-    } else {
-      throw DataDoesNotExist();
-    }
-  }
 
   @override
   Future<Task> getTaskByID({

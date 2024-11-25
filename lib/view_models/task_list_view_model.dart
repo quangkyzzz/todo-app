@@ -1,7 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_app/model/data/group_data_source/group_repository.dart';
-import 'package:todo_app/model/data/task_data_source/task_repository.dart';
 import 'package:todo_app/model/data/task_list_data_source/task_list_repository.dart';
 import 'package:todo_app/model/entity/task_list.dart';
 import 'package:todo_app/model/entity/task.dart';
@@ -96,12 +95,7 @@ class TaskListViewModel extends ChangeNotifier {
     currentTaskList.tasks
         .firstWhere((element) => element.id == task.id)
         .isCompleted = isCompleted;
-    TaskRepository.initDataSource().updateIsCompleted(
-      groupID: task.groupID,
-      taskListID: task.taskListID,
-      taskID: task.id,
-      isCompleted: isCompleted,
-    );
+
     notifyListeners();
   }
 
@@ -117,12 +111,7 @@ class TaskListViewModel extends ChangeNotifier {
     currentTaskList.tasks
         .firstWhere((element) => element.id == task.id)
         .isImportant = isImportant;
-    TaskRepository.initDataSource().updateIsImportant(
-      groupID: task.groupID,
-      taskListID: task.taskListID,
-      taskID: task.id,
-      isImportant: isImportant,
-    );
+
     if (currentTaskList.id == '3') {
       if (!isImportant) {
         currentTaskList.tasks.remove(task);
@@ -201,17 +190,6 @@ class TaskListViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addTaskToMyDay({required Task task}) {
-    TaskRepository.initDataSource().updateIsOnMyDay(
-      groupID: task.groupID,
-      taskListID: task.taskListID,
-      taskID: task.id,
-      isOnMyDay: true,
-    );
-    addMultipleTask(tasks: [task]);
-    notifyListeners();
-  }
-
   void addMultipleTask({required List<Task> tasks}) {
     currentTaskList.tasks.addAll(tasks);
     notifyListeners();
@@ -284,7 +262,7 @@ class TaskListViewModel extends ChangeNotifier {
   }
 
   void getOnMyDayTask() async {
-    List<Task> allTask = await TaskRepository.initDataSource().getAllTask();
+    List<Task> allTask = await TaskListRepository.initDataSource().getAllTask();
     List<Task> result = [];
     for (Task task in allTask) {
       if (task.isOnMyDay) result.add(task);
@@ -297,7 +275,7 @@ class TaskListViewModel extends ChangeNotifier {
   }
 
   Future<List<Task>> readRecentNotInMyDayTask() async {
-    List<Task> allTask = await TaskRepository.initDataSource().getAllTask();
+    List<Task> allTask = await TaskListRepository.initDataSource().getAllTask();
     List<Task> result = [];
     for (var task in allTask) {
       DateTime createDate = DateTime(
@@ -318,7 +296,7 @@ class TaskListViewModel extends ChangeNotifier {
   }
 
   Future<List<Task>> readOlderNotInMyDayTask() async {
-    List<Task> allTask = await TaskRepository.initDataSource().getAllTask();
+    List<Task> allTask = await TaskListRepository.initDataSource().getAllTask();
     List<Task> result = [];
     for (var task in allTask) {
       DateTime createDate = DateTime(
@@ -341,7 +319,7 @@ class TaskListViewModel extends ChangeNotifier {
   }
 
   void getImportantTask() async {
-    List<Task> allTask = await TaskRepository.initDataSource().getAllTask();
+    List<Task> allTask = await TaskListRepository.initDataSource().getAllTask();
     List<Task> result = [];
 
     for (Task task in allTask) {
@@ -355,7 +333,7 @@ class TaskListViewModel extends ChangeNotifier {
   }
 
   void getPlannedTask() async {
-    List<Task> allTask = await TaskRepository.initDataSource().getAllTask();
+    List<Task> allTask = await TaskListRepository.initDataSource().getAllTask();
     List<Task> result = [];
 
     for (Task task in allTask) {
@@ -459,7 +437,7 @@ class TaskListViewModel extends ChangeNotifier {
   }
 
   void getSearchTaskList() async {
-    List<Task> allTask = await TaskRepository.initDataSource().getAllTask();
+    List<Task> allTask = await TaskListRepository.initDataSource().getAllTask();
     currentTaskList = await TaskListRepository.initDataSource()
         .getTaskListByID(groupID: '1', taskListID: '5');
     currentTaskList.tasks = allTask;
