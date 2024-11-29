@@ -1,8 +1,8 @@
-Báo cáo 25/11
+Báo cáo 29/11
 Đã làm :
-    -   Sửa cách truyền dữ liệu vào taskViewModel.
-    -   Sửa cấu trúc của các data class.
-Đang làm:   
     -   Sửa các hàm trong taskListViewModel.
+    -   Sửa view ListItem và My Day page.
+Đang làm:   
+    -   Tìm hiểu BLoc
 Dự định làm:
     -   Dựa vào review và tiếp tục chỉnh sửa.
