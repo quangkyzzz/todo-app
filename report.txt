@@ -1,8 +1,7 @@
-Báo cáo 29/11
+Báo cáo 2/12
 Đã làm :
-    -   Sửa các hàm trong taskListViewModel.
-    -   Sửa view ListItem và My Day page.
+    -   Tìm hiểu lý thuyết BLoc
 Đang làm:   
-    -   Tìm hiểu BLoc
+    -   Làm ví dụ sử dụng BLoc.
 Dự định làm:
     -   Dựa vào review và tiếp tục chỉnh sửa.
