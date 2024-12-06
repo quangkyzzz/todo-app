@@ -1,7 +1,10 @@
-Báo cáo 2/12
+Báo cáo 6/12
 Đã làm :
-    -   Tìm hiểu lý thuyết BLoc
+    -   Làm các ví dụ về các thành phần cơ bản của BLoc 
+(Cubit, BLoc,BLoc provider, BLoc consumer,...).
 Đang làm:   
-    -   Làm ví dụ sử dụng BLoc.
+    -   Làm ví dụ về các thành phần còn lại 
+(Repository Provider,Bloc Listener)
+    -   Tìm hiểu thêm để so sánh Cubit và Bloc
 Dự định làm:
     -   Dựa vào review và tiếp tục chỉnh sửa.
