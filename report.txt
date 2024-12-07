@@ -1,10 +1,8 @@
-Báo cáo 6/12
+Báo cáo 7/12
 Đã làm :
-    -   Làm các ví dụ về các thành phần cơ bản của BLoc 
-(Cubit, BLoc,BLoc provider, BLoc consumer,...).
+    -   Làm ví dụ về các widget còn lại 
+(Repository Provider, Bloc Listener,...)
 Đang làm:   
-    -   Làm ví dụ về các thành phần còn lại 
-(Repository Provider,Bloc Listener)
-    -   Tìm hiểu thêm để so sánh Cubit và Bloc
+    -   Tìm hiểu về các thư viện thu âm, xử lý âm thanh.
 Dự định làm:
-    -   Dựa vào review và tiếp tục chỉnh sửa.
+    -   Làm ví dụ sử dụng các thư viện xử lý âm thanh.
