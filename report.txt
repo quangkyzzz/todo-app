@@ -1,8 +1,7 @@
-Báo cáo 7/12
+Báo cáo 8/1
 Đã làm :
-    -   Làm ví dụ về các widget còn lại 
-(Repository Provider, Bloc Listener,...)
+    -   Tìm hiểu và làm ví dụ về thư viện record
 Đang làm:   
-    -   Tìm hiểu về các thư viện thu âm, xử lý âm thanh.
+    -   Đọc lại và rà soát lại project
 Dự định làm:
-    -   Làm ví dụ sử dụng các thư viện xử lý âm thanh.
+    -   Dựa vào review để chỉnh sửa.
