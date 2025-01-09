@@ -1,7 +1,7 @@
-Báo cáo 8/1
-Đã làm :
-    -   Tìm hiểu và làm ví dụ về thư viện record
+Báo cáo 9/1
+Đã làm:
+    -   Tìm hiểu sơ lược về cấu trúc project Mizi
 Đang làm:   
-    -   Đọc lại và rà soát lại project
+    -   Tìm hiểu các package sử dụng trong project mizi
 Dự định làm:
-    -   Dựa vào review để chỉnh sửa.
+    -   Tìm hiểu kỹ về giao diện các màn trong project Mizi
