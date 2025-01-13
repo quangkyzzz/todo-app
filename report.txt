@@ -1,7 +1,7 @@
 Báo cáo 10/1
 Đã làm:
-    -   Tìm hiểu các package chính sử dụng trong project Mizi
+    -   Tìm hiểu các màn homePage, songTile, song play 
 Đang làm:   
-    -   Tìm hiểu các màn, widget chính trong project.
+    -   Tìm hiểu cách sửa lỗi.
 Dự định làm:
-    -   Trao đổi và bắt đầu code.
+    -   Dựa vào review và tiếp tục sửa.
