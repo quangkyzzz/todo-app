@@ -7,4 +7,4 @@ Báo cáo 25/3
     *Mizi & 95TV:
     -  Thêm deeplink cho màn mua gói cước
 Dự định làm:
-    -   Test chức năng deeplink của Mizi, 95TV và đẩy lên CH Play và apple store
+    -   Dựa vào review và tiếp tục chỉnh sửa.
