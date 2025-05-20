@@ -3,5 +3,5 @@
     "cmake.sourceDirectory": "D:/Project/Flutter_Project/todo_app/windows/flutter",
     "cmake.ignoreCMakeListsMissing": true,
     "todo-tree.tree.showBadges": true,
-    "editor.lightbulb.enabled": false
+    "editor.lightbulb.enabled": "off"
 }

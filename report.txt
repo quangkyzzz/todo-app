@@ -1,7 +1,10 @@
-Báo cáo 2/12
+Báo cáo 25/3
 Đã làm :
-    -   Tìm hiểu lý thuyết BLoc
-Đang làm:   
-    -   Làm ví dụ sử dụng BLoc.
+    *HiPlay:
+    -  Sửa lỗi chức năng auto play next video/movie khi bật full screen.
+    -  Sửa UI và tương tác của nút back trong màn play game
+    -  Sửa lỗi hiển thị thông báo điểm danh khi mở app
+    *Mizi & 95TV:
+    -  Thêm deeplink cho màn mua gói cước
 Dự định làm:
-    -   Dựa vào review và tiếp tục chỉnh sửa.
+    -   Test chức năng deeplink của Mizi, 95TV và đẩy lên CH Play và apple store
