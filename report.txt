@@ -1,10 +1,15 @@
-Báo cáo 25/3
-Đã làm :
-    *HiPlay:
-    -  Sửa lỗi chức năng auto play next video/movie khi bật full screen.
-    -  Sửa UI và tương tác của nút back trong màn play game
-    -  Sửa lỗi hiển thị thông báo điểm danh khi mở app
-    *Mizi & 95TV:
-    -  Thêm deeplink cho màn mua gói cước
+Báo cáo 26/9
+Đã làm:
+    -   Sửa chức năng nút thêm task mới.
+    -   Sửa cấu trúc code của bottom sheet thêm task và background service.
+    -   Thay đổi nhỏ giao diện.
+Đang làm:
+    -   Sửa taskMapViewModel
 Dự định làm:
-    -   Dựa vào review và tiếp tục chỉnh sửa.
+    -   Hoàn thành sửa các màn liên quan đến taskMapViewModel
+     và xóa bỏ taskMapViewModel.
+
+//about: getMyDay,planned,... function
+//about: move to taskListViewModel
+
+test check
